@@ -1,0 +1,41 @@
+Package: RPhosFate
+Type: Package
+Title: Soil and Chemical Substance Emission and Transport Model
+Version: 0.7.1.9000
+Authors@R: person("Gerold", "Hepp", email = "ghepp@iwag.tuwien.ac.at", role = c("aut", "cre"))
+Description: An enhanced version of the PhosFate model implemented in R
+    supporting suspended solids (SS) and particulate phosphorus (PP).
+License: file LICENSE
+URL: https://github.com/gisler/RPhosFate
+BugReports: https://github.com/gisler/RPhosFate/issues
+Language: en-GB
+Encoding: UTF-8
+LazyData: true
+ByteCompile: true
+Depends:
+    R (>= 3.2.0)
+Imports:
+    methods,
+    raster,
+    Rcpp,
+    spatstat,
+    stats
+Suggests:
+    graphics,
+    hydroGOF,
+    whitebox
+LinkingTo:
+    Rcpp,
+    RcppArmadillo
+Additional_repositories:
+    http://R-Forge.R-project.org
+RoxygenNote: 7.1.1
+Collate:
+    'aaa.R'
+    'RPhosFate.R'
+    'RcppExports.R'
+    'findNearestNeighbour.R'
+    'input.R'
+    'interface.R'
+    'updateRPhosFateParameters.R'
+    'zzz.R'
