@@ -147,7 +147,7 @@ setMethod(
     cs_dir_old <- setwd(cmt@cv_dir[1])
     on.exit(setwd(cs_dir_old))
 
-    saveRDS(cmt@parameters, "parameters.rds", ascii = TRUE, compress = FALSE)
+    writeParameters(cmt@parameters)
     saveRDS(cmt@helper@order, "order.rds")
   }
 )

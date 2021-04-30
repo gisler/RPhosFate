@@ -19,7 +19,9 @@ Imports:
     raster,
     Rcpp,
     spatstat,
-    stats
+    stats,
+    utils,
+    yaml
 Suggests:
     graphics,
     hydroGOF,
@@ -34,8 +36,10 @@ Collate:
     'aaa.R'
     'RPhosFate.R'
     'RcppExports.R'
+    'deprecated.R'
     'findNearestNeighbour.R'
     'input.R'
     'interface.R'
-    'updateRPhosFateParameters.R'
+    'readWrite.R'
+    'utils.R'
     'zzz.R'

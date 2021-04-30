@@ -2,36 +2,34 @@
 #' @import raster
 #' @importFrom Rcpp sourceCpp
 #' @importFrom stats median
+#' @importFrom yaml read_yaml write_yaml
+#' @importFrom utils modifyList
 #' @useDynLib RPhosFate
 NULL
 
-#### Class RPhosFateParameters ####
-setClassRPhosFateParameters <- function(env) {
-  setClass(
-    Class = "RPhosFateParameters",
-    slots = c(
-      ns_slp_min = "numeric",
-      ns_slp_max = "numeric",
-      ns_rhy_a   = "numeric",
-      ns_rhy_b   = "numeric",
-      ns_cha_rto = "numeric",
-      ns_man_rip = "numeric",
-      ns_man_cha = "numeric",
-      ns_dep_ovl = "numeric",
-      ns_dep_cha = "numeric",
-      ns_tfc_inl = "numeric",
-      nv_enr_rto = "numeric",
-      iv_fDo     = "integer",
-      nm_olc     = "matrix",
-      df_cdt     = "data.frame"
-    ),
-    where = env
+#### Class RPhosFateParameters2 ####
+setClass(
+  Class = "RPhosFateParameters2",
+  slots = c(
+    ns_slp_min = "numeric",
+    ns_slp_max = "numeric",
+    ns_rhy_a   = "numeric",
+    ns_rhy_b   = "numeric",
+    ns_cha_rto = "numeric",
+    ns_man_rip = "numeric",
+    ns_man_cha = "numeric",
+    ns_dep_ovl = "numeric",
+    ns_dep_cha = "numeric",
+    ns_tfc_inl = "numeric",
+    nv_enr_rto = "numeric",
+    iv_fDo     = "integer",
+    nm_olc     = "matrix",
+    df_cdt     = "data.frame"
   )
-}
-setClassRPhosFateParameters(environment())
+)
 setMethod(
   f = "initialize",
-  signature = "RPhosFateParameters",
+  signature = "RPhosFateParameters2",
   definition = function(.Object, arguments) {
     # Min slope cap in %
     if (!is.null(arguments$ns_slp_min       )) {.Object@ns_slp_min <- arguments$ns_slp_min} else {.Object@ns_slp_min <- 0.001}
@@ -329,7 +327,7 @@ setClass(
     cv_dir     = "character",
     ls_ini     = "logical",
     is_MCi     = "integer",
-    parameters = "RPhosFateParameters",
+    parameters = "RPhosFateParameters2",
     topo       = "RPhosFateTopo",
     erosion    = "RPhosFateErosion",
     transport  = "RPhosFateTransport",
@@ -359,20 +357,19 @@ setMethod(
       dir.create("Result", showWarnings = FALSE)
     }
 
-    if (.Object@ls_ini && file.exists("parameters.rds")) {
-      .Object@parameters <- tryCatch(
-        readParameters(),
-        error = updateRPhosFateParameters
-      )
-    } else {
-      .Object@parameters <- new("RPhosFateParameters", arguments)
+    if (.Object@ls_ini && file.exists("parameters.yaml")) {
+      arguments <- readParameters(arguments)
+    } else if (.Object@ls_ini && file.exists("parameters.rds")) {
+      arguments <- parametersRDS2YAML()
     }
-    .Object@topo      <- new("RPhosFateTopo", .Object)
-    .Object@erosion   <- new("RPhosFateErosion", .Object)
-    .Object@transport <- new("RPhosFateTransport", .Object)
-    .Object@SS        <- new("RPhosFateSS", .Object)
-    .Object@PP        <- new("RPhosFatePP", .Object)
-    .Object@helper    <- new("RPhosFateHelper", .Object)
+
+    .Object@parameters <- new("RPhosFateParameters2", arguments)
+    .Object@topo       <- new("RPhosFateTopo", .Object)
+    .Object@erosion    <- new("RPhosFateErosion", .Object)
+    .Object@transport  <- new("RPhosFateTransport", .Object)
+    .Object@SS         <- new("RPhosFateSS", .Object)
+    .Object@PP         <- new("RPhosFatePP", .Object)
+    .Object@helper     <- new("RPhosFateHelper", .Object)
 
     return(.Object)
   }
