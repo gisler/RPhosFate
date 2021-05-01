@@ -5,7 +5,7 @@ writeParameters <- function(parameters) {
   parameters[["nv_enr_rto"]] <- as.list(parameters[["nv_enr_rto"]])
 
   write_yaml(
-    parameters,
+    c(list(RPhosFate = as.character(packageVersion("RPhosFate"))), parameters),,
     "parameters.yaml",
     indent.mapping.sequence = TRUE
   )
