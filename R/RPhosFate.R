@@ -308,8 +308,10 @@ setMethod(
     cs_dir_old <- setwd(file.path(cmt@cv_dir[1], "Result"))
     on.exit(setwd(cs_dir_old))
 
+    parameters <- cmt@parameters
+    parameters@nv_tfc_inl <- parameters@nv_tfc_inl["SS"]
     li_tpt <- transportCpp(
-      parameters = cmt@parameters,
+      parameters = parameters,
       helper     = cmt@helper,
       order      = cmt@helper@order,
       im_cha     = as.matrix(cmt@topo@rl_cha),
@@ -350,6 +352,7 @@ setMethod(
 
     parameters <- cmt@parameters
     parameters@ns_dep_ovl <- parameters@ns_dep_ovl / parameters@nv_enr_rto["PP"]
+    parameters@nv_tfc_inl <- parameters@nv_tfc_inl["PP"]
     li_tpt <- transportCpp(
       parameters = parameters,
       helper     = cmt@helper,
