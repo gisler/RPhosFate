@@ -150,7 +150,7 @@ List transportCpp(
 	double ns_cha_rto = parameters.slot("ns_cha_rto");
 	double ns_dep_ovl = parameters.slot("ns_dep_ovl");
 	double ns_dep_cha = parameters.slot("ns_dep_cha");
-	double ns_tfc_inl = parameters.slot("ns_tfc_inl");
+	double ns_tfc_inl = parameters.slot("nv_tfc_inl");
 	int is_res = helper.slot("is_res");
 	int is_rws = helper.slot("is_rws");
 	int is_cls = helper.slot("is_cls");

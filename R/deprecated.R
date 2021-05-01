@@ -23,6 +23,7 @@ parametersRDS2YAML <- function() {
   parameters <- readRDS("parameters.rds")
 
   arguments <- slots2list(parameters)
+  arguments[["nv_tfc_inl"]] <- c(SS = arguments[["ns_tfc_inl"]], PP = arguments[["ns_tfc_inl"]])
 
   parameters <- new("RPhosFateParameters2", arguments)
   writeParameters(parameters)
