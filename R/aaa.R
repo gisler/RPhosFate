@@ -20,7 +20,7 @@ setClass(
     ns_man_cha = "numeric",
     ns_dep_ovl = "numeric",
     ns_dep_cha = "numeric",
-    ns_tfc_inl = "numeric",
+    nv_tfc_inl = "numeric",
     nv_enr_rto = "numeric",
     iv_fDo     = "integer",
     nm_olc     = "matrix",
@@ -58,8 +58,8 @@ setMethod(
     # Channel deposition coefficient
     if (!is.null(arguments$ns_dep_cha       )) {.Object@ns_dep_cha <- arguments$ns_dep_cha} else {stop("\"ns_dep_cha\" must be supplied.")}
 
-    # Inlet transfer coefficient
-    if (!is.null(arguments$ns_tfc_inl       )) {.Object@ns_tfc_inl <- arguments$ns_tfc_inl} else {stop("\"ns_tfc_inl\" must be supplied.")}
+    # Inlet transfer coefficients
+    if (!is.null(names(arguments$nv_tfc_inl))) {.Object@nv_tfc_inl <- arguments$nv_tfc_inl} else {stop("\"nv_tfc_inl\" must be supplied as named vector.")}
 
     # Enrichment ratios
     if (!is.null(names(arguments$nv_enr_rto))) {.Object@nv_enr_rto <- arguments$nv_enr_rto} else {stop("\"nv_enr_rto\" must be supplied as named vector.")}
