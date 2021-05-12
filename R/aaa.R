@@ -1,9 +1,9 @@
 #' @import methods
 #' @import raster
 #' @importFrom Rcpp sourceCpp
-#' @importFrom stats median
+#' @importFrom stats median setNames
 #' @importFrom yaml read_yaml write_yaml
-#' @importFrom utils modifyList
+#' @importFrom utils modifyList packageVersion
 #' @useDynLib RPhosFate
 NULL
 
