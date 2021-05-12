@@ -3,5 +3,5 @@
 ^\.lintr$
 ^\.Rproj\.user$
 ^CONTRIBUTING\.md$
-^src/Rcpp_1\.0\.5\.tar\.gz$
-^src/RcppArmadillo_0\.9\.900\.1\.0\.tar\.gz$
+^src/Rcpp_1\.0\.1\.tar\.gz$
+^src/RcppArmadillo_0\.9\.300\.2\.0\.tar\.gz$
