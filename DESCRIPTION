@@ -1,7 +1,7 @@
 Package: RPhosFate
 Type: Package
 Title: Soil and Chemical Substance Emission and Transport Model
-Version: 0.7.1.9000
+Version: 0.7.1.9002
 Authors@R: person("Gerold", "Hepp", email = "ghepp@iwag.tuwien.ac.at", role = c("aut", "cre"))
 Description: An enhanced version of the PhosFate model implemented in R
     supporting suspended solids (SS) and particulate phosphorus (PP).
@@ -32,7 +32,7 @@ LinkingTo:
 Additional_repositories:
     https://gisler.github.io/drat,
     http://R-Forge.R-project.org
-RoxygenNote: 7.1.1
+RoxygenNote: 6.1.1
 Collate:
     'aaa.R'
     'RPhosFate.R'
