@@ -1,6 +1,5 @@
-#### Class RPhosFateParameters ####
 setClass(
-  Class = "RPhosFateParameters",
+  "RPhosFateParameters",
   slots = c(
     ns_slp_min = "numeric",
     ns_slp_max = "numeric",

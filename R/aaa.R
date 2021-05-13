@@ -9,7 +9,7 @@ NULL
 
 #### Class RPhosFateParameters2 ####
 setClass(
-  Class = "RPhosFateParameters2",
+  "RPhosFateParameters2",
   slots = c(
     ns_slp_min = "numeric",
     ns_slp_max = "numeric",
@@ -20,28 +20,28 @@ setClass(
     ns_man_cha = "numeric",
     ns_dep_ovl = "numeric",
     ns_dep_cha = "numeric",
-    nv_tfc_inl = "numeric",
     nv_enr_rto = "numeric",
+    nv_tfc_inl = "numeric",
     iv_fDo     = "integer",
     nm_olc     = "matrix",
     df_cdt     = "data.frame"
   )
 )
 setMethod(
-  f = "initialize",
-  signature = "RPhosFateParameters2",
-  definition = function(.Object, arguments) {
+  "initialize",
+  "RPhosFateParameters2",
+  function(.Object, arguments) {
     # Min slope cap in %
     if (!is.null(arguments$ns_slp_min       )) {.Object@ns_slp_min <- arguments$ns_slp_min} else {.Object@ns_slp_min <- 0.001}
 
     # Max slope cap in %
-    if (!is.null(arguments$ns_slp_max       )) {.Object@ns_slp_max <- arguments$ns_slp_max} else {.Object@ns_slp_max <- 999}
+    if (!is.null(arguments$ns_slp_max       )) {.Object@ns_slp_max <- arguments$ns_slp_max} else {.Object@ns_slp_max <- 999.0}
 
     # Parameter related to the discharge recurrence interval (WetSpa, T = 6)
     if (!is.null(arguments$ns_rhy_a         )) {.Object@ns_rhy_a   <- arguments$ns_rhy_a  } else {.Object@ns_rhy_a   <- 0.09}
 
     # Parameter related to the discharge recurrence interval (WetSpa, T = 6)
-    if (!is.null(arguments$ns_rhy_b         )) {.Object@ns_rhy_b   <- arguments$ns_rhy_b  } else {.Object@ns_rhy_b   <- 0.5}
+    if (!is.null(arguments$ns_rhy_b         )) {.Object@ns_rhy_b   <- arguments$ns_rhy_b  } else {.Object@ns_rhy_b   <- 0.50}
 
     # Ratio of channel width to cell length determining the riparian zone
     if (!is.null(arguments$ns_cha_rto       )) {.Object@ns_cha_rto <- arguments$ns_cha_rto} else {.Object@ns_cha_rto <- 0.5}
@@ -58,14 +58,14 @@ setMethod(
     # Channel deposition coefficient
     if (!is.null(arguments$ns_dep_cha       )) {.Object@ns_dep_cha <- arguments$ns_dep_cha} else {stop("\"ns_dep_cha\" must be supplied.")}
 
-    # Inlet transfer coefficients
-    if (!is.null(names(arguments$nv_tfc_inl))) {.Object@nv_tfc_inl <- arguments$nv_tfc_inl} else {stop("\"nv_tfc_inl\" must be supplied as named vector.")}
-
     # Enrichment ratios
     if (!is.null(names(arguments$nv_enr_rto))) {.Object@nv_enr_rto <- arguments$nv_enr_rto} else {stop("\"nv_enr_rto\" must be supplied as named vector.")}
 
+    # Inlet transfer coefficients
+    if (!is.null(names(arguments$nv_tfc_inl))) {.Object@nv_tfc_inl <- arguments$nv_tfc_inl} else {stop("\"nv_tfc_inl\" must be supplied as named vector.")}
+
     # Outflow direction vector (ArcGIS coded)
-    if (!is.null(arguments$iv_fDo           )) {.Object@iv_fDo     <- arguments$iv_fDo    } else {.Object@iv_fDo     <- as.integer(c(32, 16, 8, 64, 0, 4, 128, 1, 2))}
+    if (!is.null(arguments$iv_fDo           )) {.Object@iv_fDo     <- arguments$iv_fDo    } else {.Object@iv_fDo     <- c(32L, 16L, 8L, 64L, 0L, 4L, 128L, 1L, 2L)}
 
     # Catchment outlet coordinates
     if (!is.null(arguments$nm_olc           )) {.Object@nm_olc     <- arguments$nm_olc    } else {.Object@nm_olc     <- matrix()}
@@ -73,13 +73,13 @@ setMethod(
     # Calibration data
     if (!is.null(arguments$df_cdt           )) {.Object@df_cdt     <- arguments$df_cdt    } else {.Object@df_cdt     <- data.frame()}
 
-    return(.Object)
+    .Object
   }
 )
 
 #### Class RPhosFateTopo ####
 setClass(
-  Class = "RPhosFateTopo",
+  "RPhosFateTopo",
   slots = c(
     rl_acc     = "RasterLayer", # Flow accumulation for transport calculation order
     rl_acc_wtd = "RasterLayer", # Weighted flow accumulation for erosion and transport
@@ -98,10 +98,10 @@ setClass(
   )
 )
 setMethod(
-  f = "initialize",
-  signature = "RPhosFateTopo",
-  definition = function(.Object, cmt) {
-    cs_dir_old <- setwd(cmt@cv_dir[1])
+  "initialize",
+  "RPhosFateTopo",
+  function(.Object, cmt) {
+    cs_dir_old <- setwd(cmt@cv_dir[1L])
     on.exit(setwd(cs_dir_old))
 
     setwd("Input")
@@ -122,13 +122,13 @@ setMethod(
     .Object@rl_rip     <- readLayer(cmt, "rip"    )
     .Object@rl_slp_cap <- readLayer(cmt, "slp_cap")
 
-    return(.Object)
+    .Object
   }
 )
 
 #### Class RPhosFateErosion ####
 setClass(
-  Class = "RPhosFateErosion",
+  "RPhosFateErosion",
   slots = c(
     rl_RFa = "RasterLayer", # R-factor
     rl_KFa = "RasterLayer", # K-factor
@@ -139,10 +139,10 @@ setClass(
   )
 )
 setMethod(
-  f = "initialize",
-  signature = "RPhosFateErosion",
-  definition = function(.Object, cmt) {
-    cs_dir_old <- setwd(cmt@cv_dir[1])
+  "initialize",
+  "RPhosFateErosion",
+  function(.Object, cmt) {
+    cs_dir_old <- setwd(cmt@cv_dir[1L])
     on.exit(setwd(cs_dir_old))
 
     setwd("Input")
@@ -157,23 +157,23 @@ setMethod(
     setwd("../Result")
     .Object@rl_ero <- readLayer(cmt, "ero")
 
-    return(.Object)
+    .Object
   }
 )
 
 #### Class RPhosFateTransport ####
 setClass(
-  Class = "RPhosFateTransport",
+  "RPhosFateTransport",
   slots = c(
     rl_man = "RasterLayer", # Manning n
     rl_rhy = "RasterLayer"  # Hydraulic radius in m
   )
 )
 setMethod(
-  f = "initialize",
-  signature = "RPhosFateTransport",
-  definition = function(.Object, cmt) {
-    cs_dir_old <- setwd(cmt@cv_dir[1])
+  "initialize",
+  "RPhosFateTransport",
+  function(.Object, cmt) {
+    cs_dir_old <- setwd(cmt@cv_dir[1L])
     on.exit(setwd(cs_dir_old))
 
     setwd("Input")
@@ -182,81 +182,75 @@ setMethod(
     setwd("../Intermediate")
     .Object@rl_rhy <- readLayer(cmt, "rhy")
 
-    return(.Object)
+    .Object
   }
 )
 
+#### Class RPhosFateSubstanceBare ####
+setClass(
+  "RPhosFateSubstanceBare",
+  slots = c(
+    rl_xxr     = "RasterLayer", # Substance retention     in kg/cell/yr
+    rl_xxt     = "RasterLayer", # Substance transport     in kg/cell/yr
+    rl_xxt_inp = "RasterLayer", # Substance input load    in kg/cell/yr
+    rl_xxt_out = "RasterLayer", # Substance outlet load   in kg/cell/yr
+    rl_xxt_cld = "RasterLayer", # Substance cell load     in kg/cell/yr
+    rl_xxt_ctf = "RasterLayer"  # Substance cell transfer in kg/cell/yr
+  ),
+  contains = "VIRTUAL"
+)
+#### Class RPhosFateSubstance ####
+setClass(
+  "RPhosFateSubstance",
+  slots = c(
+    rl_xxc = "RasterLayer", # Substance content of topsoil in mg P/kg
+    rl_xxe = "RasterLayer"  # Substance emission      in kg P/cell/yr
+  ),
+  contains = c("VIRTUAL", "RPhosFateSubstanceBare")
+)
+
+
 #### Class RPhosFateSS ####
 setClass(
-  Class = "RPhosFateSS",
-  slots = c(
-    rl_ssr     = "RasterLayer", # SS retention     in kg/cell/yr
-    rl_sst     = "RasterLayer", # SS transport     in kg/cell/yr
-    rl_sst_inp = "RasterLayer", # SS input load    in kg/cell/yr
-    rl_sst_out = "RasterLayer", # SS outlet load   in kg/cell/yr
-    rl_sst_cld = "RasterLayer", # SS cell load     in kg/cell/yr
-    rl_sst_ctf = "RasterLayer"  # SS cell transfer in kg/cell/yr
-  )
+  "RPhosFateSS",
+  contains = "RPhosFateSubstanceBare"
 )
 setMethod(
-  f = "initialize",
-  signature = "RPhosFateSS",
-  definition = function(.Object, cmt) {
-    cs_dir_old <- setwd(cmt@cv_dir[1])
-    on.exit(setwd(cs_dir_old))
+  "initialize",
+  "RPhosFateSS",
+  function(.Object, cmt) {
+    slots <- slotNames(.Object)
+    layers <- file.path(
+      rep("Result", length(slots)),
+      sub("^rl_xx", "ss", slots)
+    )
 
-    setwd("Result")
-    .Object@rl_ssr     <- readLayer(cmt, "ssr"    )
-    .Object@rl_sst     <- readLayer(cmt, "sst"    )
-    .Object@rl_sst_inp <- readLayer(cmt, "sst_inp")
-    .Object@rl_sst_out <- readLayer(cmt, "sst_out")
-    .Object@rl_sst_cld <- readLayer(cmt, "sst_cld")
-    .Object@rl_sst_ctf <- readLayer(cmt, "sst_ctf")
-
-    return(.Object)
+    populateLayerSlots(cmt, .Object, slots, layers)
   }
 )
 
 #### Class RPhosFatePP ####
 setClass(
-  Class = "RPhosFatePP",
-  slots = c(
-    rl_ppc     = "RasterLayer", # PP content of topsoil in mg P/kg
-    rl_ppe     = "RasterLayer", # PP emission      in kg P/cell/yr
-    rl_ppr     = "RasterLayer", # PP retention     in kg P/cell/yr
-    rl_ppt     = "RasterLayer", # PP transport     in kg P/cell/yr
-    rl_ppt_inp = "RasterLayer", # PP input load    in kg P/cell/yr
-    rl_ppt_out = "RasterLayer", # PP outlet load   in kg P/cell/yr
-    rl_ppt_cld = "RasterLayer", # PP cell load     in kg P/cell/yr
-    rl_ppt_ctf = "RasterLayer"  # PP cell transfer in kg P/cell/yr
-  )
+  "RPhosFatePP",
+  contains = "RPhosFateSubstance"
 )
 setMethod(
-  f = "initialize",
-  signature = "RPhosFatePP",
-  definition = function(.Object, cmt) {
-    cs_dir_old <- setwd(cmt@cv_dir[1])
-    on.exit(setwd(cs_dir_old))
+  "initialize",
+  "RPhosFatePP",
+  function(.Object, cmt) {
+    slots <- slotNames(.Object)
+    layers <- file.path(
+      c("Input", rep("Result", length(slots) - 1L)),
+      sub("^rl_xx", "pp", slots)
+    )
 
-    setwd("Input")
-    .Object@rl_ppc     <- readLayer(cmt, "ppc")
-
-    setwd("../Result")
-    .Object@rl_ppe     <- readLayer(cmt, "ppe"    )
-    .Object@rl_ppr     <- readLayer(cmt, "ppr"    )
-    .Object@rl_ppt     <- readLayer(cmt, "ppt"    )
-    .Object@rl_ppt_inp <- readLayer(cmt, "ppt_inp")
-    .Object@rl_ppt_out <- readLayer(cmt, "ppt_out")
-    .Object@rl_ppt_cld <- readLayer(cmt, "ppt_cld")
-    .Object@rl_ppt_ctf <- readLayer(cmt, "ppt_ctf")
-
-    return(.Object)
+    populateLayerSlots(cmt, .Object, slots, layers)
   }
 )
 
 #### Class RPhosFateOrder ####
 setClass(
-  Class = "RPhosFateOrder",
+  "RPhosFateOrder",
   slots = c(
     iv_ord_row = "integer",
     iv_ord_col = "integer",
@@ -267,7 +261,7 @@ setClass(
 
 #### Class RPhosFateHelper ####
 setClass(
-  Class = "RPhosFateHelper",
+  "RPhosFateHelper",
   slots = c(
     ex_cmt     = "Extent",
     is_res     = "integer",
@@ -281,10 +275,10 @@ setClass(
   )
 )
 setMethod(
-  f = "initialize",
-  signature = "RPhosFateHelper",
-  definition = function(.Object, cmt) {
-    cs_dir_old <- setwd(cmt@cv_dir[1])
+  "initialize",
+  "RPhosFateHelper",
+  function(.Object, cmt) {
+    cs_dir_old <- setwd(cmt@cv_dir[1L])
     on.exit(setwd(cs_dir_old))
 
     # Extent of catchment area
@@ -303,26 +297,26 @@ setMethod(
     .Object@is_cls <- ncol(cmt@topo@rl_acc_wtd)
 
     # Diagonal outflow direction vector
-    .Object@iv_fDo_dgl <- cmt@parameters@iv_fDo[c(1, 3, 7, 9)]
+    .Object@iv_fDo_dgl <- cmt@parameters@iv_fDo[c(1L, 3L, 7L, 9L)]
 
     # Outflow direction matrix
-    .Object@im_fDo <- matrix(cmt@parameters@iv_fDo, nrow = 3, ncol = 3)
+    .Object@im_fDo <- matrix(cmt@parameters@iv_fDo, 3L)
 
     # Inflow direction matrix
-    .Object@im_fDi <- matrix(rev(cmt@parameters@iv_fDo), nrow = 3, ncol = 3)
+    .Object@im_fDi <- matrix(rev(cmt@parameters@iv_fDo), 3L)
 
     # Transport calculation order
     if (cmt@ls_ini && file.exists("order.rds")) {
       .Object@order <- readRDS("order.rds")
     }
 
-    return(.Object)
+    .Object
   }
 )
 
 #### Class RPhosFate ####
 setClass(
-  Class = "RPhosFate",
+  "RPhosFate",
   slots = c(
     cv_dir     = "character",
     ls_ini     = "logical",
@@ -337,9 +331,9 @@ setClass(
   )
 )
 setMethod(
-  f = "initialize",
-  signature = "RPhosFate",
-  definition = function(.Object, arguments) {
+  "initialize",
+  "RPhosFate",
+  function(.Object, arguments) {
     # Project directory
     if (!is.null(arguments$cv_dir)) .Object@cv_dir <- arguments$cv_dir else stop("\"cv_dir\" must be supplied.")
 
@@ -349,7 +343,7 @@ setMethod(
     # Monte Carlo iteration
     if (!is.null(arguments$is_MCi)) .Object@is_MCi <- arguments$is_MCi
 
-    cs_dir_old <- setwd(.Object@cv_dir[1])
+    cs_dir_old <- setwd(.Object@cv_dir[1L])
     on.exit(setwd(cs_dir_old))
 
     if (!dir.exists("Intermediate") || !dir.exists("Result")) {
@@ -371,33 +365,6 @@ setMethod(
     .Object@PP         <- new("RPhosFatePP", .Object)
     .Object@helper     <- new("RPhosFateHelper", .Object)
 
-    return(.Object)
-  }
-)
-
-#### readLayer ####
-setGeneric(
-  name = "readLayer",
-  def = function(cmt, layer, isRequiredInputLayer = FALSE, isMCinputLayer = FALSE) {standardGeneric("readLayer")}
-)
-setMethod(
-  f = "readLayer",
-  signature = c("RPhosFate", "character"),
-  definition = function(cmt, layer, isRequiredInputLayer, isMCinputLayer) {
-    if (length(cmt@is_MCi) == 1L && isMCinputLayer) {
-      cs_dir_old <- setwd(cmt@cv_dir[2])
-      on.exit(setwd(cs_dir_old))
-    }
-
-    filename <- paste0(layer, cmt@is_MCi, ".img")
-    if (isRequiredInputLayer) {
-      rasterLayer <- raster(filename)
-    } else if (file.exists(filename)) {
-      rasterLayer <- raster(filename)
-    } else {
-      rasterLayer <- new("RasterLayer")
-    }
-
-    return(rasterLayer)
+    .Object
   }
 )
