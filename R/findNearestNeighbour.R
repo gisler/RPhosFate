@@ -6,18 +6,18 @@ findNearestNeighbour <- function(X, Y, Extent) {
 
   nn <- spatstat::nncross(pppX, pppY, what = c("dist", "which"))
   nn <- data.frame(
-    X.x = X[, 1],
-    X.y = X[, 2],
-    X[, 3, drop = FALSE],
+    X.x = X[, 1L],
+    X.y = X[, 2L],
+    X[, 3L, drop = FALSE],
     nn
   )
   dfY <- data.frame(
-    Y.x = Y[, 1],
-    Y.y = Y[, 2],
-    Y[, 3, drop = FALSE],
+    Y.x = Y[, 1L],
+    Y.y = Y[, 2L],
+    Y[, 3L, drop = FALSE],
     index = seq_len(nrow(Y))
   )
   nn <- merge(nn, dfY, by.x = "which", by.y = "index", sort = FALSE)
 
-  return(nn[2:8])
+  nn[2:8]
 }

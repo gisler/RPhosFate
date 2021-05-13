@@ -133,6 +133,8 @@ void replace_submatrix(NumericMatrix nm_values, NumericMatrix nm_rpl, int is_row
 // [[Rcpp::export]]
 List transportCpp(
   S4 parameters,
+  double ns_dep_ovl,
+  double ns_tfc_inl,
 	S4 helper,
 	S4 order,
 	IntegerMatrix im_cha,
@@ -145,12 +147,10 @@ List transportCpp(
 	NumericMatrix nm_slp
 ) {
 
+  double ns_cha_rto = parameters.slot("ns_cha_rto");
 	double ns_man_rip = parameters.slot("ns_man_rip");
 	double ns_man_cha = parameters.slot("ns_man_cha");
-	double ns_cha_rto = parameters.slot("ns_cha_rto");
-	double ns_dep_ovl = parameters.slot("ns_dep_ovl");
 	double ns_dep_cha = parameters.slot("ns_dep_cha");
-	double ns_tfc_inl = parameters.slot("nv_tfc_inl");
 	int is_res = helper.slot("is_res");
 	int is_rws = helper.slot("is_rws");
 	int is_cls = helper.slot("is_cls");
