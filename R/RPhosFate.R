@@ -179,7 +179,7 @@ setMethod(
         im_sth = as.matrix(cmt@topo@rl_cha),
         im_fDo = cmt@helper@im_fDo
       ),
-      template = cmt@topo@rl_dir
+      template = cmt@topo@rl_acc_wtd
     )
 
     # Inlet cells
@@ -189,7 +189,7 @@ setMethod(
         im_sth = as.matrix(cmt@topo@rl_rds),
         im_fDo = cmt@helper@im_fDo
       ),
-      template = cmt@topo@rl_dir
+      template = cmt@topo@rl_acc_wtd
     )
 
     # No inlet cells at channel cells
@@ -334,18 +334,18 @@ setMethod(
     )
 
     if (length(cmt@is_MCi) == 0L) {
-      writeRaster(raster(li_tpt$nm_xxr    , template = cmt@topo@rl_dir), filenames["xxr"    ], datatype = "FLT4S", options = "COMPRESSED=YES", overwrite = TRUE)
-      writeRaster(raster(li_tpt$nm_xxt_inp, template = cmt@topo@rl_dir), filenames["xxt_inp"], datatype = "FLT4S", options = "COMPRESSED=YES", overwrite = TRUE)
-      writeRaster(raster(li_tpt$nm_xxt_out, template = cmt@topo@rl_dir), filenames["xxt_out"], datatype = "FLT4S", options = "COMPRESSED=YES", overwrite = TRUE)
-      writeRaster(raster(li_tpt$nm_xxt_cld, template = cmt@topo@rl_dir), filenames["xxt_cld"], datatype = "FLT4S", options = "COMPRESSED=YES", overwrite = TRUE)
-      writeRaster(raster(li_tpt$nm_xxt_ctf, template = cmt@topo@rl_dir), filenames["xxt_ctf"], datatype = "FLT4S", options = "COMPRESSED=YES", overwrite = TRUE)
+      writeRaster(raster(li_tpt$nm_xxr    , template = cmt@topo@rl_acc_wtd), filenames["xxr"    ], datatype = "FLT4S", options = "COMPRESSED=YES", overwrite = TRUE)
+      writeRaster(raster(li_tpt$nm_xxt_inp, template = cmt@topo@rl_acc_wtd), filenames["xxt_inp"], datatype = "FLT4S", options = "COMPRESSED=YES", overwrite = TRUE)
+      writeRaster(raster(li_tpt$nm_xxt_out, template = cmt@topo@rl_acc_wtd), filenames["xxt_out"], datatype = "FLT4S", options = "COMPRESSED=YES", overwrite = TRUE)
+      writeRaster(raster(li_tpt$nm_xxt_cld, template = cmt@topo@rl_acc_wtd), filenames["xxt_cld"], datatype = "FLT4S", options = "COMPRESSED=YES", overwrite = TRUE)
+      writeRaster(raster(li_tpt$nm_xxt_ctf, template = cmt@topo@rl_acc_wtd), filenames["xxt_ctf"], datatype = "FLT4S", options = "COMPRESSED=YES", overwrite = TRUE)
       slot(cmt, substance)@rl_xxr     <- raster(filenames["xxr"    ])
       slot(cmt, substance)@rl_xxt_inp <- raster(filenames["xxt_inp"])
       slot(cmt, substance)@rl_xxt_out <- raster(filenames["xxt_out"])
       slot(cmt, substance)@rl_xxt_cld <- raster(filenames["xxt_cld"])
       slot(cmt, substance)@rl_xxt_ctf <- raster(filenames["xxt_ctf"])
     }
-    writeRaster(raster(li_tpt$nm_xxt, template = cmt@topo@rl_dir), filenames["xxt"], datatype = "FLT4S", options = "COMPRESSED=YES", overwrite = TRUE)
+    writeRaster(raster(li_tpt$nm_xxt, template = cmt@topo@rl_acc_wtd), filenames["xxt"], datatype = "FLT4S", options = "COMPRESSED=YES", overwrite = TRUE)
     slot(cmt, substance)@rl_xxt <- raster(filenames["xxt"])
 
     cmt
