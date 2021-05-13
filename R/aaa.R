@@ -190,12 +190,12 @@ setMethod(
 setClass(
   "RPhosFateSubstanceBare",
   slots = c(
-    rl_xxr     = "RasterLayer", # Substance retention     in kg/cell/yr
-    rl_xxt     = "RasterLayer", # Substance transport     in kg/cell/yr
-    rl_xxt_inp = "RasterLayer", # Substance input load    in kg/cell/yr
-    rl_xxt_out = "RasterLayer", # Substance outlet load   in kg/cell/yr
-    rl_xxt_cld = "RasterLayer", # Substance cell load     in kg/cell/yr
-    rl_xxt_ctf = "RasterLayer"  # Substance cell transfer in kg/cell/yr
+    rl_xxr     = "RasterLayer", # Substance retention     in t (SS) or kg/cell/yr
+    rl_xxt     = "RasterLayer", # Substance transport     in t (SS) or kg/cell/yr
+    rl_xxt_inp = "RasterLayer", # Substance input load    in t (SS) or kg/cell/yr
+    rl_xxt_out = "RasterLayer", # Substance outlet load   in t (SS) or kg/cell/yr
+    rl_xxt_cld = "RasterLayer", # Substance cell load     in t (SS) or kg/cell/yr
+    rl_xxt_ctf = "RasterLayer"  # Substance cell transfer in t (SS) or kg/cell/yr
   ),
   contains = "VIRTUAL"
 )
@@ -203,8 +203,8 @@ setClass(
 setClass(
   "RPhosFateSubstance",
   slots = c(
-    rl_xxc = "RasterLayer", # Substance content of topsoil in mg P/kg
-    rl_xxe = "RasterLayer"  # Substance emission      in kg P/cell/yr
+    rl_xxc = "RasterLayer", # Substance content of topsoil in mg/kg
+    rl_xxe = "RasterLayer"  # Substance emission      in kg/cell/yr
   ),
   contains = c("VIRTUAL", "RPhosFateSubstanceBare")
 )
