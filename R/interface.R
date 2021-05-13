@@ -5,70 +5,75 @@ NULL
 #' @export
 RPhosFate <- function(...) {
   arguments <- list(...)
-  return(new("RPhosFate", arguments))
+  new("RPhosFate", arguments)
 }
 #' @export
 catchment <- function(...) {
   arguments <- list(...)
-  return(new("RPhosFate", arguments))
+  new("RPhosFate", arguments)
 }
 
 #### firstRun ####
 setGeneric(
-  name = "firstRun",
-  def = function(cmt) {standardGeneric("firstRun")}
+  "firstRun",
+  function(cmt, substance = "PP", ...) standardGeneric("firstRun")
 )
 #' @export
 setMethod(
-  f = "firstRun",
-  signature = "RPhosFate",
-  definition = function(cmt) {
+  "firstRun",
+  "RPhosFate",
+  function(cmt, substance) {
     cmt <- erosionPrerequisites(cmt)
     cmt <- erosion(cmt)
-    cmt <- emission(cmt, cmt@PP)
+    if (substance != "SS") {
+      cmt <- emission(cmt, substance)
+    }
     cmt <- transportPrerequisites(cmt)
     cmt <- transportCalcOrder(cmt)
-    cmt <- transport(cmt, cmt@PP)
+    cmt <- transport(cmt, substance)
 
-    return(cmt)
+    cmt
   }
 )
 
 #### subsequentRun ####
 setGeneric(
-  name = "subsequentRun",
-  def = function(cmt) {standardGeneric("subsequentRun")}
+  "subsequentRun",
+  function(cmt, substance = "PP", ...) standardGeneric("subsequentRun")
 )
 #' @export
 setMethod(
-  f = "subsequentRun",
-  signature = "RPhosFate",
-  definition = function(cmt) {
+  "subsequentRun",
+  "RPhosFate",
+  function(cmt, substance) {
     if (length(cmt@is_MCi) == 1L) {
       cmt <- erosion(cmt)
-      cmt <- emission(cmt, cmt@PP)
+
+      if (substance != "SS") {
+        cmt <- emission(cmt, substance)
+      }
     }
 
     if (length(cmt@helper@order@iv_ord_row) == 0L) {
       cmt <- transportCalcOrder(cmt)
     }
 
-    cmt <- transport(cmt, cmt@PP)
+    cmt <- transport(cmt, substance)
 
-    return(cmt)
+    cmt
   }
 )
 
 #### snapGauges ####
 setGeneric(
-  name = "snapGauges",
-  def = function(cmt) {standardGeneric("snapGauges")}
+  "snapGauges",
+  function(cmt, ...) standardGeneric("snapGauges")
 )
 #' @export
 setMethod(
-  f = "snapGauges",
-  signature = "RPhosFate",
-  definition = function(cmt) {
+  "snapGauges",
+  "RPhosFate",
+  function(cmt) {
     df_ggs <- findNearestNeighbour(
       data.frame(
         x  = cmt@parameters@df_cdt$x,
@@ -82,29 +87,38 @@ setMethod(
     cmt@parameters@df_cdt$x <- df_ggs$Y.x
     cmt@parameters@df_cdt$y <- df_ggs$Y.y
 
-    return(cmt)
+    cmt
   }
 )
 
 #### calibrationQuality ####
 setGeneric(
-  name = "calibrationQuality",
-  def = function(cmt, col) {standardGeneric("calibrationQuality")}
+  "calibrationQuality",
+  function(cmt, substance = "PP", ...) standardGeneric("calibrationQuality")
 )
 #' @export
 setMethod(
-  f = "calibrationQuality",
-  signature = c("RPhosFate"),
-  definition = function(cmt, col) {
+  "calibrationQuality",
+  "RPhosFate",
+  function(cmt, substance, col) {
     if (!requireNamespace("hydroGOF", quietly = TRUE)) {
-      stop("Package \"hydroGOF\" must be installed for this functionality.", call. = FALSE)
+      stop(
+        "Package \"hydroGOF\" must be installed for this functionality.",
+        call. = FALSE
+      )
     }
 
-    nv_mld <- extract(cmt@PP@rl_ppt, cbind(cmt@parameters@df_cdt$x, cmt@parameters@df_cdt$y)) / 1000
+    nv_mld <- extract(
+      slot(cmt, substance)@rl_xxt,
+      cbind(cmt@parameters@df_cdt$x, cmt@parameters@df_cdt$y)
+    )
+    if (substance != "SS") {
+      nv_mld <- nv_mld / 1000
+    }
     nv_old <- cmt@parameters@df_cdt[[col]]
     nv_rae <- abs(nv_old - nv_mld) / abs(nv_old - mean(nv_old, na.rm = TRUE))
 
-    if (length(nv_old) > 1) {
+    if (length(nv_old) > 1L) {
       cat("NSE:   ", hydroGOF::NSE.default(  nv_mld, nv_old), "\n", sep = "")
       cat("mNSE:  ", hydroGOF::mNSE.default( nv_mld, nv_old), "\n", sep = "")
       cat("RSR:   ", hydroGOF::rsr.default(  nv_mld, nv_old), "\n", sep = "")
@@ -115,7 +129,8 @@ setMethod(
       cat("MdRAE: ", median(nv_rae, na.rm = TRUE),            "\n", sep = "")
       cat(
         "\nIn-channel retention: ",
-        1 - (extract(cmt@PP@rl_ppt, cmt@parameters@nm_olc) / cellStats(cmt@PP@rl_ppt_inp, sum)),
+        1 - (extract(slot(cmt, substance)@rl_xxt, cmt@parameters@nm_olc) /
+          cellStats(slot(cmt, substance)@rl_xxt_inp, sum)),
         "\n",
         sep = ""
       )
@@ -123,28 +138,28 @@ setMethod(
 
     plot(
       nv_old, nv_mld,
-      pch = 16,
+      pch = 16L,
       xlim = c(0, max(nv_old, na.rm = TRUE)),
       ylim = c(0, max(nv_mld, na.rm = TRUE))
     )
     graphics::clip(0, max(nv_old, na.rm = TRUE), 0, max(nv_mld, na.rm = TRUE))
-    graphics::abline(0, 1.3, lty = 2)
-    graphics::abline(0, 1)
-    graphics::abline(0, 0.7, lty = 2)
+    graphics::abline(0, 1.3, lty = 2L)
+    graphics::abline(0, 1.0)
+    graphics::abline(0, 0.7, lty = 2L)
   }
 )
 
 #### saveState ####
 setGeneric(
-  name = "saveState",
-  def = function(cmt) {standardGeneric("saveState")}
+  "saveState",
+  function(cmt, ...) standardGeneric("saveState")
 )
 #' @export
 setMethod(
-  f = "saveState",
-  signature = "RPhosFate",
-  definition = function(cmt) {
-    cs_dir_old <- setwd(cmt@cv_dir[1])
+  "saveState",
+  "RPhosFate",
+  function(cmt) {
+    cs_dir_old <- setwd(cmt@cv_dir[1L])
     on.exit(setwd(cs_dir_old))
 
     writeParameters(cmt@parameters)
