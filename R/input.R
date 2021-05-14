@@ -31,7 +31,7 @@ DEMrelatedInput <- function(
     )
   }
 
-  cs_dir_old <- setwd(cv_dir[1])
+  cs_dir_old <- setwd(cv_dir[1L])
   on.exit(setwd(cs_dir_old))
 
   dir.create("Input", showWarnings = FALSE)
@@ -67,7 +67,7 @@ DEMrelatedInput <- function(
       directions = 8,
       pairs = FALSE,
       include = TRUE
-    )] <- 1
+    )] <- 1L
 
     rl_dem_bnt <- overlay(
       x = rl_dem_bnt,
@@ -151,7 +151,7 @@ DEMrelatedInput <- function(
   )
 
   rl_cha <- raster("cha.tif")
-  rl_cha[!is.na(rl_cha)] <- 1
+  rl_cha[!is.na(rl_cha)] <- 1L
   writeRaster(
     rl_cha,
     filename = "cha.tif",
@@ -165,7 +165,7 @@ DEMrelatedInput <- function(
   if (!is.null(cs_rds)) {
     rl_rds <- raster(cs_rds)
     rl_rds <- adjustExtent(rl_rds, rl_wsh)
-    rl_rds[!rl_rds %in% c(0, 1)] <- NA
+    rl_rds[!rl_rds %in% c(0L, 1L)] <- NA_integer_
     rl_rds <- mask(
       rl_rds,
       rl_wsh,
@@ -176,7 +176,7 @@ DEMrelatedInput <- function(
     )
   } else {
     rl_rds <- rl_wsh
-    rl_rds[] <- NA
+    rl_rds[] <- NA_integer_
     writeRaster(
       rl_rds,
       filename = "rds.tif",
@@ -191,8 +191,8 @@ DEMrelatedInput <- function(
   rl_dir_tau <- subs(
     rl_dir,
     data.frame(
-      by = c(1, 2, 4, 8, 16, 32, 64, 128),
-      which = c(1, 8, 7, 6, 5, 4, 3, 2)
+      by    = c(1L, 2L, 4L, 8L, 16L, 32L, 64L, 128L),
+      which = c(1L, 8L, 7L, 6L,  5L,  4L,  3L,   2L)
     ),
     filename = "dir_tau.tif",
     datatype = "INT1U",
@@ -239,7 +239,7 @@ DEMrelatedInput <- function(
       x = rl_dir_tau,
       y = raster("cha.tif"),
       z = rl_rds,
-      fun = function(x, y, z) {ifelse(is.na(y), ifelse(is.na(z), x, NA), x)},
+      fun = function(x, y, z) {ifelse(is.na(y), ifelse(is.na(z), x, NA_integer_), x)},
       filename = "dir_tau_rds.tif",
       datatype = "INT1U",
       options = "COMPRESSED=YES",
@@ -301,9 +301,8 @@ DEMrelatedInput <- function(
     im_dir = as.matrix(raster("dir_ovr.tif")),
     nm_dem = as.matrix(rl_dem_ovr),
     im_fDo = matrix(
-      as.integer(c(32, 16, 8, 64, 0, 4, 128, 1, 2)),
-      nrow = 3,
-      ncol = 3
+      c(32L, 16L, 8L, 64L, 0L, 4L, 128L, 1L, 2L),
+      3L
     ),
     ns_fpl = xres(rl_dir),
     is_ths = as.integer(is_ths)

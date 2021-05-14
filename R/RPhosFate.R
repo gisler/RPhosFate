@@ -29,7 +29,7 @@ setMethod(
 
     # Overland weighted flow accumulation
     rl_acc_wtd_ovl <- cmt@topo@rl_acc_wtd
-    rl_acc_wtd_ovl[!is.na(cmt@topo@rl_cha)] <- NA
+    rl_acc_wtd_ovl[!is.na(cmt@topo@rl_cha)] <- NA_real_
     rl_acc_wtd_ovl[rl_acc_wtd_ovl < 1] <- 1
 
     # Ratio of rill to interrill erosion
@@ -193,13 +193,13 @@ setMethod(
     )
 
     # No inlet cells at channel cells
-    cmt@topo@rl_inl[!is.na(cmt@topo@rl_cha)] <- NA
+    cmt@topo@rl_inl[!is.na(cmt@topo@rl_cha)] <- NA_integer_
 
     # No riparian zone cells at road cells
-    cmt@topo@rl_rip[!is.na(cmt@topo@rl_rds)] <- NA
+    cmt@topo@rl_rip[!is.na(cmt@topo@rl_rds)] <- NA_integer_
 
     # No inlet cells at riparian zone cells
-    cmt@topo@rl_inl[!is.na(cmt@topo@rl_rip)] <- NA
+    cmt@topo@rl_inl[!is.na(cmt@topo@rl_rip)] <- NA_integer_
 
     # Nearest channel cells for inlet cells
     df_out <- findNearestNeighbour(
@@ -244,11 +244,11 @@ setMethod(
   function(cmt) {
     # Overland flow accumulation
     rl_acc_ovl <- cmt@topo@rl_acc
-    rl_acc_ovl[!is.na(cmt@topo@rl_cha)] <- NA
+    rl_acc_ovl[!is.na(cmt@topo@rl_cha)] <- NA_integer_
 
     # Channel flow accumulation
     rl_acc_cha <- cmt@topo@rl_acc
-    rl_acc_cha[is.na(cmt@topo@rl_cha)] <- NA
+    rl_acc_cha[ is.na(cmt@topo@rl_cha)] <- NA_integer_
 
     # Transport calculation order as column-major index
     im_acc_ovl <- as.matrix(rl_acc_ovl)
