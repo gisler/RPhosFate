@@ -85,16 +85,16 @@ setClass(
     rl_acc_wtd = "RasterLayer", # Weighted flow accumulation for erosion and transport
     rl_cha     = "RasterLayer", # Channel cells
     rl_clc     = "RasterLayer", # Clay content of topsoil in %
-    rl_dem     = "RasterLayer", # DEM
+    rl_dem     = "RasterLayer", # Digital elevation model
     rl_dir     = "RasterLayer", # Flow direction
-    rl_fid     = "RasterLayer", # Field plot IDs
-    rl_inl     = "RasterLayer", # Inlet cells
+    rl_fid     = "RasterLayer", # Field IDs
+    rl_inl     = "RasterLayer", # Inlet cells at roads
     rl_lue     = "RasterLayer", # Land use
     rl_rds     = "RasterLayer", # Road cells
-    rl_rip     = "RasterLayer", # Riparian zone cells
+    rl_rip     = "RasterLayer", # Riparian zone cells at channels
     rl_slp     = "RasterLayer", # Slope in %
     rl_slp_cap = "RasterLayer", # Capped slope in %
-    rl_wsh     = "RasterLayer"  # Watershed
+    rl_wsh     = "RasterLayer"  # Extent of watershed
   )
 )
 setMethod(
@@ -130,11 +130,11 @@ setMethod(
 setClass(
   "RPhosFateErosion",
   slots = c(
-    rl_RFa = "RasterLayer", # R-factor
-    rl_KFa = "RasterLayer", # K-factor
-    rl_LFa = "RasterLayer", # L-factor
-    rl_SFa = "RasterLayer", # S-factor
-    rl_CFa = "RasterLayer", # C-factor
+    rl_RFa = "RasterLayer", # R factor
+    rl_KFa = "RasterLayer", # K factor
+    rl_LFa = "RasterLayer", # L factor
+    rl_SFa = "RasterLayer", # S factor
+    rl_CFa = "RasterLayer", # C factor
     rl_ero = "RasterLayer"  # Erosion in t/cell/yr
   )
 )
@@ -190,12 +190,12 @@ setMethod(
 setClass(
   "RPhosFateBare",
   slots = c(
-    rl_xxr     = "RasterLayer", # Substance retention     in t (SS) or kg/cell/yr
-    rl_xxt     = "RasterLayer", # Substance transport     in t (SS) or kg/cell/yr
-    rl_xxt_inp = "RasterLayer", # Substance input load    in t (SS) or kg/cell/yr
-    rl_xxt_out = "RasterLayer", # Substance outlet load   in t (SS) or kg/cell/yr
-    rl_xxt_cld = "RasterLayer", # Substance cell load     in t (SS) or kg/cell/yr
-    rl_xxt_ctf = "RasterLayer"  # Substance cell transfer in t (SS) or kg/cell/yr
+    rl_xxr     = "RasterLayer", # Substance retention             in t (SS) or kg/cell/yr
+    rl_xxt     = "RasterLayer", # Substance transport             in t (SS) or kg/cell/yr
+    rl_xxt_inp = "RasterLayer", # Substance input (inlet) loads   in t (SS) or kg/cell/yr
+    rl_xxt_out = "RasterLayer", # Substance output (outlet) loads in t (SS) or kg/cell/yr
+    rl_xxt_cld = "RasterLayer", # Substance cell loads            in t (SS) or kg/cell/yr
+    rl_xxt_ctf = "RasterLayer"  # Substance cell transfers        in t (SS) or kg/cell/yr
   ),
   contains = "VIRTUAL"
 )
@@ -204,7 +204,7 @@ setClass(
   "RPhosFateConc",
   slots = c(
     rl_xxc = "RasterLayer", # Substance content of topsoil in mg/kg
-    rl_xxe = "RasterLayer"  # Substance emission      in kg/cell/yr
+    rl_xxe = "RasterLayer"  # Substance emission           in kg/cell/yr
   ),
   contains = c("VIRTUAL", "RPhosFateBare")
 )
