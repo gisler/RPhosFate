@@ -128,9 +128,9 @@ setMethod(
     on.exit(setwd(cs_dir_old))
 
     # Emission in kg/cell/yr
-    slot(cmt, substance)@rl_xxe <- overlay(
+    slot(cmt@substance, substance)@rl_xxe <- overlay(
       x = cmt@erosion@rl_ero,
-      y = slot(cmt, substance)@rl_xxc,
+      y = slot(cmt@substance, substance)@rl_xxc,
       z = cmt@topo@rl_clc,
       fun = function(x, y, z) {
         x * y * (1 + z / 1e2) * 1e-3
@@ -139,13 +139,13 @@ setMethod(
 
     filename <- paste0(tolower(substance), "e", cmt@is_MCi, ".img")
     writeRaster(
-      slot(cmt, substance)@rl_xxe,
+      slot(cmt@substance, substance)@rl_xxe,
       filename,
       datatype = "FLT4S",
       options = "COMPRESSED=YES",
       overwrite = TRUE
     )
-    slot(cmt, substance)@rl_xxe <- raster(filename)
+    slot(cmt@substance, substance)@rl_xxe <- raster(filename)
 
     cmt
   }
@@ -322,7 +322,7 @@ setMethod(
       im_inl     = as.matrix(cmt@topo@rl_inl),
       im_rip     = as.matrix(cmt@topo@rl_rip),
       nm_man     = as.matrix(cmt@transport@rl_man),
-      nm_xxe     = if (substance == "SS") {as.matrix(cmt@erosion@rl_ero)} else {as.matrix(slot(cmt, substance)@rl_xxe)},
+      nm_xxe     = if (substance == "SS") {as.matrix(cmt@erosion@rl_ero)} else {as.matrix(slot(cmt@substance, substance)@rl_xxe)},
       nm_rhy     = as.matrix(cmt@transport@rl_rhy),
       nm_slp     = as.matrix(cmt@topo@rl_slp_cap)
     )
@@ -339,14 +339,14 @@ setMethod(
       writeRaster(raster(li_tpt$nm_xxt_out, template = cmt@topo@rl_acc_wtd), filenames["xxt_out"], datatype = "FLT4S", options = "COMPRESSED=YES", overwrite = TRUE)
       writeRaster(raster(li_tpt$nm_xxt_cld, template = cmt@topo@rl_acc_wtd), filenames["xxt_cld"], datatype = "FLT4S", options = "COMPRESSED=YES", overwrite = TRUE)
       writeRaster(raster(li_tpt$nm_xxt_ctf, template = cmt@topo@rl_acc_wtd), filenames["xxt_ctf"], datatype = "FLT4S", options = "COMPRESSED=YES", overwrite = TRUE)
-      slot(cmt, substance)@rl_xxr     <- raster(filenames["xxr"    ])
-      slot(cmt, substance)@rl_xxt_inp <- raster(filenames["xxt_inp"])
-      slot(cmt, substance)@rl_xxt_out <- raster(filenames["xxt_out"])
-      slot(cmt, substance)@rl_xxt_cld <- raster(filenames["xxt_cld"])
-      slot(cmt, substance)@rl_xxt_ctf <- raster(filenames["xxt_ctf"])
+      slot(cmt@substance, substance)@rl_xxr     <- raster(filenames["xxr"    ])
+      slot(cmt@substance, substance)@rl_xxt_inp <- raster(filenames["xxt_inp"])
+      slot(cmt@substance, substance)@rl_xxt_out <- raster(filenames["xxt_out"])
+      slot(cmt@substance, substance)@rl_xxt_cld <- raster(filenames["xxt_cld"])
+      slot(cmt@substance, substance)@rl_xxt_ctf <- raster(filenames["xxt_ctf"])
     }
     writeRaster(raster(li_tpt$nm_xxt, template = cmt@topo@rl_acc_wtd), filenames["xxt"], datatype = "FLT4S", options = "COMPRESSED=YES", overwrite = TRUE)
-    slot(cmt, substance)@rl_xxt <- raster(filenames["xxt"])
+    slot(cmt@substance, substance)@rl_xxt <- raster(filenames["xxt"])
 
     cmt
   }
