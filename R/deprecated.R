@@ -18,11 +18,14 @@ setClass(
   )
 )
 
-parametersRDS2YAML <- function() {
+parametersRDS2YAML <- function(substances) {
   parameters <- readRDS("parameters.rds")
 
   arguments <- slots2list(parameters)
-  arguments[["nv_tfc_inl"]] <- c(SS = arguments[["ns_tfc_inl"]], PP = arguments[["ns_tfc_inl"]])
+  arguments[["nv_tfc_inl"]] <- setNames(
+    rep(arguments[["ns_tfc_inl"]], length(substances)),
+    substances
+  )
 
   parameters <- new("RPhosFateParameters2", arguments)
   writeParameters(parameters)
