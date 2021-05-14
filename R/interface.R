@@ -48,10 +48,10 @@ setMethod(
   function(cmt, substance) {
     if (length(cmt@is_MCi) == 1L) {
       cmt <- erosion(cmt)
+    }
 
-      if (substance != "SS") {
-        cmt <- emission(cmt, substance)
-      }
+    if (substance != "SS") {
+      cmt <- emission(cmt, substance)
     }
 
     if (length(cmt@helper@order@iv_ord_row) == 0L) {
