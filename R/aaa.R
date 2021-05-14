@@ -186,9 +186,9 @@ setMethod(
   }
 )
 
-#### Class RPhosFateSubstanceBare ####
+#### Class RPhosFateBare ####
 setClass(
-  "RPhosFateSubstanceBare",
+  "RPhosFateBare",
   slots = c(
     rl_xxr     = "RasterLayer", # Substance retention     in t (SS) or kg/cell/yr
     rl_xxt     = "RasterLayer", # Substance transport     in t (SS) or kg/cell/yr
@@ -199,21 +199,21 @@ setClass(
   ),
   contains = "VIRTUAL"
 )
-#### Class RPhosFateSubstance ####
+#### Class RPhosFateConc ####
 setClass(
-  "RPhosFateSubstance",
+  "RPhosFateConc",
   slots = c(
     rl_xxc = "RasterLayer", # Substance content of topsoil in mg/kg
     rl_xxe = "RasterLayer"  # Substance emission      in kg/cell/yr
   ),
-  contains = c("VIRTUAL", "RPhosFateSubstanceBare")
+  contains = c("VIRTUAL", "RPhosFateBare")
 )
 
 
 #### Class RPhosFateSS ####
 setClass(
   "RPhosFateSS",
-  contains = "RPhosFateSubstanceBare"
+  contains = "RPhosFateBare"
 )
 setMethod(
   "initialize",
@@ -232,7 +232,7 @@ setMethod(
 #### Class RPhosFatePP ####
 setClass(
   "RPhosFatePP",
-  contains = "RPhosFateSubstance"
+  contains = "RPhosFateConc"
 )
 setMethod(
   "initialize",
@@ -245,6 +245,25 @@ setMethod(
     )
 
     populateLayerSlots(cmt, .Object, slots, layers)
+  }
+)
+
+#### Class RPhosFateSubstance ####
+setClass(
+  "RPhosFateSubstance",
+  slots = c(
+    SS = "RPhosFateSS",
+    PP = "RPhosFatePP"
+  )
+)
+setMethod(
+  "initialize",
+  "RPhosFateSubstance",
+  function(.Object, cmt) {
+    .Object@SS <- new("RPhosFateSS", cmt)
+    .Object@PP <- new("RPhosFatePP", cmt)
+
+    .Object
   }
 )
 
@@ -325,8 +344,7 @@ setClass(
     topo       = "RPhosFateTopo",
     erosion    = "RPhosFateErosion",
     transport  = "RPhosFateTransport",
-    SS         = "RPhosFateSS",
-    PP         = "RPhosFatePP",
+    substance  = "RPhosFateSubstance",
     helper     = "RPhosFateHelper"
   )
 )
@@ -351,18 +369,18 @@ setMethod(
       dir.create("Result", showWarnings = FALSE)
     }
 
+    .Object@substance  <- new("RPhosFateSubstance", .Object)
+
     if (.Object@ls_ini && file.exists("parameters.yaml")) {
       arguments <- readParameters(arguments)
     } else if (.Object@ls_ini && file.exists("parameters.rds")) {
-      arguments <- parametersRDS2YAML()
+      arguments <- parametersRDS2YAML(slotNames(.Object@substance))
     }
 
     .Object@parameters <- new("RPhosFateParameters2", arguments)
     .Object@topo       <- new("RPhosFateTopo", .Object)
     .Object@erosion    <- new("RPhosFateErosion", .Object)
     .Object@transport  <- new("RPhosFateTransport", .Object)
-    .Object@SS         <- new("RPhosFateSS", .Object)
-    .Object@PP         <- new("RPhosFatePP", .Object)
     .Object@helper     <- new("RPhosFateHelper", .Object)
 
     .Object

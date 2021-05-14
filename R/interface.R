@@ -109,7 +109,7 @@ setMethod(
     }
 
     nv_mld <- extract(
-      slot(cmt, substance)@rl_xxt,
+      slot(cmt@substance, substance)@rl_xxt,
       cbind(cmt@parameters@df_cdt$x, cmt@parameters@df_cdt$y)
     )
     if (substance != "SS") {
@@ -129,8 +129,8 @@ setMethod(
       cat("MdRAE: ", median(nv_rae, na.rm = TRUE),            "\n", sep = "")
       cat(
         "\nIn-channel retention: ",
-        1 - (extract(slot(cmt, substance)@rl_xxt, cmt@parameters@nm_olc) /
-          cellStats(slot(cmt, substance)@rl_xxt_inp, sum)),
+        1 - (extract(slot(cmt@substance, substance)@rl_xxt, cmt@parameters@nm_olc) /
+          cellStats(slot(cmt@substance, substance)@rl_xxt_inp, sum)),
         "\n",
         sep = ""
       )
