@@ -162,14 +162,14 @@ setMethod(
   }
 )
 
-#### autoCalibration ####
+#### autoCalibrate ####
 setGeneric(
-  "autoCalibration",
-  function(cmt, ...) standardGeneric("autoCalibration")
+  "autoCalibrate",
+  function(cmt, ...) standardGeneric("autoCalibrate")
 )
 #' @export
 setMethod(
-  "autoCalibration",
+  "autoCalibrate",
   "RPhosFate",
   function(cmt, substance, col, interval, metric) {
     optimize(
