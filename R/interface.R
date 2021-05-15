@@ -180,12 +180,14 @@ setMethod(
       col = col,
       metric = metric,
       maximum = if (metric %in% c("NSE", "mNSE")) {TRUE} else {FALSE}
-    )[[1L]]
+    )
+
+    print(value)
 
     if (substance == "SS") {
-      cmt@parameters@ns_dep_ovl <- value
+      cmt@parameters@ns_dep_ovl <- value[[1L]]
     } else {
-      cmt@parameters@nv_enr_rto[substance] <- value
+      cmt@parameters@nv_enr_rto[substance] <- value[[1L]]
     }
 
     cmt
