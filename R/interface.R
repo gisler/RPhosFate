@@ -119,22 +119,33 @@ setMethod(
     nv_rae <- abs(nv_old - nv_mld) / abs(nv_old - mean(nv_old, na.rm = TRUE))
 
     if (length(nv_old) > 1L) {
-      cat("NSE:   ", hydroGOF::NSE.default(  nv_mld, nv_old), "\n", sep = "")
-      cat("mNSE:  ", hydroGOF::mNSE.default( nv_mld, nv_old), "\n", sep = "")
-      cat("RSR:   ", hydroGOF::rsr.default(  nv_mld, nv_old), "\n", sep = "")
-    }
-    {
-      cat("PBIAS: ", hydroGOF::pbias.default(nv_mld, nv_old), "\n", sep = "")
-      cat("GMRAE: ", exp(mean(log(nv_rae), na.rm = TRUE)),    "\n", sep = "")
-      cat("MdRAE: ", median(nv_rae, na.rm = TRUE),            "\n", sep = "")
-      cat(
-        "\nIn-channel retention: ",
-        1 - (extract(slot(cmt@substance, substance)@rl_xxt, cmt@parameters@nm_olc) /
-          cellStats(slot(cmt@substance, substance)@rl_xxt_inp, sum)),
-        "\n",
-        sep = ""
+      metrics <- c(
+        hydroGOF::NSE( nv_mld, nv_old),
+        hydroGOF::mNSE(nv_mld, nv_old),
+        hydroGOF::rsr( nv_mld, nv_old)
       )
+    } else {
+      metrics <- c(rep(NA_real_, 3L))
     }
+    names(metrics) <- c("NSE", "mNSE", "RSR")
+    metrics <- c(
+      metrics,
+      PBIAS = hydroGOF::pbias(nv_mld, nv_old),
+      GMRAE = exp(mean(log(nv_rae), na.rm = TRUE)),
+      MdRAE = median(nv_rae, na.rm = TRUE),
+      inChannelRetention = 1 - (
+        extract(slot(cmt@substance, substance)@rl_xxt, cmt@parameters@nm_olc) /
+        cellStats(slot(cmt@substance, substance)@rl_xxt_inp, sum)
+      )
+    )
+
+    cat("NSE:   ", metrics["NSE"  ], "\n", sep = "")
+    cat("mNSE:  ", metrics["mNSE" ], "\n", sep = "")
+    cat("RSR:   ", metrics["RSR"  ], "\n", sep = "")
+    cat("PBIAS: ", metrics["PBIAS"], "\n", sep = "")
+    cat("GMRAE: ", metrics["GMRAE"], "\n", sep = "")
+    cat("MdRAE: ", metrics["MdRAE"], "\n", sep = "")
+    cat("\nIn-channel retention: ", metrics["inChannelRetention"], "\n", sep = "")
 
     plot(
       nv_old, nv_mld,
@@ -146,6 +157,8 @@ setMethod(
     graphics::abline(0, 1.3, lty = 2L)
     graphics::abline(0, 1.0)
     graphics::abline(0, 0.7, lty = 2L)
+
+    metrics
   }
 )
 
