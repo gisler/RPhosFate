@@ -162,6 +162,28 @@ setMethod(
   }
 )
 
+#### autoCalibration ####
+setGeneric(
+  "autoCalibration",
+  function(cmt, ...) standardGeneric("autoCalibration")
+)
+#' @export
+setMethod(
+  "autoCalibration",
+  "RPhosFate",
+  function(cmt, substance, col, interval, metric) {
+    optimize(
+      calibrate,
+      interval,
+      cmt = cmt,
+      substance = substance,
+      col = col,
+      metric = metric,
+      maximum = if (metric %in% c("NSE", "mNSE")) {TRUE} else {FALSE}
+    )
+  }
+)
+
 #### saveState ####
 setGeneric(
   "saveState",
