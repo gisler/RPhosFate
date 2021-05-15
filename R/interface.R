@@ -172,7 +172,7 @@ setMethod(
   "autoCalibrate",
   "RPhosFate",
   function(cmt, substance, col, interval, metric) {
-    optimize(
+    value <- optimize(
       calibrate,
       interval,
       cmt = cmt,
@@ -180,7 +180,15 @@ setMethod(
       col = col,
       metric = metric,
       maximum = if (metric %in% c("NSE", "mNSE")) {TRUE} else {FALSE}
-    )
+    )[[1L]]
+
+    if (substance == "SS") {
+      cmt@parameters@ns_dep_ovl <- value
+    } else {
+      cmt@parameters@nv_enr_rto[substance] <- value
+    }
+
+    cmt
   }
 )
 
