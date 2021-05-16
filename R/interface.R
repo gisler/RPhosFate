@@ -101,13 +101,6 @@ setMethod(
   "calibrationQuality",
   "RPhosFate",
   function(cmt, substance, col) {
-    if (!requireNamespace("hydroGOF", quietly = TRUE)) {
-      stop(
-        "Package \"hydroGOF\" must be installed for this functionality.",
-        call. = FALSE
-      )
-    }
-
     nv_mld <- extract(
       slot(cmt@substance, substance)@rl_xxt,
       cbind(cmt@parameters@df_cdt$x, cmt@parameters@df_cdt$y)
@@ -120,9 +113,9 @@ setMethod(
 
     if (length(nv_old) > 1L) {
       metrics <- c(
-        hydroGOF::NSE( nv_mld, nv_old),
-        hydroGOF::mNSE(nv_mld, nv_old),
-        hydroGOF::rsr( nv_mld, nv_old)
+        NSE( nv_mld, nv_old),
+        mNSE(nv_mld, nv_old),
+        rsr( nv_mld, nv_old)
       )
     } else {
       metrics <- c(rep(NA_real_, 3L))
@@ -130,7 +123,7 @@ setMethod(
     names(metrics) <- c("NSE", "mNSE", "RSR")
     metrics <- c(
       metrics,
-      PBIAS = hydroGOF::pbias(nv_mld, nv_old),
+      PBIAS = pbias(nv_mld, nv_old),
       GMRAE = exp(mean(log(nv_rae), na.rm = TRUE)),
       MdRAE = median(nv_rae, na.rm = TRUE),
       inChannelRetention = 1 - (
@@ -153,10 +146,10 @@ setMethod(
       xlim = c(0, max(nv_old, na.rm = TRUE)),
       ylim = c(0, max(nv_mld, na.rm = TRUE))
     )
-    graphics::clip(0, max(nv_old, na.rm = TRUE), 0, max(nv_mld, na.rm = TRUE))
-    graphics::abline(0, 1.3, lty = 2L)
-    graphics::abline(0, 1.0)
-    graphics::abline(0, 0.7, lty = 2L)
+    clip(0, max(nv_old, na.rm = TRUE), 0, max(nv_mld, na.rm = TRUE))
+    abline(0, 1.3, lty = 2L)
+    abline(0, 1.0)
+    abline(0, 0.7, lty = 2L)
 
     metrics
   }

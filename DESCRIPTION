@@ -15,6 +15,8 @@ ByteCompile: true
 Depends:
     R (>= 3.2.0)
 Imports:
+    graphics,
+    hydroGOF,
     methods,
     raster,
     Rcpp,
@@ -23,8 +25,6 @@ Imports:
     utils,
     yaml
 Suggests:
-    graphics,
-    hydroGOF,
     whitebox
 LinkingTo:
     Rcpp,
