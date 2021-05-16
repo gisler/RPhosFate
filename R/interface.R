@@ -75,17 +75,11 @@ setMethod(
   "RPhosFate",
   function(cmt) {
     df_ggs <- findNearestNeighbour(
-      data.frame(
-        x  = cmt@parameters@df_cdt$x,
-        y  = cmt@parameters@df_cdt$y,
-        ID = cmt@parameters@df_cdt$ID
-      ),
+      cmt@parameters@df_cdt[, c("x", "y", "ID")],
       rasterToPoints(cmt@topo@rl_cha),
       cmt@helper@ex_cmt
     )
-
-    cmt@parameters@df_cdt$x <- df_ggs$Y.x
-    cmt@parameters@df_cdt$y <- df_ggs$Y.y
+    cmt@parameters@df_cdt[, c("x", "y")] <- df_ggs[, c("Y.x", "Y.y")]
 
     cmt
   }
@@ -103,7 +97,7 @@ setMethod(
   function(cmt, substance, col) {
     nv_mld <- extract(
       slot(cmt@substance, substance)@rl_xxt,
-      cbind(cmt@parameters@df_cdt$x, cmt@parameters@df_cdt$y)
+      as.matrix(cmt@parameters@df_cdt[, c("x", "y")])
     )
     if (substance != "SS") {
       nv_mld <- nv_mld / 1000
@@ -128,7 +122,7 @@ setMethod(
       MdRAE = median(nv_rae, na.rm = TRUE),
       inChannelRetention = 1 - (
         extract(slot(cmt@substance, substance)@rl_xxt, cmt@parameters@nm_olc) /
-        cellStats(slot(cmt@substance, substance)@rl_xxt_inp, sum)
+          cellStats(slot(cmt@substance, substance)@rl_xxt_inp, sum)
       )
     )
 
@@ -141,7 +135,8 @@ setMethod(
     cat("\nIn-channel retention: ", metrics["inChannelRetention"], "\n", sep = "")
 
     plot(
-      nv_old, nv_mld,
+      nv_old,
+      nv_mld,
       pch = 16L,
       xlim = c(0, max(nv_old, na.rm = TRUE)),
       ylim = c(0, max(nv_mld, na.rm = TRUE))
