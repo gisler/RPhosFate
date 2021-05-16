@@ -55,16 +55,16 @@ setMethod(
     if (!is.null(arguments$ns_man_cha       )) {.Object@ns_man_cha <- arguments$ns_man_cha} else {.Object@ns_man_cha <- 0.04}
 
     # Overland deposition coefficient
-    if (!is.null(arguments$ns_dep_ovl       )) {.Object@ns_dep_ovl <- arguments$ns_dep_ovl} else {stop("\"ns_dep_ovl\" must be supplied.")}
+    if (!is.null(arguments$ns_dep_ovl       )) {.Object@ns_dep_ovl <- arguments$ns_dep_ovl} else {stop('"ns_dep_ovl" must be supplied.')}
 
     # Channel deposition coefficient
-    if (!is.null(arguments$ns_dep_cha       )) {.Object@ns_dep_cha <- arguments$ns_dep_cha} else {stop("\"ns_dep_cha\" must be supplied.")}
+    if (!is.null(arguments$ns_dep_cha       )) {.Object@ns_dep_cha <- arguments$ns_dep_cha} else {stop('"ns_dep_cha" must be supplied.')}
 
     # Enrichment ratios
-    if (!is.null(names(arguments$nv_enr_rto))) {.Object@nv_enr_rto <- arguments$nv_enr_rto} else {stop("\"nv_enr_rto\" must be supplied as named vector.")}
+    if (!is.null(names(arguments$nv_enr_rto))) {.Object@nv_enr_rto <- arguments$nv_enr_rto} else {stop('"nv_enr_rto" must be supplied as a named vector.')}
 
     # Inlet transfer coefficients
-    if (!is.null(names(arguments$nv_tfc_inl))) {.Object@nv_tfc_inl <- arguments$nv_tfc_inl} else {stop("\"nv_tfc_inl\" must be supplied as named vector.")}
+    if (!is.null(names(arguments$nv_tfc_inl))) {.Object@nv_tfc_inl <- arguments$nv_tfc_inl} else {stop('"nv_tfc_inl" must be supplied as a named vector.')}
 
     # Outflow direction vector (ArcGIS coded)
     if (!is.null(arguments$iv_fDo           )) {.Object@iv_fDo     <- arguments$iv_fDo    } else {.Object@iv_fDo     <- c(32L, 16L, 8L, 64L, 0L, 4L, 128L, 1L, 2L)}
@@ -355,7 +355,7 @@ setMethod(
   "RPhosFate",
   function(.Object, arguments) {
     # Project directory
-    if (!is.null(arguments$cv_dir)) .Object@cv_dir <- arguments$cv_dir else stop("\"cv_dir\" must be supplied.")
+    if (!is.null(arguments$cv_dir)) .Object@cv_dir <- arguments$cv_dir else stop('"cv_dir" must be supplied.')
 
     # Load parameters from disc?
     if (!is.null(arguments$ls_ini)) .Object@ls_ini <- arguments$ls_ini else .Object@ls_ini <- FALSE
