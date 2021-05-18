@@ -159,7 +159,7 @@ setGeneric(
 setMethod(
   "autoCalibrate",
   "RPhosFate",
-  function(cmt, substance, col, interval, metric) {
+  function(cmt, substance, col, interval, metric, tol = min(interval) * 1e-2) {
     value <- optimize(
       calibrate,
       interval,
@@ -167,7 +167,8 @@ setMethod(
       substance = substance,
       col = col,
       metric = metric,
-      maximum = if (metric %in% c("NSE", "mNSE")) {TRUE} else {FALSE}
+      maximum = if (metric %in% c("NSE", "mNSE")) {TRUE} else {FALSE},
+      tol = tol
     )
 
     print(value)
