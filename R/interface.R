@@ -159,7 +159,15 @@ setGeneric(
 setMethod(
   "autoCalibrate",
   "RPhosFate",
-  function(cmt, substance, col, interval, metric, tol = min(interval) * 1e-2) {
+  function(
+    cmt,
+    substance,
+    col,
+    interval,
+    metric,
+    tol = min(interval) * 1e-2,
+    parameter = NULL
+  ) {
     value <- optimize(
       calibrate,
       interval,
@@ -167,13 +175,16 @@ setMethod(
       substance = substance,
       col = col,
       metric = metric,
+      parameter = parameter,
       maximum = if (metric %in% c("NSE", "mNSE")) {TRUE} else {FALSE},
       tol = tol
     )
 
     print(value)
 
-    if (substance == "SS") {
+    if (!is.null(parameter)) {
+      slot(cmt@parameters, parameter) <- value[[1L]]
+    } else if (substance == "SS") {
       cmt@parameters@ns_dep_ovl <- value[[1L]]
     } else {
       cmt@parameters@nv_enr_rto[substance] <- value[[1L]]
