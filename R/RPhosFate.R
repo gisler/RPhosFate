@@ -11,6 +11,8 @@ setMethod(
   "erosionPrerequisites",
   "RPhosFate",
   function(cmt) {
+    compareRaster(cmt@topo@rl_acc_wtd, cmt@topo@rl_slp, cmt@topo@rl_cha)
+
     cs_dir_old <- setwd(file.path(cmt@cv_dir[1L], "Intermediate"))
     on.exit(setwd(cs_dir_old))
 
@@ -98,6 +100,15 @@ setMethod(
   "erosion",
   "RPhosFate",
   function(cmt) {
+    compareRaster(
+      cmt@topo@rl_acc_wtd,
+      cmt@erosion@rl_RFa,
+      cmt@erosion@rl_KFa,
+      cmt@erosion@rl_LFa,
+      cmt@erosion@rl_SFa,
+      cmt@erosion@rl_CFa
+    )
+
     cs_dir_old <- setwd(file.path(cmt@cv_dir[1L], "Result"))
     on.exit(setwd(cs_dir_old))
 
@@ -135,6 +146,12 @@ setMethod(
   "RPhosFate",
   function(cmt, substance = "PP") {
     assertSubstance(cmt, substance)
+    compareRaster(
+      cmt@topo@rl_acc_wtd,
+      cmt@erosion@rl_ero,
+      slot(cmt@substance, substance)@rl_xxc,
+      cmt@topo@rl_clc
+    )
 
     cs_dir_old <- setwd(file.path(cmt@cv_dir[1L], "Result"))
     on.exit(setwd(cs_dir_old))
@@ -168,6 +185,13 @@ setMethod(
   "transportPrerequisites",
   "RPhosFate",
   function(cmt) {
+    compareRaster(
+      cmt@topo@rl_acc_wtd,
+      cmt@topo@rl_dir,
+      cmt@topo@rl_cha,
+      cmt@topo@rl_rds
+    )
+
     cs_dir_old <- setwd(file.path(cmt@cv_dir[1L], "Intermediate"))
     on.exit(setwd(cs_dir_old))
 
@@ -250,6 +274,12 @@ setMethod(
   "transportCalcOrder",
   "RPhosFate",
   function(cmt) {
+    compareRaster(
+      cmt@topo@rl_acc_wtd,
+      cmt@topo@rl_acc,
+      cmt@topo@rl_cha
+    )
+
     # Overland flow accumulation
     rl_acc_ovl <- cmt@topo@rl_acc
     rl_acc_ovl[!is.na(cmt@topo@rl_cha)] <- NA_integer_
@@ -319,6 +349,21 @@ setMethod(
   "RPhosFate",
   function(cmt, substance = "PP") {
     assertSubstance(cmt, substance)
+    compareRaster(
+      cmt@topo@rl_acc_wtd,
+      cmt@topo@rl_cha,
+      cmt@topo@rl_dir,
+      cmt@topo@rl_inl,
+      cmt@topo@rl_rip,
+      cmt@transport@rl_man,
+      if (substance == "SS") {
+        cmt@erosion@rl_ero
+      } else {
+        slot(cmt@substance, substance)@rl_xxe
+      },
+      cmt@transport@rl_rhy,
+      cmt@topo@rl_slp_cap
+    )
 
     cs_dir_old <- setwd(file.path(cmt@cv_dir[1L], "Result"))
     on.exit(setwd(cs_dir_old))
