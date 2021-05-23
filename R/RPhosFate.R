@@ -3,8 +3,8 @@ NULL
 
 #### erosionPrerequisites ####
 setGeneric(
-   "erosionPrerequisites",
-   function(cmt, ...) standardGeneric("erosionPrerequisites")
+  "erosionPrerequisites",
+  function(cmt, ...) standardGeneric("erosionPrerequisites")
 )
 #' @export
 setMethod(
@@ -14,7 +14,7 @@ setMethod(
     cs_dir_old <- setwd(file.path(cmt@cv_dir[1L], "Intermediate"))
     on.exit(setwd(cs_dir_old))
 
-    # Capped slope in % (also relevant for transport() {RPhosFate})
+    # Capped slope in % (also relevant for transport)
     cmt@topo@rl_slp_cap <- cmt@topo@rl_slp
     cmt@topo@rl_slp_cap[cmt@topo@rl_slp_cap < cmt@parameters@ns_slp_min] <- cmt@parameters@ns_slp_min
     cmt@topo@rl_slp_cap[cmt@topo@rl_slp_cap > cmt@parameters@ns_slp_max] <- cmt@parameters@ns_slp_max
@@ -27,7 +27,7 @@ setMethod(
       }
     )
 
-    # Overland weighted flow accumulation
+    # Weighted overland flow accumulation
     rl_acc_wtd_ovl <- cmt@topo@rl_acc_wtd
     rl_acc_wtd_ovl[!is.na(cmt@topo@rl_cha)] <- NA_real_
     rl_acc_wtd_ovl[rl_acc_wtd_ovl < 1] <- 1
@@ -39,7 +39,6 @@ setMethod(
         sin(x) / (0.0896 * (3 * sin(x)^0.8 + 0.56))
       }
     )
-
     # Rill erodibility parameter
     rl_LFa_m <- calc(
       rl_LFa_b,
@@ -48,31 +47,42 @@ setMethod(
       }
     )
 
-    # L-factor
+    # L factor
     cmt@erosion@rl_LFa <- overlay(
       x = rl_acc_wtd_ovl,
       y = rl_LFa_m,
       fun = function(x, y) {
-        ((x * cmt@helper@is_res)^(1 + y) - ((x - 1) * cmt@helper@is_res)^(1 + y)) / # nolint
+        ((x * cmt@helper@is_res)^(1 + y) -
+          ((x - 1) * cmt@helper@is_res)^(1 + y)) / # nolint
           (cmt@helper@is_res * 22.13^y)
-      }
+      },
+      filename = "LFa.img",
+      datatype = "FLT4S",
+      options = "COMPRESSED=YES",
+      overwrite = TRUE
     )
 
-    # S-factor
+    # S factor
     cmt@erosion@rl_SFa <- overlay(
       x = rl_slp_cap_rad,
       y = cmt@topo@rl_slp_cap,
       fun = function(x, y) {
         ifelse(y < 9, 10.8 * sin(x) + 0.03, 16.8 * sin(x) - 0.5)
-      }
+      },
+      filename = "SFa.img",
+      datatype = "FLT4S",
+      options = "COMPRESSED=YES",
+      overwrite = TRUE
     )
 
-    writeRaster(cmt@topo@rl_slp_cap, "slp_cap.img", datatype = "FLT4S", options = "COMPRESSED=YES", overwrite = TRUE)
-    writeRaster(cmt@erosion@rl_LFa , "LFa.img"    , datatype = "FLT4S", options = "COMPRESSED=YES", overwrite = TRUE)
-    writeRaster(cmt@erosion@rl_SFa , "SFa.img"    , datatype = "FLT4S", options = "COMPRESSED=YES", overwrite = TRUE)
+    writeRaster(
+      cmt@topo@rl_slp_cap,
+      "slp_cap.img",
+      datatype = "FLT4S",
+      options = "COMPRESSED=YES",
+      overwrite = TRUE
+    )
     cmt@topo@rl_slp_cap <- raster("slp_cap.img")
-    cmt@erosion@rl_LFa  <- raster("LFa.img")
-    cmt@erosion@rl_SFa  <- raster("SFa.img")
 
     cmt
   }
@@ -127,6 +137,7 @@ setMethod(
     cs_dir_old <- setwd(file.path(cmt@cv_dir[1L], "Result"))
     on.exit(setwd(cs_dir_old))
 
+    filename <- paste0(tolower(substance), "e", cmt@is_MCi, ".img")
     # Emission in kg/cell/yr
     slot(cmt@substance, substance)@rl_xxe <- overlay(
       x = cmt@erosion@rl_ero,
@@ -134,18 +145,12 @@ setMethod(
       z = cmt@topo@rl_clc,
       fun = function(x, y, z) {
         x * y * (1 + z / 1e2) * 1e-3
-      }
-    )
-
-    filename <- paste0(tolower(substance), "e", cmt@is_MCi, ".img")
-    writeRaster(
-      slot(cmt@substance, substance)@rl_xxe,
-      filename,
+      },
+      filename = filename,
       datatype = "FLT4S",
       options = "COMPRESSED=YES",
       overwrite = TRUE
     )
-    slot(cmt@substance, substance)@rl_xxe <- raster(filename)
 
     cmt
   }
@@ -168,8 +173,13 @@ setMethod(
     cmt@transport@rl_rhy <- calc(
       cmt@topo@rl_acc_wtd,
       function(x) {
-        cmt@parameters@ns_rhy_a * (x * cmt@helper@is_siz / 1e6)^cmt@parameters@ns_rhy_b
-      }
+        cmt@parameters@ns_rhy_a *
+          (x * cmt@helper@is_siz / 1e6)^cmt@parameters@ns_rhy_b
+      },
+      filename = "rhy.img",
+      datatype = "FLT4S",
+      options = "COMPRESSED=YES",
+      overwrite = TRUE
     )
 
     # Riparian zone cells
@@ -194,10 +204,8 @@ setMethod(
 
     # No inlet cells at channel cells
     cmt@topo@rl_inl[!is.na(cmt@topo@rl_cha)] <- NA_integer_
-
     # No riparian zone cells at road cells
     cmt@topo@rl_rip[!is.na(cmt@topo@rl_rds)] <- NA_integer_
-
     # No inlet cells at riparian zone cells
     cmt@topo@rl_inl[!is.na(cmt@topo@rl_rip)] <- NA_integer_
 
@@ -211,7 +219,6 @@ setMethod(
     # X-coordinates of nearest channel cells to column numbers
     df_out$Y.x <- (df_out$Y.x + cmt@helper@is_res / 2 -
       cmt@helper@ex_cmt[1L]) / cmt@helper@is_res
-
     # Y-coordinates of nearest channel cells to row numbers
     df_out$Y.y <- cmt@helper@is_rws - ((df_out$Y.y - cmt@helper@is_res / 2 -
       cmt@helper@ex_cmt[3L]) / cmt@helper@is_res)
@@ -221,12 +228,10 @@ setMethod(
     # Bug in subs() {raster}: use default by and which
     cmt@topo@rl_inl <- subs(cmt@topo@rl_inl, y = df_out[c(3L, 8L)])
 
-    writeRaster(cmt@transport@rl_rhy, "rhy.img", datatype = "FLT4S", options = "COMPRESSED=YES", overwrite = TRUE)
-    writeRaster(cmt@topo@rl_rip     , "rip.img", datatype = "INT4S", options = "COMPRESSED=YES", overwrite = TRUE)
-    writeRaster(cmt@topo@rl_inl     , "inl.img", datatype = "INT4S", options = "COMPRESSED=YES", overwrite = TRUE)
-    cmt@transport@rl_rhy <- raster("rhy.img")
-    cmt@topo@rl_rip      <- raster("rip.img")
-    cmt@topo@rl_inl      <- raster("inl.img")
+    writeRaster(cmt@topo@rl_rip, "rip.img", datatype = "INT4S", options = "COMPRESSED=YES", overwrite = TRUE)
+    writeRaster(cmt@topo@rl_inl, "inl.img", datatype = "INT4S", options = "COMPRESSED=YES", overwrite = TRUE)
+    cmt@topo@rl_rip <- raster("rip.img")
+    cmt@topo@rl_inl <- raster("inl.img")
 
     cmt
   }
@@ -256,7 +261,7 @@ setMethod(
     ar_ord_ovl <- tapply(seq_along(im_acc_ovl), im_acc_ovl, identity)
     ar_ord_cha <- tapply(seq_along(im_acc_cha), im_acc_cha, identity)
 
-    # Row numbers from index
+    # Row order from index
     iv_ord_ovl_row <- as.integer(unlist(lapply(
       ar_ord_ovl,
       function(x) {
@@ -272,7 +277,7 @@ setMethod(
       }
     )))
 
-    # Column numbers from index
+    # Column order from index
     iv_ord_ovl_col <- as.integer(unlist(lapply(
       ar_ord_ovl,
       function(x) {
@@ -286,13 +291,15 @@ setMethod(
       }
     )))
 
-    # Reverse overland row and column numbers for bottom-up calculations (C++ is zero-based)
-    cmt@helper@order@iv_ord_ovl_row_rev <- rev(iv_ord_ovl_row) - 1L
-    cmt@helper@order@iv_ord_ovl_col_rev <- rev(iv_ord_ovl_col) - 1L
-
-    # Overland and channel row and column numbers for top-down calculations (C++ is zero-based)
+    # Overland as well as channel row and column numbers for top-down
+    # computation (C++ has zero-based numbering)
     cmt@helper@order@iv_ord_row <- c(iv_ord_ovl_row, iv_ord_cha_row) - 1L
     cmt@helper@order@iv_ord_col <- c(iv_ord_ovl_col, iv_ord_cha_col) - 1L
+
+    # Reverse overland row and column numbers for bottom-up computation
+    # (C++ has zero-based numbering)
+    cmt@helper@order@iv_ord_ovl_row_rev <- rev(iv_ord_ovl_row) - 1L
+    cmt@helper@order@iv_ord_ovl_col_rev <- rev(iv_ord_ovl_col) - 1L
 
     cmt
   }
@@ -313,7 +320,11 @@ setMethod(
 
     li_tpt <- transportCpp(
       parameters = cmt@parameters,
-      ns_dep_ovl = if (substance == "SS") {cmt@parameters@ns_dep_ovl} else {cmt@parameters@ns_dep_ovl / cmt@parameters@nv_enr_rto[substance]},
+      ns_dep_ovl = if (substance == "SS") {
+        cmt@parameters@ns_dep_ovl
+      } else {
+        cmt@parameters@ns_dep_ovl / cmt@parameters@nv_enr_rto[substance]
+      },
       ns_tfc_inl = cmt@parameters@nv_tfc_inl[substance],
       helper     = cmt@helper,
       order      = cmt@helper@order,
@@ -322,7 +333,11 @@ setMethod(
       im_inl     = as.matrix(cmt@topo@rl_inl),
       im_rip     = as.matrix(cmt@topo@rl_rip),
       nm_man     = as.matrix(cmt@transport@rl_man),
-      nm_xxe     = if (substance == "SS") {as.matrix(cmt@erosion@rl_ero)} else {as.matrix(slot(cmt@substance, substance)@rl_xxe)},
+      nm_xxe     = if (substance == "SS") {
+        as.matrix(cmt@erosion@rl_ero)
+      } else {
+        as.matrix(slot(cmt@substance, substance)@rl_xxe)
+      },
       nm_rhy     = as.matrix(cmt@transport@rl_rhy),
       nm_slp     = as.matrix(cmt@topo@rl_slp_cap)
     )

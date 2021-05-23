@@ -1,15 +1,14 @@
 #' @export
 findNearestNeighbour <- function(X, Y, Extent) {
-  win <- spatstat::as.owin(Extent[1:4])
-  pppX <- spatstat::as.ppp(X, W = win)
-  pppY <- spatstat::as.ppp(Y, W = win)
+  win <- as.owin(Extent[1:4])
+  pppX <- as.ppp(X, W = win)
+  pppY <- as.ppp(Y, W = win)
 
-  nn <- spatstat::nncross(pppX, pppY, what = c("dist", "which"))
   nn <- data.frame(
     X.x = X[, 1L],
     X.y = X[, 2L],
     X[, 3L, drop = FALSE],
-    nn
+    nncross(pppX, pppY)
   )
   dfY <- data.frame(
     Y.x = Y[, 1L],

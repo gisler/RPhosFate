@@ -3,6 +3,7 @@
 #' @importFrom graphics abline clip
 #' @importFrom hydroGOF mNSE NSE pbias rsr
 #' @importFrom Rcpp sourceCpp
+#' @importFrom spatstat as.owin as.ppp nncross
 #' @importFrom stats median optimize setNames
 #' @importFrom yaml read_yaml write_yaml
 #' @importFrom utils modifyList packageVersion
@@ -192,12 +193,12 @@ setMethod(
 setClass(
   "RPhosFateBare",
   slots = c(
-    rl_xxr     = "RasterLayer", # Substance retention             in t (SS) or kg/cell/yr
-    rl_xxt     = "RasterLayer", # Substance transport             in t (SS) or kg/cell/yr
-    rl_xxt_inp = "RasterLayer", # Substance input (inlet) loads   in t (SS) or kg/cell/yr
-    rl_xxt_out = "RasterLayer", # Substance output (outlet) loads in t (SS) or kg/cell/yr
-    rl_xxt_cld = "RasterLayer", # Substance cell loads            in t (SS) or kg/cell/yr
-    rl_xxt_ctf = "RasterLayer"  # Substance cell transfers        in t (SS) or kg/cell/yr
+    rl_xxr     = "RasterLayer", # Substance retention                  in t (SS) or kg/cell/yr
+    rl_xxt     = "RasterLayer", # Substance transport                  in t (SS) or kg/cell/yr
+    rl_xxt_inp = "RasterLayer", # Substance inputs into surface waters in t (SS) or kg/cell/yr
+    rl_xxt_out = "RasterLayer", # Substance outlet loads               in t (SS) or kg/cell/yr
+    rl_xxt_cld = "RasterLayer", # Substance cell loads                 in t (SS) or kg/cell/yr
+    rl_xxt_ctf = "RasterLayer"  # Substance cell transfers             in t (SS) or kg/cell/yr
   ),
   contains = "VIRTUAL"
 )
