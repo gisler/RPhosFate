@@ -127,13 +127,13 @@ setMethod(
 #### emission ####
 setGeneric(
   "emission",
-  function(cmt, substance = "PP", ...) standardGeneric("emission")
+  function(cmt, ...) standardGeneric("emission")
 )
 #' @export
 setMethod(
   "emission",
   "RPhosFate",
-  function(cmt, substance) {
+  function(cmt, substance = "PP") {
     cs_dir_old <- setwd(file.path(cmt@cv_dir[1L], "Result"))
     on.exit(setwd(cs_dir_old))
 
@@ -308,13 +308,13 @@ setMethod(
 #### transport ####
 setGeneric(
   "transport",
-  function(cmt, substance = "PP", ...) standardGeneric("transport")
+  function(cmt, ...) standardGeneric("transport")
 )
 #' @export
 setMethod(
   "transport",
   "RPhosFate",
-  function(cmt, substance) {
+  function(cmt, substance = "PP") {
     cs_dir_old <- setwd(file.path(cmt@cv_dir[1L], "Result"))
     on.exit(setwd(cs_dir_old))
 
