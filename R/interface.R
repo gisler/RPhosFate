@@ -29,8 +29,11 @@ setMethod(
 
     cmt <- erosionPrerequisites(cmt)
     cmt <- erosion(cmt)
-    if (substance != "SS") {
-      cmt <- emission(cmt, substance)
+    for (emmisiveSubstance in setdiff(slotNames(cmt@substance), "SS")) {
+      if (extent(slot(cmt@substance, emmisiveSubstance)@rl_xxc) ==
+          cmt@helper@ex_cmt) {
+        cmt <- emission(cmt, emmisiveSubstance)
+      }
     }
     cmt <- transportPrerequisites(cmt)
     cmt <- transportCalcOrder(cmt)
@@ -54,9 +57,10 @@ setMethod(
 
     if (length(cmt@is_MCi) == 1L) {
       cmt <- erosion(cmt)
-    }
-    if (substance != "SS") {
-      cmt <- emission(cmt, substance)
+
+      if (substance != "SS") {
+        cmt <- emission(cmt, substance)
+      }
     }
     if (length(cmt@helper@order@iv_ord_row) == 0L) {
       cmt <- transportCalcOrder(cmt)
