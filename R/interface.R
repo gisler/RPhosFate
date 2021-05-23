@@ -165,7 +165,7 @@ setMethod(
     col,
     interval,
     metric,
-    tol = min(interval) * 1e-2,
+    tol = min(interval) * 0.1,
     parameter = NULL
   ) {
     value <- optimize(
