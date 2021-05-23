@@ -1,7 +1,9 @@
 #' @import methods
 #' @import raster
+#' @importFrom graphics abline clip
+#' @importFrom hydroGOF mNSE NSE pbias rsr
 #' @importFrom Rcpp sourceCpp
-#' @importFrom stats median setNames
+#' @importFrom stats median optimize setNames
 #' @importFrom yaml read_yaml write_yaml
 #' @importFrom utils modifyList packageVersion
 #' @useDynLib RPhosFate
