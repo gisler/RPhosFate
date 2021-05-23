@@ -43,6 +43,5 @@ Collate:
     'findNearestNeighbour.R'
     'input.R'
     'interface.R'
-    'readWrite.R'
     'utils.R'
     'zzz.R'

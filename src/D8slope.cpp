@@ -9,8 +9,8 @@ arma::dmat D8slope(
   double ns_fpl,
   int is_ths = 1
 ) {
-  /* With integers, missing values are stored as the smallest integer (-2.147.483.648).
-   * See also https://adv-r.hadley.nz/rcpp.html
+  /* With integers, missing values are stored as the smallest integer
+   * (-2.147.483.648). See also https://adv-r.hadley.nz/rcpp.html
    */
   int NA_integer_ = Rcpp::IntegerVector::get_na();
 
@@ -39,8 +39,11 @@ arma::dmat D8slope(
         nm_tmp.elem(arma::find(im_dir.at(i - 1, j - 1) == im_fDo))
       );
 
-      if (std::find(iv_fDo_dgl.begin(), iv_fDo_dgl.end(), im_dir.at(i - 1, j - 1)) ==
-          iv_fDo_dgl.end()) {
+      if (std::find(
+        iv_fDo_dgl.begin(),
+        iv_fDo_dgl.end(),
+        im_dir.at(i - 1, j - 1)
+      ) == iv_fDo_dgl.end()) {
         nm_slp.at(i - 1, j - 1) = ns_tmp / ns_fpl     * 100.0;
       } else {
         nm_slp.at(i - 1, j - 1) = ns_tmp / ns_fpl_dgl * 100.0;

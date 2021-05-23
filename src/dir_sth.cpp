@@ -8,8 +8,8 @@ arma::imat dir_sth(
   arma::imat& im_fDo,
   int is_ths = 1
 ) {
-  /* With integers, missing values are stored as the smallest integer (-2.147.483.648).
-   * See also https://adv-r.hadley.nz/rcpp.html
+  /* With integers, missing values are stored as the smallest integer
+   * (-2.147.483.648). See also https://adv-r.hadley.nz/rcpp.html
    */
   int NA_integer_ = Rcpp::IntegerVector::get_na();
 
