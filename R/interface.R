@@ -18,13 +18,13 @@ catchment <- function(...) {
 #### firstRun ####
 setGeneric(
   "firstRun",
-  function(cmt, substance = "PP", ...) standardGeneric("firstRun")
+  function(cmt, ...) standardGeneric("firstRun")
 )
 #' @export
 setMethod(
   "firstRun",
   "RPhosFate",
-  function(cmt, substance) {
+  function(cmt, substance = "PP") {
     cmt <- erosionPrerequisites(cmt)
     cmt <- erosion(cmt)
     if (substance != "SS") {
@@ -41,13 +41,13 @@ setMethod(
 #### subsequentRun ####
 setGeneric(
   "subsequentRun",
-  function(cmt, substance = "PP", ...) standardGeneric("subsequentRun")
+  function(cmt, ...) standardGeneric("subsequentRun")
 )
 #' @export
 setMethod(
   "subsequentRun",
   "RPhosFate",
-  function(cmt, substance) {
+  function(cmt, substance = "PP") {
     if (length(cmt@is_MCi) == 1L) {
       cmt <- erosion(cmt)
     }
@@ -87,13 +87,13 @@ setMethod(
 #### calibrationQuality ####
 setGeneric(
   "calibrationQuality",
-  function(cmt, substance = "PP", ...) standardGeneric("calibrationQuality")
+  function(cmt, ...) standardGeneric("calibrationQuality")
 )
 #' @export
 setMethod(
   "calibrationQuality",
   "RPhosFate",
-  function(cmt, substance, col) {
+  function(cmt, substance = "PP", col) {
     nv_mld <- extract(
       slot(cmt@substance, substance)@rl_xxt,
       as.matrix(cmt@parameters@df_cdt[, c("x", "y")])
