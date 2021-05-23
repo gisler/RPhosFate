@@ -12,24 +12,40 @@ DEMrelatedInput <- function(
   sp_sds,
   cs_rds = NULL,
   cs_wgs = NULL,
-  is_brn = 50L,
+  ns_brn = 50,
   is_adj = 1L,
   is_ths = 1L,
   ls_tmp = FALSE
 ) {
   if (!requireNamespace("whitebox", quietly = TRUE)) {
-    stop(
-      'Package "whitebox" must be installed from "http://R-Forge.R-project.org" for this functionality.',
-      call. = FALSE
-    )
+    stop(paste(
+      'Package "whitebox" must be installed',
+      'from "http://R-Forge.R-project.org" for this functionality.'
+    ), call. = FALSE)
   }
   whitebox::wbt_init()
   if (Sys.which("mpiexec") == "" || Sys.which("AreaD8") == "") {
-    stop(
-      '"TauDEM" must be installed and added to "PATH" environment variable for this functionality.',
-      call. = FALSE
-    )
+    stop(paste(
+      '"TauDEM" must be installed and added to "PATH" environment variable',
+      'for this functionality.'
+    ), call. = FALSE)
   }
+  qassert(cv_dir, "S+")
+  qassert(cs_dem, "S1")
+  qassert(cs_cha, "S1")
+  assertClass(sp_msk, "SpatialPolygonsDataFrame")
+  assertClass(sp_olp, "SpatialPointsDataFrame")
+  assertClass(sp_sds, "SpatialPointsDataFrame")
+  if (!is.null(cs_rds)) {
+    qassert(cs_rds, "S1")
+  }
+  if (!is.null(cs_wgs)) {
+    qassert(cs_wgs, "S1")
+  }
+  qassert(ns_brn, "N1[0,)")
+  qassert(is_adj, "X1[0,)")
+  qassert(is_ths, "X1(0,)")
+  qassert(ls_tmp, "B1")
 
   cs_dir_old <- setwd(cv_dir[1L])
   on.exit(setwd(cs_dir_old))
@@ -58,7 +74,7 @@ DEMrelatedInput <- function(
     x = rl_dem_ovr,
     y = rl_cha_map,
     fun = function(x, y) {
-      ifelse(is.na(y), x, x - is_brn)
+      ifelse(is.na(y), x, x - ns_brn)
     }
   )
 
@@ -75,7 +91,7 @@ DEMrelatedInput <- function(
       x = rl_dem_bnt,
       y = rl_cha_map,
       fun = function(x, y) {
-        ifelse(is.na(y), x, x - is_brn)
+        ifelse(is.na(y), x, x - ns_brn)
       }
     )
   }
