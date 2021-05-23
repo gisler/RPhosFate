@@ -25,6 +25,8 @@ setMethod(
   "firstRun",
   "RPhosFate",
   function(cmt, substance = "PP") {
+    assertSubstance(cmt, substance)
+
     cmt <- erosionPrerequisites(cmt)
     cmt <- erosion(cmt)
     if (substance != "SS") {
@@ -48,6 +50,8 @@ setMethod(
   "subsequentRun",
   "RPhosFate",
   function(cmt, substance = "PP") {
+    assertSubstance(cmt, substance)
+
     if (length(cmt@is_MCi) == 1L) {
       cmt <- erosion(cmt)
     }
@@ -94,56 +98,65 @@ setMethod(
   "calibrationQuality",
   "RPhosFate",
   function(cmt, substance = "PP", col) {
+    assertSubstance(cmt, substance)
+    assertCol(cmt, col)
+
     nv_mld <- extract(
       slot(cmt@substance, substance)@rl_xxt,
       as.matrix(cmt@parameters@df_cdt[, c("x", "y")])
     )
+    nv_old <- cmt@parameters@df_cdt[[col]]
+
+    assertNumeric(nv_mld, all.missing = FALSE)
+    assertNumeric(nv_old, all.missing = FALSE)
+
     if (substance != "SS") {
       nv_mld <- nv_mld * 1e-3
     }
-    nv_old <- cmt@parameters@df_cdt[[col]]
     nv_rae <- abs(nv_old - nv_mld) / abs(nv_old - mean(nv_old, na.rm = TRUE))
 
-    if (length(nv_old) > 1L) {
-      metrics <- c(
-        NSE( nv_mld, nv_old),
-        mNSE(nv_mld, nv_old),
-        rsr( nv_mld, nv_old)
-      )
-    } else {
-      metrics <- c(rep(NA_real_, 3L))
-    }
-    names(metrics) <- c("NSE", "mNSE", "RSR")
     metrics <- c(
-      metrics,
-      PBIAS = pbias(nv_mld, nv_old),
-      GMRAE = exp(mean(log(nv_rae), na.rm = TRUE)),
-      MdRAE = median(nv_rae, na.rm = TRUE),
-      inChannelRetention = 1 - (
+      tryCatch(NSE(  nv_mld, nv_old), error = function(e) NA),
+      tryCatch(mNSE( nv_mld, nv_old), error = function(e) NA),
+      tryCatch(rmse( nv_mld, nv_old), error = function(e) NA),
+      tryCatch(nrmse(nv_mld, nv_old), error = function(e) NA),
+      tryCatch(pbias(nv_mld, nv_old), error = function(e) NA),
+      tryCatch(rsr(  nv_mld, nv_old), error = function(e) NA),
+      exp(mean(log(nv_rae), na.rm = TRUE))                   ,
+      median(nv_rae, na.rm = TRUE)                           ,
+      1 - (
         extract(slot(cmt@substance, substance)@rl_xxt, cmt@parameters@nm_olc) /
           cellStats(slot(cmt@substance, substance)@rl_xxt_inp, sum)
       )
     )
+    names(metrics) <- c(cmt@helper@cv_met, "inChannelRetention")
 
     cat("NSE:   ", metrics["NSE"  ], "\n", sep = "")
     cat("mNSE:  ", metrics["mNSE" ], "\n", sep = "")
-    cat("RSR:   ", metrics["RSR"  ], "\n", sep = "")
+    cat("RMSE:  ", metrics["RMSE" ], "\n", sep = "")
+    cat("NRMSE: ", metrics["NRMSE"], "\n", sep = "")
     cat("PBIAS: ", metrics["PBIAS"], "\n", sep = "")
+    cat("RSR:   ", metrics["RSR"  ], "\n", sep = "")
     cat("GMRAE: ", metrics["GMRAE"], "\n", sep = "")
     cat("MdRAE: ", metrics["MdRAE"], "\n", sep = "")
-    cat("\nIn-channel retention: ", metrics["inChannelRetention"], "\n\n", sep = "")
+    cat(
+      "\nIn-channel retention: ", metrics["inChannelRetention"],
+      "\n\n", sep = ""
+    )
 
     plot(
       nv_old,
       nv_mld,
       pch = 16L,
+      xlab = "Observed/calculated load(s)",
+      ylab = "Modelled load(s)",
       xlim = c(0, max(nv_old, na.rm = TRUE)),
       ylim = c(0, max(nv_mld, na.rm = TRUE))
     )
     clip(0, max(nv_old, na.rm = TRUE), 0, max(nv_mld, na.rm = TRUE))
-    abline(0, 1.3, lty = 2L)
+    abline(0, 1.3, col = "grey50", lty = 2L)
     abline(0, 1.0)
-    abline(0, 0.7, lty = 2L)
+    abline(0, 0.7, col = "grey50", lty = 2L)
 
     metrics
   }
@@ -167,6 +180,17 @@ setMethod(
     tol = min(interval) * 0.1,
     parameter = NULL
   ) {
+    assertSubstance(cmt, substance)
+    assertCol(cmt, col)
+    qassert(interval, "N2(0,)")
+    qassert(metric, "S1")
+    assertSubset(metric, cmt@helper@cv_met)
+    qassert(tol, "N1(0,)")
+    if (!is.null(parameter)) {
+      qassert(parameter, "S1")
+      assertSubset(parameter, c("ns_dep_ovl", "ns_dep_cha"))
+    }
+
     value <- optimize(
       calibrate,
       interval,
@@ -187,6 +211,13 @@ setMethod(
       cmt@parameters@ns_dep_ovl <- value[[1L]]
     } else {
       cmt@parameters@nv_enr_rto[substance] <- value[[1L]]
+    }
+
+    if (any(abs(interval - value[[1L]]) <= tol)) {
+      warning(paste(
+        "Parameter approximately within tolerance of interval end-point.",
+        "Optimum may not have been found."
+      ), call. = FALSE)
     }
 
     cmt

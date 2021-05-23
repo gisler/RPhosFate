@@ -15,6 +15,7 @@ ByteCompile: true
 Depends:
     R (>= 3.2.0)
 Imports:
+    checkmate,
     graphics,
     hydroGOF,
     methods,
@@ -37,6 +38,7 @@ Collate:
     'aaa.R'
     'RPhosFate.R'
     'RcppExports.R'
+    'assertives.R'
     'deprecated.R'
     'findNearestNeighbour.R'
     'input.R'

@@ -1,7 +1,8 @@
+#' @import checkmate
 #' @import methods
 #' @import raster
 #' @importFrom graphics abline clip
-#' @importFrom hydroGOF mNSE NSE pbias rsr
+#' @importFrom hydroGOF mNSE NSE pbias rmse nrmse rsr
 #' @importFrom Rcpp sourceCpp
 #' @importFrom spatstat as.owin as.ppp nncross
 #' @importFrom stats median optimize setNames
@@ -293,6 +294,7 @@ setClass(
     iv_fDo_dgl = "integer",
     im_fDo     = "matrix",
     im_fDi     = "matrix",
+    cv_met     = "character",
     order      = "RPhosFateOrder"
   )
 )
@@ -326,6 +328,12 @@ setMethod(
 
     # Inflow direction matrix
     .Object@im_fDi <- matrix(rev(cmt@parameters@iv_fDo), 3L)
+
+    # Implemented calibration quality metrics
+    .Object@cv_met <- c(
+      "NSE", "mNSE", "RMSE", "NRMSE",
+      "PBIAS", "RSR", "GMRAE", "MdRAE"
+    )
 
     # Transport calculation order
     if (cmt@ls_ini && file.exists("order.rds")) {
