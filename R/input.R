@@ -19,7 +19,7 @@ DEMrelatedInput <- function(
 ) {
   if (!requireNamespace("whitebox", quietly = TRUE)) {
     stop(
-      'Package "whitebox" must be installed for this functionality.',
+      'Package "whitebox" must be installed from "http://R-Forge.R-project.org" for this functionality.',
       call. = FALSE
     )
   }
@@ -57,7 +57,9 @@ DEMrelatedInput <- function(
   rl_dem_bnt <- overlay(
     x = rl_dem_ovr,
     y = rl_cha_map,
-    fun = function(x, y) {ifelse(is.na(y), x, x - is_brn)}
+    fun = function(x, y) {
+      ifelse(is.na(y), x, x - is_brn)
+    }
   )
 
   for (i in seq_len(is_adj)) {
@@ -72,7 +74,9 @@ DEMrelatedInput <- function(
     rl_dem_bnt <- overlay(
       x = rl_dem_bnt,
       y = rl_cha_map,
-      fun = function(x, y) {ifelse(is.na(y), x, x - is_brn)}
+      fun = function(x, y) {
+        ifelse(is.na(y), x, x - is_brn)
+      }
     )
   }
 
@@ -84,7 +88,6 @@ DEMrelatedInput <- function(
     overwrite = TRUE
   )
   rl_dem_bnt <- raster("dem_bnt.tif")
-
   rm(rl_cha_map)
 
   # Breach depressions (oversized DEM)
@@ -199,6 +202,7 @@ DEMrelatedInput <- function(
     options = "COMPRESSED=YES",
     overwrite = TRUE
   )
+
   system2(
     "mpiexec",
     sprintf(
@@ -220,6 +224,7 @@ DEMrelatedInput <- function(
       options = "COMPRESSED=YES",
       overwrite = TRUE
     )
+
     system2(
       "mpiexec",
       sprintf(
@@ -239,12 +244,15 @@ DEMrelatedInput <- function(
       x = rl_dir_tau,
       y = raster("cha.tif"),
       z = rl_rds,
-      fun = function(x, y, z) {ifelse(is.na(y), ifelse(is.na(z), x, NA_integer_), x)},
+      fun = function(x, y, z) {
+        ifelse(is.na(y), ifelse(is.na(z), x, NA_integer_), x)
+      },
       filename = "dir_tau_rds.tif",
       datatype = "INT1U",
       options = "COMPRESSED=YES",
       overwrite = TRUE
     )
+
     system2(
       "mpiexec",
       sprintf(
@@ -259,7 +267,9 @@ DEMrelatedInput <- function(
       x = rl_cha,
       y = raster("acc_rds.tif"),
       z = raster("acc.tif"),
-      fun = function(x, y, z) {ifelse(is.na(x), y, z)},
+      fun = function(x, y, z) {
+        ifelse(is.na(x), y, z)
+      },
       filename = "acc.tif",
       datatype = "INT4S",
       options = "COMPRESSED=YES",
@@ -285,7 +295,9 @@ DEMrelatedInput <- function(
       x = rl_cha,
       y = raster("acc_wtd_rds.tif"),
       z = raster("acc_wtd.tif"),
-      fun = function(x, y, z) {ifelse(is.na(x), y, z)},
+      fun = function(x, y, z) {
+        ifelse(is.na(x), y, z)
+      },
       filename = "acc_wtd.tif",
       datatype = "FLT4S",
       options = "COMPRESSED=YES",
@@ -307,6 +319,7 @@ DEMrelatedInput <- function(
     ns_fpl = xres(rl_dir),
     is_ths = as.integer(is_ths)
   )
+
   rl_slp <- mask(
     crop(raster(nm_slp_ovr, template = rl_dem_ovr), rl_wsh),
     rl_wsh,
@@ -328,7 +341,6 @@ DEMrelatedInput <- function(
     slp     = rl_slp    ,
     wsh     = rl_wsh
   )
-
   mapply(
     function(rl, filename) {
       writeRaster(
