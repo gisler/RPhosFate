@@ -5,11 +5,13 @@ NULL
 #' @export
 RPhosFate <- function(...) {
   arguments <- list(...)
+
   new("RPhosFate", arguments)
 }
 #' @export
 catchment <- function(...) {
   arguments <- list(...)
+
   new("RPhosFate", arguments)
 }
 
@@ -49,15 +51,12 @@ setMethod(
     if (length(cmt@is_MCi) == 1L) {
       cmt <- erosion(cmt)
     }
-
     if (substance != "SS") {
       cmt <- emission(cmt, substance)
     }
-
     if (length(cmt@helper@order@iv_ord_row) == 0L) {
       cmt <- transportCalcOrder(cmt)
     }
-
     cmt <- transport(cmt, substance)
 
     cmt
@@ -75,17 +74,11 @@ setMethod(
   "RPhosFate",
   function(cmt) {
     df_ggs <- findNearestNeighbour(
-      data.frame(
-        x  = cmt@parameters@df_cdt$x,
-        y  = cmt@parameters@df_cdt$y,
-        ID = cmt@parameters@df_cdt$ID
-      ),
+      cmt@parameters@df_cdt[, c("x", "y", "ID")],
       rasterToPoints(cmt@topo@rl_cha),
       cmt@helper@ex_cmt
     )
-
-    cmt@parameters@df_cdt$x <- df_ggs$Y.x
-    cmt@parameters@df_cdt$y <- df_ggs$Y.y
+    cmt@parameters@df_cdt[, c("x", "y")] <- df_ggs[, c("Y.x", "Y.y")]
 
     cmt
   }
@@ -106,7 +99,7 @@ setMethod(
       as.matrix(cmt@parameters@df_cdt[, c("x", "y")])
     )
     if (substance != "SS") {
-      nv_mld <- nv_mld / 1000
+      nv_mld <- nv_mld * 1e-3
     }
     nv_old <- cmt@parameters@df_cdt[[col]]
     nv_rae <- abs(nv_old - nv_mld) / abs(nv_old - mean(nv_old, na.rm = TRUE))
@@ -138,7 +131,7 @@ setMethod(
     cat("PBIAS: ", metrics["PBIAS"], "\n", sep = "")
     cat("GMRAE: ", metrics["GMRAE"], "\n", sep = "")
     cat("MdRAE: ", metrics["MdRAE"], "\n", sep = "")
-    cat("\nIn-channel retention: ", metrics["inChannelRetention"], "\n", sep = "")
+    cat("\nIn-channel retention: ", metrics["inChannelRetention"], "\n\n", sep = "")
 
     plot(
       nv_old,
@@ -182,7 +175,7 @@ setMethod(
       col = col,
       metric = metric,
       parameter = parameter,
-      maximum = if (metric %in% c("NSE", "mNSE")) {TRUE} else {FALSE},
+      maximum = if (metric %in% c("NSE", "mNSE")) TRUE else FALSE,
       tol = tol
     )
 
