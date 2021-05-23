@@ -134,6 +134,8 @@ setMethod(
   "emission",
   "RPhosFate",
   function(cmt, substance = "PP") {
+    assertSubstance(cmt, substance)
+
     cs_dir_old <- setwd(file.path(cmt@cv_dir[1L], "Result"))
     on.exit(setwd(cs_dir_old))
 
@@ -223,7 +225,8 @@ setMethod(
     df_out$Y.y <- cmt@helper@is_rws - ((df_out$Y.y - cmt@helper@is_res / 2 -
       cmt@helper@ex_cmt[3L]) / cmt@helper@is_res)
 
-    # Substituting inlet values with integer codes identifying nearest channel cells
+    # Substituting inlet values with integer codes identifying nearest channel
+    # cells
     df_out$code <- as.integer(df_out$Y.y * cmt@helper@is_cls + df_out$Y.x)
     # Bug in subs() {raster}: use default by and which
     cmt@topo@rl_inl <- subs(cmt@topo@rl_inl, y = df_out[c(3L, 8L)])
@@ -315,6 +318,8 @@ setMethod(
   "transport",
   "RPhosFate",
   function(cmt, substance = "PP") {
+    assertSubstance(cmt, substance)
+
     cs_dir_old <- setwd(file.path(cmt@cv_dir[1L], "Result"))
     on.exit(setwd(cs_dir_old))
 
@@ -360,7 +365,13 @@ setMethod(
       slot(cmt@substance, substance)@rl_xxt_cld <- raster(filenames["xxt_cld"])
       slot(cmt@substance, substance)@rl_xxt_ctf <- raster(filenames["xxt_ctf"])
     }
-    writeRaster(raster(li_tpt$nm_xxt, template = cmt@topo@rl_acc_wtd), filenames["xxt"], datatype = "FLT4S", options = "COMPRESSED=YES", overwrite = TRUE)
+    writeRaster(
+      raster(li_tpt$nm_xxt, template = cmt@topo@rl_acc_wtd),
+      filenames["xxt"],
+      datatype = "FLT4S",
+      options = "COMPRESSED=YES",
+      overwrite = TRUE
+    )
     slot(cmt@substance, substance)@rl_xxt <- raster(filenames["xxt"])
 
     cmt
