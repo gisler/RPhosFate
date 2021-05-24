@@ -365,7 +365,7 @@ setMethod(
       cmt@topo@rl_slp_cap
     )
     if (substance != "SS") {
-      qassert(cmt@parameters@nv_enr_rto[substance], "N1(0,)")
+      qassert(cmt@parameters@nv_enr_rto[substance], "N1[1,)")
     }
     qassert(cmt@parameters@nv_tfc_inl[substance], "N1[0,1]")
 
