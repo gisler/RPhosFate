@@ -44,7 +44,7 @@ DEMrelatedInput <- function(
   }
   qassert(ns_brn, "N1[0,)")
   qassert(is_adj, "X1[0,)")
-  qassert(is_ths, "X1(0,)")
+  qassert(is_ths, "X1[1,)")
   qassert(ls_tmp, "B1")
 
   cs_dir_old <- setwd(cv_dir[1L])
