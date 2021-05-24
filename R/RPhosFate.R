@@ -364,6 +364,10 @@ setMethod(
       cmt@transport@rl_rhy,
       cmt@topo@rl_slp_cap
     )
+    if (substance != "SS") {
+      qassert(cmt@parameters@nv_enr_rto[substance], "N1(0,)")
+    }
+    qassert(cmt@parameters@nv_tfc_inl[substance], "N1[0,1]")
 
     cs_dir_old <- setwd(file.path(cmt@cv_dir[1L], "Result"))
     on.exit(setwd(cs_dir_old))
