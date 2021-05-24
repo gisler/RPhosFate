@@ -25,7 +25,7 @@ setMethod(
     rl_slp_cap_rad <- calc(
       cmt@topo@rl_slp_cap,
       function(x) {
-        atan(x / 1e2)
+        atan(x * 1e-2)
       }
     )
 
@@ -119,7 +119,7 @@ setMethod(
       cmt@erosion@rl_LFa *
       cmt@erosion@rl_SFa *
       cmt@erosion@rl_CFa *
-      cmt@helper@is_siz / 1e4
+      cmt@helper@is_siz * 1e-4
 
     filename <- paste0("ero", cmt@is_MCi, ".img")
     writeRaster(
@@ -163,7 +163,7 @@ setMethod(
       y = slot(cmt@substance, substance)@rl_xxc,
       z = cmt@topo@rl_clc,
       fun = function(x, y, z) {
-        x * y * (1 + z / 1e2) * 1e-3
+        x * y * (1 + z * 1e-2) * 1e-3
       },
       filename = filename,
       datatype = "FLT4S",
@@ -200,7 +200,7 @@ setMethod(
       cmt@topo@rl_acc_wtd,
       function(x) {
         cmt@parameters@ns_rhy_a *
-          (x * cmt@helper@is_siz / 1e6)^cmt@parameters@ns_rhy_b
+          (x * cmt@helper@is_siz * 1e-6)^cmt@parameters@ns_rhy_b
       },
       filename = "rhy.img",
       datatype = "FLT4S",
@@ -365,7 +365,7 @@ setMethod(
       cmt@topo@rl_slp_cap
     )
     if (substance != "SS") {
-      qassert(cmt@parameters@nv_enr_rto[substance], "N1(0,)")
+      qassert(cmt@parameters@nv_enr_rto[substance], "N1[1,)")
     }
     qassert(cmt@parameters@nv_tfc_inl[substance], "N1[0,1]")
 
