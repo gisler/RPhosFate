@@ -30,8 +30,11 @@ setMethod(
     cmt <- erosionPrerequisites(cmt)
     cmt <- erosion(cmt)
     for (emmisiveSubstance in setdiff(slotNames(cmt@substance), "SS")) {
-      if (extent(slot(cmt@substance, emmisiveSubstance)@rl_xxc) ==
-          cmt@helper@ex_cmt) {
+      if (compareRaster(
+        cmt@topo@rl_acc_wtd,
+        slot(cmt@substance, emmisiveSubstance)@rl_xxc,
+        stopiffalse = FALSE
+      )) {
         cmt <- emission(cmt, emmisiveSubstance)
       }
     }
