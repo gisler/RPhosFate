@@ -19,7 +19,7 @@ calibrate <- function(value, cmt, substance, col, metric, parameter) {
 
 populateLayerSlots <- function(
   cmt,
-  .Object,
+  object,
   slots,
   layers,
   areRequiredInputLayers = rep(FALSE, length(slots)),
@@ -29,7 +29,7 @@ populateLayerSlots <- function(
   on.exit(setwd(cs_dir_old))
 
   for (i in seq_along(slots)) {
-    slot(.Object, slots[i]) <- readLayer(
+    slot(object, slots[i]) <- readLayer(
       cmt,
       layers[i],
       areRequiredInputLayers[i],
@@ -37,7 +37,21 @@ populateLayerSlots <- function(
     )
   }
 
-  .Object
+  object
+}
+
+populateParameterSlots <- function(parameters, arguments) {
+  parameterNames <- slotNames(parameters)
+  argumentNames <- names(arguments)
+
+  assertSubset(argumentNames, parameterNames)
+
+  for (i in seq_along(arguments)) {
+    slot(parameters, argumentNames[i]) <- arguments[[i]]
+  }
+  validObject(parameters)
+
+  parameters
 }
 
 readLayer <- function(

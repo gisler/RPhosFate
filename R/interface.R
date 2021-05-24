@@ -4,15 +4,11 @@ NULL
 #### Constructors ####
 #' @export
 RPhosFate <- function(...) {
-  arguments <- list(...)
-
-  new("RPhosFate", arguments)
+  new("RPhosFate", list(...))
 }
 #' @export
 catchment <- function(...) {
-  arguments <- list(...)
-
-  new("RPhosFate", arguments)
+  new("RPhosFate", list(...))
 }
 
 #### firstRun ####
@@ -84,6 +80,8 @@ setMethod(
   "snapGauges",
   "RPhosFate",
   function(cmt) {
+    assertdf_cdt(cmt)
+
     df_ggs <- findNearestNeighbour(
       cmt@parameters@df_cdt[, c("x", "y", "ID")],
       rasterToPoints(cmt@topo@rl_cha),
@@ -107,6 +105,13 @@ setMethod(
   function(cmt, substance = "PP", col) {
     assertSubstance(cmt, substance)
     assertCol(cmt, col)
+    assertMatrix(
+      cmt@parameters@nm_olc,
+      "numeric",
+      any.missing = FALSE,
+      nrows = 1L,
+      ncols = 2L
+    )
 
     nv_mld <- extract(
       slot(cmt@substance, substance)@rl_xxt,
@@ -114,8 +119,14 @@ setMethod(
     )
     nv_old <- cmt@parameters@df_cdt[[col]]
 
-    assertNumeric(nv_mld, all.missing = FALSE)
-    assertNumeric(nv_old, all.missing = FALSE)
+    assertNumeric(
+      nv_mld,
+      lower = 0,
+      finite = TRUE,
+      all.missing = FALSE,
+      len = length(nv_old),
+      .var.name = "Modelled load(s)"
+    )
 
     if (substance != "SS") {
       nv_mld <- nv_mld * 1e-3
@@ -123,14 +134,14 @@ setMethod(
     nv_rae <- abs(nv_old - nv_mld) / abs(nv_old - mean(nv_old, na.rm = TRUE))
 
     metrics <- c(
-      tryCatch(NSE(  nv_mld, nv_old), error = function(e) NA),
-      tryCatch(mNSE( nv_mld, nv_old), error = function(e) NA),
-      tryCatch(rmse( nv_mld, nv_old), error = function(e) NA),
-      tryCatch(nrmse(nv_mld, nv_old), error = function(e) NA),
-      tryCatch(pbias(nv_mld, nv_old), error = function(e) NA),
-      tryCatch(rsr(  nv_mld, nv_old), error = function(e) NA),
-      exp(mean(log(nv_rae), na.rm = TRUE))                   ,
-      median(nv_rae, na.rm = TRUE)                           ,
+      tryCatch(NSE(  nv_mld, nv_old), error = function(e) NA_real_),
+      tryCatch(mNSE( nv_mld, nv_old), error = function(e) NA_real_),
+      tryCatch(rmse( nv_mld, nv_old), error = function(e) NA_real_),
+      tryCatch(nrmse(nv_mld, nv_old), error = function(e) NA_real_),
+      tryCatch(pbias(nv_mld, nv_old), error = function(e) NA_real_),
+      tryCatch(rsr(  nv_mld, nv_old), error = function(e) NA_real_),
+      exp(mean(log(nv_rae), na.rm = TRUE))                         ,
+      median(nv_rae, na.rm = TRUE)                                 ,
       1 - (
         extract(slot(cmt@substance, substance)@rl_xxt, cmt@parameters@nm_olc) /
           cellStats(slot(cmt@substance, substance)@rl_xxt_inp, sum)
@@ -155,7 +166,7 @@ setMethod(
       nv_old,
       nv_mld,
       pch = 16L,
-      xlab = "Observed/calculated load(s)",
+      xlab = col,
       ylab = "Modelled load(s)",
       xlim = c(0, max(nv_old, na.rm = TRUE)),
       ylim = c(0, max(nv_mld, na.rm = TRUE))

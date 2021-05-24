@@ -15,69 +15,63 @@ NULL
 setClass(
   "RPhosFateParameters2",
   slots = c(
-    ns_slp_min = "numeric",
-    ns_slp_max = "numeric",
-    ns_rhy_a   = "numeric",
-    ns_rhy_b   = "numeric",
-    ns_cha_rto = "numeric",
-    ns_man_rip = "numeric",
-    ns_man_cha = "numeric",
-    ns_dep_ovl = "numeric",
-    ns_dep_cha = "numeric",
-    nv_enr_rto = "numeric",
-    nv_tfc_inl = "numeric",
-    iv_fDo     = "integer",
-    nm_olc     = "matrix",
-    df_cdt     = "data.frame"
+    ns_slp_min = "numeric",   # Min slope cap in %
+    ns_slp_max = "numeric",   # Max slope cap in %
+    ns_rhy_a   = "numeric",   # Parameter related to the discharge recurrence interval (WetSpa, T = 6)
+    ns_rhy_b   = "numeric",   # Parameter related to the discharge recurrence interval (WetSpa, T = 6)
+    ns_cha_rto = "numeric",   # Ratio of channel width to cell length determining the riparian zone
+    ns_man_rip = "numeric",   # Riparian zone manning n
+    ns_man_cha = "numeric",   # Channel manning n
+    ns_dep_ovl = "numeric",   # Overland deposition coefficient
+    ns_dep_cha = "numeric",   # Channel deposition coefficient
+    nv_enr_rto = "numeric",   # Enrichment ratios
+    nv_tfc_inl = "numeric",   # Inlet transfer coefficients
+    iv_fDo     = "integer",   # Outflow direction vector (ArcGIS coded)
+    nm_olc     = "matrix",    # Catchment outlet coordinates
+    df_cdt     = "data.frame" # Calibration data
+  ),
+  prototype = list(
+    ns_slp_min = 0.001,
+    ns_slp_max = 999.0,
+    ns_rhy_a   = 0.09,
+    ns_rhy_b   = 0.50,
+    ns_cha_rto = 0.5,
+    ns_man_rip = 0.32,
+    ns_man_cha = 0.04,
+    nv_enr_rto = numeric(),
+    nv_tfc_inl = numeric(),
+    iv_fDo     = c(32L, 16L, 8L, 64L, 0L, 4L, 128L, 1L, 2L),
+    nm_olc     = matrix(NA_real_),
+    df_cdt     = data.frame()
   )
 )
 setMethod(
   "initialize",
   "RPhosFateParameters2",
   function(.Object, arguments) {
-    # Min slope cap in %
-    if (!is.null(arguments$ns_slp_min       )) {.Object@ns_slp_min <- arguments$ns_slp_min} else {.Object@ns_slp_min <- 0.001}
+    populateParameterSlots(.Object, arguments)
+  }
+)
+setValidity(
+  "RPhosFateParameters2",
+  function(object) {
+    qassert(object@ns_slp_min, "N1[0,)", .var.name = "ns_slp_min")
+    assertNumber(
+      object@ns_slp_max,
+      lower = object@ns_slp_min,
+      finite = TRUE,
+      .var.name = "ns_slp_max"
+    )
+    qassert(object@ns_rhy_a  , "N1(0,)", .var.name = "ns_rhy_a"  )
+    qassert(object@ns_rhy_b  , "N1[0,)", .var.name = "ns_rhy_b"  )
+    qassert(object@ns_cha_rto, "N1(0,)", .var.name = "ns_cha_rto")
+    qassert(object@ns_man_rip, "N1(0,)", .var.name = "ns_man_rip")
+    qassert(object@ns_man_cha, "N1(0,)", .var.name = "ns_man_cha")
+    qassert(object@ns_dep_ovl, "N1(0,)", .var.name = "ns_dep_ovl")
+    qassert(object@ns_dep_cha, "N1[0,)", .var.name = "ns_dep_cha")
+    qassert(object@iv_fDo    , "I9[0,)", .var.name = "iv_fDo"    )
 
-    # Max slope cap in %
-    if (!is.null(arguments$ns_slp_max       )) {.Object@ns_slp_max <- arguments$ns_slp_max} else {.Object@ns_slp_max <- 999.0}
-
-    # Parameter related to the discharge recurrence interval (WetSpa, T = 6)
-    if (!is.null(arguments$ns_rhy_a         )) {.Object@ns_rhy_a   <- arguments$ns_rhy_a  } else {.Object@ns_rhy_a   <- 0.09}
-
-    # Parameter related to the discharge recurrence interval (WetSpa, T = 6)
-    if (!is.null(arguments$ns_rhy_b         )) {.Object@ns_rhy_b   <- arguments$ns_rhy_b  } else {.Object@ns_rhy_b   <- 0.50}
-
-    # Ratio of channel width to cell length determining the riparian zone
-    if (!is.null(arguments$ns_cha_rto       )) {.Object@ns_cha_rto <- arguments$ns_cha_rto} else {.Object@ns_cha_rto <- 0.5}
-
-    # Riparian zone manning n
-    if (!is.null(arguments$ns_man_rip       )) {.Object@ns_man_rip <- arguments$ns_man_rip} else {.Object@ns_man_rip <- 0.32}
-
-    # Channel manning n
-    if (!is.null(arguments$ns_man_cha       )) {.Object@ns_man_cha <- arguments$ns_man_cha} else {.Object@ns_man_cha <- 0.04}
-
-    # Overland deposition coefficient
-    if (!is.null(arguments$ns_dep_ovl       )) {.Object@ns_dep_ovl <- arguments$ns_dep_ovl} else {stop('"ns_dep_ovl" must be supplied.')}
-
-    # Channel deposition coefficient
-    if (!is.null(arguments$ns_dep_cha       )) {.Object@ns_dep_cha <- arguments$ns_dep_cha} else {stop('"ns_dep_cha" must be supplied.')}
-
-    # Enrichment ratios
-    if (!is.null(names(arguments$nv_enr_rto))) {.Object@nv_enr_rto <- arguments$nv_enr_rto} else {stop('"nv_enr_rto" must be supplied as a named vector.')}
-
-    # Inlet transfer coefficients
-    if (!is.null(names(arguments$nv_tfc_inl))) {.Object@nv_tfc_inl <- arguments$nv_tfc_inl} else {stop('"nv_tfc_inl" must be supplied as a named vector.')}
-
-    # Outflow direction vector (ArcGIS coded)
-    if (!is.null(arguments$iv_fDo           )) {.Object@iv_fDo     <- arguments$iv_fDo    } else {.Object@iv_fDo     <- c(32L, 16L, 8L, 64L, 0L, 4L, 128L, 1L, 2L)}
-
-    # Catchment outlet coordinates
-    if (!is.null(arguments$nm_olc           )) {.Object@nm_olc     <- arguments$nm_olc    } else {.Object@nm_olc     <- matrix()}
-
-    # Calibration data
-    if (!is.null(arguments$df_cdt           )) {.Object@df_cdt     <- arguments$df_cdt    } else {.Object@df_cdt     <- data.frame()}
-
-    .Object
+    TRUE
   }
 )
 
@@ -213,7 +207,6 @@ setClass(
   contains = c("VIRTUAL", "RPhosFateBare")
 )
 
-
 #### Class RPhosFateSS ####
 setClass(
   "RPhosFateSS",
@@ -286,16 +279,17 @@ setClass(
 setClass(
   "RPhosFateHelper",
   slots = c(
-    ex_cmt     = "Extent",
-    is_res     = "integer",
-    is_siz     = "integer",
-    is_rws     = "integer",
-    is_cls     = "integer",
-    iv_fDo_dgl = "integer",
-    im_fDo     = "matrix",
-    im_fDi     = "matrix",
-    cv_met     = "character",
-    order      = "RPhosFateOrder"
+    ex_cmt     = "Extent",        # Extent of catchment area
+    is_res     = "integer",       # Cell length in m
+    is_siz     = "integer",       # Cell area in m^2
+    is_rws     = "integer",       # Number of rows
+    is_cls     = "integer",       # Number of columns
+    iv_fDo_dgl = "integer",       # Diagonal outflow direction vector
+    im_fDo     = "matrix",        # Outflow direction matrix
+    im_fDi     = "matrix",        # Inflow direction matrix
+    cv_rls     = "character",     # Objects holding raster layers
+    cv_met     = "character",     # Implemented calibration quality metrics
+    order      = "RPhosFateOrder" # Transport calculation order
   )
 )
 setMethod(
@@ -305,37 +299,20 @@ setMethod(
     cs_dir_old <- setwd(cmt@cv_dir[1L])
     on.exit(setwd(cs_dir_old))
 
-    # Extent of catchment area
-    .Object@ex_cmt <- extent(cmt@topo@rl_acc_wtd)
-
-    # Cell length in m
-    .Object@is_res <- as.integer(xres(cmt@topo@rl_acc_wtd))
-
-    # Cell area in m^2
-    .Object@is_siz <- as.integer(.Object@is_res^2)
-
-    # Number of rows
-    .Object@is_rws <- nrow(cmt@topo@rl_acc_wtd)
-
-    # Number of columns
-    .Object@is_cls <- ncol(cmt@topo@rl_acc_wtd)
-
-    # Diagonal outflow direction vector
+    .Object@ex_cmt     <- extent(cmt@topo@rl_acc_wtd)
+    .Object@is_res     <- as.integer(xres(cmt@topo@rl_acc_wtd))
+    .Object@is_siz     <- as.integer(.Object@is_res^2)
+    .Object@is_rws     <- nrow(cmt@topo@rl_acc_wtd)
+    .Object@is_cls     <- ncol(cmt@topo@rl_acc_wtd)
     .Object@iv_fDo_dgl <- cmt@parameters@iv_fDo[c(1L, 3L, 7L, 9L)]
+    .Object@im_fDo     <- matrix(cmt@parameters@iv_fDo, 3L)
+    .Object@im_fDi     <- matrix(rev(cmt@parameters@iv_fDo), 3L)
+    .Object@cv_rls     <- c("topo", "erosion", "transport")
 
-    # Outflow direction matrix
-    .Object@im_fDo <- matrix(cmt@parameters@iv_fDo, 3L)
-
-    # Inflow direction matrix
-    .Object@im_fDi <- matrix(rev(cmt@parameters@iv_fDo), 3L)
-
-    # Implemented calibration quality metrics
     .Object@cv_met <- c(
       "NSE", "mNSE", "RMSE", "NRMSE",
       "PBIAS", "RSR", "GMRAE", "MdRAE"
     )
-
-    # Transport calculation order
     if (cmt@ls_ini && file.exists("order.rds")) {
       .Object@order <- readRDS("order.rds")
     }
@@ -348,36 +325,44 @@ setMethod(
 setClass(
   "RPhosFate",
   slots = c(
-    cv_dir     = "character",
-    ls_ini     = "logical",
-    is_MCi     = "integer",
+    cv_dir     = "character", # Project directory
+    ls_ini     = "logical",   # Load parameters from disc?
+    is_MCi     = "integer",   # Monte Carlo iteration
     parameters = "RPhosFateParameters2",
     topo       = "RPhosFateTopo",
     erosion    = "RPhosFateErosion",
     transport  = "RPhosFateTransport",
     substance  = "RPhosFateSubstance",
     helper     = "RPhosFateHelper"
+  ),
+  prototype = list(
+    ls_ini = FALSE,
+    is_MCi = integer()
   )
 )
 setMethod(
   "initialize",
   "RPhosFate",
   function(.Object, arguments) {
-    # Project directory
-    if (!is.null(arguments$cv_dir)) .Object@cv_dir <- arguments$cv_dir else stop('"cv_dir" must be supplied.')
+    argumentNames <- names(arguments)
 
-    # Load parameters from disc?
-    if (!is.null(arguments$ls_ini)) .Object@ls_ini <- arguments$ls_ini else .Object@ls_ini <- FALSE
-
-    # Monte Carlo iteration
-    if (!is.null(arguments$is_MCi)) .Object@is_MCi <- arguments$is_MCi
+    .Object@cv_dir <- arguments$cv_dir
+    if ("ls_ini" %in% argumentNames) {
+      .Object@ls_ini <- arguments$ls_ini
+    }
+    if ("is_MCi" %in% argumentNames) {
+      .Object@is_MCi <- arguments$is_MCi
+    }
+    validObject(.Object)
 
     cs_dir_old <- setwd(.Object@cv_dir[1L])
     on.exit(setwd(cs_dir_old))
 
-    if (!dir.exists("Intermediate") || !dir.exists("Result")) {
-      dir.create("Intermediate", showWarnings = FALSE)
-      dir.create("Result", showWarnings = FALSE)
+    if (!dir.exists("Intermediate")) {
+      dir.create("Intermediate")
+    }
+    if (!dir.exists("Result")) {
+      dir.create("Result")
     }
 
     .Object@substance  <- new("RPhosFateSubstance", .Object)
@@ -387,6 +372,10 @@ setMethod(
     } else if (.Object@ls_ini && file.exists("parameters.rds")) {
       arguments <- parametersRDS2YAML(slotNames(.Object@substance))
     }
+    arguments <- arguments[setdiff(
+      names(arguments),
+      c("RPhosFate", "cv_dir", "ls_ini", "is_MCi")
+    )]
 
     .Object@parameters <- new("RPhosFateParameters2", arguments)
     .Object@topo       <- new("RPhosFateTopo", .Object)
@@ -395,5 +384,15 @@ setMethod(
     .Object@helper     <- new("RPhosFateHelper", .Object)
 
     .Object
+  }
+)
+setValidity(
+  "RPhosFate",
+  function(object) {
+    qassert(object@cv_dir, "S+"    , .var.name = "cv_dir")
+    qassert(object@ls_ini, "B1"    , .var.name = "ls_ini")
+    qassert(object@is_MCi, "I?[0,)", .var.name = "is_MCi")
+
+    TRUE
   }
 )
