@@ -68,7 +68,10 @@ readParameters <- function(arguments) {
   parameters[["nv_enr_rto"]] <- unlist(parameters[["nv_enr_rto"]])
   parameters[["nv_tfc_inl"]] <- unlist(parameters[["nv_tfc_inl"]])
   parameters[["nm_olc"]] <- matrix(parameters[["nm_olc"]], 1L)
-  parameters[["df_cdt"]] <- as.data.frame(parameters[["df_cdt"]])
+  parameters[["df_cdt"]] <- as.data.frame(
+    parameters[["df_cdt"]],
+    stringsAsFactors = FALSE
+  )
 
   modifyList(parameters, arguments)
 }
@@ -92,6 +95,7 @@ writeParameters <- function(parameters) {
   write_yaml(
     c(list(RPhosFate = as.character(packageVersion("RPhosFate"))), parameters),
     "parameters.yaml",
+    precision = 15L,
     indent.mapping.sequence = TRUE
   )
 }
