@@ -34,6 +34,7 @@ Additional_repositories:
     https://gisler.github.io/drat,
     http://R-Forge.R-project.org
 RoxygenNote: 6.1.1
+Roxygen: list(markdown = TRUE)
 Collate:
     'aaa.R'
     'RPhosFate.R'
