@@ -54,9 +54,9 @@ setMethod(
       x = rl_acc_wtd_ovl,
       y = rl_LFa_m,
       fun = function(x, y) {
-        ((x * cmt@helper@is_res)^(1 + y) -
-          ((x - 1) * cmt@helper@is_res)^(1 + y)) / # nolint
-          (cmt@helper@is_res * 22.13^y)
+        ((x * cmt@helpers@is_res)^(1 + y) -
+          ((x - 1) * cmt@helpers@is_res)^(1 + y)) / # nolint
+          (cmt@helpers@is_res * 22.13^y)
       },
       filename = "LFa.img",
       datatype = "FLT4S",
@@ -119,7 +119,7 @@ setMethod(
       cmt@erosion@rl_LFa *
       cmt@erosion@rl_SFa *
       cmt@erosion@rl_CFa *
-      cmt@helper@is_siz * 1e-4
+      cmt@helpers@is_siz * 1e-4
 
     filename <- paste0("ero", cmt@is_MCi, ".img")
     writeRaster(
@@ -149,7 +149,7 @@ setMethod(
     compareRaster(
       cmt@topo@rl_acc_wtd,
       cmt@erosion@rl_ero,
-      slot(cmt@substance, substance)@rl_xxc,
+      slot(cmt@substances, substance)@rl_xxc,
       cmt@topo@rl_clc
     )
 
@@ -158,9 +158,9 @@ setMethod(
 
     filename <- paste0(tolower(substance), "e", cmt@is_MCi, ".img")
     # Emission in kg/cell/yr
-    slot(cmt@substance, substance)@rl_xxe <- overlay(
+    slot(cmt@substances, substance)@rl_xxe <- overlay(
       x = cmt@erosion@rl_ero,
-      y = slot(cmt@substance, substance)@rl_xxc,
+      y = slot(cmt@substances, substance)@rl_xxc,
       z = cmt@topo@rl_clc,
       fun = function(x, y, z) {
         x * y * (1 + z * 1e-2) * 1e-3
@@ -200,7 +200,7 @@ setMethod(
       cmt@topo@rl_acc_wtd,
       function(x) {
         cmt@parameters@ns_rhy_a *
-          (x * cmt@helper@is_siz * 1e-6)^cmt@parameters@ns_rhy_b
+          (x * cmt@helpers@is_siz * 1e-6)^cmt@parameters@ns_rhy_b
       },
       filename = "rhy.img",
       datatype = "FLT4S",
@@ -213,7 +213,7 @@ setMethod(
       dir_sth(
         im_dir = as.matrix(cmt@topo@rl_dir),
         im_sth = as.matrix(cmt@topo@rl_cha),
-        im_fDo = cmt@helper@im_fDo
+        im_fDo = cmt@helpers@im_fDo
       ),
       template = cmt@topo@rl_acc_wtd
     )
@@ -223,7 +223,7 @@ setMethod(
       dir_sth(
         im_dir = as.matrix(cmt@topo@rl_dir),
         im_sth = as.matrix(cmt@topo@rl_rds),
-        im_fDo = cmt@helper@im_fDo
+        im_fDo = cmt@helpers@im_fDo
       ),
       template = cmt@topo@rl_acc_wtd
     )
@@ -239,19 +239,19 @@ setMethod(
     df_out <- findNearestNeighbour(
       rasterToPoints(cmt@topo@rl_inl),
       rasterToPoints(cmt@topo@rl_cha),
-      cmt@helper@ex_cmt
+      cmt@helpers@ex_cmt
     )
 
     # X-coordinates of nearest channel cells to column numbers
-    df_out$Y.x <- (df_out$Y.x + cmt@helper@is_res / 2 -
-      cmt@helper@ex_cmt[1L]) / cmt@helper@is_res
+    df_out$Y.x <- (df_out$Y.x + cmt@helpers@is_res / 2 -
+      cmt@helpers@ex_cmt[1L]) / cmt@helpers@is_res
     # Y-coordinates of nearest channel cells to row numbers
-    df_out$Y.y <- cmt@helper@is_rws - ((df_out$Y.y - cmt@helper@is_res / 2 -
-      cmt@helper@ex_cmt[3L]) / cmt@helper@is_res)
+    df_out$Y.y <- cmt@helpers@is_rws - ((df_out$Y.y - cmt@helpers@is_res / 2 -
+      cmt@helpers@ex_cmt[3L]) / cmt@helpers@is_res)
 
     # Substituting inlet values with integer codes identifying nearest channel
     # cells
-    df_out$code <- as.integer(df_out$Y.y * cmt@helper@is_cls + df_out$Y.x)
+    df_out$code <- as.integer(df_out$Y.y * cmt@helpers@is_cls + df_out$Y.x)
     # Bug in subs() {raster}: use default by and which
     cmt@topo@rl_inl <- subs(cmt@topo@rl_inl, y = df_out[c(3L, 8L)])
 
@@ -298,15 +298,15 @@ setMethod(
     iv_ord_ovl_row <- as.integer(unlist(lapply(
       ar_ord_ovl,
       function(x) {
-        (x + cmt@helper@is_rws) - ceiling(x / cmt@helper@is_rws) *
-          cmt@helper@is_rws
+        (x + cmt@helpers@is_rws) - ceiling(x / cmt@helpers@is_rws) *
+          cmt@helpers@is_rws
       }
     )))
     iv_ord_cha_row <- as.integer(unlist(lapply(
       ar_ord_cha,
       function(x) {
-        (x + cmt@helper@is_rws) - ceiling(x / cmt@helper@is_rws) *
-          cmt@helper@is_rws
+        (x + cmt@helpers@is_rws) - ceiling(x / cmt@helpers@is_rws) *
+          cmt@helpers@is_rws
       }
     )))
 
@@ -314,25 +314,25 @@ setMethod(
     iv_ord_ovl_col <- as.integer(unlist(lapply(
       ar_ord_ovl,
       function(x) {
-        ceiling(x / cmt@helper@is_rws)
+        ceiling(x / cmt@helpers@is_rws)
       }
     )))
     iv_ord_cha_col <- as.integer(unlist(lapply(
       ar_ord_cha,
       function(x) {
-        ceiling(x / cmt@helper@is_rws)
+        ceiling(x / cmt@helpers@is_rws)
       }
     )))
 
     # Overland as well as channel row and column numbers for top-down
     # computation (C++ has zero-based numbering)
-    cmt@helper@order@iv_ord_row <- c(iv_ord_ovl_row, iv_ord_cha_row) - 1L
-    cmt@helper@order@iv_ord_col <- c(iv_ord_ovl_col, iv_ord_cha_col) - 1L
+    cmt@helpers@order@iv_ord_row <- c(iv_ord_ovl_row, iv_ord_cha_row) - 1L
+    cmt@helpers@order@iv_ord_col <- c(iv_ord_ovl_col, iv_ord_cha_col) - 1L
 
     # Reverse overland row and column numbers for bottom-up computation
     # (C++ has zero-based numbering)
-    cmt@helper@order@iv_ord_ovl_row_rev <- rev(iv_ord_ovl_row) - 1L
-    cmt@helper@order@iv_ord_ovl_col_rev <- rev(iv_ord_ovl_col) - 1L
+    cmt@helpers@order@iv_ord_ovl_row_rev <- rev(iv_ord_ovl_row) - 1L
+    cmt@helpers@order@iv_ord_ovl_col_rev <- rev(iv_ord_ovl_col) - 1L
 
     cmt
   }
@@ -359,7 +359,7 @@ setMethod(
       if (substance == "SS") {
         cmt@erosion@rl_ero
       } else {
-        slot(cmt@substance, substance)@rl_xxe
+        slot(cmt@substances, substance)@rl_xxe
       },
       cmt@transport@rl_rhy,
       cmt@topo@rl_slp_cap
@@ -390,8 +390,8 @@ setMethod(
         cmt@parameters@ns_dep_ovl / cmt@parameters@nv_enr_rto[substance]
       },
       ns_tfc_inl = cmt@parameters@nv_tfc_inl[substance],
-      helper     = cmt@helper,
-      order      = cmt@helper@order,
+      helpers    = cmt@helpers,
+      order      = cmt@helpers@order,
       im_cha     = as.matrix(cmt@topo@rl_cha),
       im_dir     = as.matrix(cmt@topo@rl_dir),
       im_inl     = as.matrix(cmt@topo@rl_inl),
@@ -400,7 +400,7 @@ setMethod(
       nm_xxe     = if (substance == "SS") {
         as.matrix(cmt@erosion@rl_ero)
       } else {
-        as.matrix(slot(cmt@substance, substance)@rl_xxe)
+        as.matrix(slot(cmt@substances, substance)@rl_xxe)
       },
       nm_rhy     = as.matrix(cmt@transport@rl_rhy),
       nm_slp     = as.matrix(cmt@topo@rl_slp_cap)
@@ -418,11 +418,11 @@ setMethod(
       writeRaster(raster(li_tpt$nm_xxt_out, template = cmt@topo@rl_acc_wtd), filenames["xxt_out"], datatype = "FLT4S", options = "COMPRESSED=YES", overwrite = TRUE)
       writeRaster(raster(li_tpt$nm_xxt_cld, template = cmt@topo@rl_acc_wtd), filenames["xxt_cld"], datatype = "FLT4S", options = "COMPRESSED=YES", overwrite = TRUE)
       writeRaster(raster(li_tpt$nm_xxt_ctf, template = cmt@topo@rl_acc_wtd), filenames["xxt_ctf"], datatype = "FLT4S", options = "COMPRESSED=YES", overwrite = TRUE)
-      slot(cmt@substance, substance)@rl_xxr     <- raster(filenames["xxr"    ])
-      slot(cmt@substance, substance)@rl_xxt_inp <- raster(filenames["xxt_inp"])
-      slot(cmt@substance, substance)@rl_xxt_out <- raster(filenames["xxt_out"])
-      slot(cmt@substance, substance)@rl_xxt_cld <- raster(filenames["xxt_cld"])
-      slot(cmt@substance, substance)@rl_xxt_ctf <- raster(filenames["xxt_ctf"])
+      slot(cmt@substances, substance)@rl_xxr     <- raster(filenames["xxr"    ])
+      slot(cmt@substances, substance)@rl_xxt_inp <- raster(filenames["xxt_inp"])
+      slot(cmt@substances, substance)@rl_xxt_out <- raster(filenames["xxt_out"])
+      slot(cmt@substances, substance)@rl_xxt_cld <- raster(filenames["xxt_cld"])
+      slot(cmt@substances, substance)@rl_xxt_ctf <- raster(filenames["xxt_ctf"])
     }
     writeRaster(
       raster(li_tpt$nm_xxt, template = cmt@topo@rl_acc_wtd),
@@ -431,7 +431,7 @@ setMethod(
       options = "COMPRESSED=YES",
       overwrite = TRUE
     )
-    slot(cmt@substance, substance)@rl_xxt <- raster(filenames["xxt"])
+    slot(cmt@substances, substance)@rl_xxt <- raster(filenames["xxt"])
 
     cmt
   }

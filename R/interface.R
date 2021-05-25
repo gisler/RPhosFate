@@ -25,10 +25,10 @@ setMethod(
 
     cmt <- erosionPrerequisites(cmt)
     cmt <- erosion(cmt)
-    for (emmisiveSubstance in setdiff(slotNames(cmt@substance), "SS")) {
+    for (emmisiveSubstance in setdiff(slotNames(cmt@substances), "SS")) {
       if (compareRaster(
         cmt@topo@rl_acc_wtd,
-        slot(cmt@substance, emmisiveSubstance)@rl_xxc,
+        slot(cmt@substances, emmisiveSubstance)@rl_xxc,
         stopiffalse = FALSE
       )) {
         cmt <- emission(cmt, emmisiveSubstance)
@@ -61,7 +61,7 @@ setMethod(
         cmt <- emission(cmt, substance)
       }
     }
-    if (length(cmt@helper@order@iv_ord_row) == 0L) {
+    if (length(cmt@helpers@order@iv_ord_row) == 0L) {
       cmt <- transportCalcOrder(cmt)
     }
     cmt <- transport(cmt, substance)
@@ -85,7 +85,7 @@ setMethod(
     df_ggs <- findNearestNeighbour(
       cmt@parameters@df_cdt[, c("x", "y", "ID")],
       rasterToPoints(cmt@topo@rl_cha),
-      cmt@helper@ex_cmt
+      cmt@helpers@ex_cmt
     )
     cmt@parameters@df_cdt[, c("x", "y")] <- df_ggs[, c("Y.x", "Y.y")]
 
@@ -115,7 +115,7 @@ setMethod(
     )
 
     nv_mld <- extract(
-      slot(cmt@substance, substance)@rl_xxt,
+      slot(cmt@substances, substance)@rl_xxt,
       as.matrix(cmt@parameters@df_cdt[, c("x", "y")])
     )
     nv_old <- cmt@parameters@df_cdt[[col]]
@@ -144,11 +144,11 @@ setMethod(
       exp(mean(log(nv_rae), na.rm = TRUE))                         ,
       median(nv_rae, na.rm = TRUE)                                 ,
       1 - (
-        extract(slot(cmt@substance, substance)@rl_xxt, cmt@parameters@nm_olc) /
-          cellStats(slot(cmt@substance, substance)@rl_xxt_inp, sum)
+        extract(slot(cmt@substances, substance)@rl_xxt, cmt@parameters@nm_olc) /
+          cellStats(slot(cmt@substances, substance)@rl_xxt_inp, sum)
       )
     )
-    names(metrics) <- c(cmt@helper@cv_met, "inChannelRetention")
+    names(metrics) <- c(cmt@helpers@cv_met, "inChannelRetention")
 
     cat("NSE:   ", metrics["NSE"  ], "\n", sep = "")
     cat("mNSE:  ", metrics["mNSE" ], "\n", sep = "")
@@ -203,7 +203,7 @@ setMethod(
     assertCol(cmt, col)
     qassert(interval, "N2(0,)")
     qassert(metric, "S1")
-    assertSubset(metric, cmt@helper@cv_met)
+    assertSubset(metric, cmt@helpers@cv_met)
     qassert(tol, "N1(0,)")
     if (!is.null(parameter)) {
       qassert(parameter, "S1")
@@ -257,6 +257,6 @@ setMethod(
     on.exit(setwd(cs_dir_old))
 
     writeParameters(cmt@parameters)
-    saveRDS(cmt@helper@order, "order.rds")
+    saveRDS(cmt@helpers@order, "order.rds")
   }
 )

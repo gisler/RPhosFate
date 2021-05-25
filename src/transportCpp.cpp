@@ -135,7 +135,7 @@ List transportCpp(
   S4 parameters,
   double ns_dep_ovl,
   double ns_tfc_inl,
-  S4 helper,
+  S4 helpers,
   S4 order,
   IntegerMatrix im_cha,
   IntegerMatrix im_dir,
@@ -150,11 +150,11 @@ List transportCpp(
   double ns_man_rip = parameters.slot("ns_man_rip");
   double ns_man_cha = parameters.slot("ns_man_cha");
   double ns_dep_cha = parameters.slot("ns_dep_cha");
-  int is_res = helper.slot("is_res");
-  int is_rws = helper.slot("is_rws");
-  int is_cls = helper.slot("is_cls");
-  IntegerMatrix im_fDo = helper.slot("im_fDo");
-  IntegerMatrix im_fDi = helper.slot("im_fDi");
+  int is_res = helpers.slot("is_res");
+  int is_rws = helpers.slot("is_rws");
+  int is_cls = helpers.slot("is_cls");
+  IntegerMatrix im_fDo = helpers.slot("im_fDo");
+  IntegerMatrix im_fDi = helpers.slot("im_fDi");
   IntegerVector iv_ord_row = order.slot("iv_ord_row");
   IntegerVector iv_ord_col = order.slot("iv_ord_col");
   IntegerVector iv_ord_ovl_row_rev = order.slot("iv_ord_ovl_row_rev");
