@@ -19,7 +19,7 @@ setMethod(
 
       return(slot(slot(cmt@substance, substance), sprintf("rl_%s", layer)))
     } else {
-      for (object in cmt@helper@cv_rls) {
+      for (object in cmt@helper@cv_rlo) {
         if (layer %in% sub("^rl_", "", slotNames(slot(cmt, object)))) {
           return(slot(slot(cmt, object), sprintf("rl_%s", layer)))
         }
