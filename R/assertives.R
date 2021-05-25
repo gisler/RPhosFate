@@ -46,5 +46,5 @@ assertCol <- function(cmt, col) {
 
 assertSubstance <- function(cmt, substance) {
   qassert(substance, "S1")
-  assertSubset(substance, slotNames(cmt@substance))
+  assertSubset(substance, slotNames(cmt@substances))
 }
