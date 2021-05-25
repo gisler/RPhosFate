@@ -41,6 +41,7 @@ Collate:
     'assertives.R'
     'deprecated.R'
     'findNearestNeighbour.R'
+    'gettersSetters.R'
     'input.R'
     'interface.R'
     'utils.R'
