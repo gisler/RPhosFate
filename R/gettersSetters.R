@@ -14,12 +14,12 @@ setMethod(
       assertSubstance(cmt, substance)
       assertSubset(
         layer,
-        sub("^rl_", "", slotNames(slot(cmt@substance, substance)))
+        sub("^rl_", "", slotNames(slot(cmt@substances, substance)))
       )
 
-      return(slot(slot(cmt@substance, substance), sprintf("rl_%s", layer)))
+      return(slot(slot(cmt@substances, substance), sprintf("rl_%s", layer)))
     } else {
-      for (object in cmt@helper@cv_rlo) {
+      for (object in cmt@helpers@cv_rlo) {
         if (layer %in% sub("^rl_", "", slotNames(slot(cmt, object)))) {
           return(slot(slot(cmt, object), sprintf("rl_%s", layer)))
         }

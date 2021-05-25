@@ -245,9 +245,9 @@ setMethod(
   }
 )
 
-#### Class RPhosFateSubstance ####
+#### Class RPhosFateSubstances ####
 setClass(
-  "RPhosFateSubstance",
+  "RPhosFateSubstances",
   slots = c(
     SS = "RPhosFateSS",
     PP = "RPhosFatePP"
@@ -255,7 +255,7 @@ setClass(
 )
 setMethod(
   "initialize",
-  "RPhosFateSubstance",
+  "RPhosFateSubstances",
   function(.Object, cmt) {
     .Object@SS <- new("RPhosFateSS", cmt)
     .Object@PP <- new("RPhosFatePP", cmt)
@@ -275,9 +275,9 @@ setClass(
   )
 )
 
-#### Class RPhosFateHelper ####
+#### Class RPhosFateHelpers ####
 setClass(
-  "RPhosFateHelper",
+  "RPhosFateHelpers",
   slots = c(
     ex_cmt     = "Extent",        # Extent of catchment area
     is_res     = "integer",       # Cell length in m
@@ -294,7 +294,7 @@ setClass(
 )
 setMethod(
   "initialize",
-  "RPhosFateHelper",
+  "RPhosFateHelpers",
   function(.Object, cmt) {
     cs_dir_old <- setwd(cmt@cv_dir[1L])
     on.exit(setwd(cs_dir_old))
@@ -332,8 +332,8 @@ setClass(
     topo       = "RPhosFateTopo",
     erosion    = "RPhosFateErosion",
     transport  = "RPhosFateTransport",
-    substance  = "RPhosFateSubstance",
-    helper     = "RPhosFateHelper"
+    substances = "RPhosFateSubstances",
+    helpers    = "RPhosFateHelpers"
   ),
   prototype = list(
     cv_dir = character(),
@@ -366,13 +366,13 @@ setMethod(
       dir.create("Result")
     }
 
-    .Object@substance  <- new("RPhosFateSubstance", .Object)
+    .Object@substances <- new("RPhosFateSubstances", .Object)
 
     if (.Object@ls_ini && file.exists("parameters.yaml")) {
       arguments <- readParameters(arguments)
       argumentNames <- names(arguments)
     } else if (.Object@ls_ini && file.exists("parameters.rds")) {
-      arguments <- parametersRDS2YAML(slotNames(.Object@substance))
+      arguments <- parametersRDS2YAML(slotNames(.Object@substances))
       argumentNames <- names(arguments)
     }
     arguments <- arguments[setdiff(
@@ -384,7 +384,7 @@ setMethod(
     .Object@topo       <- new("RPhosFateTopo", .Object)
     .Object@erosion    <- new("RPhosFateErosion", .Object)
     .Object@transport  <- new("RPhosFateTransport", .Object)
-    .Object@helper     <- new("RPhosFateHelper", .Object)
+    .Object@helpers    <- new("RPhosFateHelpers", .Object)
 
     .Object
   }
