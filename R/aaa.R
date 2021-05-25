@@ -322,12 +322,32 @@ setMethod(
 )
 
 #### Class RPhosFate ####
+#' RPhosFate
+#'
+#' An S4 object representing a river catchment.
+#'
+#' @slot cv_dir A character vector holding the project root and optionally the
+#'   Monte Carlo input directories.
+#' @slot ls_ini A logical scalar specifying if an existing project shall be
+#'   loaded from disk (defaults to `FALSE`).
+#' @slot is_MCi An integer scalar holding the current Monte Carlo iteration
+#'   (defaults to an integer of length zero).
+#' @slot parameters An S4 object holding the model parameters.
+#' @slot topo An S4 object holding the raster layers related to topography in
+#'   the broader sense.
+#' @slot erosion An S4 object holding the raster layers related to erosion.
+#' @slot transport An S4 object holding raster layers required for modelling
+#'   transport.
+#' @slot substances An S4 object holding the substance containers.
+#' @slot helpers An S4 object holding helper data.
+#'
+#' @export
 setClass(
   "RPhosFate",
   slots = c(
-    cv_dir     = "character", # Project directory
-    ls_ini     = "logical",   # Load parameters from disc?
-    is_MCi     = "integer",   # Monte Carlo iteration
+    cv_dir     = "character",
+    ls_ini     = "logical",
+    is_MCi     = "integer",
     parameters = "RPhosFateParameters2",
     topo       = "RPhosFateTopo",
     erosion    = "RPhosFateErosion",
