@@ -110,7 +110,8 @@ setMethod(
       "numeric",
       any.missing = FALSE,
       nrows = 1L,
-      ncols = 2L
+      ncols = 2L,
+      .var.name = "nm_olc"
     )
 
     nv_mld <- extract(

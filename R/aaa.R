@@ -38,6 +38,8 @@ setClass(
     ns_cha_rto = 0.5,
     ns_man_rip = 0.32,
     ns_man_cha = 0.04,
+    ns_dep_ovl = numeric(),
+    ns_dep_cha = numeric(),
     nv_enr_rto = numeric(),
     nv_tfc_inl = numeric(),
     iv_fDo     = c(32L, 16L, 8L, 64L, 0L, 4L, 128L, 1L, 2L),
@@ -67,8 +69,6 @@ setValidity(
     qassert(object@ns_cha_rto, "N1(0,)", .var.name = "ns_cha_rto")
     qassert(object@ns_man_rip, "N1(0,)", .var.name = "ns_man_rip")
     qassert(object@ns_man_cha, "N1(0,)", .var.name = "ns_man_cha")
-    qassert(object@ns_dep_ovl, "N1(0,)", .var.name = "ns_dep_ovl")
-    qassert(object@ns_dep_cha, "N1[0,)", .var.name = "ns_dep_cha")
     qassert(object@iv_fDo    , "I9[0,)", .var.name = "iv_fDo"    )
 
     TRUE
@@ -336,6 +336,7 @@ setClass(
     helper     = "RPhosFateHelper"
   ),
   prototype = list(
+    cv_dir = character(),
     ls_ini = FALSE,
     is_MCi = integer()
   )
@@ -369,11 +370,13 @@ setMethod(
 
     if (.Object@ls_ini && file.exists("parameters.yaml")) {
       arguments <- readParameters(arguments)
+      argumentNames <- names(arguments)
     } else if (.Object@ls_ini && file.exists("parameters.rds")) {
       arguments <- parametersRDS2YAML(slotNames(.Object@substance))
+      argumentNames <- names(arguments)
     }
     arguments <- arguments[setdiff(
-      names(arguments),
+      argumentNames,
       c("RPhosFate", "cv_dir", "ls_ini", "is_MCi")
     )]
 

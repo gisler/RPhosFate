@@ -1,22 +1,33 @@
 assertdf_cdt <- function(cmt) {
-  assertDataFrame(cmt@parameters@df_cdt, min.rows = 1L, min.cols = 4L)
+  assertDataFrame(
+    cmt@parameters@df_cdt,
+    min.rows = 1L,
+    min.cols = 4L,
+    .var.name = "df_cdt"
+  )
   assertCharacter(
     names(cmt@parameters@df_cdt),
     min.chars = 1L,
     any.missing = FALSE,
     min.len = 4L,
-    unique = TRUE
+    unique = TRUE,
+    .var.name = "names(df_cdt)"
   )
-  assertSubset(c("ID", "x", "y"), names(cmt@parameters@df_cdt))
+  assertSubset(
+    c("ID", "x", "y"),
+    names(cmt@parameters@df_cdt),
+    .var.name = "names(df_cdt)"
+  )
   assertVector(
     cmt@parameters@df_cdt[["ID"]],
     strict = TRUE,
     any.missing = FALSE,
     min.len = 1L,
-    unique = TRUE
+    unique = TRUE,
+    .var.name = 'df_cdt[["ID"]]'
   )
-  qassert(cmt@parameters@df_cdt[["x"]], "N+(0,)")
-  qassert(cmt@parameters@df_cdt[["y"]], "N+(0,)")
+  qassert(cmt@parameters@df_cdt[["x"]], "N+(0,)", .var.name = 'df_cdt[["x"]]')
+  qassert(cmt@parameters@df_cdt[["y"]], "N+(0,)", .var.name = 'df_cdt[["y"]]')
 }
 
 assertCol <- function(cmt, col) {
@@ -29,6 +40,7 @@ assertCol <- function(cmt, col) {
     finite = TRUE,
     all.missing = FALSE,
     min.len = 1L,
+    .var.name =  "df_cdt[[col]]"
   )
 }
 
