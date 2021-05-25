@@ -364,10 +364,20 @@ setMethod(
       cmt@transport@rl_rhy,
       cmt@topo@rl_slp_cap
     )
+    qassert(cmt@parameters@ns_dep_ovl, "N1(0,)", .var.name = "ns_dep_ovl")
+    qassert(cmt@parameters@ns_dep_cha, "N1[0,)", .var.name = "ns_dep_cha")
     if (substance != "SS") {
-      qassert(cmt@parameters@nv_enr_rto[substance], "N1[1,)")
+      qassert(
+        cmt@parameters@nv_enr_rto[substance],
+        "N1[1,)",
+        .var.name = "nv_enr_rto[substance]"
+      )
     }
-    qassert(cmt@parameters@nv_tfc_inl[substance], "N1[0,1]")
+    qassert(
+      cmt@parameters@nv_tfc_inl[substance],
+      "N1[0,1]",
+      .var.name = "nv_tfc_inl[substance]"
+    )
 
     cs_dir_old <- setwd(file.path(cmt@cv_dir[1L], "Result"))
     on.exit(setwd(cs_dir_old))
