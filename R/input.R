@@ -129,16 +129,12 @@ DEMrelatedInput <- function(
   )
 
   rl_wsh <- trim(
-    raster("wsh_ovr.tif")
-  )
-  writeRaster(
-    rl_wsh,
+    raster("wsh_ovr.tif"),
     filename = "wsh.tif",
     datatype = "INT1U",
     options = "COMPRESSED=YES",
     overwrite = TRUE
   )
-  rl_wsh <- raster("wsh.tif")
 
   # Extract DEM by watershed
   rl_dem <- mask(
