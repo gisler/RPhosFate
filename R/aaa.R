@@ -322,23 +322,23 @@ setMethod(
 )
 
 #### Class RPhosFate ####
-#' RPhosFate
+#' RPhosFate Class
 #'
 #' An S4 object representing a river catchment.
 #'
-#' @slot cv_dir A character vector holding the project root and optionally the
-#'   Monte Carlo input directories.
-#' @slot ls_ini A logical scalar specifying if an existing project shall be
-#'   loaded from disk (defaults to `FALSE`).
-#' @slot is_MCi An integer scalar holding the current Monte Carlo iteration
-#'   (defaults to an integer of length zero).
+#' @slot cv_dir A character vector holding the project root (first position) and
+#'   optionally the Monte Carlo input data directory (second position).
+#' @slot ls_ini A logical scalar specifying if an existing project was loaded
+#'   from disk (defaults to `FALSE`).
+#' @slot is_MCi An integer scalar holding the current Monte Carlo iteration if
+#'   applicable (defaults to `integer()`).
 #' @slot parameters An S4 object holding the model parameters.
 #' @slot topo An S4 object holding the raster layers related to topography in
 #'   the broader sense.
 #' @slot erosion An S4 object holding the raster layers related to erosion.
 #' @slot transport An S4 object holding raster layers required for modelling
 #'   transport.
-#' @slot substances An S4 object holding the substance containers.
+#' @slot substances An S4 object holding the substance raster layer containers.
 #' @slot helpers An S4 object holding helper data.
 #'
 #' @export
