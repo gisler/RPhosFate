@@ -3,21 +3,21 @@
 \docType{class}
 \name{RPhosFate-class}
 \alias{RPhosFate-class}
-\title{RPhosFate}
+\title{RPhosFate Class}
 \description{
 An S4 object representing a river catchment.
 }
 \section{Slots}{
 
 \describe{
-\item{\code{cv_dir}}{A character vector holding the project root and optionally the
-Monte Carlo input directories.}
+\item{\code{cv_dir}}{A character vector holding the project root (first position) and
+optionally the Monte Carlo input data directory (second position).}
 
-\item{\code{ls_ini}}{A logical scalar specifying if an existing project shall be
-loaded from disk (defaults to \code{FALSE}).}
+\item{\code{ls_ini}}{A logical scalar specifying if an existing project was loaded
+from disk (defaults to \code{FALSE}).}
 
-\item{\code{is_MCi}}{An integer scalar holding the current Monte Carlo iteration
-(defaults to an integer of length zero).}
+\item{\code{is_MCi}}{An integer scalar holding the current Monte Carlo iteration if
+applicable (defaults to \code{integer()}).}
 
 \item{\code{parameters}}{An S4 object holding the model parameters.}
 
@@ -29,7 +29,7 @@ the broader sense.}
 \item{\code{transport}}{An S4 object holding raster layers required for modelling
 transport.}
 
-\item{\code{substances}}{An S4 object holding the substance containers.}
+\item{\code{substances}}{An S4 object holding the substance raster layer containers.}
 
 \item{\code{helpers}}{An S4 object holding helper data.}
 }}
