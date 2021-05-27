@@ -47,7 +47,24 @@ populateParameterSlots <- function(parameters, arguments) {
   assertSubset(argumentNames, parameterNames)
 
   for (i in seq_along(arguments)) {
-    slot(parameters, argumentNames[i]) <- arguments[[i]]
+    if (argumentNames[i] %in% c("nv_enr_rto", "nv_tfc_inl")) {
+      slot(parameters, argumentNames[i])[intersect(
+        names(slot(parameters, argumentNames[i])),
+        names(arguments[[i]])
+      )] <- arguments[[i]][intersect(
+        names(slot(parameters, argumentNames[i])),
+        names(arguments[[i]])
+      )]
+      slot(parameters, argumentNames[i]) <- c(
+        slot(parameters, argumentNames[i]),
+        arguments[[i]][setdiff(
+          names(arguments[[i]]),
+          names(slot(parameters, argumentNames[i]))
+        )]
+      )
+    } else {
+      slot(parameters, argumentNames[i]) <- arguments[[i]]
+    }
   }
   validObject(parameters)
 
