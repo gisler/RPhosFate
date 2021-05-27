@@ -2,10 +2,130 @@
 NULL
 
 #### Constructors ####
+#' @rdname catchment
 #' @export
 RPhosFate <- function(...) {
   new("RPhosFate", list(...))
 }
+#' Initialise Project
+#'
+#' Create a project from scratch or load an existing one utilising _Erdas
+#' Imagine_ raster files (*.img) from, by convention, the following three
+#' project root subdirectories:
+#' * _Input_
+#' * _Intermediate_
+#' * _Result_
+#'
+#' See subdirectory sections for further information.
+#'
+#' @param \dots Arguments used to initialise the project. See argument sections
+#'   for further information.
+#'
+#' @section _Input_ subdirectory:
+#' This directory holds all possible user input raster data:
+#' * _acc:_ Flow accumulations required for transport (the top-most cells must
+#' have a value of one).
+#' * \emph{acc_wtd:} Weighted flow accumulations (can be equal to _acc_).
+#' * _CFa:_ (R)USLE C-factors.
+#' * _cha:_ Channel cells (may only contain the values 1 and `NA`).
+#' * _clc:_ Clay content of top soils in \% required for substance emissions.
+#' * _dem:_ Digital elevation model in m a.s.l. (optional).
+#' * _dir:_ D8 flow directions required for transport.
+#' * _fid:_ Field IDs (optional).
+#' * _KFa:_ (R)USLE K-factors.
+#' * _lue:_ Land use classes (optional).
+#' * _man:_ Manning's roughness coefficients required for transport.
+#' * _xxc:_ Substance content of top soils in mg/kg required for substance
+#' emissions, for example, _ppc_ (PP).
+#' * _rds:_ Road cells required for transport (0: road cell without subsurface
+#' drainage, 1: road cell with subsurface drainage, `NA`: no road cell).
+#' * _RFa:_ (R)USLE R-factors.
+#' * _slp:_ Slopes in \%.
+#' * _wsh:_ Watershed (optional).
+#'
+#' @section _Intermediate_ subdirectory:
+#' This directory holds intermediate results:
+#' * _inl:_ Cells representing inlets at roads (storm drains).
+#' * _LFa:_ L-factors.
+#' * _rhy:_ Hydraulic radii in m.
+#' * _rip:_ Cells representing the riparian zones within channel cells.
+#' * _SFa:_ RUSLE S-factors.
+#' * \emph{slp_cap:} Capped slopes in \%.
+#'
+#' @section _Result_ subdirectory:
+#' This directory holds the model results:
+#' * _ero:_ Erosion in t/cell/yr.
+#' * _xxe:_ Substance emissions in kg/cell/yr, for example, _ppe_ (PP).
+#' * _xxr:_ Substance retentions in t/cell/yr (SS) or kg/cell/yr, for example,
+#' _ppr_ (PP).
+#' * _xxt:_ Substance transports in t/cell/yr (SS) or kg/cell/yr, for example,
+#' _ppt_ (PP).
+#' * \emph{xxt_cld:} Substance cell loads in t/cell/yr (SS) or kg/cell/yr, for
+#' example, \emph{ppt_cld} (PP).
+#' * \emph{xxt_ctf:} Substance cell transfers in t/cell/yr (SS) or kg/cell/yr,
+#' for example, \emph{ppt_ctf} (PP).
+#' * \emph{xxt_inp:} Substance inputs into surface waters in t/cell/yr (SS) or
+#' kg/cell/yr, for example, \emph{ppt_inp} (PP).
+#' * \emph{xxt_out:} Substance outlet loads in t/cell/yr (SS) or kg/cell/yr, for
+#' example, \emph{ppt_out} (PP).
+#'
+#' @section Data management arguments:
+#' * `cv_dir`: A character vector specifying the project root (first position)
+#' and optionally the Monte Carlo input data directory (second position).
+#' * `ls_ini`: A logical scalar specifying if an existing project shall be
+#' loaded from disk (defaults to `FALSE`). Specified parameters or substance
+#' parameter values via the `\dots` argument take precedence over saved ones.
+#' * `is_MCi`: An integer scalar specifying the current Monte Carlo iteration if
+#' applicable (defaults to `integer()`, which means Monte Carlo simulation mode
+#' is disabled).
+#'
+#' @section Model parameter arguments:
+#' * `ns_slp_min`: A numeric scalar specifying the minimum bounding slope in \%
+#' (defaults to 0.001).
+#' * `ns_slp_max`: A numeric scalar specifying the maximum bounding slope in \%
+#' (defaults to 999.0).
+#' * `ns_rhy_a`: A numeric scalar specifying a network constant depending on the
+#' discharge frequency needed for the calculation of the hydraulic radius, which
+#' in turn is a prerequisite for substance transport (defaults to 0.09
+#' representing a discharge frequency of approximately six years).
+#' * `ns_rhy_b`: A numeric scalar specifying a geometry scaling exponent
+#' depending on the discharge frequency needed for the calculation of the
+#' hydraulic radius, which in turn is a prerequisite for substance transport
+#' (defaults to 0.50 representing a discharge frequency of approximately six
+#' years).
+#' * `ns_cha_rto`: A numeric scalar specifying the ratio of the channel to the
+#' cell width determining the widths of the riparian zones required for
+#' substance transport (defaults to 0.5).
+#' * `ns_man_rip`: A numeric scalar specifying Manning's roughness coefficient
+#' of the riparian zones within channel cells required for substance transport
+#' (defaults to 0.32).
+#' * `ns_man_cha`: A numeric scalar specifying Manning's roughness coefficient
+#' of the channel within channel cells required for substance transport
+#' (defaults to 0.04).
+#' * `ns_dep_ovl`: A numeric scalar specifying the overland deposition
+#' coefficient in \eqn{s^{-1}}{s^(-1)} required for substance transport (no
+#' default).
+#' * `ns_dep_cha`: A numeric scalar specifying the channel deposition
+#' coefficient in \eqn{s^{-1}}{s^(-1)} required for substance transport (no
+#' default). * `nv_enr_rto` A named numeric vector specifying the substance
+#' enrichment ratios required for substance except SS transport, for example,
+#' `c(PP = 2.0)` (no default).
+#' * `nv_tfc_inl`: A named numeric vector specifying the inlet transfer
+#' coefficients required for substance transport, for example, `c(SS = 0.6, PP =
+#' 0.6)` (no default).
+#' * `iv_fDo`: An integer vector specifying the outflow direction vector
+#' required for substance transport (defaults to _ArcGIS_ codes).
+#' * `nm_olc`: A numeric [`matrix`] specifying the catchment outlet coordinates
+#' required for calibration (no default).
+#' * `df_cdt`: A [`data.frame`] with calibration data, which must have at least
+#' the following three columns and one or more columns with substance loads in
+#' t/yr (no default):
+#'   * _ID:_ ID(s) of the gauge(s)
+#'   * _x:_ x-coordinate(s) of the gauge(s)
+#'   * _y:_ y-coordinate(s) of the gauge(s)
+#'
+#' @return An S4 [`RPhosFate-class`] river catchment object.
+#'
 #' @export
 catchment <- function(...) {
   new("RPhosFate", list(...))
