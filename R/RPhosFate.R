@@ -367,12 +367,26 @@ setMethod(
     qassert(cmt@parameters@ns_dep_ovl, "N1(0,)", .var.name = "ns_dep_ovl")
     qassert(cmt@parameters@ns_dep_cha, "N1[0,)", .var.name = "ns_dep_cha")
     if (substance != "SS") {
+      assertCharacter(
+        names(cmt@parameters@nv_enr_rto),
+        min.chars = 1L,
+        any.missing = FALSE,
+        unique = TRUE,
+        .var.name = "names(nv_enr_rto)"
+      )
       qassert(
         cmt@parameters@nv_enr_rto[substance],
         "N1[1,)",
         .var.name = "nv_enr_rto[substance]"
       )
     }
+    assertCharacter(
+      names(cmt@parameters@nv_tfc_inl),
+      min.chars = 1L,
+      any.missing = FALSE,
+      unique = TRUE,
+      .var.name = "names(nv_tfc_inl)"
+    )
     qassert(
       cmt@parameters@nv_tfc_inl[substance],
       "N1[0,1]",

@@ -64,12 +64,12 @@ setValidity(
       finite = TRUE,
       .var.name = "ns_slp_max"
     )
-    qassert(object@ns_rhy_a  , "N1(0,)", .var.name = "ns_rhy_a"  )
-    qassert(object@ns_rhy_b  , "N1[0,)", .var.name = "ns_rhy_b"  )
-    qassert(object@ns_cha_rto, "N1(0,)", .var.name = "ns_cha_rto")
-    qassert(object@ns_man_rip, "N1(0,)", .var.name = "ns_man_rip")
-    qassert(object@ns_man_cha, "N1(0,)", .var.name = "ns_man_cha")
-    qassert(object@iv_fDo    , "I9[0,)", .var.name = "iv_fDo"    )
+    qassert(object@ns_rhy_a  , "N1(0,)" , .var.name = "ns_rhy_a"  )
+    qassert(object@ns_rhy_b  , "N1[0,)" , .var.name = "ns_rhy_b"  )
+    qassert(object@ns_cha_rto, "N1(0,1]", .var.name = "ns_cha_rto")
+    qassert(object@ns_man_rip, "N1(0,)" , .var.name = "ns_man_rip")
+    qassert(object@ns_man_cha, "N1(0,)" , .var.name = "ns_man_cha")
+    qassert(object@iv_fDo    , "I9[0,)" , .var.name = "iv_fDo"    )
 
     TRUE
   }
