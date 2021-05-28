@@ -17,7 +17,7 @@ for further information.}
 An S4 \code{\linkS4class{RPhosFate}} river catchment object.
 }
 \description{
-Create a project from scratch or load an existing one utilising \emph{Erdas
+Creates a project from scratch or loads an existing one utilising \emph{Erdas
 Imagine} raster files (*.img) from, by convention, the following three
 project root subdirectories:
 \itemize{
@@ -25,8 +25,7 @@ project root subdirectories:
 \item \emph{Intermediate}
 \item \emph{Result}
 }
-}
-\details{
+
 See subdirectory sections for further information.
 }
 \section{\emph{Input} subdirectory}{
@@ -37,7 +36,7 @@ This directory holds all possible user input raster data:
 have a value of one).
 \item \emph{acc_wtd:} Weighted flow accumulations (can be equal to \emph{acc}).
 \item \emph{CFa:} (R)USLE C-factors.
-\item \emph{cha:} Channel cells (may only contain the values 1 and \code{NA}).
+\item \emph{cha:} Channel cells (0: channel cell, \code{NA}: no channel cell).
 \item \emph{clc:} Clay content of top soils in \% required for substance emissions.
 \item \emph{dem:} Digital elevation model in m a.s.l. (optional).
 \item \emph{dir:} D8 flow directions required for transport.
