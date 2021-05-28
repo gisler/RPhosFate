@@ -279,8 +279,8 @@ setClass(
 setClass(
   "RPhosFateHelpers",
   slots = c(
-    ex_cmt     = "Extent",        # Extent of catchment area
-    is_res     = "integer",       # Cell length in m
+    ex_cmt     = "Extent",        # Extent of river catchment
+    is_res     = "integer",       # Cell resolution in m
     is_siz     = "integer",       # Cell area in m^2
     is_rws     = "integer",       # Number of rows
     is_cls     = "integer",       # Number of columns
