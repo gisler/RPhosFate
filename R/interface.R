@@ -9,7 +9,8 @@ RPhosFate <- function(...) {
 }
 #' Initialise Project
 #'
-#' Create a project from scratch or load an existing one utilising _Erdas
+#' @description
+#' Creates a project from scratch or loads an existing one utilising _Erdas
 #' Imagine_ raster files (*.img) from, by convention, the following three
 #' project root subdirectories:
 #' * _Input_
@@ -27,7 +28,7 @@ RPhosFate <- function(...) {
 #' have a value of one).
 #' * \emph{acc_wtd:} Weighted flow accumulations (can be equal to _acc_).
 #' * _CFa:_ (R)USLE C-factors.
-#' * _cha:_ Channel cells (may only contain the values 1 and `NA`).
+#' * _cha:_ Channel cells (0: channel cell, `NA`: no channel cell).
 #' * _clc:_ Clay content of top soils in \% required for substance emissions.
 #' * _dem:_ Digital elevation model in m a.s.l. (optional).
 #' * _dir:_ D8 flow directions required for transport.

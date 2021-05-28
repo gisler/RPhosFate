@@ -34,3 +34,6 @@ transport.}
 \item{\code{helpers}}{An S4 object holding helper data.}
 }}
 
+\seealso{
+\code{\link{catchment}}, \code{\link{RPhosFate}}
+}
