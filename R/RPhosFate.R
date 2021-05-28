@@ -6,6 +6,26 @@ setGeneric(
   "erosionPrerequisites",
   function(cmt, ...) standardGeneric("erosionPrerequisites")
 )
+#' Erosion Prerequisites
+#'
+#' Calculates capped slopes, L- and RUSLE S-factors. Weighted flow accumulations
+#' less than one are set to one for the calculation of the L-factors.
+#'
+#' @param cmt An S4 [`RPhosFate-class`] river catchment object.
+#'
+#' @inherit catchment return
+#'
+#' @references
+#' \cite{Desmet, P.J.J., Govers, G., 1996. A GIS procedure for automatically
+#' calculating the USLE LS factor on topographically complex landscape units.
+#' Journal of Soil and Water Conservation 51, 427–433.}
+#' \cite{Renard, K.G., Foster, G.R., Weesies, G.A., McCool, D.K., Yoder, D.C.,
+#' 1997. Predicting soil erosion by water: a guide to conservation planning with
+#' the Revised Universal Soil Loss Equation (RUSLE), Agriculture Handbook. U.S.
+#' Government Printing Office, Washington, DC.}
+#'
+#' @aliases erosionPrerequisites
+#'
 #' @export
 setMethod(
   "erosionPrerequisites",
@@ -95,6 +115,25 @@ setGeneric(
   "erosion",
   function(cmt, ...) standardGeneric("erosion")
 )
+#' Erosion
+#'
+#' Calculates (R)USLE erosion.
+#'
+#' @inheritParams erosionPrerequisites,RPhosFate-method
+#'
+#' @inherit catchment return
+#'
+#' @references
+#' \cite{Renard, K.G., Foster, G.R., Weesies, G.A., McCool, D.K., Yoder, D.C.,
+#' 1997. Predicting soil erosion by water: a guide to conservation planning with
+#' the Revised Universal Soil Loss Equation (RUSLE), Agriculture Handbook. U.S.
+#' Government Printing Office, Washington, DC.}
+#' \cite{Wischmeier, W.H., Smith, D.D., 1978. Predicting rainfall erosion
+#' losses. A guide to conservation planning, Agriculture Handbook. U.S.
+#' Government Printing Office, Washington, DC.}
+#'
+#' @aliases erosion
+#'
 #' @export
 setMethod(
   "erosion",
@@ -140,6 +179,17 @@ setGeneric(
   "emission",
   function(cmt, ...) standardGeneric("emission")
 )
+#' Emission
+#'
+#' Calculates substance emissions.
+#'
+#' @inheritParams erosionPrerequisites,RPhosFate-method
+#' @param substance A character string specifying the substance to calculate.
+#'
+#' @inherit catchment return
+#'
+#' @aliases emission
+#'
 #' @export
 setMethod(
   "emission",
@@ -180,6 +230,17 @@ setGeneric(
   "transportPrerequisites",
   function(cmt, ...) standardGeneric("transportPrerequisites")
 )
+#' Transport Prerequisites
+#'
+#' Calculates hydraulic radii and determines cells representing inlets as well
+#' as riparian zones.
+#'
+#' @inheritParams erosionPrerequisites,RPhosFate-method
+#'
+#' @inherit catchment return
+#'
+#' @aliases transportPrerequisites
+#'
 #' @export
 setMethod(
   "transportPrerequisites",
@@ -269,6 +330,16 @@ setGeneric(
   "transportCalcOrder",
   function(cmt, ...) standardGeneric("transportCalcOrder")
 )
+#' Transport Calculation Order
+#'
+#' Determines the cell transport calculation order.
+#'
+#' @inheritParams erosionPrerequisites,RPhosFate-method
+#'
+#' @inherit catchment return
+#'
+#' @aliases transportCalcOrder
+#'
 #' @export
 setMethod(
   "transportCalcOrder",
@@ -343,6 +414,17 @@ setGeneric(
   "transport",
   function(cmt, ...) standardGeneric("transport")
 )
+#' Transport
+#'
+#' Calculates substance retentions, transports and cell loads as well as
+#' transfers among others.
+#'
+#' @inheritParams emission,RPhosFate-method
+#'
+#' @inherit catchment return
+#'
+#' @aliases transport
+#'
 #' @export
 setMethod(
   "transport",
