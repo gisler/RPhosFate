@@ -6,10 +6,10 @@
 \alias{erosionPrerequisites}
 \title{Erosion Prerequisites}
 \usage{
-\S4method{erosionPrerequisites}{RPhosFate}(cmt)
+\S4method{erosionPrerequisites}{RPhosFate}(x)
 }
 \arguments{
-\item{cmt}{An S4 \code{\linkS4class{RPhosFate}} river catchment object.}
+\item{x}{An S4 \code{\linkS4class{RPhosFate}} river catchment object.}
 }
 \value{
 An S4 \code{\linkS4class{RPhosFate}} river catchment object.

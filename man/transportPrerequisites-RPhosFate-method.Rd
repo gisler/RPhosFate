@@ -6,10 +6,10 @@
 \alias{transportPrerequisites}
 \title{Transport Prerequisites}
 \usage{
-\S4method{transportPrerequisites}{RPhosFate}(cmt)
+\S4method{transportPrerequisites}{RPhosFate}(x)
 }
 \arguments{
-\item{cmt}{An S4 \code{\linkS4class{RPhosFate}} river catchment object.}
+\item{x}{An S4 \code{\linkS4class{RPhosFate}} river catchment object.}
 }
 \value{
 An S4 \code{\linkS4class{RPhosFate}} river catchment object.

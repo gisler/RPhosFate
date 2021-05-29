@@ -135,99 +135,99 @@ catchment <- function(...) {
 #### firstRun ####
 setGeneric(
   "firstRun",
-  function(cmt, ...) standardGeneric("firstRun")
+  function(x, ...) standardGeneric("firstRun")
 )
 #' @export
 setMethod(
   "firstRun",
   "RPhosFate",
-  function(cmt, substance = "PP") {
-    assertSubstance(cmt, substance)
+  function(x, substance = "PP") {
+    assertSubstance(x, substance)
 
-    cmt <- erosionPrerequisites(cmt)
-    cmt <- erosion(cmt)
-    for (emmisiveSubstance in setdiff(slotNames(cmt@substances), "SS")) {
+    x <- erosionPrerequisites(x)
+    x <- erosion(x)
+    for (emmisiveSubstance in setdiff(slotNames(x@substances), "SS")) {
       if (compareRaster(
-        cmt@topo@rl_acc_wtd,
-        slot(cmt@substances, emmisiveSubstance)@rl_xxc,
+        x@topo@rl_acc_wtd,
+        slot(x@substances, emmisiveSubstance)@rl_xxc,
         stopiffalse = FALSE
       )) {
-        cmt <- emission(cmt, emmisiveSubstance)
+        x <- emission(x, emmisiveSubstance)
       }
     }
-    cmt <- transportPrerequisites(cmt)
-    cmt <- transportCalcOrder(cmt)
-    cmt <- transport(cmt, substance)
+    x <- transportPrerequisites(x)
+    x <- transportCalcOrder(x)
+    x <- transport(x, substance)
 
-    cmt
+    x
   }
 )
 
 #### subsequentRun ####
 setGeneric(
   "subsequentRun",
-  function(cmt, ...) standardGeneric("subsequentRun")
+  function(x, ...) standardGeneric("subsequentRun")
 )
 #' @export
 setMethod(
   "subsequentRun",
   "RPhosFate",
-  function(cmt, substance = "PP") {
-    assertSubstance(cmt, substance)
+  function(x, substance = "PP") {
+    assertSubstance(x, substance)
 
-    if (length(cmt@is_MCi) == 1L) {
-      cmt <- erosion(cmt)
+    if (length(x@is_MCi) == 1L) {
+      x <- erosion(x)
 
       if (substance != "SS") {
-        cmt <- emission(cmt, substance)
+        x <- emission(x, substance)
       }
     }
-    if (length(cmt@helpers@order@iv_ord_row) == 0L) {
-      cmt <- transportCalcOrder(cmt)
+    if (length(x@helpers@order@iv_ord_row) == 0L) {
+      x <- transportCalcOrder(x)
     }
-    cmt <- transport(cmt, substance)
+    x <- transport(x, substance)
 
-    cmt
+    x
   }
 )
 
 #### snapGauges ####
 setGeneric(
   "snapGauges",
-  function(cmt, ...) standardGeneric("snapGauges")
+  function(x, ...) standardGeneric("snapGauges")
 )
 #' @export
 setMethod(
   "snapGauges",
   "RPhosFate",
-  function(cmt) {
-    assertdf_cdt(cmt)
+  function(x) {
+    assertdf_cdt(x)
 
     df_ggs <- findNearestNeighbour(
-      cmt@parameters@df_cdt[, c("x", "y", "ID")],
-      rasterToPoints(cmt@topo@rl_cha),
-      cmt@helpers@ex_cmt
+      x@parameters@df_cdt[, c("x", "y", "ID")],
+      rasterToPoints(x@topo@rl_cha),
+      x@helpers@ex_cmt
     )
-    cmt@parameters@df_cdt[, c("x", "y")] <- df_ggs[, c("Y.x", "Y.y")]
+    x@parameters@df_cdt[, c("x", "y")] <- df_ggs[, c("Y.x", "Y.y")]
 
-    cmt
+    x
   }
 )
 
 #### calibrationQuality ####
 setGeneric(
   "calibrationQuality",
-  function(cmt, ...) standardGeneric("calibrationQuality")
+  function(x, ...) standardGeneric("calibrationQuality")
 )
 #' @export
 setMethod(
   "calibrationQuality",
   "RPhosFate",
-  function(cmt, substance = "PP", col) {
-    assertSubstance(cmt, substance)
-    assertCol(cmt, col)
+  function(x, substance = "PP", col) {
+    assertSubstance(x, substance)
+    assertCol(x, col)
     assertMatrix(
-      cmt@parameters@nm_olc,
+      x@parameters@nm_olc,
       "numeric",
       any.missing = FALSE,
       nrows = 1L,
@@ -236,10 +236,10 @@ setMethod(
     )
 
     nv_mld <- extract(
-      slot(cmt@substances, substance)@rl_xxt,
-      as.matrix(cmt@parameters@df_cdt[, c("x", "y")])
+      slot(x@substances, substance)@rl_xxt,
+      as.matrix(x@parameters@df_cdt[, c("x", "y")])
     )
-    nv_old <- cmt@parameters@df_cdt[[col]]
+    nv_old <- x@parameters@df_cdt[[col]]
 
     assertNumeric(
       nv_mld,
@@ -265,11 +265,11 @@ setMethod(
       exp(mean(log(nv_rae), na.rm = TRUE))                         ,
       median(nv_rae, na.rm = TRUE)                                 ,
       1 - (
-        extract(slot(cmt@substances, substance)@rl_xxt, cmt@parameters@nm_olc) /
-          cellStats(slot(cmt@substances, substance)@rl_xxt_inp, sum)
+        extract(slot(x@substances, substance)@rl_xxt, x@parameters@nm_olc) /
+          cellStats(slot(x@substances, substance)@rl_xxt_inp, sum)
       )
     )
-    names(metrics) <- c(cmt@helpers@cv_met, "inChannelRetention")
+    names(metrics) <- c(x@helpers@cv_met, "inChannelRetention")
 
     cat("NSE:   ", metrics["NSE"  ], "\n", sep = "")
     cat("mNSE:  ", metrics["mNSE" ], "\n", sep = "")
@@ -305,14 +305,14 @@ setMethod(
 #### autoCalibrate ####
 setGeneric(
   "autoCalibrate",
-  function(cmt, ...) standardGeneric("autoCalibrate")
+  function(x, ...) standardGeneric("autoCalibrate")
 )
 #' @export
 setMethod(
   "autoCalibrate",
   "RPhosFate",
   function(
-    cmt,
+    x,
     substance,
     col,
     interval,
@@ -320,11 +320,11 @@ setMethod(
     tol = min(interval) * 0.1,
     parameter = NULL
   ) {
-    assertSubstance(cmt, substance)
-    assertCol(cmt, col)
+    assertSubstance(x, substance)
+    assertCol(x, col)
     qassert(interval, "N2(0,)")
     qassert(metric, "S1")
-    assertSubset(metric, cmt@helpers@cv_met)
+    assertSubset(metric, x@helpers@cv_met)
     qassert(tol, "N1(0,)")
     if (!is.null(parameter)) {
       qassert(parameter, "S1")
@@ -334,7 +334,7 @@ setMethod(
     value <- optimize(
       calibrate,
       interval,
-      cmt = cmt,
+      cmt = x,
       substance = substance,
       col = col,
       metric = metric,
@@ -346,11 +346,11 @@ setMethod(
     print(value)
 
     if (!is.null(parameter)) {
-      slot(cmt@parameters, parameter) <- value[[1L]]
+      slot(x@parameters, parameter) <- value[[1L]]
     } else if (substance == "SS") {
-      cmt@parameters@ns_dep_ovl <- value[[1L]]
+      x@parameters@ns_dep_ovl <- value[[1L]]
     } else {
-      cmt@parameters@nv_enr_rto[substance] <- value[[1L]]
+      x@parameters@nv_enr_rto[substance] <- value[[1L]]
     }
 
     if (any(abs(interval - value[[1L]]) <= tol)) {
@@ -360,24 +360,24 @@ setMethod(
       ), call. = FALSE)
     }
 
-    cmt
+    x
   }
 )
 
 #### saveState ####
 setGeneric(
   "saveState",
-  function(cmt, ...) standardGeneric("saveState")
+  function(x, ...) standardGeneric("saveState")
 )
 #' @export
 setMethod(
   "saveState",
   "RPhosFate",
-  function(cmt) {
-    cs_dir_old <- setwd(cmt@cv_dir[1L])
+  function(x) {
+    cs_dir_old <- setwd(x@cv_dir[1L])
     on.exit(setwd(cs_dir_old))
 
-    writeParameters(cmt@parameters)
-    saveRDS(cmt@helpers@order, "order.rds")
+    writeParameters(x@parameters)
+    saveRDS(x@helpers@order, "order.rds")
   }
 )
