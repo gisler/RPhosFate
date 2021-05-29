@@ -24,27 +24,27 @@ Sets one or more model parameters or substance parameter values.
 
 \itemize{
 \item \code{ns_slp_min}: A numeric scalar specifying the minimum bounding slope in \%
-(defaults to 0.001).
+(defaults to \code{0.001}).
 \item \code{ns_slp_max}: A numeric scalar specifying the maximum bounding slope in \%
-(defaults to 999.0).
+(defaults to \code{999.0}).
 \item \code{ns_rhy_a}: A numeric scalar specifying a network constant depending on the
 discharge frequency needed for the calculation of the hydraulic radius, which
-in turn is a prerequisite for substance transport (defaults to 0.09
+in turn is a prerequisite for substance transport (defaults to \code{0.09}
 representing a discharge frequency of approximately six years).
 \item \code{ns_rhy_b}: A numeric scalar specifying a geometry scaling exponent
 depending on the discharge frequency needed for the calculation of the
 hydraulic radius, which in turn is a prerequisite for substance transport
-(defaults to 0.50 representing a discharge frequency of approximately six
+(defaults to \code{0.50} representing a discharge frequency of approximately six
 years).
 \item \code{ns_cha_rto}: A numeric scalar specifying the ratio of the channel to the
 cell width determining the widths of the riparian zones required for
-substance transport (defaults to 0.5).
+substance transport (defaults to \code{0.5}).
 \item \code{ns_man_rip}: A numeric scalar specifying Manning's roughness coefficient
 of the riparian zones within channel cells required for substance transport
-(defaults to 0.32).
+(defaults to \code{0.32}).
 \item \code{ns_man_cha}: A numeric scalar specifying Manning's roughness coefficient
 of the channel within channel cells required for substance transport
-(defaults to 0.04).
+(defaults to \code{0.04}).
 \item \code{ns_dep_ovl}: A numeric scalar specifying the overland deposition
 coefficient in \eqn{s^{-1}}{s^(-1)} required for substance transport (no
 default).

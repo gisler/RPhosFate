@@ -18,7 +18,7 @@ An S4 \code{\linkS4class{RPhosFate}} river catchment object.
 }
 \description{
 Calls \code{\link{transport}} for the specified substance. In Monte Carlo simulation
-mode \code{\link{erosion}} and if applicable \code{\link{emission}} are called as well.
+mode \code{\link{erosion}} and, if applicable, \code{\link{emission}} are called as well.
 }
 \seealso{
 \code{\link{firstRun}}

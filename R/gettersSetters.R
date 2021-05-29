@@ -10,10 +10,10 @@ setGeneric(
 #' @inheritParams erosionPrerequisites,RPhosFate-method
 #' @param i A character string specifying a layer name. Substance related layers
 #'   whose names start with _xx_ are treated differently. They have to be
-#'   queried by their name (not filename), for example, `"xxc"` together with
-#'   the respective substance specified in argument `j`, for example, `"PP"`,
-#'   which queries the particulate phosphorus concentration in top soil. See
-#'   subdirectory sections for further information.
+#'   queried by their name (not filename), for example, `"xxc"` in combination
+#'   with the respective substance specified in argument `j`, for example,
+#'   `"PP"`, which queries the particulate phosphorus concentrations in top
+#'   soils. See subdirectory sections for further information.
 #' @param j A character string specifying a substance if applicable.
 #'
 #' @inheritSection catchment _Input_ subdirectory
@@ -78,7 +78,8 @@ setGeneric(
 #'
 #' @inheritSection catchment Model parameter arguments
 #'
-#' @return Depends on the queried parameter.
+#' @return Depends on the queried parameter. See model parameter arguments
+#'   section for further information.
 #'
 #' @seealso [`setParameter`]
 #'
