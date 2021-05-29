@@ -1,27 +1,27 @@
 #### getLayer ####
 setGeneric(
   "getLayer",
-  function(cmt, ...) standardGeneric("getLayer")
+  function(x, ...) standardGeneric("getLayer")
 )
 #' @export
 setMethod(
   "getLayer",
   "RPhosFate",
-  function(cmt, layer, substance = NULL) {
+  function(x, layer, substance = NULL) {
     qassert(layer, "S1")
 
     if (!is.null(substance)) {
-      assertSubstance(cmt, substance)
+      assertSubstance(x, substance)
       assertSubset(
         layer,
-        sub("^rl_", "", slotNames(slot(cmt@substances, substance)))
+        sub("^rl_", "", slotNames(slot(x@substances, substance)))
       )
 
-      return(slot(slot(cmt@substances, substance), sprintf("rl_%s", layer)))
+      return(slot(slot(x@substances, substance), sprintf("rl_%s", layer)))
     } else {
-      for (object in cmt@helpers@cv_rlo) {
-        if (layer %in% sub("^rl_", "", slotNames(slot(cmt, object)))) {
-          return(slot(slot(cmt, object), sprintf("rl_%s", layer)))
+      for (object in x@helpers@cv_rlo) {
+        if (layer %in% sub("^rl_", "", slotNames(slot(x, object)))) {
+          return(slot(slot(x, object), sprintf("rl_%s", layer)))
         }
       }
     }
@@ -45,32 +45,32 @@ setMethod(
 #### getParameter ####
 setGeneric(
   "getParameter",
-  function(cmt, ...) standardGeneric("getParameter")
+  function(x, ...) standardGeneric("getParameter")
 )
 #' @export
 setMethod(
   "getParameter",
   "RPhosFate",
-  function(cmt, parameter) {
+  function(x, parameter) {
     qassert(parameter, "S1")
-    assertSubset(parameter, slotNames(cmt@parameters))
+    assertSubset(parameter, slotNames(x@parameters))
 
-    slot(cmt@parameters, parameter)
+    slot(x@parameters, parameter)
   }
 )
 
 #### setParameter ####
 setGeneric(
   "setParameter",
-  function(cmt, ...) standardGeneric("setParameter")
+  function(x, ...) standardGeneric("setParameter")
 )
 #' @export
 setMethod(
   "setParameter",
   "RPhosFate",
-  function(cmt, ...) {
-    cmt@parameters <- populateParameterSlots(cmt@parameters, list(...))
+  function(x, ...) {
+    x@parameters <- populateParameterSlots(x@parameters, list(...))
 
-    cmt
+    x
   }
 )
