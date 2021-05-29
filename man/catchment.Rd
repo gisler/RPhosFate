@@ -132,9 +132,10 @@ coefficient in \eqn{s^{-1}}{s^(-1)} required for substance transport (no
 default).
 \item \code{ns_dep_cha}: A numeric scalar specifying the channel deposition
 coefficient in \eqn{s^{-1}}{s^(-1)} required for substance transport (no
-default). * \code{nv_enr_rto} A named numeric vector specifying the substance
-enrichment ratios required for substance except SS transport, for example,
-\code{c(PP = 2.0)} (no default).
+default).
+\item \code{nv_enr_rto} A named numeric vector specifying the substance enrichment
+ratios required for substance except SS transport, for example, \code{c(PP = 2.0)}
+(no default).
 \item \code{nv_tfc_inl}: A named numeric vector specifying the inlet transfer
 coefficients required for substance transport, for example, \code{c(SS = 0.6, PP = 0.6)} (no default).
 \item \code{iv_fDo}: An integer vector specifying the outflow direction vector

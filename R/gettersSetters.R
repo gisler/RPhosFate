@@ -68,6 +68,22 @@ setGeneric(
   "getParameter",
   function(x, ...) standardGeneric("getParameter")
 )
+#' Get Parameter
+#'
+#' Obtains a model parameter.
+#'
+#' @inheritParams erosionPrerequisites,RPhosFate-method
+#' @param parameter A character string specifying a parameter name. See model
+#'   parameter arguments section for further information.
+#'
+#' @inheritSection catchment Model parameter arguments
+#'
+#' @return Depends on the queried parameter.
+#'
+#' @seealso [`setParameter`]
+#'
+#' @aliases getParameter
+#'
 #' @export
 setMethod(
   "getParameter",
@@ -85,6 +101,22 @@ setGeneric(
   "setParameter",
   function(x, ...) standardGeneric("setParameter")
 )
+#' Set Parameter(s)
+#'
+#' Sets one or more model parameters or substance parameter values.
+#'
+#' @inheritParams erosionPrerequisites,RPhosFate-method
+#' @param \dots Names and values of the parameters to set. See model parameter
+#'   arguments section for further information.
+#'
+#' @inheritSection catchment Model parameter arguments
+#'
+#' @inherit catchment return
+#'
+#' @seealso [`getParameter`]
+#'
+#' @aliases setParameter
+#'
 #' @export
 setMethod(
   "setParameter",
