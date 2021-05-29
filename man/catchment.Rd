@@ -36,7 +36,7 @@ This directory holds all possible user input raster data:
 have a value of one).
 \item \emph{acc_wtd:} Weighted flow accumulations (can be equal to \emph{acc}).
 \item \emph{CFa:} (R)USLE C-factors.
-\item \emph{cha:} Channel cells (0: channel cell, \code{NA}: no channel cell).
+\item \emph{cha:} Channel cells (1: channel cell, \code{NA}: no channel cell).
 \item \emph{clc:} Clay content of top soils in \% required for substance emissions.
 \item \emph{dem:} Digital elevation model in m a.s.l. (optional).
 \item \emph{dir:} D8 flow directions required for transport.
