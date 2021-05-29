@@ -18,12 +18,12 @@ adjustExtent <- function(rl, ex) {
 #'   raster digital elevation model.
 #' @param cs_cha A character string specifying a path to a potentially large
 #'   raster providing channels.
-#' @param sp_msk A [`sp::SpatialPolygonsDataFrame-class`] providing a somewhat
+#' @param sp_msk An [`sp::SpatialPolygonsDataFrame-class`] providing a somewhat
 #'   oversized catchment mask used to clip the potentially large input rasters
 #'   for further processing.
-#' @param sp_olp A [`sp::SpatialPointsDataFrame-class`] providing the desired
+#' @param sp_olp An [`sp::SpatialPointsDataFrame-class`] providing the desired
 #'   catchment outlet.
-#' @param sp_sds A [`sp::SpatialPointsDataFrame-class`] providing the mapped
+#' @param sp_sds An [`sp::SpatialPointsDataFrame-class`] providing the mapped
 #'   channel sources.
 #' @param cs_rds An optional character string specifying a path to a potentially
 #'   large raster providing roads.
