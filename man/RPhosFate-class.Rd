@@ -35,5 +35,5 @@ transport.}
 }}
 
 \seealso{
-\code{\link{catchment}}, \code{\link{RPhosFate}}
+\code{\link{RPhosFate}}, \code{\link{catchment}}
 }

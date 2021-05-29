@@ -341,7 +341,7 @@ setMethod(
 #' @slot substances An S4 object holding the substance raster layer containers.
 #' @slot helpers An S4 object holding helper data.
 #'
-#' @seealso [`catchment`], [`RPhosFate`]
+#' @seealso [`RPhosFate`], [`catchment`]
 #'
 #' @export
 setClass(
