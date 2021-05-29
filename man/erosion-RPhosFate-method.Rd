@@ -22,6 +22,7 @@ Calculates (R)USLE erosion.
 1997. Predicting soil erosion by water: a guide to conservation planning with
 the Revised Universal Soil Loss Equation (RUSLE), Agriculture Handbook. U.S.
 Government Printing Office, Washington, DC.}
+
 \cite{Wischmeier, W.H., Smith, D.D., 1978. Predicting rainfall erosion
 losses. A guide to conservation planning, Agriculture Handbook. U.S.
 Government Printing Office, Washington, DC.}

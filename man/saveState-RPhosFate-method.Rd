@@ -15,6 +15,6 @@
 \code{NULL} invisibly.
 }
 \description{
-Saves parameters (\emph{parameters.yaml}) and transport calculation order
-(\emph{order.rds}) to disk.
+Saves parameters \emph{(parameters.yaml)} and transport calculation order
+\emph{(order.rds)} to disk.
 }
