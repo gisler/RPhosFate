@@ -239,6 +239,11 @@ setGeneric(
 #'
 #' @inherit catchment return
 #'
+#' @references
+#' \cite{Molnár, P., Ramírez, J.A., 1998. Energy dissipation theories and
+#' optimal channel characteristics of river networks. Water Resources Research
+#' 34, 1809–1818.}
+#'
 #' @aliases transportPrerequisites
 #'
 #' @export
@@ -422,6 +427,10 @@ setGeneric(
 #' @inheritParams emission,RPhosFate-method
 #'
 #' @inherit catchment return
+#'
+#' @references
+#' \cite{Engman, E.T., 1986. Roughness coefficients for routing surface runoff.
+#' Journal of Irrigation and Drainage Engineering 112, 39–53.}
 #'
 #' @aliases transport
 #'
