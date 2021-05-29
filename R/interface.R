@@ -369,6 +369,17 @@ setGeneric(
   "saveState",
   function(x, ...) standardGeneric("saveState")
 )
+#' Save State
+#'
+#' Saves parameters (_parameters.yaml_) and transport calculation order
+#' (_order.rds_) to disk.
+#'
+#' @inheritParams erosionPrerequisites,RPhosFate-method
+#'
+#' @return `NULL` invisibly.
+#'
+#' @aliases saveState
+#'
 #' @export
 setMethod(
   "saveState",
