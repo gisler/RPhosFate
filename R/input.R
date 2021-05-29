@@ -2,6 +2,56 @@ adjustExtent <- function(rl, ex) {
   extend(crop(rl, ex), ex)
 }
 
+#' DEM Related Input
+#'
+#' @description
+#' Clips and calculates or derives all input data related to the digital
+#' elevation model in the broader sense: \emph{acc, acc_wtd, cha, dem, dir, rds,
+#' slp,} and _wsh._
+#'
+#' Requires [_TauDEM_](http://hydrology.usu.edu/taudem/taudem5/downloads.html)
+#' 5.3.7 to be installed on your computer.
+#'
+#' @param cv_dir A character vector specifying the desired project root
+#'   directory (first position).
+#' @param cs_dem A character string specifying a path to a potentially large
+#'   raster digital elevation model.
+#' @param cs_cha A character string specifying a path to a potentially large
+#'   raster providing channels.
+#' @param sp_msk A [`sp::SpatialPolygonsDataFrame-class`] providing a somewhat
+#'   oversized catchment mask used to clip the potentially large input rasters
+#'   for further processing.
+#' @param sp_olp A [`sp::SpatialPointsDataFrame-class`] providing the desired
+#'   catchment outlet.
+#' @param sp_sds A [`sp::SpatialPointsDataFrame-class`] providing the mapped
+#'   channel sources.
+#' @param cs_rds An optional character string specifying a path to a potentially
+#'   large raster providing roads.
+#' @param cs_wgs An optional character string specifying a path to a potentially
+#'   large raster providing flow accumulation weights.
+#' @param ns_brn A numeric scalar specifying the stream burning step size in m.
+#' @param is_adj A numeric scalar specifying how many cells adjacent to channels
+#'   shall be burnt.
+#' @param is_ths An integer scalar specifying the number of threads to use
+#'   during computation.
+#' @param ls_tmp A logical scalar specifying if the temporary files created
+#'   during computation shall be kept.
+#'
+#' @details
+#' In case no flow accumulation weights are provided, _acc_ and \emph{acc_wtd}
+#' are identical.
+#'
+#' _slp_ represents D8 slopes.
+#'
+#' @return A numeric [`matrix`] specifying the catchment outlet coordinates.
+#'
+#' @references
+#' \cite{Lindsay, J.B., Creed, I.F., 2005. Removal of artifact depressions from
+#' digital elevation models: towards a minimum impact approach. Hydrol. Process.
+#' 19, 3113–3126.}
+#'
+#' @seealso [`RPhosFate`], [`catchment`]
+#'
 #' @export
 DEMrelatedInput <- function(
   cv_dir,
@@ -47,12 +97,14 @@ DEMrelatedInput <- function(
   qassert(is_ths, "X1[1,)")
   qassert(ls_tmp, "B1")
 
-  cs_dir_old <- setwd(cv_dir[1L])
-  on.exit(setwd(cs_dir_old))
+  dir.create(
+    file.path(cv_dir[1L], "Input", "temp"),
+    showWarnings = FALSE,
+    recursive = TRUE
+  )
 
-  dir.create("Input", showWarnings = FALSE)
-  dir.create("temp", showWarnings = FALSE)
-  setwd("temp")
+  cs_dir_old <- file.path(cv_dir[1L], "Input", "temp")
+  on.exit(setwd(cs_dir_old))
 
   # Extract oversized DEM by mask
   rl_dem_ovr <- raster(cs_dem)
@@ -363,7 +415,7 @@ DEMrelatedInput <- function(
         overwrite = TRUE
       )
     },
-    toInput, file.path("..", "Input", sprintf("%s.%s", names(toInput), "img"))
+    toInput, file.path("..", sprintf("%s.%s", names(toInput), "img"))
   )
 
   # Outlet coordinates
