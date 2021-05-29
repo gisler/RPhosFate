@@ -19,6 +19,7 @@ setGeneric(
 #' \cite{Desmet, P.J.J., Govers, G., 1996. A GIS procedure for automatically
 #' calculating the USLE LS factor on topographically complex landscape units.
 #' Journal of Soil and Water Conservation 51, 427–433.}
+#'
 #' \cite{Renard, K.G., Foster, G.R., Weesies, G.A., McCool, D.K., Yoder, D.C.,
 #' 1997. Predicting soil erosion by water: a guide to conservation planning with
 #' the Revised Universal Soil Loss Equation (RUSLE), Agriculture Handbook. U.S.
@@ -128,6 +129,7 @@ setGeneric(
 #' 1997. Predicting soil erosion by water: a guide to conservation planning with
 #' the Revised Universal Soil Loss Equation (RUSLE), Agriculture Handbook. U.S.
 #' Government Printing Office, Washington, DC.}
+#'
 #' \cite{Wischmeier, W.H., Smith, D.D., 1978. Predicting rainfall erosion
 #' losses. A guide to conservation planning, Agriculture Handbook. U.S.
 #' Government Printing Office, Washington, DC.}

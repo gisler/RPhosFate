@@ -24,22 +24,22 @@ RPhosFate <- function(...) {
 #'
 #' @section _Input_ subdirectory:
 #' This directory holds all possible user input raster data:
-#' * _acc:_ Flow accumulations required for transport (the top-most cells must
+#' * _acc:_ Flow accumulations required for transport (the top-most cells should
 #' have a value of one).
 #' * \emph{acc_wtd:} Weighted flow accumulations (can be equal to _acc_).
 #' * _CFa:_ (R)USLE C-factors.
-#' * _cha:_ Channel cells (1: channel cell, `NA`: no channel cell).
-#' * _clc:_ Clay content of top soils in \% required for substance emissions.
+#' * _cha:_ Channel cells (`1`: channel cell, `NA`: no channel cell).
+#' * _clc:_ Clay contents of top soils in \% required for substance emissions.
 #' * _dem:_ Digital elevation model in m a.s.l. (optional).
 #' * _dir:_ D8 flow directions required for transport.
 #' * _fid:_ Field IDs (optional).
 #' * _KFa:_ (R)USLE K-factors.
 #' * _lue:_ Land use classes (optional).
 #' * _man:_ Manning's roughness coefficients required for transport.
-#' * _xxc:_ Substance content of top soils in mg/kg required for substance
-#' emissions, for example, _ppc_ (PP).
-#' * _rds:_ Road cells required for transport (0: road cell without subsurface
-#' drainage, 1: road cell with subsurface drainage, `NA`: no road cell).
+#' * _xxc:_ Substance contents of top soils in mg/kg required for substance
+#' emissions, for example, _ppc_ for PP top soil contents.
+#' * _rds:_ Road cells required for transport (`0`: road cell without subsurface
+#' drainage, `1`: road cell with subsurface drainage, `NA`: no road cell).
 #' * _RFa:_ (R)USLE R-factors.
 #' * _slp:_ Slopes in \%.
 #' * _wsh:_ Watershed (optional).
@@ -56,53 +56,54 @@ RPhosFate <- function(...) {
 #' @section _Result_ subdirectory:
 #' This directory holds the model results:
 #' * _ero:_ Erosion in t/cell/yr.
-#' * _xxe:_ Substance emissions in kg/cell/yr, for example, _ppe_ (PP).
+#' * _xxe:_ Substance emissions in kg/cell/yr, for example, _ppe_ for PP
+#' emissions.
 #' * _xxr:_ Substance retentions in t/cell/yr (SS) or kg/cell/yr, for example,
-#' _ppr_ (PP).
+#' _ppr_ for PP retentions.
 #' * _xxt:_ Substance transports in t/cell/yr (SS) or kg/cell/yr, for example,
-#' _ppt_ (PP).
+#' _ppt_ for PP transports.
 #' * \emph{xxt_cld:} Substance cell loads in t/cell/yr (SS) or kg/cell/yr, for
-#' example, \emph{ppt_cld} (PP).
+#' example, \emph{ppt_cld} for PP cell loads.
 #' * \emph{xxt_ctf:} Substance cell transfers in t/cell/yr (SS) or kg/cell/yr,
-#' for example, \emph{ppt_ctf} (PP).
+#' for example, \emph{ppt_ctf} for PP transfers.
 #' * \emph{xxt_inp:} Substance inputs into surface waters in t/cell/yr (SS) or
-#' kg/cell/yr, for example, \emph{ppt_inp} (PP).
+#' kg/cell/yr, for example, \emph{ppt_inp} for PP inputs into surface waters.
 #' * \emph{xxt_out:} Substance outlet loads in t/cell/yr (SS) or kg/cell/yr, for
-#' example, \emph{ppt_out} (PP).
+#' example, \emph{ppt_out} for PP outlet loads.
 #'
 #' @section Data management arguments:
 #' * `cv_dir`: A character vector specifying the project root (first position)
 #' and optionally the Monte Carlo input data directory (second position).
 #' * `ls_ini`: A logical scalar specifying if an existing project shall be
-#' loaded from disk (defaults to `FALSE`). Specified parameters or substance
-#' parameter values via the `\dots` argument take precedence over saved ones.
+#' loaded from disk (defaults to `FALSE`). Parameters or substance parameter
+#' values specified via the `\dots` argument take precedence over saved ones.
 #' * `is_MCi`: An integer scalar specifying the current Monte Carlo iteration if
 #' applicable (defaults to `integer()`, which means Monte Carlo simulation mode
 #' is disabled).
 #'
 #' @section Model parameter arguments:
 #' * `ns_slp_min`: A numeric scalar specifying the minimum bounding slope in \%
-#' (defaults to 0.001).
+#' (defaults to `0.001`).
 #' * `ns_slp_max`: A numeric scalar specifying the maximum bounding slope in \%
-#' (defaults to 999.0).
+#' (defaults to `999.0`).
 #' * `ns_rhy_a`: A numeric scalar specifying a network constant depending on the
 #' discharge frequency needed for the calculation of the hydraulic radius, which
-#' in turn is a prerequisite for substance transport (defaults to 0.09
+#' in turn is a prerequisite for substance transport (defaults to `0.09`
 #' representing a discharge frequency of approximately six years).
 #' * `ns_rhy_b`: A numeric scalar specifying a geometry scaling exponent
 #' depending on the discharge frequency needed for the calculation of the
 #' hydraulic radius, which in turn is a prerequisite for substance transport
-#' (defaults to 0.50 representing a discharge frequency of approximately six
+#' (defaults to `0.50` representing a discharge frequency of approximately six
 #' years).
 #' * `ns_cha_rto`: A numeric scalar specifying the ratio of the channel to the
 #' cell width determining the widths of the riparian zones required for
-#' substance transport (defaults to 0.5).
+#' substance transport (defaults to `0.5`).
 #' * `ns_man_rip`: A numeric scalar specifying Manning's roughness coefficient
 #' of the riparian zones within channel cells required for substance transport
-#' (defaults to 0.32).
+#' (defaults to `0.32`).
 #' * `ns_man_cha`: A numeric scalar specifying Manning's roughness coefficient
 #' of the channel within channel cells required for substance transport
-#' (defaults to 0.04).
+#' (defaults to `0.04`).
 #' * `ns_dep_ovl`: A numeric scalar specifying the overland deposition
 #' coefficient in \eqn{s^{-1}}{s^(-1)} required for substance transport (no
 #' default).
@@ -143,8 +144,8 @@ setGeneric(
 #' Calls [`erosionPrerequisites`], [`erosion`], [`emission`],
 #' [`transportPrerequisites`], [`transportCalcOrder`] and [`transport`] in the
 #' mentioned order. While [`transport`] is called for the specified substance
-#' only, [`emission`] is called for all substances with a provided top soil
-#' concentration.
+#' only, [`emission`] is called for all substances whose top soil concentrations
+#' have been provided.
 #'
 #' @inheritParams emission,RPhosFate-method
 #'
@@ -188,7 +189,7 @@ setGeneric(
 #' Subsequent Run
 #'
 #' Calls [`transport`] for the specified substance. In Monte Carlo simulation
-#' mode [`erosion`] and if applicable [`emission`] are called as well.
+#' mode [`erosion`] and, if applicable, [`emission`] are called as well.
 #'
 #' @inheritParams emission,RPhosFate-method
 #'
@@ -382,18 +383,20 @@ setGeneric(
 #' @inheritParams calibrationQuality,RPhosFate-method
 #' @param interval A numeric vector specifying the end-points of the interval to
 #'   be searched.
-#' @param metric A character string specifying the metric to optimise.
+#' @param metric A character string specifying the metric to optimise. See
+#'   [`calibrationQuality`] for available metrics.
 #' @param tol A numeric scalar specifying the desired accuracy of the parameter
 #'   used for optimisation (not the metric).
 #' @param parameter By default, SS are optimised utilising the overland
 #'   deposition coefficient and all other substances are optimised utilising
 #'   their respective enrichment ratio. This argument can be used to specify a
 #'   dedicated parameter utilised for optimisation via a character string
-#'   (overland or channel deposition coefficient).
+#'   (overland (`"ns_dep_ovl"`) or channel deposition coefficient
+#'   (`"ns_dep_cha"`)).
 #'
 #' @inherit catchment return
 #'
-#' @seealso [`calibrationQuality`], [`optimize`]
+#' @seealso [`optimize`]
 #'
 #' @aliases autoCalibrate
 #'
@@ -461,8 +464,8 @@ setGeneric(
 )
 #' Save State
 #'
-#' Saves parameters (_parameters.yaml_) and transport calculation order
-#' (_order.rds_) to disk.
+#' Saves parameters _(parameters.yaml)_ and transport calculation order
+#' _(order.rds)_ to disk.
 #'
 #' @inheritParams erosionPrerequisites,RPhosFate-method
 #'

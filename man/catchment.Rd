@@ -32,22 +32,22 @@ See subdirectory sections for further information.
 
 This directory holds all possible user input raster data:
 \itemize{
-\item \emph{acc:} Flow accumulations required for transport (the top-most cells must
+\item \emph{acc:} Flow accumulations required for transport (the top-most cells should
 have a value of one).
 \item \emph{acc_wtd:} Weighted flow accumulations (can be equal to \emph{acc}).
 \item \emph{CFa:} (R)USLE C-factors.
-\item \emph{cha:} Channel cells (1: channel cell, \code{NA}: no channel cell).
-\item \emph{clc:} Clay content of top soils in \% required for substance emissions.
+\item \emph{cha:} Channel cells (\code{1}: channel cell, \code{NA}: no channel cell).
+\item \emph{clc:} Clay contents of top soils in \% required for substance emissions.
 \item \emph{dem:} Digital elevation model in m a.s.l. (optional).
 \item \emph{dir:} D8 flow directions required for transport.
 \item \emph{fid:} Field IDs (optional).
 \item \emph{KFa:} (R)USLE K-factors.
 \item \emph{lue:} Land use classes (optional).
 \item \emph{man:} Manning's roughness coefficients required for transport.
-\item \emph{xxc:} Substance content of top soils in mg/kg required for substance
-emissions, for example, \emph{ppc} (PP).
-\item \emph{rds:} Road cells required for transport (0: road cell without subsurface
-drainage, 1: road cell with subsurface drainage, \code{NA}: no road cell).
+\item \emph{xxc:} Substance contents of top soils in mg/kg required for substance
+emissions, for example, \emph{ppc} for PP top soil contents.
+\item \emph{rds:} Road cells required for transport (\code{0}: road cell without subsurface
+drainage, \code{1}: road cell with subsurface drainage, \code{NA}: no road cell).
 \item \emph{RFa:} (R)USLE R-factors.
 \item \emph{slp:} Slopes in \%.
 \item \emph{wsh:} Watershed (optional).
@@ -72,19 +72,20 @@ This directory holds intermediate results:
 This directory holds the model results:
 \itemize{
 \item \emph{ero:} Erosion in t/cell/yr.
-\item \emph{xxe:} Substance emissions in kg/cell/yr, for example, \emph{ppe} (PP).
+\item \emph{xxe:} Substance emissions in kg/cell/yr, for example, \emph{ppe} for PP
+emissions.
 \item \emph{xxr:} Substance retentions in t/cell/yr (SS) or kg/cell/yr, for example,
-\emph{ppr} (PP).
+\emph{ppr} for PP retentions.
 \item \emph{xxt:} Substance transports in t/cell/yr (SS) or kg/cell/yr, for example,
-\emph{ppt} (PP).
+\emph{ppt} for PP transports.
 \item \emph{xxt_cld:} Substance cell loads in t/cell/yr (SS) or kg/cell/yr, for
-example, \emph{ppt_cld} (PP).
+example, \emph{ppt_cld} for PP cell loads.
 \item \emph{xxt_ctf:} Substance cell transfers in t/cell/yr (SS) or kg/cell/yr,
-for example, \emph{ppt_ctf} (PP).
+for example, \emph{ppt_ctf} for PP transfers.
 \item \emph{xxt_inp:} Substance inputs into surface waters in t/cell/yr (SS) or
-kg/cell/yr, for example, \emph{ppt_inp} (PP).
+kg/cell/yr, for example, \emph{ppt_inp} for PP inputs into surface waters.
 \item \emph{xxt_out:} Substance outlet loads in t/cell/yr (SS) or kg/cell/yr, for
-example, \emph{ppt_out} (PP).
+example, \emph{ppt_out} for PP outlet loads.
 }
 }
 
@@ -94,8 +95,8 @@ example, \emph{ppt_out} (PP).
 \item \code{cv_dir}: A character vector specifying the project root (first position)
 and optionally the Monte Carlo input data directory (second position).
 \item \code{ls_ini}: A logical scalar specifying if an existing project shall be
-loaded from disk (defaults to \code{FALSE}). Specified parameters or substance
-parameter values via the \code{\dots} argument take precedence over saved ones.
+loaded from disk (defaults to \code{FALSE}). Parameters or substance parameter
+values specified via the \code{\dots} argument take precedence over saved ones.
 \item \code{is_MCi}: An integer scalar specifying the current Monte Carlo iteration if
 applicable (defaults to \code{integer()}, which means Monte Carlo simulation mode
 is disabled).
@@ -106,27 +107,27 @@ is disabled).
 
 \itemize{
 \item \code{ns_slp_min}: A numeric scalar specifying the minimum bounding slope in \%
-(defaults to 0.001).
+(defaults to \code{0.001}).
 \item \code{ns_slp_max}: A numeric scalar specifying the maximum bounding slope in \%
-(defaults to 999.0).
+(defaults to \code{999.0}).
 \item \code{ns_rhy_a}: A numeric scalar specifying a network constant depending on the
 discharge frequency needed for the calculation of the hydraulic radius, which
-in turn is a prerequisite for substance transport (defaults to 0.09
+in turn is a prerequisite for substance transport (defaults to \code{0.09}
 representing a discharge frequency of approximately six years).
 \item \code{ns_rhy_b}: A numeric scalar specifying a geometry scaling exponent
 depending on the discharge frequency needed for the calculation of the
 hydraulic radius, which in turn is a prerequisite for substance transport
-(defaults to 0.50 representing a discharge frequency of approximately six
+(defaults to \code{0.50} representing a discharge frequency of approximately six
 years).
 \item \code{ns_cha_rto}: A numeric scalar specifying the ratio of the channel to the
 cell width determining the widths of the riparian zones required for
-substance transport (defaults to 0.5).
+substance transport (defaults to \code{0.5}).
 \item \code{ns_man_rip}: A numeric scalar specifying Manning's roughness coefficient
 of the riparian zones within channel cells required for substance transport
-(defaults to 0.32).
+(defaults to \code{0.32}).
 \item \code{ns_man_cha}: A numeric scalar specifying Manning's roughness coefficient
 of the channel within channel cells required for substance transport
-(defaults to 0.04).
+(defaults to \code{0.04}).
 \item \code{ns_dep_ovl}: A numeric scalar specifying the overland deposition
 coefficient in \eqn{s^{-1}}{s^(-1)} required for substance transport (no
 default).

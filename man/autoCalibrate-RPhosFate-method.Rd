@@ -20,7 +20,8 @@ respective substance loads.}
 \item{interval}{A numeric vector specifying the end-points of the interval to
 be searched.}
 
-\item{metric}{A character string specifying the metric to optimise.}
+\item{metric}{A character string specifying the metric to optimise. See
+\code{\link{calibrationQuality}} for available metrics.}
 
 \item{tol}{A numeric scalar specifying the desired accuracy of the parameter
 used for optimisation (not the metric).}
@@ -29,7 +30,8 @@ used for optimisation (not the metric).}
 deposition coefficient and all other substances are optimised utilising
 their respective enrichment ratio. This argument can be used to specify a
 dedicated parameter utilised for optimisation via a character string
-(overland or channel deposition coefficient).}
+(overland (\code{"ns_dep_ovl"}) or channel deposition coefficient
+(\code{"ns_dep_cha"})).}
 }
 \value{
 An S4 \code{\linkS4class{RPhosFate}} river catchment object.
@@ -39,5 +41,5 @@ Automatically calibrates the model with the help of a combination of golden
 section search and successive parabolic interpolation.
 }
 \seealso{
-\code{\link{calibrationQuality}}, \code{\link{optimize}}
+\code{\link{optimize}}
 }

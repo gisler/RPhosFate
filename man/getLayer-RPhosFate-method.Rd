@@ -16,10 +16,10 @@
 
 \item{i}{A character string specifying a layer name. Substance related layers
 whose names start with \emph{xx} are treated differently. They have to be
-queried by their name (not filename), for example, \code{"xxc"} together with
-the respective substance specified in argument \code{j}, for example, \code{"PP"},
-which queries the particulate phosphorus concentration in top soil. See
-subdirectory sections for further information.}
+queried by their name (not filename), for example, \code{"xxc"} in combination
+with the respective substance specified in argument \code{j}, for example,
+\code{"PP"}, which queries the particulate phosphorus concentrations in top
+soils. See subdirectory sections for further information.}
 
 \item{j}{A character string specifying a substance if applicable.}
 }
@@ -33,22 +33,22 @@ Obtains a project raster layer for further analysis.
 
 This directory holds all possible user input raster data:
 \itemize{
-\item \emph{acc:} Flow accumulations required for transport (the top-most cells must
+\item \emph{acc:} Flow accumulations required for transport (the top-most cells should
 have a value of one).
 \item \emph{acc_wtd:} Weighted flow accumulations (can be equal to \emph{acc}).
 \item \emph{CFa:} (R)USLE C-factors.
-\item \emph{cha:} Channel cells (1: channel cell, \code{NA}: no channel cell).
-\item \emph{clc:} Clay content of top soils in \% required for substance emissions.
+\item \emph{cha:} Channel cells (\code{1}: channel cell, \code{NA}: no channel cell).
+\item \emph{clc:} Clay contents of top soils in \% required for substance emissions.
 \item \emph{dem:} Digital elevation model in m a.s.l. (optional).
 \item \emph{dir:} D8 flow directions required for transport.
 \item \emph{fid:} Field IDs (optional).
 \item \emph{KFa:} (R)USLE K-factors.
 \item \emph{lue:} Land use classes (optional).
 \item \emph{man:} Manning's roughness coefficients required for transport.
-\item \emph{xxc:} Substance content of top soils in mg/kg required for substance
-emissions, for example, \emph{ppc} (PP).
-\item \emph{rds:} Road cells required for transport (0: road cell without subsurface
-drainage, 1: road cell with subsurface drainage, \code{NA}: no road cell).
+\item \emph{xxc:} Substance contents of top soils in mg/kg required for substance
+emissions, for example, \emph{ppc} for PP top soil contents.
+\item \emph{rds:} Road cells required for transport (\code{0}: road cell without subsurface
+drainage, \code{1}: road cell with subsurface drainage, \code{NA}: no road cell).
 \item \emph{RFa:} (R)USLE R-factors.
 \item \emph{slp:} Slopes in \%.
 \item \emph{wsh:} Watershed (optional).
@@ -73,19 +73,20 @@ This directory holds intermediate results:
 This directory holds the model results:
 \itemize{
 \item \emph{ero:} Erosion in t/cell/yr.
-\item \emph{xxe:} Substance emissions in kg/cell/yr, for example, \emph{ppe} (PP).
+\item \emph{xxe:} Substance emissions in kg/cell/yr, for example, \emph{ppe} for PP
+emissions.
 \item \emph{xxr:} Substance retentions in t/cell/yr (SS) or kg/cell/yr, for example,
-\emph{ppr} (PP).
+\emph{ppr} for PP retentions.
 \item \emph{xxt:} Substance transports in t/cell/yr (SS) or kg/cell/yr, for example,
-\emph{ppt} (PP).
+\emph{ppt} for PP transports.
 \item \emph{xxt_cld:} Substance cell loads in t/cell/yr (SS) or kg/cell/yr, for
-example, \emph{ppt_cld} (PP).
+example, \emph{ppt_cld} for PP cell loads.
 \item \emph{xxt_ctf:} Substance cell transfers in t/cell/yr (SS) or kg/cell/yr,
-for example, \emph{ppt_ctf} (PP).
+for example, \emph{ppt_ctf} for PP transfers.
 \item \emph{xxt_inp:} Substance inputs into surface waters in t/cell/yr (SS) or
-kg/cell/yr, for example, \emph{ppt_inp} (PP).
+kg/cell/yr, for example, \emph{ppt_inp} for PP inputs into surface waters.
 \item \emph{xxt_out:} Substance outlet loads in t/cell/yr (SS) or kg/cell/yr, for
-example, \emph{ppt_out} (PP).
+example, \emph{ppt_out} for PP outlet loads.
 }
 }
 

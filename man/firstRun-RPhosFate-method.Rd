@@ -20,8 +20,8 @@ An S4 \code{\linkS4class{RPhosFate}} river catchment object.
 Calls \code{\link{erosionPrerequisites}}, \code{\link{erosion}}, \code{\link{emission}},
 \code{\link{transportPrerequisites}}, \code{\link{transportCalcOrder}} and \code{\link{transport}} in the
 mentioned order. While \code{\link{transport}} is called for the specified substance
-only, \code{\link{emission}} is called for all substances with a provided top soil
-concentration.
+only, \code{\link{emission}} is called for all substances whose top soil concentrations
+have been provided.
 }
 \seealso{
 \code{\link{subsequentRun}}
