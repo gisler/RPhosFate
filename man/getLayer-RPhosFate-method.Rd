@@ -5,7 +5,7 @@
 \alias{getLayer,RPhosFate-method}
 \alias{getLayer}
 \alias{[,RPhosFate,ANY,ANY,ANY-method}
-\title{Query Layer}
+\title{Get Layer}
 \usage{
 \S4method{getLayer}{RPhosFate}(x, i, j = NULL)
 
@@ -27,7 +27,7 @@ subdirectory sections for further information.}
 A \code{\link[raster:RasterLayer-class]{raster::RasterLayer}} object.
 }
 \description{
-Queries a project raster layer for further analysis.
+Obtains a project raster layer for further analysis.
 }
 \section{\emph{Input} subdirectory}{
 

@@ -108,9 +108,10 @@ RPhosFate <- function(...) {
 #' default).
 #' * `ns_dep_cha`: A numeric scalar specifying the channel deposition
 #' coefficient in \eqn{s^{-1}}{s^(-1)} required for substance transport (no
-#' default). * `nv_enr_rto` A named numeric vector specifying the substance
-#' enrichment ratios required for substance except SS transport, for example,
-#' `c(PP = 2.0)` (no default).
+#' default).
+#' * `nv_enr_rto` A named numeric vector specifying the substance enrichment
+#' ratios required for substance except SS transport, for example, `c(PP = 2.0)`
+#' (no default).
 #' * `nv_tfc_inl`: A named numeric vector specifying the inlet transfer
 #' coefficients required for substance transport, for example, `c(SS = 0.6, PP =
 #' 0.6)` (no default).
@@ -137,6 +138,22 @@ setGeneric(
   "firstRun",
   function(x, ...) standardGeneric("firstRun")
 )
+#' First Run
+#'
+#' Calls [`erosionPrerequisites`], [`erosion`], [`emission`],
+#' [`transportPrerequisites`], [`transportCalcOrder`] and [`transport`] in the
+#' mentioned order. While [`transport`] is called for the specified substance
+#' only, [`emission`] is called for all substances with a provided top soil
+#' concentration.
+#'
+#' @inheritParams emission,RPhosFate-method
+#'
+#' @inherit catchment return
+#'
+#' @seealso [`subsequentRun`]
+#'
+#' @aliases firstRun
+#'
 #' @export
 setMethod(
   "firstRun",
@@ -168,6 +185,19 @@ setGeneric(
   "subsequentRun",
   function(x, ...) standardGeneric("subsequentRun")
 )
+#' Subsequent Run
+#'
+#' Calls [`transport`] for the specified substance. In Monte Carlo simulation
+#' mode [`erosion`] and if applicable [`emission`] are called as well.
+#'
+#' @inheritParams emission,RPhosFate-method
+#'
+#' @inherit catchment return
+#'
+#' @seealso [`firstRun`]
+#'
+#' @aliases subsequentRun
+#'
 #' @export
 setMethod(
   "subsequentRun",
@@ -196,6 +226,18 @@ setGeneric(
   "snapGauges",
   function(x, ...) standardGeneric("snapGauges")
 )
+#' Snap Gauge(s)
+#'
+#' Snaps all provided gauges to the nearest channel cell.
+#'
+#' @inheritParams erosionPrerequisites,RPhosFate-method
+#'
+#' @inherit catchment return
+#'
+#' @seealso [`calibrationQuality`]
+#'
+#' @aliases snapGauges
+#'
 #' @export
 setMethod(
   "snapGauges",
@@ -219,6 +261,31 @@ setGeneric(
   "calibrationQuality",
   function(x, ...) standardGeneric("calibrationQuality")
 )
+#' Calibration Quality
+#'
+#' Assesses the model's calibration quality via the following metrics:
+#' * _NSE:_ Nash-Sutcliffe Efficiency
+#' * _mNSE:_ Modified Nash-Sutcliffe Efficiency (`j = 1`)
+#' * _RMSE:_ Root Mean Square Error
+#' * _NRMSE:_ Normalised Root Mean Square Error (normalised by standard
+#' deviation of observations)
+#' * _PBIAS:_ Percent Bias
+#' * _RSR:_ Ratio of the RMSE to the standard deviation of the observations
+#' * _GMRAE:_ Geometric Mean Relative Absolute Error
+#' * _MdRAE:_ Median Relative Absolute Error
+#'
+#' @inheritParams emission,RPhosFate-method
+#' @param col A character string specifying the calibration data column with the
+#'   respective substance loads.
+#'
+#' @return A named numeric vector containing the assessed metrics as well as the
+#'   in-channel retention.
+#'
+#' @seealso [`hydroGOF::NSE`], [`hydroGOF::mNSE`], [`hydroGOF::rmse`],
+#'   [`hydroGOF::nrmse`], [`hydroGOF::pbias`], [`hydroGOF::rsr`], [`snapGauges`]
+#'
+#' @aliases calibrationQuality
+#'
 #' @export
 setMethod(
   "calibrationQuality",
@@ -307,6 +374,29 @@ setGeneric(
   "autoCalibrate",
   function(x, ...) standardGeneric("autoCalibrate")
 )
+#' Automatic Model Calibration
+#'
+#' Automatically calibrates the model with the help of a combination of golden
+#' section search and successive parabolic interpolation.
+#'
+#' @inheritParams calibrationQuality,RPhosFate-method
+#' @param interval A numeric vector specifying the end-points of the interval to
+#'   be searched.
+#' @param metric A character string specifying the metric to optimise.
+#' @param tol A numeric scalar specifying the desired accuracy of the parameter
+#'   used for optimisation (not the metric).
+#' @param parameter By default, SS are optimised utilising the overland
+#'   deposition coefficient and all other substances are optimised utilising
+#'   their respective enrichment ratio. This argument can be used to specify a
+#'   dedicated parameter utilised for optimisation via a character string
+#'   (overland or channel deposition coefficient).
+#'
+#' @inherit catchment return
+#'
+#' @seealso [`calibrationQuality`], [`optimize`]
+#'
+#' @aliases autoCalibrate
+#'
 #' @export
 setMethod(
   "autoCalibrate",
