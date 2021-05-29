@@ -29,6 +29,18 @@ setMethod(
     stop(sprintf("Layer %s was not found.", deparse(layer)), call. = FALSE)
   }
 )
+#' @export
+setMethod(
+  "[",
+  "RPhosFate",
+  function(x, i, j) {
+    if (missing(j)) {
+      j <- NULL
+    }
+
+    getLayer(x, i, j)
+  }
+)
 
 #### getParameter ####
 setGeneric(
