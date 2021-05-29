@@ -18,14 +18,14 @@ raster digital elevation model.}
 \item{cs_cha}{A character string specifying a path to a potentially large
 raster providing channels.}
 
-\item{sp_msk}{A \code{\link[sp:SpatialPolygonsDataFrame-class]{sp::SpatialPolygonsDataFrame}} providing a somewhat
+\item{sp_msk}{An \code{\link[sp:SpatialPolygonsDataFrame-class]{sp::SpatialPolygonsDataFrame}} providing a somewhat
 oversized catchment mask used to clip the potentially large input rasters
 for further processing.}
 
-\item{sp_olp}{A \code{\link[sp:SpatialPointsDataFrame-class]{sp::SpatialPointsDataFrame}} providing the desired
+\item{sp_olp}{An \code{\link[sp:SpatialPointsDataFrame-class]{sp::SpatialPointsDataFrame}} providing the desired
 catchment outlet.}
 
-\item{sp_sds}{A \code{\link[sp:SpatialPointsDataFrame-class]{sp::SpatialPointsDataFrame}} providing the mapped
+\item{sp_sds}{An \code{\link[sp:SpatialPointsDataFrame-class]{sp::SpatialPointsDataFrame}} providing the mapped
 channel sources.}
 
 \item{cs_rds}{An optional character string specifying a path to a potentially
