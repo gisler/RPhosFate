@@ -1,4 +1,3 @@
-#' @export
 findNearestNeighbour <- function(X, Y, Extent) {
   win <- as.owin(Extent[1:4])
   pppX <- as.ppp(X, W = win)

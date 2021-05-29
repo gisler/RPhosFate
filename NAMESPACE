@@ -3,7 +3,6 @@
 export(DEMrelatedInput)
 export(RPhosFate)
 export(catchment)
-export(findNearestNeighbour)
 exportClasses(RPhosFate)
 exportMethods("[")
 exportMethods(autoCalibrate)
