@@ -18,3 +18,8 @@ An S4 \code{\linkS4class{RPhosFate}} river catchment object.
 Calculates hydraulic radii and determines cells representing inlets as well
 as riparian zones.
 }
+\references{
+\cite{Molnár, P., Ramírez, J.A., 1998. Energy dissipation theories and
+optimal channel characteristics of river networks. Water Resources Research
+34, 1809–1818.}
+}

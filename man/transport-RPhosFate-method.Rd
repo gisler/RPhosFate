@@ -20,3 +20,7 @@ An S4 \code{\linkS4class{RPhosFate}} river catchment object.
 Calculates substance retentions, transports and cell loads as well as
 transfers among others.
 }
+\references{
+\cite{Engman, E.T., 1986. Roughness coefficients for routing surface runoff.
+Journal of Irrigation and Drainage Engineering 112, 39–53.}
+}
