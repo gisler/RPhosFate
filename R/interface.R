@@ -28,7 +28,7 @@ RPhosFate <- function(...) {
 #' have a value of one).
 #' * \emph{acc_wtd:} Weighted flow accumulations (can be equal to _acc_).
 #' * _CFa:_ (R)USLE C-factors.
-#' * _cha:_ Channel cells (0: channel cell, `NA`: no channel cell).
+#' * _cha:_ Channel cells (1: channel cell, `NA`: no channel cell).
 #' * _clc:_ Clay content of top soils in \% required for substance emissions.
 #' * _dem:_ Digital elevation model in m a.s.l. (optional).
 #' * _dir:_ D8 flow directions required for transport.
