@@ -6,10 +6,10 @@
 \alias{transport}
 \title{Transport}
 \usage{
-\S4method{transport}{RPhosFate}(cmt, substance = "PP")
+\S4method{transport}{RPhosFate}(x, substance = "PP")
 }
 \arguments{
-\item{cmt}{An S4 \code{\linkS4class{RPhosFate}} river catchment object.}
+\item{x}{An S4 \code{\linkS4class{RPhosFate}} river catchment object.}
 
 \item{substance}{A character string specifying the substance to calculate.}
 }

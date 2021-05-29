@@ -4,14 +4,14 @@ NULL
 #### erosionPrerequisites ####
 setGeneric(
   "erosionPrerequisites",
-  function(cmt, ...) standardGeneric("erosionPrerequisites")
+  function(x, ...) standardGeneric("erosionPrerequisites")
 )
 #' Erosion Prerequisites
 #'
 #' Calculates capped slopes, L- and RUSLE S-factors. Weighted flow accumulations
 #' less than one are set to one for the calculation of the L-factors.
 #'
-#' @param cmt An S4 [`RPhosFate-class`] river catchment object.
+#' @param x An S4 [`RPhosFate-class`] river catchment object.
 #'
 #' @inherit catchment return
 #'
@@ -30,28 +30,28 @@ setGeneric(
 setMethod(
   "erosionPrerequisites",
   "RPhosFate",
-  function(cmt) {
-    compareRaster(cmt@topo@rl_acc_wtd, cmt@topo@rl_slp, cmt@topo@rl_cha)
+  function(x) {
+    compareRaster(x@topo@rl_acc_wtd, x@topo@rl_slp, x@topo@rl_cha)
 
-    cs_dir_old <- setwd(file.path(cmt@cv_dir[1L], "Intermediate"))
+    cs_dir_old <- setwd(file.path(x@cv_dir[1L], "Intermediate"))
     on.exit(setwd(cs_dir_old))
 
     # Capped slope in % (also relevant for transport)
-    cmt@topo@rl_slp_cap <- cmt@topo@rl_slp
-    cmt@topo@rl_slp_cap[cmt@topo@rl_slp_cap < cmt@parameters@ns_slp_min] <- cmt@parameters@ns_slp_min
-    cmt@topo@rl_slp_cap[cmt@topo@rl_slp_cap > cmt@parameters@ns_slp_max] <- cmt@parameters@ns_slp_max
+    x@topo@rl_slp_cap <- x@topo@rl_slp
+    x@topo@rl_slp_cap[x@topo@rl_slp_cap < x@parameters@ns_slp_min] <- x@parameters@ns_slp_min
+    x@topo@rl_slp_cap[x@topo@rl_slp_cap > x@parameters@ns_slp_max] <- x@parameters@ns_slp_max
 
     # Capped slope in radian
     rl_slp_cap_rad <- calc(
-      cmt@topo@rl_slp_cap,
+      x@topo@rl_slp_cap,
       function(x) {
         atan(x * 1e-2)
       }
     )
 
     # Weighted overland flow accumulation
-    rl_acc_wtd_ovl <- cmt@topo@rl_acc_wtd
-    rl_acc_wtd_ovl[!is.na(cmt@topo@rl_cha)] <- NA_real_
+    rl_acc_wtd_ovl <- x@topo@rl_acc_wtd
+    rl_acc_wtd_ovl[!is.na(x@topo@rl_cha)] <- NA_real_
     rl_acc_wtd_ovl[rl_acc_wtd_ovl < 1] <- 1
 
     # Ratio of rill to interrill erosion
@@ -70,13 +70,13 @@ setMethod(
     )
 
     # L factor
-    cmt@erosion@rl_LFa <- overlay(
+    is_res = x@helpers@is_res
+    x@erosion@rl_LFa <- overlay(
       x = rl_acc_wtd_ovl,
       y = rl_LFa_m,
       fun = function(x, y) {
-        ((x * cmt@helpers@is_res)^(1 + y) -
-          ((x - 1) * cmt@helpers@is_res)^(1 + y)) / # nolint
-          (cmt@helpers@is_res * 22.13^y)
+        ((x * is_res)^(1 + y) - ((x - 1) * is_res)^(1 + y)) / # nolint
+          (is_res * 22.13^y)
       },
       filename = "LFa.img",
       datatype = "FLT4S",
@@ -85,9 +85,9 @@ setMethod(
     )
 
     # S factor
-    cmt@erosion@rl_SFa <- overlay(
+    x@erosion@rl_SFa <- overlay(
       x = rl_slp_cap_rad,
-      y = cmt@topo@rl_slp_cap,
+      y = x@topo@rl_slp_cap,
       fun = function(x, y) {
         ifelse(y < 9, 10.8 * sin(x) + 0.03, 16.8 * sin(x) - 0.5)
       },
@@ -98,22 +98,22 @@ setMethod(
     )
 
     writeRaster(
-      cmt@topo@rl_slp_cap,
+      x@topo@rl_slp_cap,
       "slp_cap.img",
       datatype = "FLT4S",
       options = "COMPRESSED=YES",
       overwrite = TRUE
     )
-    cmt@topo@rl_slp_cap <- raster("slp_cap.img")
+    x@topo@rl_slp_cap <- raster("slp_cap.img")
 
-    cmt
+    x
   }
 )
 
 #### erosion ####
 setGeneric(
   "erosion",
-  function(cmt, ...) standardGeneric("erosion")
+  function(x, ...) standardGeneric("erosion")
 )
 #' Erosion
 #'
@@ -138,46 +138,46 @@ setGeneric(
 setMethod(
   "erosion",
   "RPhosFate",
-  function(cmt) {
+  function(x) {
     compareRaster(
-      cmt@topo@rl_acc_wtd,
-      cmt@erosion@rl_RFa,
-      cmt@erosion@rl_KFa,
-      cmt@erosion@rl_LFa,
-      cmt@erosion@rl_SFa,
-      cmt@erosion@rl_CFa
+      x@topo@rl_acc_wtd,
+      x@erosion@rl_RFa,
+      x@erosion@rl_KFa,
+      x@erosion@rl_LFa,
+      x@erosion@rl_SFa,
+      x@erosion@rl_CFa
     )
 
-    cs_dir_old <- setwd(file.path(cmt@cv_dir[1L], "Result"))
+    cs_dir_old <- setwd(file.path(x@cv_dir[1L], "Result"))
     on.exit(setwd(cs_dir_old))
 
     # Erosion in t/cell/yr
-    cmt@erosion@rl_ero <-
-      cmt@erosion@rl_RFa *
-      cmt@erosion@rl_KFa *
-      cmt@erosion@rl_LFa *
-      cmt@erosion@rl_SFa *
-      cmt@erosion@rl_CFa *
-      cmt@helpers@is_siz * 1e-4
+    x@erosion@rl_ero <-
+      x@erosion@rl_RFa *
+      x@erosion@rl_KFa *
+      x@erosion@rl_LFa *
+      x@erosion@rl_SFa *
+      x@erosion@rl_CFa *
+      x@helpers@is_siz * 1e-4
 
-    filename <- paste0("ero", cmt@is_MCi, ".img")
+    filename <- paste0("ero", x@is_MCi, ".img")
     writeRaster(
-      cmt@erosion@rl_ero,
+      x@erosion@rl_ero,
       filename,
       datatype = "FLT4S",
       options = "COMPRESSED=YES",
       overwrite = TRUE
     )
-    cmt@erosion@rl_ero <- raster(filename)
+    x@erosion@rl_ero <- raster(filename)
 
-    cmt
+    x
   }
 )
 
 #### emission ####
 setGeneric(
   "emission",
-  function(cmt, ...) standardGeneric("emission")
+  function(x, ...) standardGeneric("emission")
 )
 #' Emission
 #'
@@ -194,24 +194,24 @@ setGeneric(
 setMethod(
   "emission",
   "RPhosFate",
-  function(cmt, substance = "PP") {
-    assertSubstance(cmt, substance)
+  function(x, substance = "PP") {
+    assertSubstance(x, substance)
     compareRaster(
-      cmt@topo@rl_acc_wtd,
-      cmt@erosion@rl_ero,
-      slot(cmt@substances, substance)@rl_xxc,
-      cmt@topo@rl_clc
+      x@topo@rl_acc_wtd,
+      x@erosion@rl_ero,
+      slot(x@substances, substance)@rl_xxc,
+      x@topo@rl_clc
     )
 
-    cs_dir_old <- setwd(file.path(cmt@cv_dir[1L], "Result"))
+    cs_dir_old <- setwd(file.path(x@cv_dir[1L], "Result"))
     on.exit(setwd(cs_dir_old))
 
-    filename <- paste0(tolower(substance), "e", cmt@is_MCi, ".img")
+    filename <- paste0(tolower(substance), "e", x@is_MCi, ".img")
     # Emission in kg/cell/yr
-    slot(cmt@substances, substance)@rl_xxe <- overlay(
-      x = cmt@erosion@rl_ero,
-      y = slot(cmt@substances, substance)@rl_xxc,
-      z = cmt@topo@rl_clc,
+    slot(x@substances, substance)@rl_xxe <- overlay(
+      x = x@erosion@rl_ero,
+      y = slot(x@substances, substance)@rl_xxc,
+      z = x@topo@rl_clc,
       fun = function(x, y, z) {
         x * y * (1 + z * 1e-2) * 1e-3
       },
@@ -221,14 +221,14 @@ setMethod(
       overwrite = TRUE
     )
 
-    cmt
+    x
   }
 )
 
 #### transportPrerequisites ####
 setGeneric(
   "transportPrerequisites",
-  function(cmt, ...) standardGeneric("transportPrerequisites")
+  function(x, ...) standardGeneric("transportPrerequisites")
 )
 #' Transport Prerequisites
 #'
@@ -250,23 +250,25 @@ setGeneric(
 setMethod(
   "transportPrerequisites",
   "RPhosFate",
-  function(cmt) {
+  function(x) {
     compareRaster(
-      cmt@topo@rl_acc_wtd,
-      cmt@topo@rl_dir,
-      cmt@topo@rl_cha,
-      cmt@topo@rl_rds
+      x@topo@rl_acc_wtd,
+      x@topo@rl_dir,
+      x@topo@rl_cha,
+      x@topo@rl_rds
     )
 
-    cs_dir_old <- setwd(file.path(cmt@cv_dir[1L], "Intermediate"))
+    cs_dir_old <- setwd(file.path(x@cv_dir[1L], "Intermediate"))
     on.exit(setwd(cs_dir_old))
 
     # Hydraulic radius in m
-    cmt@transport@rl_rhy <- calc(
-      cmt@topo@rl_acc_wtd,
+    ns_rhy_a <- x@parameters@ns_rhy_a
+    ns_rhy_b <- x@parameters@ns_rhy_b
+    is_siz <- x@helpers@is_siz
+    x@transport@rl_rhy <- calc(
+      x@topo@rl_acc_wtd,
       function(x) {
-        cmt@parameters@ns_rhy_a *
-          (x * cmt@helpers@is_siz * 1e-6)^cmt@parameters@ns_rhy_b
+        ns_rhy_a * (x * is_siz * 1e-6)^ns_rhy_b
       },
       filename = "rhy.img",
       datatype = "FLT4S",
@@ -275,65 +277,65 @@ setMethod(
     )
 
     # Riparian zone cells
-    cmt@topo@rl_rip <- raster(
+    x@topo@rl_rip <- raster(
       dir_sth(
-        im_dir = as.matrix(cmt@topo@rl_dir),
-        im_sth = as.matrix(cmt@topo@rl_cha),
-        im_fDo = cmt@helpers@im_fDo
+        im_dir = as.matrix(x@topo@rl_dir),
+        im_sth = as.matrix(x@topo@rl_cha),
+        im_fDo = x@helpers@im_fDo
       ),
-      template = cmt@topo@rl_acc_wtd
+      template = x@topo@rl_acc_wtd
     )
 
     # Inlet cells
-    cmt@topo@rl_inl <- raster(
+    x@topo@rl_inl <- raster(
       dir_sth(
-        im_dir = as.matrix(cmt@topo@rl_dir),
-        im_sth = as.matrix(cmt@topo@rl_rds),
-        im_fDo = cmt@helpers@im_fDo
+        im_dir = as.matrix(x@topo@rl_dir),
+        im_sth = as.matrix(x@topo@rl_rds),
+        im_fDo = x@helpers@im_fDo
       ),
-      template = cmt@topo@rl_acc_wtd
+      template = x@topo@rl_acc_wtd
     )
 
     # No inlet cells at channel cells
-    cmt@topo@rl_inl[!is.na(cmt@topo@rl_cha)] <- NA_integer_
+    x@topo@rl_inl[!is.na(x@topo@rl_cha)] <- NA_integer_
     # No riparian zone cells at road cells
-    cmt@topo@rl_rip[!is.na(cmt@topo@rl_rds)] <- NA_integer_
+    x@topo@rl_rip[!is.na(x@topo@rl_rds)] <- NA_integer_
     # No inlet cells at riparian zone cells
-    cmt@topo@rl_inl[!is.na(cmt@topo@rl_rip)] <- NA_integer_
+    x@topo@rl_inl[!is.na(x@topo@rl_rip)] <- NA_integer_
 
     # Nearest channel cells for inlet cells
     df_out <- findNearestNeighbour(
-      rasterToPoints(cmt@topo@rl_inl),
-      rasterToPoints(cmt@topo@rl_cha),
-      cmt@helpers@ex_cmt
+      rasterToPoints(x@topo@rl_inl),
+      rasterToPoints(x@topo@rl_cha),
+      x@helpers@ex_cmt
     )
 
     # X-coordinates of nearest channel cells to column numbers
-    df_out$Y.x <- (df_out$Y.x + cmt@helpers@is_res / 2 -
-      cmt@helpers@ex_cmt[1L]) / cmt@helpers@is_res
+    df_out$Y.x <- (df_out$Y.x + x@helpers@is_res / 2 -
+      x@helpers@ex_cmt[1L]) / x@helpers@is_res
     # Y-coordinates of nearest channel cells to row numbers
-    df_out$Y.y <- cmt@helpers@is_rws - ((df_out$Y.y - cmt@helpers@is_res / 2 -
-      cmt@helpers@ex_cmt[3L]) / cmt@helpers@is_res)
+    df_out$Y.y <- x@helpers@is_rws - ((df_out$Y.y - x@helpers@is_res / 2 -
+      x@helpers@ex_cmt[3L]) / x@helpers@is_res)
 
     # Substituting inlet values with integer codes identifying nearest channel
     # cells
-    df_out$code <- as.integer(df_out$Y.y * cmt@helpers@is_cls + df_out$Y.x)
+    df_out$code <- as.integer(df_out$Y.y * x@helpers@is_cls + df_out$Y.x)
     # Bug in subs() {raster}: use default by and which
-    cmt@topo@rl_inl <- subs(cmt@topo@rl_inl, y = df_out[c(3L, 8L)])
+    x@topo@rl_inl <- subs(x@topo@rl_inl, y = df_out[c(3L, 8L)])
 
-    writeRaster(cmt@topo@rl_rip, "rip.img", datatype = "INT4S", options = "COMPRESSED=YES", overwrite = TRUE)
-    writeRaster(cmt@topo@rl_inl, "inl.img", datatype = "INT4S", options = "COMPRESSED=YES", overwrite = TRUE)
-    cmt@topo@rl_rip <- raster("rip.img")
-    cmt@topo@rl_inl <- raster("inl.img")
+    writeRaster(x@topo@rl_rip, "rip.img", datatype = "INT4S", options = "COMPRESSED=YES", overwrite = TRUE)
+    writeRaster(x@topo@rl_inl, "inl.img", datatype = "INT4S", options = "COMPRESSED=YES", overwrite = TRUE)
+    x@topo@rl_rip <- raster("rip.img")
+    x@topo@rl_inl <- raster("inl.img")
 
-    cmt
+    x
   }
 )
 
 #### transportCalcOrder ####
 setGeneric(
   "transportCalcOrder",
-  function(cmt, ...) standardGeneric("transportCalcOrder")
+  function(x, ...) standardGeneric("transportCalcOrder")
 )
 #' Transport Calculation Order
 #'
@@ -349,20 +351,20 @@ setGeneric(
 setMethod(
   "transportCalcOrder",
   "RPhosFate",
-  function(cmt) {
+  function(x) {
     compareRaster(
-      cmt@topo@rl_acc_wtd,
-      cmt@topo@rl_acc,
-      cmt@topo@rl_cha
+      x@topo@rl_acc_wtd,
+      x@topo@rl_acc,
+      x@topo@rl_cha
     )
 
     # Overland flow accumulation
-    rl_acc_ovl <- cmt@topo@rl_acc
-    rl_acc_ovl[!is.na(cmt@topo@rl_cha)] <- NA_integer_
+    rl_acc_ovl <- x@topo@rl_acc
+    rl_acc_ovl[!is.na(x@topo@rl_cha)] <- NA_integer_
 
     # Channel flow accumulation
-    rl_acc_cha <- cmt@topo@rl_acc
-    rl_acc_cha[ is.na(cmt@topo@rl_cha)] <- NA_integer_
+    rl_acc_cha <- x@topo@rl_acc
+    rl_acc_cha[ is.na(x@topo@rl_cha)] <- NA_integer_
 
     # Transport calculation order as column-major index
     im_acc_ovl <- as.matrix(rl_acc_ovl)
@@ -371,53 +373,38 @@ setMethod(
     ar_ord_cha <- tapply(seq_along(im_acc_cha), im_acc_cha, identity)
 
     # Row order from index
-    iv_ord_ovl_row <- as.integer(unlist(lapply(
-      ar_ord_ovl,
-      function(x) {
-        (x + cmt@helpers@is_rws) - ceiling(x / cmt@helpers@is_rws) *
-          cmt@helpers@is_rws
-      }
-    )))
-    iv_ord_cha_row <- as.integer(unlist(lapply(
-      ar_ord_cha,
-      function(x) {
-        (x + cmt@helpers@is_rws) - ceiling(x / cmt@helpers@is_rws) *
-          cmt@helpers@is_rws
-      }
-    )))
+    is_rws <- x@helpers@is_rws
+    fun <- function(x) {
+      (x + is_rws) - ceiling(x / is_rws) * is_rws
+    }
+    iv_ord_ovl_row <- as.integer(unlist(lapply(ar_ord_ovl, fun)))
+    iv_ord_cha_row <- as.integer(unlist(lapply(ar_ord_cha, fun)))
 
     # Column order from index
-    iv_ord_ovl_col <- as.integer(unlist(lapply(
-      ar_ord_ovl,
-      function(x) {
-        ceiling(x / cmt@helpers@is_rws)
-      }
-    )))
-    iv_ord_cha_col <- as.integer(unlist(lapply(
-      ar_ord_cha,
-      function(x) {
-        ceiling(x / cmt@helpers@is_rws)
-      }
-    )))
+    fun <- function(x) {
+      ceiling(x / is_rws)
+    }
+    iv_ord_ovl_col <- as.integer(unlist(lapply(ar_ord_ovl, fun)))
+    iv_ord_cha_col <- as.integer(unlist(lapply(ar_ord_cha, fun)))
 
     # Overland as well as channel row and column numbers for top-down
     # computation (C++ has zero-based numbering)
-    cmt@helpers@order@iv_ord_row <- c(iv_ord_ovl_row, iv_ord_cha_row) - 1L
-    cmt@helpers@order@iv_ord_col <- c(iv_ord_ovl_col, iv_ord_cha_col) - 1L
+    x@helpers@order@iv_ord_row <- c(iv_ord_ovl_row, iv_ord_cha_row) - 1L
+    x@helpers@order@iv_ord_col <- c(iv_ord_ovl_col, iv_ord_cha_col) - 1L
 
     # Reverse overland row and column numbers for bottom-up computation
     # (C++ has zero-based numbering)
-    cmt@helpers@order@iv_ord_ovl_row_rev <- rev(iv_ord_ovl_row) - 1L
-    cmt@helpers@order@iv_ord_ovl_col_rev <- rev(iv_ord_ovl_col) - 1L
+    x@helpers@order@iv_ord_ovl_row_rev <- rev(iv_ord_ovl_row) - 1L
+    x@helpers@order@iv_ord_ovl_col_rev <- rev(iv_ord_ovl_col) - 1L
 
-    cmt
+    x
   }
 )
 
 #### transport ####
 setGeneric(
   "transport",
-  function(cmt, ...) standardGeneric("transport")
+  function(x, ...) standardGeneric("transport")
 )
 #' Transport
 #'
@@ -438,106 +425,106 @@ setGeneric(
 setMethod(
   "transport",
   "RPhosFate",
-  function(cmt, substance = "PP") {
-    assertSubstance(cmt, substance)
+  function(x, substance = "PP") {
+    assertSubstance(x, substance)
     compareRaster(
-      cmt@topo@rl_acc_wtd,
-      cmt@topo@rl_cha,
-      cmt@topo@rl_dir,
-      cmt@topo@rl_inl,
-      cmt@topo@rl_rip,
-      cmt@transport@rl_man,
+      x@topo@rl_acc_wtd,
+      x@topo@rl_cha,
+      x@topo@rl_dir,
+      x@topo@rl_inl,
+      x@topo@rl_rip,
+      x@transport@rl_man,
       if (substance == "SS") {
-        cmt@erosion@rl_ero
+        x@erosion@rl_ero
       } else {
-        slot(cmt@substances, substance)@rl_xxe
+        slot(x@substances, substance)@rl_xxe
       },
-      cmt@transport@rl_rhy,
-      cmt@topo@rl_slp_cap
+      x@transport@rl_rhy,
+      x@topo@rl_slp_cap
     )
-    qassert(cmt@parameters@ns_dep_ovl, "N1(0,)", .var.name = "ns_dep_ovl")
-    qassert(cmt@parameters@ns_dep_cha, "N1[0,)", .var.name = "ns_dep_cha")
+    qassert(x@parameters@ns_dep_ovl, "N1(0,)", .var.name = "ns_dep_ovl")
+    qassert(x@parameters@ns_dep_cha, "N1[0,)", .var.name = "ns_dep_cha")
     if (substance != "SS") {
       assertCharacter(
-        names(cmt@parameters@nv_enr_rto),
+        names(x@parameters@nv_enr_rto),
         min.chars = 1L,
         any.missing = FALSE,
         unique = TRUE,
         .var.name = "names(nv_enr_rto)"
       )
       qassert(
-        cmt@parameters@nv_enr_rto[substance],
+        x@parameters@nv_enr_rto[substance],
         "N1[1,)",
         .var.name = "nv_enr_rto[substance]"
       )
     }
     assertCharacter(
-      names(cmt@parameters@nv_tfc_inl),
+      names(x@parameters@nv_tfc_inl),
       min.chars = 1L,
       any.missing = FALSE,
       unique = TRUE,
       .var.name = "names(nv_tfc_inl)"
     )
     qassert(
-      cmt@parameters@nv_tfc_inl[substance],
+      x@parameters@nv_tfc_inl[substance],
       "N1[0,1]",
       .var.name = "nv_tfc_inl[substance]"
     )
 
-    cs_dir_old <- setwd(file.path(cmt@cv_dir[1L], "Result"))
+    cs_dir_old <- setwd(file.path(x@cv_dir[1L], "Result"))
     on.exit(setwd(cs_dir_old))
 
     li_tpt <- transportCpp(
-      parameters = cmt@parameters,
+      parameters = x@parameters,
       ns_dep_ovl = if (substance == "SS") {
-        cmt@parameters@ns_dep_ovl
+        x@parameters@ns_dep_ovl
       } else {
-        cmt@parameters@ns_dep_ovl / cmt@parameters@nv_enr_rto[substance]
+        x@parameters@ns_dep_ovl / x@parameters@nv_enr_rto[substance]
       },
-      ns_tfc_inl = cmt@parameters@nv_tfc_inl[substance],
-      helpers    = cmt@helpers,
-      order      = cmt@helpers@order,
-      im_cha     = as.matrix(cmt@topo@rl_cha),
-      im_dir     = as.matrix(cmt@topo@rl_dir),
-      im_inl     = as.matrix(cmt@topo@rl_inl),
-      im_rip     = as.matrix(cmt@topo@rl_rip),
-      nm_man     = as.matrix(cmt@transport@rl_man),
+      ns_tfc_inl = x@parameters@nv_tfc_inl[substance],
+      helpers    = x@helpers,
+      order      = x@helpers@order,
+      im_cha     = as.matrix(x@topo@rl_cha),
+      im_dir     = as.matrix(x@topo@rl_dir),
+      im_inl     = as.matrix(x@topo@rl_inl),
+      im_rip     = as.matrix(x@topo@rl_rip),
+      nm_man     = as.matrix(x@transport@rl_man),
       nm_xxe     = if (substance == "SS") {
-        as.matrix(cmt@erosion@rl_ero)
+        as.matrix(x@erosion@rl_ero)
       } else {
-        as.matrix(slot(cmt@substances, substance)@rl_xxe)
+        as.matrix(slot(x@substances, substance)@rl_xxe)
       },
-      nm_rhy     = as.matrix(cmt@transport@rl_rhy),
-      nm_slp     = as.matrix(cmt@topo@rl_slp_cap)
+      nm_rhy     = as.matrix(x@transport@rl_rhy),
+      nm_slp     = as.matrix(x@topo@rl_slp_cap)
     )
 
     layers <- paste0("xx", c("r", "t_inp", "t_out", "t_cld", "t_ctf", "t"))
     filenames <- setNames(
-      paste0(sub("^xx", tolower(substance), layers), cmt@is_MCi, ".img"),
+      paste0(sub("^xx", tolower(substance), layers), x@is_MCi, ".img"),
       layers
     )
 
-    if (length(cmt@is_MCi) == 0L) {
-      writeRaster(raster(li_tpt$nm_xxr    , template = cmt@topo@rl_acc_wtd), filenames["xxr"    ], datatype = "FLT4S", options = "COMPRESSED=YES", overwrite = TRUE)
-      writeRaster(raster(li_tpt$nm_xxt_inp, template = cmt@topo@rl_acc_wtd), filenames["xxt_inp"], datatype = "FLT4S", options = "COMPRESSED=YES", overwrite = TRUE)
-      writeRaster(raster(li_tpt$nm_xxt_out, template = cmt@topo@rl_acc_wtd), filenames["xxt_out"], datatype = "FLT4S", options = "COMPRESSED=YES", overwrite = TRUE)
-      writeRaster(raster(li_tpt$nm_xxt_cld, template = cmt@topo@rl_acc_wtd), filenames["xxt_cld"], datatype = "FLT4S", options = "COMPRESSED=YES", overwrite = TRUE)
-      writeRaster(raster(li_tpt$nm_xxt_ctf, template = cmt@topo@rl_acc_wtd), filenames["xxt_ctf"], datatype = "FLT4S", options = "COMPRESSED=YES", overwrite = TRUE)
-      slot(cmt@substances, substance)@rl_xxr     <- raster(filenames["xxr"    ])
-      slot(cmt@substances, substance)@rl_xxt_inp <- raster(filenames["xxt_inp"])
-      slot(cmt@substances, substance)@rl_xxt_out <- raster(filenames["xxt_out"])
-      slot(cmt@substances, substance)@rl_xxt_cld <- raster(filenames["xxt_cld"])
-      slot(cmt@substances, substance)@rl_xxt_ctf <- raster(filenames["xxt_ctf"])
+    if (length(x@is_MCi) == 0L) {
+      writeRaster(raster(li_tpt$nm_xxr    , template = x@topo@rl_acc_wtd), filenames["xxr"    ], datatype = "FLT4S", options = "COMPRESSED=YES", overwrite = TRUE)
+      writeRaster(raster(li_tpt$nm_xxt_inp, template = x@topo@rl_acc_wtd), filenames["xxt_inp"], datatype = "FLT4S", options = "COMPRESSED=YES", overwrite = TRUE)
+      writeRaster(raster(li_tpt$nm_xxt_out, template = x@topo@rl_acc_wtd), filenames["xxt_out"], datatype = "FLT4S", options = "COMPRESSED=YES", overwrite = TRUE)
+      writeRaster(raster(li_tpt$nm_xxt_cld, template = x@topo@rl_acc_wtd), filenames["xxt_cld"], datatype = "FLT4S", options = "COMPRESSED=YES", overwrite = TRUE)
+      writeRaster(raster(li_tpt$nm_xxt_ctf, template = x@topo@rl_acc_wtd), filenames["xxt_ctf"], datatype = "FLT4S", options = "COMPRESSED=YES", overwrite = TRUE)
+      slot(x@substances, substance)@rl_xxr     <- raster(filenames["xxr"    ])
+      slot(x@substances, substance)@rl_xxt_inp <- raster(filenames["xxt_inp"])
+      slot(x@substances, substance)@rl_xxt_out <- raster(filenames["xxt_out"])
+      slot(x@substances, substance)@rl_xxt_cld <- raster(filenames["xxt_cld"])
+      slot(x@substances, substance)@rl_xxt_ctf <- raster(filenames["xxt_ctf"])
     }
     writeRaster(
-      raster(li_tpt$nm_xxt, template = cmt@topo@rl_acc_wtd),
+      raster(li_tpt$nm_xxt, template = x@topo@rl_acc_wtd),
       filenames["xxt"],
       datatype = "FLT4S",
       options = "COMPRESSED=YES",
       overwrite = TRUE
     )
-    slot(cmt@substances, substance)@rl_xxt <- raster(filenames["xxt"])
+    slot(x@substances, substance)@rl_xxt <- raster(filenames["xxt"])
 
-    cmt
+    x
   }
 )

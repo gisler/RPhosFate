@@ -6,10 +6,10 @@
 \alias{transportCalcOrder}
 \title{Transport Calculation Order}
 \usage{
-\S4method{transportCalcOrder}{RPhosFate}(cmt)
+\S4method{transportCalcOrder}{RPhosFate}(x)
 }
 \arguments{
-\item{cmt}{An S4 \code{\linkS4class{RPhosFate}} river catchment object.}
+\item{x}{An S4 \code{\linkS4class{RPhosFate}} river catchment object.}
 }
 \value{
 An S4 \code{\linkS4class{RPhosFate}} river catchment object.

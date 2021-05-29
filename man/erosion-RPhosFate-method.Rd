@@ -6,10 +6,10 @@
 \alias{erosion}
 \title{Erosion}
 \usage{
-\S4method{erosion}{RPhosFate}(cmt)
+\S4method{erosion}{RPhosFate}(x)
 }
 \arguments{
-\item{cmt}{An S4 \code{\linkS4class{RPhosFate}} river catchment object.}
+\item{x}{An S4 \code{\linkS4class{RPhosFate}} river catchment object.}
 }
 \value{
 An S4 \code{\linkS4class{RPhosFate}} river catchment object.
