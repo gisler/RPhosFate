@@ -12,7 +12,7 @@ You should have received a copy of the GNU Affero General Public License along w
 
 ## Installation
 
-Currently, no CRAN release is planned. A Windows binary package built with Microsoft R Open 3.5.3 is nonetheless available from a [`drat`](https://github.com/eddelbuettel/drat) repository. It can be installed along with its most important dependencies via the following command:
+Currently, no [CRAN](https://cran.r-project.org/) release is planned. A Windows binary package built with [Microsoft R Open](https://mran.microsoft.com/release-history) 3.5.3 is nonetheless available from a [`drat`](https://github.com/eddelbuettel/drat) repository. It can be installed along with its most important dependencies via the following command:
 
 ``` r
 install.packages(
