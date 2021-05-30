@@ -23,8 +23,8 @@ adjustExtent <- function(rl, ex) {
 #'   for further processing.
 #' @param sp_olp An [`sp::SpatialPointsDataFrame-class`] providing the desired
 #'   catchment outlet.
-#' @param sp_sds An [`sp::SpatialPointsDataFrame-class`] providing the mapped
-#'   channel sources.
+#' @param sp_sds An [`sp::SpatialPointsDataFrame-class`] providing channel
+#'   sources.
 #' @param cs_rds An optional character string specifying a path to a potentially
 #'   large raster providing roads.
 #' @param cs_wgs An optional character string specifying a path to a potentially
@@ -50,7 +50,7 @@ adjustExtent <- function(rl, ex) {
 #' digital elevation models: towards a minimum impact approach. Hydrol. Process.
 #' 19, 3113–3126.}
 #'
-#' @seealso [`RPhosFate`], [`catchment`]
+#' @seealso [`RPhosFate`]
 #'
 #' @export
 DEMrelatedInput <- function(
