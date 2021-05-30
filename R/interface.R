@@ -279,11 +279,12 @@ setGeneric(
 #' @param col A character string specifying the calibration data column with the
 #'   respective substance loads.
 #'
-#' @return A named numeric vector containing the assessed metrics as well as the
+#' @return A named numeric vector containing the assessed metrics along with the
 #'   in-channel retention.
 #'
-#' @seealso [`hydroGOF::NSE`], [`hydroGOF::mNSE`], [`hydroGOF::rmse`],
-#'   [`hydroGOF::nrmse`], [`hydroGOF::pbias`], [`hydroGOF::rsr`], [`snapGauges`]
+#' @seealso [`snapGauges`], [`autoCalibrate`], [`hydroGOF::NSE`],
+#'   [`hydroGOF::mNSE`], [`hydroGOF::rmse`], [`hydroGOF::nrmse`],
+#'   [`hydroGOF::pbias`], [`hydroGOF::rsr`]
 #'
 #' @aliases calibrationQuality
 #'

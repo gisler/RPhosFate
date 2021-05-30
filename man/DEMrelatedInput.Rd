@@ -25,8 +25,8 @@ for further processing.}
 \item{sp_olp}{An \code{\link[sp:SpatialPointsDataFrame-class]{sp::SpatialPointsDataFrame}} providing the desired
 catchment outlet.}
 
-\item{sp_sds}{An \code{\link[sp:SpatialPointsDataFrame-class]{sp::SpatialPointsDataFrame}} providing the mapped
-channel sources.}
+\item{sp_sds}{An \code{\link[sp:SpatialPointsDataFrame-class]{sp::SpatialPointsDataFrame}} providing channel
+sources.}
 
 \item{cs_rds}{An optional character string specifying a path to a potentially
 large raster providing roads.}
@@ -68,5 +68,5 @@ digital elevation models: towards a minimum impact approach. Hydrol. Process.
 19, 3113–3126.}
 }
 \seealso{
-\code{\link{RPhosFate}}, \code{\link{catchment}}
+\code{\link{RPhosFate}}
 }

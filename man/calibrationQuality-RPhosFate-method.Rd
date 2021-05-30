@@ -17,7 +17,7 @@
 respective substance loads.}
 }
 \value{
-A named numeric vector containing the assessed metrics as well as the
+A named numeric vector containing the assessed metrics along with the
 in-channel retention.
 }
 \description{
@@ -35,6 +35,7 @@ deviation of observations)
 }
 }
 \seealso{
-\code{\link[hydroGOF:NSE]{hydroGOF::NSE}}, \code{\link[hydroGOF:mNSE]{hydroGOF::mNSE}}, \code{\link[hydroGOF:rmse]{hydroGOF::rmse}},
-\code{\link[hydroGOF:nrmse]{hydroGOF::nrmse}}, \code{\link[hydroGOF:pbias]{hydroGOF::pbias}}, \code{\link[hydroGOF:rsr]{hydroGOF::rsr}}, \code{\link{snapGauges}}
+\code{\link{snapGauges}}, \code{\link{autoCalibrate}}, \code{\link[hydroGOF:NSE]{hydroGOF::NSE}},
+\code{\link[hydroGOF:mNSE]{hydroGOF::mNSE}}, \code{\link[hydroGOF:rmse]{hydroGOF::rmse}}, \code{\link[hydroGOF:nrmse]{hydroGOF::nrmse}},
+\code{\link[hydroGOF:pbias]{hydroGOF::pbias}}, \code{\link[hydroGOF:rsr]{hydroGOF::rsr}}
 }
