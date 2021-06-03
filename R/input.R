@@ -103,7 +103,7 @@ DEMrelatedInput <- function(
     recursive = TRUE
   )
 
-  cs_dir_old <- file.path(cv_dir[1L], "Input", "temp")
+  cs_dir_old <- setwd(file.path(cv_dir[1L], "Input", "temp"))
   on.exit(setwd(cs_dir_old))
 
   # Extract oversized DEM by mask
