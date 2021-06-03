@@ -27,6 +27,8 @@ project root subdirectories:
 }
 
 See subdirectory sections for further information.
+
+\code{catchment} is an alias for \code{RPhosFate}.
 }
 \section{\emph{Input} subdirectory}{
 

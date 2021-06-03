@@ -9,7 +9,7 @@ adjustExtent <- function(rl, ex) {
 #' the digital elevation model (DEM) in the broader sense: \emph{acc, acc_wtd,
 #' cha, dem, dir, rds, slp,} and _wsh._
 #'
-#' Requires [_TauDEM_](http://hydrology.usu.edu/taudem/taudem5/downloads.html)
+#' Requires _[TauDEM](http://hydrology.usu.edu/taudem/taudem5/downloads.html)_
 #' 5.3.7 to be installed on your computer and will download _WhiteboxTools_
 #' binary if needed.
 #'
@@ -58,7 +58,7 @@ adjustExtent <- function(rl, ex) {
 #' digital elevation models: towards a minimum impact approach. Hydrol. Process.
 #' 19, 3113–3126.}
 #'
-#' @seealso [`RPhosFate`]
+#' @seealso [`RPhosFate`], [`catchment`]
 #'
 #' @export
 DEMrelatedInput <- function(

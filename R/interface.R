@@ -19,6 +19,8 @@ RPhosFate <- function(...) {
 #'
 #' See subdirectory sections for further information.
 #'
+#' `catchment` is an alias for `RPhosFate`.
+#'
 #' @param \dots Arguments used to initialise the project. See argument sections
 #'   for further information.
 #'
