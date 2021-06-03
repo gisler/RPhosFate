@@ -136,6 +136,7 @@ catchment <- function(...) {
 }
 
 #### firstRun ####
+#' @export
 setGeneric(
   "firstRun",
   function(x, ...) standardGeneric("firstRun")
@@ -183,6 +184,7 @@ setMethod(
 )
 
 #### subsequentRun ####
+#' @export
 setGeneric(
   "subsequentRun",
   function(x, ...) standardGeneric("subsequentRun")
@@ -224,6 +226,7 @@ setMethod(
 )
 
 #### snapGauges ####
+#' @export
 setGeneric(
   "snapGauges",
   function(x, ...) standardGeneric("snapGauges")
@@ -259,6 +262,7 @@ setMethod(
 )
 
 #### calibrationQuality ####
+#' @export
 setGeneric(
   "calibrationQuality",
   function(x, ...) standardGeneric("calibrationQuality")
@@ -373,6 +377,7 @@ setMethod(
 )
 
 #### autoCalibrate ####
+#' @export
 setGeneric(
   "autoCalibrate",
   function(x, ...) standardGeneric("autoCalibrate")
@@ -460,6 +465,7 @@ setMethod(
 )
 
 #### saveState ####
+#' @export
 setGeneric(
   "saveState",
   function(x, ...) standardGeneric("saveState")
