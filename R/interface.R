@@ -23,9 +23,10 @@ RPhosFate <- function(...) {
 #'   for further information.
 #'
 #' @section _Input_ subdirectory:
-#' This directory holds all possible user input raster data:
-#' * _acc:_ Flow accumulations required for transport (the top-most cells should
-#' have a value of one).
+#' This directory holds all possible user input raster data (flow obstacles like
+#' roads must be considered during generation of the flow accumulation layers
+#' and also be cut out from them in order to be properly respected):
+#' * _acc:_ Flow accumulations required for transport.
 #' * \emph{acc_wtd:} Weighted flow accumulations (can be equal to _acc_).
 #' * _CFa:_ (R)USLE C-factors.
 #' * _cha:_ Channel cells (`1`: channel cell, `NA`: no channel cell).
@@ -45,7 +46,7 @@ RPhosFate <- function(...) {
 #' * _wsh:_ Watershed (optional).
 #'
 #' @section _Intermediate_ subdirectory:
-#' This directory holds intermediate results:
+#' This directory holds intermediate calculations:
 #' * _inl:_ Cells representing inlets at roads (storm drains).
 #' * _LFa:_ L-factors.
 #' * _rhy:_ Hydraulic radii in m.

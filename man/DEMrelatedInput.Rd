@@ -49,18 +49,28 @@ during computation shall be kept.}
 A numeric \code{\link{matrix}} specifying the catchment outlet coordinates.
 }
 \description{
-Clips and calculates or derives all input data related to the digital
-elevation model in the broader sense: \emph{acc, acc_wtd, cha, dem, dir, rds,
-slp,} and \emph{wsh.}
+Clips, pre-conditions and calculates or determines all input data related to
+the digital elevation model (DEM) in the broader sense: \emph{acc, acc_wtd,
+cha, dem, dir, rds, slp,} and \emph{wsh.}
 
 Requires \href{http://hydrology.usu.edu/taudem/taudem5/downloads.html}{TauDEM}
-5.3.7 to be installed on your computer.
+5.3.7 to be installed on your computer and will download \emph{WhiteboxTools}
+binary if needed.
 }
 \details{
+This function applies the following (pre-conditioning) steps in order to
+ensure hydrologic consistency of the generated input data:
+\itemize{
+\item Stream burning and orientation of cells adjacent to channel cells
+approximately into the direction of channel cells (optional).
+\item Depression breaching.
+\item Tracing of downslope flowpaths from the provided channel sources.
+}
+
 In case no flow accumulation weights are provided, \emph{acc} and \emph{acc_wtd}
 are identical.
 
-\emph{slp} represents D8 slopes.
+\emph{slp} is calculated from the original DEM and represents D8 slopes.
 }
 \references{
 \cite{Lindsay, J.B., Creed, I.F., 2005. Removal of artifact depressions from
