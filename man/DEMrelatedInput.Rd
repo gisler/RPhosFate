@@ -53,7 +53,7 @@ Clips, pre-conditions and calculates or determines all input data related to
 the digital elevation model (DEM) in the broader sense: \emph{acc, acc_wtd,
 cha, dem, dir, rds, slp,} and \emph{wsh.}
 
-Requires \href{http://hydrology.usu.edu/taudem/taudem5/downloads.html}{TauDEM}
+Requires \emph{\href{http://hydrology.usu.edu/taudem/taudem5/downloads.html}{TauDEM}}
 5.3.7 to be installed on your computer and will download \emph{WhiteboxTools}
 binary if needed.
 }
@@ -78,5 +78,5 @@ digital elevation models: towards a minimum impact approach. Hydrol. Process.
 19, 3113–3126.}
 }
 \seealso{
-\code{\link{RPhosFate}}
+\code{\link{RPhosFate}}, \code{\link{catchment}}
 }
