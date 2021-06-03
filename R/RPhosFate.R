@@ -2,6 +2,7 @@
 NULL
 
 #### erosionPrerequisites ####
+#' @export
 setGeneric(
   "erosionPrerequisites",
   function(x, ...) standardGeneric("erosionPrerequisites")
@@ -112,6 +113,7 @@ setMethod(
 )
 
 #### erosion ####
+#' @export
 setGeneric(
   "erosion",
   function(x, ...) standardGeneric("erosion")
@@ -177,6 +179,7 @@ setMethod(
 )
 
 #### emission ####
+#' @export
 setGeneric(
   "emission",
   function(x, ...) standardGeneric("emission")
@@ -228,6 +231,7 @@ setMethod(
 )
 
 #### transportPrerequisites ####
+#' @export
 setGeneric(
   "transportPrerequisites",
   function(x, ...) standardGeneric("transportPrerequisites")
@@ -335,6 +339,7 @@ setMethod(
 )
 
 #### transportCalcOrder ####
+#' @export
 setGeneric(
   "transportCalcOrder",
   function(x, ...) standardGeneric("transportCalcOrder")
@@ -404,6 +409,7 @@ setMethod(
 )
 
 #### transport ####
+#' @export
 setGeneric(
   "transport",
   function(x, ...) standardGeneric("transport")
