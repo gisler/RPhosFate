@@ -5,12 +5,13 @@ adjustExtent <- function(rl, ex) {
 #' DEM Related Input
 #'
 #' @description
-#' Clips and calculates or derives all input data related to the digital
-#' elevation model in the broader sense: \emph{acc, acc_wtd, cha, dem, dir, rds,
-#' slp,} and _wsh._
+#' Clips, pre-conditions and calculates or determines all input data related to
+#' the digital elevation model (DEM) in the broader sense: \emph{acc, acc_wtd,
+#' cha, dem, dir, rds, slp,} and _wsh._
 #'
 #' Requires [_TauDEM_](http://hydrology.usu.edu/taudem/taudem5/downloads.html)
-#' 5.3.7 to be installed on your computer.
+#' 5.3.7 to be installed on your computer and will download _WhiteboxTools_
+#' binary if needed.
 #'
 #' @param cv_dir A character vector specifying the desired project root
 #'   directory (first position).
@@ -38,10 +39,17 @@ adjustExtent <- function(rl, ex) {
 #'   during computation shall be kept.
 #'
 #' @details
+#' This function applies the following (pre-conditioning) steps in order to
+#' ensure hydrologic consistency of the generated input data:
+#' * Stream burning and orientation of cells adjacent to channel cells
+#' approximately into the direction of channel cells (optional).
+#' * Depression breaching.
+#' * Tracing of downslope flowpaths from the provided channel sources.
+#'
 #' In case no flow accumulation weights are provided, _acc_ and \emph{acc_wtd}
 #' are identical.
 #'
-#' _slp_ represents D8 slopes.
+#' _slp_ is calculated from the original DEM and represents D8 slopes.
 #'
 #' @return A numeric [`matrix`] specifying the catchment outlet coordinates.
 #'
@@ -208,7 +216,7 @@ DEMrelatedInput <- function(
     overwrite = TRUE
   )
 
-  # Channel cells
+  # Determine channel cells
   shapefile(sp_sds, "sds.shp", overwrite = TRUE)
   whitebox::wbt_trace_downslope_flowpaths(
     seed_pts = file.path(normalizePath("."), "sds.shp"),
@@ -228,7 +236,7 @@ DEMrelatedInput <- function(
   )
   rl_cha <- raster("cha.tif")
 
-  # Road cells
+  # Determine road cells
   if (!is.null(cs_rds)) {
     rl_rds <- raster(cs_rds)
     rl_rds <- adjustExtent(rl_rds, rl_wsh)
@@ -254,7 +262,7 @@ DEMrelatedInput <- function(
     rl_rds <- raster("rds.tif")
   }
 
-  # Flow accumulation
+  # Calculate flow accumulations
   rl_dir_tau <- subs(
     rl_dir,
     data.frame(
@@ -372,7 +380,7 @@ DEMrelatedInput <- function(
     rl_acc_wtd <- raster("acc_wtd.tif")
   }
 
-  # Calculate D8 slope (oversized DEM)
+  # Calculate D8 slopes (oversized DEM)
   nm_slp_ovr <- D8slope(
     im_dir = as.matrix(raster("dir_ovr.tif")),
     nm_dem = as.matrix(rl_dem_ovr),
@@ -394,7 +402,7 @@ DEMrelatedInput <- function(
   )
   rm(nm_slp_ovr)
 
-  # Copy to input
+  # Copy data to "Input" directory
   toInput <- list(
     acc     = rl_acc    ,
     acc_wtd = rl_acc_wtd,
@@ -418,13 +426,13 @@ DEMrelatedInput <- function(
     toInput, file.path("..", sprintf("%s.%s", names(toInput), "img"))
   )
 
-  # Outlet coordinates
+  # Determine outlet coordinates
   nm_olc <- xyFromCell(
     rl_acc,
     Which(rl_acc == cellStats(rl_acc, max), cells = TRUE)
   )
 
-  # Clean up
+  # Clean up temporary files
   if (!ls_tmp) {
     setwd("..")
     unlink("temp", recursive = TRUE)

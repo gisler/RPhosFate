@@ -17,9 +17,9 @@
 \item{i}{A character string specifying a layer name. Substance related layers
 whose names start with \emph{xx} are treated differently. They have to be
 queried by their name (not filename), for example, \code{"xxc"} in combination
-with the respective substance specified in argument \code{j}, for example,
-\code{"PP"}, which queries the particulate phosphorus concentrations in top
-soils. See subdirectory sections for further information.}
+with \code{"PP"} in argument \code{j} queries the particulate phosphorus
+concentrations in top soils. See subdirectory sections for further
+information.}
 
 \item{j}{A character string specifying a substance if applicable.}
 }
@@ -31,10 +31,11 @@ Obtains a project raster layer for further analysis.
 }
 \section{\emph{Input} subdirectory}{
 
-This directory holds all possible user input raster data:
+This directory holds all possible user input raster data (flow obstacles like
+roads must be considered during generation of the flow accumulation layers
+and also be cut out from them in order to be properly respected):
 \itemize{
-\item \emph{acc:} Flow accumulations required for transport (the top-most cells should
-have a value of one).
+\item \emph{acc:} Flow accumulations required for transport.
 \item \emph{acc_wtd:} Weighted flow accumulations (can be equal to \emph{acc}).
 \item \emph{CFa:} (R)USLE C-factors.
 \item \emph{cha:} Channel cells (\code{1}: channel cell, \code{NA}: no channel cell).
@@ -57,7 +58,7 @@ drainage, \code{1}: road cell with subsurface drainage, \code{NA}: no road cell)
 
 \section{\emph{Intermediate} subdirectory}{
 
-This directory holds intermediate results:
+This directory holds intermediate calculations:
 \itemize{
 \item \emph{inl:} Cells representing inlets at roads (storm drains).
 \item \emph{LFa:} L-factors.
