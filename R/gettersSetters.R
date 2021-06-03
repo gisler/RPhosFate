@@ -1,4 +1,5 @@
 #### getLayer ####
+#' @export
 setGeneric(
   "getLayer",
   function(x, ...) standardGeneric("getLayer")
@@ -64,6 +65,7 @@ setMethod(
 )
 
 #### getParameter ####
+#' @export
 setGeneric(
   "getParameter",
   function(x, ...) standardGeneric("getParameter")
@@ -98,6 +100,7 @@ setMethod(
 )
 
 #### setParameter ####
+#' @export
 setGeneric(
   "setParameter",
   function(x, ...) standardGeneric("setParameter")
