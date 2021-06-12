@@ -49,7 +49,7 @@ during computation shall be kept.}
 A numeric \code{\link{matrix}} specifying the catchment outlet coordinates.
 }
 \description{
-Clips, pre-conditions and calculates or determines all input data related to
+Clips, pre-processes and calculates or determines all input data related to
 the digital elevation model (DEM) in the broader sense: \emph{acc, acc_wtd,
 cha, dem, dir, rds, slp,} and \emph{wsh.}
 
@@ -58,8 +58,8 @@ Requires \emph{\href{http://hydrology.usu.edu/taudem/taudem5/downloads.html}{Tau
 binary if needed.
 }
 \details{
-This function applies the following (pre-conditioning) steps in order to
-ensure hydrologic consistency of the generated input data:
+This function applies the following (pre-processing) steps to ensure
+hydrologic consistency of the generated input data:
 \itemize{
 \item Stream burning and orientation of cells adjacent to channel cells
 approximately into the direction of channel cells (optional).
@@ -70,12 +70,13 @@ approximately into the direction of channel cells (optional).
 In case no flow accumulation weights are provided, \emph{acc} and \emph{acc_wtd}
 are identical.
 
-\emph{slp} is calculated from the original DEM and represents D8 slopes.
+\emph{slp} is calculated from the original, unprocessed DEM and represents D8
+slopes.
 }
 \references{
-\cite{Lindsay, J.B., Creed, I.F., 2005. Removal of artifact depressions from
-digital elevation models: towards a minimum impact approach. Hydrol. Process.
-19, 3113–3126.}
+\cite{Lindsay, J.B., 2016. Efficient hybrid breaching-filling sink removal
+methods for flow path enforcement in digital elevation models. Hydrological
+Processes 30, 846–857.}
 }
 \seealso{
 \code{\link{RPhosFate}}, \code{\link{catchment}}

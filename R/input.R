@@ -5,7 +5,7 @@ adjustExtent <- function(rl, ex) {
 #' DEM Related Input
 #'
 #' @description
-#' Clips, pre-conditions and calculates or determines all input data related to
+#' Clips, pre-processes and calculates or determines all input data related to
 #' the digital elevation model (DEM) in the broader sense: \emph{acc, acc_wtd,
 #' cha, dem, dir, rds, slp,} and _wsh._
 #'
@@ -39,8 +39,8 @@ adjustExtent <- function(rl, ex) {
 #'   during computation shall be kept.
 #'
 #' @details
-#' This function applies the following (pre-conditioning) steps in order to
-#' ensure hydrologic consistency of the generated input data:
+#' This function applies the following (pre-processing) steps to ensure
+#' hydrologic consistency of the generated input data:
 #' * Stream burning and orientation of cells adjacent to channel cells
 #' approximately into the direction of channel cells (optional).
 #' * Depression breaching.
@@ -49,14 +49,15 @@ adjustExtent <- function(rl, ex) {
 #' In case no flow accumulation weights are provided, _acc_ and \emph{acc_wtd}
 #' are identical.
 #'
-#' _slp_ is calculated from the original DEM and represents D8 slopes.
+#' _slp_ is calculated from the original, unprocessed DEM and represents D8
+#' slopes.
 #'
 #' @return A numeric [`matrix`] specifying the catchment outlet coordinates.
 #'
 #' @references
-#' \cite{Lindsay, J.B., Creed, I.F., 2005. Removal of artifact depressions from
-#' digital elevation models: towards a minimum impact approach. Hydrol. Process.
-#' 19, 3113–3126.}
+#' \cite{Lindsay, J.B., 2016. Efficient hybrid breaching-filling sink removal
+#' methods for flow path enforcement in digital elevation models. Hydrological
+#' Processes 30, 846–857.}
 #'
 #' @seealso [`RPhosFate`], [`catchment`]
 #'
