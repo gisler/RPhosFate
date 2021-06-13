@@ -299,7 +299,7 @@ setGeneric(
 setMethod(
   "calibrationQuality",
   "RPhosFate",
-  function(x, substance = "PP", col) {
+  function(x, substance, col) {
     assertSubstance(x, substance)
     assertCol(x, col)
     assertMatrix(

@@ -6,7 +6,7 @@
 \alias{calibrationQuality}
 \title{Calibration Quality}
 \usage{
-\S4method{calibrationQuality}{RPhosFate}(x, substance = "PP", col)
+\S4method{calibrationQuality}{RPhosFate}(x, substance, col)
 }
 \arguments{
 \item{x}{An S4 \code{\linkS4class{RPhosFate}} river catchment object.}
