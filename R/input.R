@@ -10,7 +10,7 @@ adjustExtent <- function(rl, ex) {
 #' cha, dem, dir, rds, slp,} and _wsh._
 #'
 #' Requires _[TauDEM](http://hydrology.usu.edu/taudem/taudem5/downloads.html)_
-#' 5.3.7 to be installed on your computer and will download _WhiteboxTools_
+#' 5.3.7 to be installed on your computer and will download the _WhiteboxTools_
 #' binary if needed.
 #'
 #' @param cv_dir A character vector specifying the desired project root
