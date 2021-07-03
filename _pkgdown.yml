@@ -1,0 +1,47 @@
+url: https://gisler.github.io/RPhosFate
+
+template:
+  params:
+    bootswatch: readable
+
+development:
+  mode: auto
+
+navbar:
+  left:
+    - icon: fa-home fa-lg
+      href: index.html
+    - text: "Reference"
+      href: reference/index.html
+    - text: "Book"
+      href: https://gisler.github.io/RPhosFateBook
+
+reference:
+  - title: "Data/Project Management"
+    contents:
+      - DEMrelatedInput
+      - catchment
+      - saveState
+  - title: "High Level Interface"
+    contents:
+      - firstRun
+      - subsequentRun
+      - getLayer
+      - getParameter
+      - setParameter
+  - title: "Calibration"
+    contents:
+      - snapGauges
+      - autoCalibrate
+      - calibrationQuality
+  - title: "Low Level Interface"
+    contents:
+      - erosionPrerequisites
+      - erosion
+      - emission
+      - transportPrerequisites
+      - transportCalcOrder
+      - transport
+  - title: "Class Description"
+    contents:
+      - RPhosFate-class

@@ -2,6 +2,8 @@
 ^\.github$
 ^\.lintr$
 ^\.Rproj\.user$
+^_pkgdown\.yml$
 ^CONTRIBUTING\.md$
+^docs$
 ^src/Rcpp_1\.0\.1\.tar\.gz$
 ^src/RcppArmadillo_0\.9\.300\.2\.0\.tar\.gz$
