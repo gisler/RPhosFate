@@ -13,7 +13,7 @@ navbar:
       href: index.html
     - text: "Reference"
       href: reference/index.html
-    - text: "Book"
+    - text: "Handbook"
       href: https://gisler.github.io/RPhosFateBook
     - text: "Papers"
       menu:
