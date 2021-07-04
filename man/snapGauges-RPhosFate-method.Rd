@@ -15,7 +15,8 @@
 An S4 \code{\linkS4class{RPhosFate}} river catchment object.
 }
 \description{
-Snaps all provided gauges to the nearest channel cell.
+Snaps the coordinates of all calibration gauges to the midpoint of the
+nearest channel cell.
 }
 \seealso{
 \code{\link{calibrationQuality}}

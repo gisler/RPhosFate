@@ -27,11 +27,10 @@ be searched.}
 used for optimisation (not the metric).}
 
 \item{parameter}{By default, SS are optimised utilising the overland
-deposition coefficient and all other substances are optimised utilising
-their respective enrichment ratio. This argument can be used to specify a
+deposition rate and all other substances are optimised utilising their
+respective enrichment ratio. This argument can be used to specify a
 dedicated parameter utilised for optimisation via a character string
-(overland (\code{"ns_dep_ovl"}) or channel deposition coefficient
-(\code{"ns_dep_cha"})).}
+(overland (\code{"ns_dep_ovl"}) or channel deposition rate (\code{"ns_dep_cha"})).}
 }
 \value{
 An S4 \code{\linkS4class{RPhosFate}} river catchment object.
