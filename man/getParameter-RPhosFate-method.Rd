@@ -46,12 +46,10 @@ of the riparian zones within channel cells required for substance transport
 \item \code{ns_man_cha}: A numeric scalar specifying Manning's roughness coefficient
 of the channel within channel cells required for substance transport
 (defaults to \code{0.04}).
-\item \code{ns_dep_ovl}: A numeric scalar specifying the overland deposition
-coefficient in \eqn{s^{-1}}{s^(-1)} required for substance transport (no
-default).
-\item \code{ns_dep_cha}: A numeric scalar specifying the channel deposition
-coefficient in \eqn{s^{-1}}{s^(-1)} required for substance transport (no
-default).
+\item \code{ns_dep_ovl}: A numeric scalar specifying the overland deposition rate per
+second required for substance transport (no default).
+\item \code{ns_dep_cha}: A numeric scalar specifying the channel deposition rate per
+second required for substance transport (no default).
 \item \code{nv_enr_rto} A named numeric vector specifying the substance enrichment
 ratios required for substance except SS transport, for example, \code{c(PP = 2.0)}
 (no default).

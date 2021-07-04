@@ -107,12 +107,10 @@ RPhosFate <- function(...) {
 #' * `ns_man_cha`: A numeric scalar specifying Manning's roughness coefficient
 #' of the channel within channel cells required for substance transport
 #' (defaults to `0.04`).
-#' * `ns_dep_ovl`: A numeric scalar specifying the overland deposition
-#' coefficient in \eqn{s^{-1}}{s^(-1)} required for substance transport (no
-#' default).
-#' * `ns_dep_cha`: A numeric scalar specifying the channel deposition
-#' coefficient in \eqn{s^{-1}}{s^(-1)} required for substance transport (no
-#' default).
+#' * `ns_dep_ovl`: A numeric scalar specifying the overland deposition rate per
+#' second required for substance transport (no default).
+#' * `ns_dep_cha`: A numeric scalar specifying the channel deposition rate per
+#' second required for substance transport (no default).
 #' * `nv_enr_rto` A named numeric vector specifying the substance enrichment
 #' ratios required for substance except SS transport, for example, `c(PP = 2.0)`
 #' (no default).
@@ -235,7 +233,8 @@ setGeneric(
 )
 #' Snap Gauge(s)
 #'
-#' Snaps all provided gauges to the nearest channel cell.
+#' Snaps the coordinates of all calibration gauges to the midpoint of the
+#' nearest channel cell.
 #'
 #' @inheritParams erosionPrerequisites,RPhosFate-method
 #'
@@ -397,11 +396,10 @@ setGeneric(
 #' @param tol A numeric scalar specifying the desired accuracy of the parameter
 #'   used for optimisation (not the metric).
 #' @param parameter By default, SS are optimised utilising the overland
-#'   deposition coefficient and all other substances are optimised utilising
-#'   their respective enrichment ratio. This argument can be used to specify a
+#'   deposition rate and all other substances are optimised utilising their
+#'   respective enrichment ratio. This argument can be used to specify a
 #'   dedicated parameter utilised for optimisation via a character string
-#'   (overland (`"ns_dep_ovl"`) or channel deposition coefficient
-#'   (`"ns_dep_cha"`)).
+#'   (overland (`"ns_dep_ovl"`) or channel deposition rate (`"ns_dep_cha"`)).
 #'
 #' @inherit catchment return
 #'
