@@ -15,11 +15,23 @@ navbar:
       href: reference/index.html
     - text: "Book"
       href: https://gisler.github.io/RPhosFateBook
+    - text: "Papers"
+      menu:
+        - text: "2008: Best management practice applications"
+          href: https://doi.org/10.2166/wst.2008.264
+        - text: "2012: Phosphorus emission hotspots"
+          href: https://doi.org/10.1016/j.scitotenv.2012.06.024
+        - text: "2019: Storm drains at road embankments"
+          href: https://doi.org/10.3390/w11102161
+        - text: "2021: Particulate PhozzyLogic Index (PPLI)"
+          href: https://doi.org/10.31223/X5FG89
 
 reference:
-  - title: "Data/Project Management"
+  - title: "Input Data"
     contents:
       - DEMrelatedInput
+  - title: "Project Management"
+    contents:
       - catchment
       - saveState
   - title: "High Level Interface"
