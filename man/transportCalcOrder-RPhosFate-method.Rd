@@ -4,7 +4,7 @@
 \name{transportCalcOrder,RPhosFate-method}
 \alias{transportCalcOrder,RPhosFate-method}
 \alias{transportCalcOrder}
-\title{Transport Calculation Order}
+\title{Transport calculation order}
 \usage{
 \S4method{transportCalcOrder}{RPhosFate}(x)
 }

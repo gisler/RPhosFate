@@ -4,7 +4,7 @@
 \name{saveState,RPhosFate-method}
 \alias{saveState,RPhosFate-method}
 \alias{saveState}
-\title{Save State}
+\title{Save state}
 \usage{
 \S4method{saveState}{RPhosFate}(x)
 }

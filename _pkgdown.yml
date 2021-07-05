@@ -27,14 +27,14 @@ navbar:
           href: https://doi.org/10.31223/X5FG89
 
 reference:
-  - title: "Input Data"
+  - title: "Input data"
     contents:
       - DEMrelatedInput
-  - title: "Project Management"
+  - title: "Project management"
     contents:
       - catchment
       - saveState
-  - title: "High Level Interface"
+  - title: "High level interface"
     contents:
       - firstRun
       - subsequentRun
@@ -46,7 +46,7 @@ reference:
       - snapGauges
       - autoCalibrate
       - calibrationQuality
-  - title: "Low Level Interface"
+  - title: "Low level interface"
     contents:
       - erosionPrerequisites
       - erosion
@@ -54,6 +54,6 @@ reference:
       - transportPrerequisites
       - transportCalcOrder
       - transport
-  - title: "Class Description"
+  - title: "Class description"
     contents:
       - RPhosFate-class

@@ -4,7 +4,7 @@
 \name{setParameter,RPhosFate-method}
 \alias{setParameter,RPhosFate-method}
 \alias{setParameter}
-\title{Set Parameter(s)}
+\title{Set parameter(s)}
 \usage{
 \S4method{setParameter}{RPhosFate}(x, ...)
 }

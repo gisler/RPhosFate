@@ -322,7 +322,7 @@ setMethod(
 )
 
 #### Class RPhosFate ####
-#' RPhosFate Class
+#' RPhosFate class
 #'
 #' An S4 object representing a river catchment.
 #'

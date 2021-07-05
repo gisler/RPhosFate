@@ -4,7 +4,7 @@
 \name{autoCalibrate,RPhosFate-method}
 \alias{autoCalibrate,RPhosFate-method}
 \alias{autoCalibrate}
-\title{Automatic Model Calibration}
+\title{Automatic model calibration}
 \usage{
 \S4method{autoCalibrate}{RPhosFate}(x, substance, col, interval, metric,
   tol = min(interval) * 0.1, parameter = NULL)

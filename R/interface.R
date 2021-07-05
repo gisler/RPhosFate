@@ -7,7 +7,7 @@ NULL
 RPhosFate <- function(...) {
   new("RPhosFate", list(...))
 }
-#' Initialise Project
+#' Initialise project
 #'
 #' @description
 #' Creates a project from scratch or loads an existing one utilising _Erdas
@@ -141,7 +141,7 @@ setGeneric(
   "firstRun",
   function(x, ...) standardGeneric("firstRun")
 )
-#' First Run
+#' First run
 #'
 #' Calls [`erosionPrerequisites`], [`erosion`], [`emission`],
 #' [`transportPrerequisites`], [`transportCalcOrder`] and [`transport`] in the
@@ -189,7 +189,7 @@ setGeneric(
   "subsequentRun",
   function(x, ...) standardGeneric("subsequentRun")
 )
-#' Subsequent Run
+#' Subsequent run
 #'
 #' Calls [`transport`] for the specified substance. In Monte Carlo simulation
 #' mode [`erosion`] and, if applicable, [`emission`] are called as well.
@@ -231,7 +231,7 @@ setGeneric(
   "snapGauges",
   function(x, ...) standardGeneric("snapGauges")
 )
-#' Snap Gauge(s)
+#' Snap gauge(s)
 #'
 #' Snaps the coordinates of all calibration gauges to the midpoint of the
 #' nearest channel cell.
@@ -268,7 +268,7 @@ setGeneric(
   "calibrationQuality",
   function(x, ...) standardGeneric("calibrationQuality")
 )
-#' Calibration Quality
+#' Calibration quality
 #'
 #' Assesses the model's calibration quality via the following metrics:
 #' * _NSE:_ Nash-Sutcliffe Efficiency
@@ -383,7 +383,7 @@ setGeneric(
   "autoCalibrate",
   function(x, ...) standardGeneric("autoCalibrate")
 )
-#' Automatic Model Calibration
+#' Automatic model calibration
 #'
 #' Automatically calibrates the model with the help of a combination of golden
 #' section search and successive parabolic interpolation.
@@ -470,7 +470,7 @@ setGeneric(
   "saveState",
   function(x, ...) standardGeneric("saveState")
 )
-#' Save State
+#' Save state
 #'
 #' Saves parameters _(parameters.yaml)_ and transport calculation order
 #' _(order.rds)_ to disk.

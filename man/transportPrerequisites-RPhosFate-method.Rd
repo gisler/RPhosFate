@@ -4,7 +4,7 @@
 \name{transportPrerequisites,RPhosFate-method}
 \alias{transportPrerequisites,RPhosFate-method}
 \alias{transportPrerequisites}
-\title{Transport Prerequisites}
+\title{Transport prerequisites}
 \usage{
 \S4method{transportPrerequisites}{RPhosFate}(x)
 }

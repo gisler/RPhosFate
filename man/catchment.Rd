@@ -3,7 +3,7 @@
 \name{RPhosFate}
 \alias{RPhosFate}
 \alias{catchment}
-\title{Initialise Project}
+\title{Initialise project}
 \usage{
 RPhosFate(...)
 

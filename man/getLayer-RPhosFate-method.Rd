@@ -5,7 +5,7 @@
 \alias{getLayer,RPhosFate-method}
 \alias{getLayer}
 \alias{[,RPhosFate,ANY,ANY,ANY-method}
-\title{Get Layer}
+\title{Get layer}
 \usage{
 \S4method{getLayer}{RPhosFate}(x, i, j = NULL)
 
