@@ -44,8 +44,8 @@ reference:
   - title: "Calibration"
     contents:
       - snapGauges
-      - autoCalibrate
       - calibrationQuality
+      - autoCalibrate
   - title: "Low level interface"
     contents:
       - erosionPrerequisites
