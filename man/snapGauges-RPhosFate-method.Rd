@@ -4,7 +4,7 @@
 \name{snapGauges,RPhosFate-method}
 \alias{snapGauges,RPhosFate-method}
 \alias{snapGauges}
-\title{Snap Gauge(s)}
+\title{Snap gauge(s)}
 \usage{
 \S4method{snapGauges}{RPhosFate}(x)
 }

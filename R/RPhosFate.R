@@ -7,7 +7,7 @@ setGeneric(
   "erosionPrerequisites",
   function(x, ...) standardGeneric("erosionPrerequisites")
 )
-#' Erosion Prerequisites
+#' Erosion prerequisites
 #'
 #' Calculates capped slopes, L- and RUSLE S-factors. Weighted flow accumulations
 #' less than one are set to one for the calculation of the L-factors.
@@ -236,7 +236,7 @@ setGeneric(
   "transportPrerequisites",
   function(x, ...) standardGeneric("transportPrerequisites")
 )
-#' Transport Prerequisites
+#' Transport prerequisites
 #'
 #' Calculates hydraulic radii and determines cells representing inlets as well
 #' as riparian zones.
@@ -344,7 +344,7 @@ setGeneric(
   "transportCalcOrder",
   function(x, ...) standardGeneric("transportCalcOrder")
 )
-#' Transport Calculation Order
+#' Transport calculation order
 #'
 #' Determines the cell transport calculation order.
 #'

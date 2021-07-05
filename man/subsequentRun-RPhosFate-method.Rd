@@ -4,7 +4,7 @@
 \name{subsequentRun,RPhosFate-method}
 \alias{subsequentRun,RPhosFate-method}
 \alias{subsequentRun}
-\title{Subsequent Run}
+\title{Subsequent run}
 \usage{
 \S4method{subsequentRun}{RPhosFate}(x, substance = "PP")
 }

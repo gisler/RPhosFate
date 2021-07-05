@@ -4,7 +4,7 @@ setGeneric(
   "getLayer",
   function(x, ...) standardGeneric("getLayer")
 )
-#' Get Layer
+#' Get layer
 #'
 #' Obtains a project raster layer for further analysis.
 #'
@@ -70,7 +70,7 @@ setGeneric(
   "getParameter",
   function(x, ...) standardGeneric("getParameter")
 )
-#' Get Parameter
+#' Get parameter
 #'
 #' Obtains a model parameter.
 #'
@@ -105,7 +105,7 @@ setGeneric(
   "setParameter",
   function(x, ...) standardGeneric("setParameter")
 )
-#' Set Parameter(s)
+#' Set parameter(s)
 #'
 #' Sets one or more model parameters or substance parameter values.
 #'

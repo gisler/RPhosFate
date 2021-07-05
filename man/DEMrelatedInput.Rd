@@ -2,7 +2,7 @@
 % Please edit documentation in R/input.R
 \name{DEMrelatedInput}
 \alias{DEMrelatedInput}
-\title{DEM Related Input}
+\title{DEM related input}
 \usage{
 DEMrelatedInput(cv_dir, cs_dem, cs_cha, sp_msk, sp_olp, sp_sds,
   cs_rds = NULL, cs_wgs = NULL, ns_brn = 50, is_adj = 1L,
