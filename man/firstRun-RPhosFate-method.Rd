@@ -4,7 +4,7 @@
 \name{firstRun,RPhosFate-method}
 \alias{firstRun,RPhosFate-method}
 \alias{firstRun}
-\title{First Run}
+\title{First run}
 \usage{
 \S4method{firstRun}{RPhosFate}(x, substance = "PP")
 }

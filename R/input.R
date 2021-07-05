@@ -2,7 +2,7 @@ adjustExtent <- function(rl, ex) {
   extend(crop(rl, ex), ex)
 }
 
-#' DEM Related Input
+#' DEM related input
 #'
 #' @description
 #' Clips, pre-processes and calculates or determines all input data related to

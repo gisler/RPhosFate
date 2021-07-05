@@ -4,7 +4,7 @@
 \name{getParameter,RPhosFate-method}
 \alias{getParameter,RPhosFate-method}
 \alias{getParameter}
-\title{Get Parameter}
+\title{Get parameter}
 \usage{
 \S4method{getParameter}{RPhosFate}(x, parameter)
 }

@@ -4,7 +4,7 @@
 \name{calibrationQuality,RPhosFate-method}
 \alias{calibrationQuality,RPhosFate-method}
 \alias{calibrationQuality}
-\title{Calibration Quality}
+\title{Calibration quality}
 \usage{
 \S4method{calibrationQuality}{RPhosFate}(x, substance, col)
 }

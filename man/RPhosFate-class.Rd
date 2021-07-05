@@ -3,7 +3,7 @@
 \docType{class}
 \name{RPhosFate-class}
 \alias{RPhosFate-class}
-\title{RPhosFate Class}
+\title{RPhosFate class}
 \description{
 An S4 object representing a river catchment.
 }

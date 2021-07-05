@@ -4,7 +4,7 @@
 \name{erosionPrerequisites,RPhosFate-method}
 \alias{erosionPrerequisites,RPhosFate-method}
 \alias{erosionPrerequisites}
-\title{Erosion Prerequisites}
+\title{Erosion prerequisites}
 \usage{
 \S4method{erosionPrerequisites}{RPhosFate}(x)
 }

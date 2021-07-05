@@ -23,6 +23,6 @@ install.packages(
 )
 ```
 
-## Semantic Versioning
+## Semantic versioning
 
 Releases of this project are versioned following the rules of [SemVer](https://semver.org).
