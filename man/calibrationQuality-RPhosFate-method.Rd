@@ -33,6 +33,11 @@ deviation of observations)
 \item \emph{GMRAE:} Geometric Mean Relative Absolute Error
 \item \emph{MdRAE:} Median Relative Absolute Error
 }
+
+In addition, a scatter plot with the observed loads on the x- and the
+modelled loads on the y-axis is displayed and provides a visual impression of
+the model performance. Other elements of this plot are an identity line
+(solid) and plus/minus 30\% deviation lines (dashed).
 }
 \seealso{
 \code{\link{snapGauges}}, \code{\link{autoCalibrate}}, \code{\link[hydroGOF:NSE]{hydroGOF::NSE}},
