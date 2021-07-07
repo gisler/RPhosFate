@@ -275,8 +275,8 @@ setGeneric(
 #' * _NSE:_ Nash-Sutcliffe Efficiency
 #' * _mNSE:_ Modified Nash-Sutcliffe Efficiency (`j = 1`)
 #' * _RMSE:_ Root Mean Square Error
-#' * _NRMSE:_ Normalised Root Mean Square Error (normalised by standard
-#' deviation of observations)
+#' * _NRMSE:_ Normalised Root Mean Square Error (normalised by the standard
+#' deviation of the observations)
 #' * _PBIAS:_ Percent Bias
 #' * _RSR:_ Ratio of the RMSE to the standard deviation of the observations
 #' * _GMRAE:_ Geometric Mean Relative Absolute Error
