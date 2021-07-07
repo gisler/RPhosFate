@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Get parameter — getParameter,RPhosFate-method • RPhosFate</title>
+<title>Get parameter(s) — getParameter,RPhosFate-method • RPhosFate</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="Get parameter — getParameter,RPhosFate-method" />
-<meta property="og:description" content="Obtains a model parameter." />
+<meta property="og:title" content="Get parameter(s) — getParameter,RPhosFate-method" />
+<meta property="og:description" content="Obtains a single model parameter or all model parameters at once." />
 
 
 <meta name="robots" content="noindex">
@@ -132,17 +132,17 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Get parameter</h1>
+    <h1>Get parameter(s)</h1>
     <small class="dont-index">Source: <a href='https://github.com/gisler/RPhosFate/blob/master/R/gettersSetters.R'><code>R/gettersSetters.R</code></a></small>
     <div class="hidden name"><code>getParameter-RPhosFate-method.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Obtains a model parameter.</p>
+    <p>Obtains a single model parameter or all model parameters at once.</p>
     </div>
 
     <pre class="usage"><span class='co'># S4 method for RPhosFate</span>
-<span class='fu'>getParameter</span>(<span class='no'>x</span>, <span class='no'>parameter</span>)</pre>
+<span class='fu'>getParameter</span>(<span class='no'>x</span>, <span class='kw'>parameter</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -153,15 +153,16 @@
     </tr>
     <tr>
       <th>parameter</th>
-      <td><p>A character string specifying a parameter name. See model
-parameter arguments section for further information.</p></td>
+      <td><p>A character string specifying a parameter name or <code>NULL</code> for
+a <code><a href='https://rdrr.io/r/base/list.html'>list</a></code> of all parameters. See model parameter arguments section for
+further information.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Depends on the queried parameter. See model parameter arguments
-section for further information.</p>
+    <p>Depends on the queried parameter or a <code><a href='https://rdrr.io/r/base/list.html'>list</a></code> in case of all
+parameters. See model parameter arguments section for further information.</p>
     <h2 class="hasAnchor" id="model-parameter-arguments"><a class="anchor" href="#model-parameter-arguments"></a>Model parameter arguments</h2>
 
     
