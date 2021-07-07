@@ -70,18 +70,19 @@ setGeneric(
   "getParameter",
   function(x, ...) standardGeneric("getParameter")
 )
-#' Get parameter
+#' Get parameter(s)
 #'
-#' Obtains a model parameter.
+#' Obtains a single model parameter or all model parameters at once.
 #'
 #' @inheritParams erosionPrerequisites,RPhosFate-method
-#' @param parameter A character string specifying a parameter name. See model
-#'   parameter arguments section for further information.
+#' @param parameter A character string specifying a parameter name or `NULL` for
+#'   a [`list`] of all parameters. See model parameter arguments section for
+#'   further information.
 #'
 #' @inheritSection catchment Model parameter arguments
 #'
-#' @return Depends on the queried parameter. See model parameter arguments
-#'   section for further information.
+#' @return Depends on the queried parameter or a [`list`] in case of all
+#'   parameters. See model parameter arguments section for further information.
 #'
 #' @seealso [`setParameter`]
 #'
@@ -91,11 +92,15 @@ setGeneric(
 setMethod(
   "getParameter",
   "RPhosFate",
-  function(x, parameter) {
-    qassert(parameter, "S1")
-    assertSubset(parameter, slotNames(x@parameters))
+  function(x, parameter = NULL) {
+    if (!is.null(parameter)) {
+      qassert(parameter, "S1")
+      assertSubset(parameter, slotNames(x@parameters))
 
-    slot(x@parameters, parameter)
+      slot(x@parameters, parameter)
+    } else {
+      slots2list(x@parameters)
+    }
   }
 )
 

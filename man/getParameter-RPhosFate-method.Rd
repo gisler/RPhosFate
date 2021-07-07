@@ -4,22 +4,23 @@
 \name{getParameter,RPhosFate-method}
 \alias{getParameter,RPhosFate-method}
 \alias{getParameter}
-\title{Get parameter}
+\title{Get parameter(s)}
 \usage{
-\S4method{getParameter}{RPhosFate}(x, parameter)
+\S4method{getParameter}{RPhosFate}(x, parameter = NULL)
 }
 \arguments{
 \item{x}{An S4 \code{\linkS4class{RPhosFate}} river catchment object.}
 
-\item{parameter}{A character string specifying a parameter name. See model
-parameter arguments section for further information.}
+\item{parameter}{A character string specifying a parameter name or \code{NULL} for
+a \code{\link{list}} of all parameters. See model parameter arguments section for
+further information.}
 }
 \value{
-Depends on the queried parameter. See model parameter arguments
-section for further information.
+Depends on the queried parameter or a \code{\link{list}} in case of all
+parameters. See model parameter arguments section for further information.
 }
 \description{
-Obtains a model parameter.
+Obtains a single model parameter or all model parameters at once.
 }
 \section{Model parameter arguments}{
 
