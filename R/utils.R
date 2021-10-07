@@ -27,17 +27,17 @@ calibrate <- function(value, cmt, substance, col, metric, parameter) {
 #'   directory.
 #'
 #' @export
-demoCatchment <- function(cs_dir = tempdir(TRUE)) {
+demoProject <- function(cs_dir = tempdir(TRUE)) {
   assertDirectoryExists(cs_dir, access = "w")
 
   file.copy(
-    system.file("demoData", "demoCatchment", package = "RPhosFate"),
+    system.file("demoData", "demoProject", package = "RPhosFate"),
     cs_dir,
     overwrite = FALSE,
     recursive = TRUE
   )
 
-  file.path(cs_dir, "demoCatchment")
+  file.path(cs_dir, "demoProject")
 }
 
 populateLayerSlots <- function(

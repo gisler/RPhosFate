@@ -1,9 +1,9 @@
 control <- RPhosFate(
-  cv_dir = system.file("tinytest", "controlCatchment", package = "RPhosFate"),
+  cv_dir = system.file("tinytest", "testProject", package = "RPhosFate"),
   ls_ini = TRUE
 )
 
-cs_dir_tst <- demoCatchment()
+cs_dir_tst <- demoProject()
 
 x <- RPhosFate(
   cv_dir = cs_dir_tst,
