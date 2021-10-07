@@ -29,6 +29,9 @@ calibrate <- function(value, cmt, substance, col, metric, parameter) {
 #' @export
 demoProject <- function(cs_dir = tempdir(TRUE)) {
   assertDirectoryExists(cs_dir, access = "w")
+  if (dir.exists(file.path(cs_dir, "demoProject"))) {
+    stop('Folder "demoProject" already exists.', call. = FALSE)
+  }
 
   file.copy(
     system.file("demoData", "demoProject", package = "RPhosFate"),
