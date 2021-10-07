@@ -1,5 +1,27 @@
-adjustExtent <- function(rl, ex) {
-  extend(crop(rl, ex), ex)
+#' Demonstration project
+#'
+#' Copies a demonstration project to an existing or a temporary directory.
+#'
+#' @param cs_dir An optional character string specifying an existing directory.
+#'
+#' @return A character string containing the demonstration project root
+#'   directory.
+#'
+#' @export
+demoProject <- function(cs_dir = tempdir(TRUE)) {
+  assertDirectoryExists(cs_dir, access = "w")
+  if (dir.exists(file.path(cs_dir, "demoProject"))) {
+    stop('Folder "demoProject" already exists.', call. = FALSE)
+  }
+
+  file.copy(
+    system.file("demoData", "demoProject", package = "RPhosFate"),
+    cs_dir,
+    overwrite = FALSE,
+    recursive = TRUE
+  )
+
+  file.path(cs_dir, "demoProject")
 }
 
 #' DEM related input
