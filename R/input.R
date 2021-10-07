@@ -61,6 +61,28 @@ adjustExtent <- function(rl, ex) {
 #'
 #' @seealso [`RPhosFate`], [`catchment`]
 #'
+#' @examples
+#' \dontrun{
+#' cv_dir <- tempfile("cmt") # temporary directory
+#'
+#' DEMrelatedInput(
+#'   cv_dir = cv_dir,
+#'   cs_dem = system.file("demoData", "largeData", "dem_lrg.tif", package = "RPhosFate"),
+#'   cs_cha = system.file("demoData", "largeData", "cha_lrg.tif", package = "RPhosFate"),
+#'   sp_msk = raster::shapefile(
+#'     system.file("demoData", "largeData", "msk.shp", package = "RPhosFate")
+#'   ),
+#'   sp_olp = raster::shapefile(
+#'     system.file("demoData", "largeData", "olp.shp", package = "RPhosFate")
+#'   ),
+#'   sp_sds = raster::shapefile(
+#'     system.file("demoData", "largeData", "sds.shp", package = "RPhosFate")
+#'   ),
+#'   cs_rds = system.file("demoData", "largeData", "rds_lrg.tif", package = "RPhosFate"),
+#'   cs_wgs = system.file("demoData", "largeData", "wgs_lrg.tif", package = "RPhosFate"),
+#'   ls_tmp = TRUE
+#' )}
+#'
 #' @export
 DEMrelatedInput <- function(
   cv_dir,

@@ -73,6 +73,29 @@ are identical.
 \emph{slp} is calculated from the original, unprocessed DEM and represents D8
 slopes.
 }
+\examples{
+\dontrun{
+cv_dir <- tempfile("cmt") # temporary directory
+
+DEMrelatedInput(
+  cv_dir = cv_dir,
+  cs_dem = system.file("demoData", "largeData", "dem_lrg.tif", package = "RPhosFate"),
+  cs_cha = system.file("demoData", "largeData", "cha_lrg.tif", package = "RPhosFate"),
+  sp_msk = raster::shapefile(
+    system.file("demoData", "largeData", "msk.shp", package = "RPhosFate")
+  ),
+  sp_olp = raster::shapefile(
+    system.file("demoData", "largeData", "olp.shp", package = "RPhosFate")
+  ),
+  sp_sds = raster::shapefile(
+    system.file("demoData", "largeData", "sds.shp", package = "RPhosFate")
+  ),
+  cs_rds = system.file("demoData", "largeData", "rds_lrg.tif", package = "RPhosFate"),
+  cs_wgs = system.file("demoData", "largeData", "wgs_lrg.tif", package = "RPhosFate"),
+  ls_tmp = TRUE
+)}
+
+}
 \references{
 \cite{Lindsay, J.B., 2016. Efficient hybrid breaching-filling sink removal
 methods for flow path enforcement in digital elevation models. Hydrological
