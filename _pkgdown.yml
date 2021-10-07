@@ -30,6 +30,7 @@ reference:
   - title: "Input data"
     contents:
       - DEMrelatedInput
+      - demoProject
   - title: "Project management"
     contents:
       - catchment
