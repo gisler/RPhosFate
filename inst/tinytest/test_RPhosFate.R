@@ -18,10 +18,9 @@ layers <- list(
 )
 for (i in seq_along(layers$layer)) {
   expect_true(
-    raster::compareRaster(
+    raster::all.equal(
       getLayer(x      , layers$layer[i], layers$substance[i]),
-      getLayer(control, layers$layer[i], layers$substance[i]),
-      values = TRUE
+      getLayer(control, layers$layer[i], layers$substance[i])
     )
   )
 }
@@ -32,10 +31,9 @@ layers <- list(
 )
 for (i in seq_along(layers$layer)) {
   expect_true(
-    raster::compareRaster(
+    raster::all.equal(
       getLayer(x      , layers$layer[i], layers$substance[i]),
-      getLayer(control, layers$layer[i], layers$substance[i]),
-      values = TRUE
+      getLayer(control, layers$layer[i], layers$substance[i])
     )
   )
 }
@@ -48,10 +46,9 @@ layers <- list(
 )
 for (i in seq_along(layers$layer)) {
   expect_true(
-    raster::compareRaster(
+    raster::all.equal(
       getLayer(x      , layers$layer[i], layers$substance[i]),
-      getLayer(control, layers$layer[i], layers$substance[i]),
-      values = TRUE
+      getLayer(control, layers$layer[i], layers$substance[i])
     )
   )
 }
