@@ -75,9 +75,9 @@ slopes.
 }
 \examples{
 \dontrun{
-# temporary project root directory
+# create temporary project root directory
 cv_dir <- tempfile("cmt")
-# directory holding the "large" rasters and other required data sets
+# obtain directory holding "large" rasters and other required data sets
 cs_dir_lrg <- system.file("tinytest", "largeData", package = "RPhosFate")
 
 nm_olc <- DEMrelatedInput(

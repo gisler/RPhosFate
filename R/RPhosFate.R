@@ -26,6 +26,19 @@ setGeneric(
 #' the Revised Universal Soil Loss Equation (RUSLE), Agriculture Handbook. U.S.
 #' Government Printing Office, Washington, DC.}
 #'
+#' @examples
+#' \dontrun{
+#' # create temporary demonstration project
+#' cv_dir <- demoProject()
+#' # load temporary demonstration project
+#' x <- RPhosFate(
+#'   cv_dir = cv_dir,
+#'   ls_ini = TRUE
+#' )
+#'
+#' x <- erosionPrerequisites(x)
+#' }
+#'
 #' @aliases erosionPrerequisites
 #'
 #' @export
@@ -136,6 +149,21 @@ setGeneric(
 #' losses. A guide to conservation planning, Agriculture Handbook. U.S.
 #' Government Printing Office, Washington, DC.}
 #'
+#' @examples
+#' \dontrun{
+#' # create temporary demonstration project
+#' cv_dir <- demoProject()
+#' # load temporary demonstration project
+#' x <- RPhosFate(
+#'   cv_dir = cv_dir,
+#'   ls_ini = TRUE
+#' )
+#' # presupposed functions calls
+#' x <- erosionPrerequisites(x)
+#'
+#' x <- erosion(x)
+#' }
+#'
 #' @aliases erosion
 #'
 #' @export
@@ -193,6 +221,22 @@ setGeneric(
 #'
 #' @inherit catchment return
 #'
+#' @examples
+#' \dontrun{
+#' # create temporary demonstration project
+#' cv_dir <- demoProject()
+#' # load temporary demonstration project
+#' x <- RPhosFate(
+#'   cv_dir = cv_dir,
+#'   ls_ini = TRUE
+#' )
+#' # presupposed functions calls
+#' x <- erosionPrerequisites(x)
+#' x <- erosion(x)
+#'
+#' x <- emission(x, "PP")
+#' }
+#'
 #' @aliases emission
 #'
 #' @export
@@ -249,6 +293,19 @@ setGeneric(
 #' \cite{Molnár, P., Ramírez, J.A., 1998. Energy dissipation theories and
 #' optimal channel characteristics of river networks. Water Resources Research
 #' 34, 1809–1818.}
+#'
+#' @examples
+#' \dontrun{
+#' # create temporary demonstration project
+#' cv_dir <- demoProject()
+#' # load temporary demonstration project
+#' x <- RPhosFate(
+#'   cv_dir = cv_dir,
+#'   ls_ini = TRUE
+#' )
+#'
+#' x <- transportPrerequisites(x)
+#' }
 #'
 #' @aliases transportPrerequisites
 #'
@@ -352,6 +409,19 @@ setGeneric(
 #'
 #' @inherit catchment return
 #'
+#' @examples
+#' \dontrun{
+#' # create temporary demonstration project
+#' cv_dir <- demoProject()
+#' # load temporary demonstration project
+#' x <- RPhosFate(
+#'   cv_dir = cv_dir,
+#'   ls_ini = TRUE
+#' )
+#'
+#' x <- transportCalcOrder(x)
+#' }
+#'
 #' @aliases transportCalcOrder
 #'
 #' @export
@@ -426,6 +496,25 @@ setGeneric(
 #' @references
 #' \cite{Engman, E.T., 1986. Roughness coefficients for routing surface runoff.
 #' Journal of Irrigation and Drainage Engineering 112, 39–53.}
+#'
+#' @examples
+#' \dontrun{
+#' # create temporary demonstration project
+#' cv_dir <- demoProject()
+#' # load temporary demonstration project
+#' x <- RPhosFate(
+#'   cv_dir = cv_dir,
+#'   ls_ini = TRUE
+#' )
+#' # presupposed functions calls
+#' x <- erosionPrerequisites(x)
+#' x <- erosion(x)
+#' x <- emission(x, "PP")
+#' x <- transportPrerequisites(x)
+#' x <- transportCalcOrder(x)
+#'
+#' x <- transport(x, "PP")
+#' }
 #'
 #' @aliases transport
 #'

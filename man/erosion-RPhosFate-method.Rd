@@ -17,6 +17,22 @@ An S4 \code{\linkS4class{RPhosFate}} river catchment object.
 \description{
 Calculates (R)USLE erosion.
 }
+\examples{
+\dontrun{
+# create temporary demonstration project
+cv_dir <- demoProject()
+# load temporary demonstration project
+x <- RPhosFate(
+  cv_dir = cv_dir,
+  ls_ini = TRUE
+)
+# presupposed functions calls
+x <- erosionPrerequisites(x)
+
+x <- erosion(x)
+}
+
+}
 \references{
 \cite{Renard, K.G., Foster, G.R., Weesies, G.A., McCool, D.K., Yoder, D.C.,
 1997. Predicting soil erosion by water: a guide to conservation planning with

@@ -19,3 +19,20 @@ An S4 \code{\linkS4class{RPhosFate}} river catchment object.
 \description{
 Calculates substance emissions.
 }
+\examples{
+\dontrun{
+# create temporary demonstration project
+cv_dir <- demoProject()
+# load temporary demonstration project
+x <- RPhosFate(
+  cv_dir = cv_dir,
+  ls_ini = TRUE
+)
+# presupposed functions calls
+x <- erosionPrerequisites(x)
+x <- erosion(x)
+
+x <- emission(x, "PP")
+}
+
+}

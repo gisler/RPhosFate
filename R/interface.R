@@ -13,6 +13,7 @@ RPhosFate <- function(...) {
 #' Creates a project from scratch or loads an existing one utilising _Erdas
 #' Imagine_ raster files (*.img) from, by convention, the following three
 #' project root subdirectories:
+#'
 #' * _Input_
 #' * _Intermediate_
 #' * _Result_
@@ -28,6 +29,7 @@ RPhosFate <- function(...) {
 #' This directory holds all possible user input raster data (flow obstacles like
 #' roads must be considered during generation of the flow accumulation layers
 #' and also be cut out from them in order to be properly respected):
+#'
 #' * _acc:_ Flow accumulations required for transport.
 #' * \emph{acc_wtd:} Weighted flow accumulations (can be equal to _acc_).
 #' * _CFa:_ (R)USLE C-factors.
@@ -49,6 +51,7 @@ RPhosFate <- function(...) {
 #'
 #' @section _Intermediate_ subdirectory:
 #' This directory holds intermediate calculations:
+#'
 #' * _inl:_ Cells representing inlets at roads (storm drains).
 #' * _LFa:_ L-factors.
 #' * _rhy:_ Hydraulic radii in m.
@@ -58,6 +61,7 @@ RPhosFate <- function(...) {
 #'
 #' @section _Result_ subdirectory:
 #' This directory holds the model results:
+#'
 #' * _ero:_ Erosion in t/cell/yr.
 #' * _xxe:_ Substance emissions in kg/cell/yr, for example, _ppe_ for PP
 #' emissions.
@@ -124,6 +128,7 @@ RPhosFate <- function(...) {
 #' * `df_cdt`: A [`data.frame`] with calibration data, which must have at least
 #' the following three columns and one or more columns with substance loads in
 #' t/yr (no default):
+#'
 #'   * _ID:_ ID(s) of the gauge(s)
 #'   * _x:_ x-coordinate(s) of the gauge(s)
 #'   * _y:_ y-coordinate(s) of the gauge(s)
@@ -272,6 +277,7 @@ setGeneric(
 #'
 #' @description
 #' Assesses the model's calibration quality via the following metrics:
+#'
 #' * _NSE:_ Nash-Sutcliffe Efficiency
 #' * _mNSE:_ Modified Nash-Sutcliffe Efficiency (`j = 1`)
 #' * _RMSE:_ Root Mean Square Error

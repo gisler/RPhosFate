@@ -4,6 +4,7 @@
 #' Copies a demonstration project to an existing or a temporary directory.
 #'
 #' The demonstration project data are a derivative of the
+#'
 #' * _[Geoland.at](https://www.data.gv.at/katalog/dataset/d88a1246-9684-480b-a480-ff63286b35b7)_ (digital elevation model),
 #' * _[AMA](https://www.data.gv.at/katalog/dataset/35e36014-ec69-439b-8629-389f52ffaa92)_ (field data),
 #' * _[BMLRT](https://www.data.gv.at/katalog/dataset/c2287ccb-f44c-48cd-bf7c-ac107b771246)_ (channel data) and
@@ -22,15 +23,18 @@ demoProject <- function(cs_dir = tempdir(TRUE)) {
   assertDirectoryExists(cs_dir, access = "w")
   demoRoot <- file.path(cs_dir, "demoProject")
   if (dir.exists(demoRoot)) {
-    stop('Folder "demoProject" already exists.', call. = FALSE)
+    warning(
+      'A folder called "demoProject" already exists and is left as is.',
+      call. = FALSE
+    )
+  } else {
+    dir.create(demoRoot)
+    testRoot <- system.file("tinytest", "testProject", package = "RPhosFate")
+    file.copy(file.path(testRoot, "Input"), demoRoot, recursive = TRUE)
+    file.copy(file.path(testRoot, "cdt.txt"), demoRoot)
+    file.copy(file.path(testRoot, "LICENSE.md"), demoRoot)
+    file.copy(file.path(testRoot, "parameters.yaml"), demoRoot)
   }
-
-  dir.create(demoRoot)
-  testRoot <- system.file("tinytest", "testProject", package = "RPhosFate")
-  file.copy(file.path(testRoot, "Input"), demoRoot, recursive = TRUE)
-  file.copy(file.path(testRoot, "cdt.txt"), demoRoot)
-  file.copy(file.path(testRoot, "LICENSE.md"), demoRoot)
-  file.copy(file.path(testRoot, "parameters.yaml"), demoRoot)
 
   demoRoot
 }
@@ -74,6 +78,7 @@ demoProject <- function(cs_dir = tempdir(TRUE)) {
 #' @details
 #' This function applies the following (pre-processing) steps to ensure
 #' hydrologic consistency of the generated input data:
+#'
 #' * Stream burning and orientation of cells adjacent to channel cells
 #' approximately into the direction of channel cells (optional).
 #' * Depression breaching.
@@ -96,9 +101,9 @@ demoProject <- function(cs_dir = tempdir(TRUE)) {
 #'
 #' @examples
 #' \dontrun{
-#' # temporary project root directory
+#' # create temporary project root directory
 #' cv_dir <- tempfile("cmt")
-#' # directory holding the "large" rasters and other required data sets
+#' # obtain directory holding "large" rasters and other required data sets
 #' cs_dir_lrg <- system.file("tinytest", "largeData", package = "RPhosFate")
 #'
 #' nm_olc <- DEMrelatedInput(
