@@ -1,6 +1,16 @@
 #' Demonstration project
 #'
+#' @description
 #' Copies a demonstration project to an existing or a temporary directory.
+#'
+#' The demonstration project data are a derivative of the
+#' * _[Geoland.at](https://www.data.gv.at/katalog/dataset/d88a1246-9684-480b-a480-ff63286b35b7)_ (digital elevation model),
+#' * _[AMA](https://www.data.gv.at/katalog/dataset/35e36014-ec69-439b-8629-389f52ffaa92)_ (field data),
+#' * _[BMLRT](https://www.data.gv.at/katalog/dataset/c2287ccb-f44c-48cd-bf7c-ac107b771246)_ (channel data) and
+#' * _[GIP.at](https://www.data.gv.at/katalog/dataset/3fefc838-791d-4dde-975b-a4131a54e7c5)_ (road data)
+#'
+#' data sets, used and licensed under
+#' _[(CC BY 4.0)](https://creativecommons.org/licenses/by/4.0)_ by Gerold Hepp.
 #'
 #' @param cs_dir An optional character string specifying an existing directory.
 #'
@@ -10,18 +20,19 @@
 #' @export
 demoProject <- function(cs_dir = tempdir(TRUE)) {
   assertDirectoryExists(cs_dir, access = "w")
-  if (dir.exists(file.path(cs_dir, "demoProject"))) {
+  demoRoot <- file.path(cs_dir, "demoProject")
+  if (dir.exists(demoRoot)) {
     stop('Folder "demoProject" already exists.', call. = FALSE)
   }
 
-  file.copy(
-    system.file("demoData", "demoProject", package = "RPhosFate"),
-    cs_dir,
-    overwrite = FALSE,
-    recursive = TRUE
-  )
+  dir.create(demoRoot)
+  testRoot <- system.file("tinytest", "testProject", package = "RPhosFate")
+  file.copy(file.path(testRoot, "Input"), demoRoot, recursive = TRUE)
+  file.copy(file.path(testRoot, "cdt.txt"), demoRoot)
+  file.copy(file.path(testRoot, "LICENSE.md"), demoRoot)
+  file.copy(file.path(testRoot, "parameters.yaml"), demoRoot)
 
-  file.path(cs_dir, "demoProject")
+  demoRoot
 }
 
 #' DEM related input
@@ -85,23 +96,20 @@ demoProject <- function(cs_dir = tempdir(TRUE)) {
 #'
 #' @examples
 #' \dontrun{
-#' cv_dir <- tempfile("cmt") # temporary directory
+#' # temporary project root directory
+#' cv_dir <- tempfile("cmt")
+#' # directory holding the "large" rasters and other required data sets
+#' cs_dir_lrg <- system.file("tinytest", "largeData", package = "RPhosFate")
 #'
-#' DEMrelatedInput(
+#' nm_olc <- DEMrelatedInput(
 #'   cv_dir = cv_dir,
-#'   cs_dem = system.file("demoData", "largeData", "dem_lrg.tif", package = "RPhosFate"),
-#'   cs_cha = system.file("demoData", "largeData", "cha_lrg.tif", package = "RPhosFate"),
-#'   sp_msk = raster::shapefile(
-#'     system.file("demoData", "largeData", "msk.shp", package = "RPhosFate")
-#'   ),
-#'   sp_olp = raster::shapefile(
-#'     system.file("demoData", "largeData", "olp.shp", package = "RPhosFate")
-#'   ),
-#'   sp_sds = raster::shapefile(
-#'     system.file("demoData", "largeData", "sds.shp", package = "RPhosFate")
-#'   ),
-#'   cs_rds = system.file("demoData", "largeData", "rds_lrg.tif", package = "RPhosFate"),
-#'   cs_wgs = system.file("demoData", "largeData", "wgs_lrg.tif", package = "RPhosFate"),
+#'   cs_dem = file.path(cs_dir_lrg, "dem_lrg.tif"),
+#'   cs_cha = file.path(cs_dir_lrg, "cha_lrg.tif"),
+#'   sp_msk = raster::shapefile(file.path(cs_dir_lrg, "msk.shp")),
+#'   sp_olp = raster::shapefile(file.path(cs_dir_lrg, "olp.shp")),
+#'   sp_sds = raster::shapefile(file.path(cs_dir_lrg, "sds.shp")),
+#'   cs_rds = file.path(cs_dir_lrg, "rds_lrg.tif"),
+#'   cs_wgs = file.path(cs_dir_lrg, "wgs_lrg.tif"),
 #'   ls_tmp = TRUE
 #' )}
 #'

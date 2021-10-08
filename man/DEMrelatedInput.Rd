@@ -75,23 +75,20 @@ slopes.
 }
 \examples{
 \dontrun{
-cv_dir <- tempfile("cmt") # temporary directory
+# temporary project root directory
+cv_dir <- tempfile("cmt")
+# directory holding the "large" rasters and other required data sets
+cs_dir_lrg <- system.file("tinytest", "largeData", package = "RPhosFate")
 
-DEMrelatedInput(
+nm_olc <- DEMrelatedInput(
   cv_dir = cv_dir,
-  cs_dem = system.file("demoData", "largeData", "dem_lrg.tif", package = "RPhosFate"),
-  cs_cha = system.file("demoData", "largeData", "cha_lrg.tif", package = "RPhosFate"),
-  sp_msk = raster::shapefile(
-    system.file("demoData", "largeData", "msk.shp", package = "RPhosFate")
-  ),
-  sp_olp = raster::shapefile(
-    system.file("demoData", "largeData", "olp.shp", package = "RPhosFate")
-  ),
-  sp_sds = raster::shapefile(
-    system.file("demoData", "largeData", "sds.shp", package = "RPhosFate")
-  ),
-  cs_rds = system.file("demoData", "largeData", "rds_lrg.tif", package = "RPhosFate"),
-  cs_wgs = system.file("demoData", "largeData", "wgs_lrg.tif", package = "RPhosFate"),
+  cs_dem = file.path(cs_dir_lrg, "dem_lrg.tif"),
+  cs_cha = file.path(cs_dir_lrg, "cha_lrg.tif"),
+  sp_msk = raster::shapefile(file.path(cs_dir_lrg, "msk.shp")),
+  sp_olp = raster::shapefile(file.path(cs_dir_lrg, "olp.shp")),
+  sp_sds = raster::shapefile(file.path(cs_dir_lrg, "sds.shp")),
+  cs_rds = file.path(cs_dir_lrg, "rds_lrg.tif"),
+  cs_wgs = file.path(cs_dir_lrg, "wgs_lrg.tif"),
   ls_tmp = TRUE
 )}
 
