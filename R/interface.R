@@ -500,7 +500,13 @@ setGeneric(
 #' # presupposed function call
 #' x <- firstRun(x, "SS")
 #'
-#' x <- autoCalibrate(x, "SS", "SS_load", c(1e-5, 1e-3), "NSE")}
+#' x <- autoCalibrate(
+#'   x,
+#'   "SS",
+#'   col = "SS_load",
+#'   interval = c(1e-5, 1e-3),
+#'   metric = "NSE"
+#' )}
 #'
 #' @aliases autoCalibrate
 #'
