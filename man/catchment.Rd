@@ -155,3 +155,23 @@ t/yr (no default):
 }
 }
 
+\examples{
+\dontrun{
+# create temporary demonstration project
+cv_dir <- demoProject()
+
+x <- RPhosFate(
+  cv_dir = cv_dir,
+  ns_dep_ovl = 25.0e-4,
+  ns_dep_cha =  0.0,
+  nv_enr_rto = c(PP = 2.0),
+  nv_tfc_inl = c(SS = 0.6, PP = 0.6),
+  nm_olc = matrix(c(4704255, 2795195), 1L),
+  df_cdt = read.table(
+    file.path(cv_dir, "cdt.txt"),
+    header = TRUE,
+    stringsAsFactors = FALSE
+  )
+)}
+
+}

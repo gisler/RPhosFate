@@ -135,6 +135,25 @@ RPhosFate <- function(...) {
 #'
 #' @return An S4 [`RPhosFate-class`] river catchment object.
 #'
+#' @examples
+#' \dontrun{
+#' # create temporary demonstration project
+#' cv_dir <- demoProject()
+#'
+#' x <- RPhosFate(
+#'   cv_dir = cv_dir,
+#'   ns_dep_ovl = 25.0e-4,
+#'   ns_dep_cha =  0.0,
+#'   nv_enr_rto = c(PP = 2.0),
+#'   nv_tfc_inl = c(SS = 0.6, PP = 0.6),
+#'   nm_olc = matrix(c(4704255, 2795195), 1L),
+#'   df_cdt = read.table(
+#'     file.path(cv_dir, "cdt.txt"),
+#'     header = TRUE,
+#'     stringsAsFactors = FALSE
+#'   )
+#' )}
+#'
 #' @export
 catchment <- function(...) {
   new("RPhosFate", list(...))
@@ -159,6 +178,18 @@ setGeneric(
 #' @inherit catchment return
 #'
 #' @seealso [`subsequentRun`]
+#'
+#' @examples
+#' \dontrun{
+#' # create temporary demonstration project
+#' cv_dir <- demoProject()
+#' # load temporary demonstration project
+#' x <- RPhosFate(
+#'   cv_dir = cv_dir,
+#'   ls_ini = TRUE
+#' )
+#'
+#' x <- firstRun(x, "SS")}
 #'
 #' @aliases firstRun
 #'
@@ -205,6 +236,20 @@ setGeneric(
 #'
 #' @seealso [`firstRun`]
 #'
+#' @examples
+#' \dontrun{
+#' # create temporary demonstration project
+#' cv_dir <- demoProject()
+#' # load temporary demonstration project
+#' x <- RPhosFate(
+#'   cv_dir = cv_dir,
+#'   ls_ini = TRUE
+#' )
+#' # presupposed function call
+#' x <- firstRun(x, "SS")
+#'
+#' x <- subsequentRun(x, "PP")}
+#'
 #' @aliases subsequentRun
 #'
 #' @export
@@ -246,6 +291,18 @@ setGeneric(
 #' @inherit catchment return
 #'
 #' @seealso [`calibrationQuality`]
+#'
+#' @examples
+#' \dontrun{
+#' # create temporary demonstration project
+#' cv_dir <- demoProject()
+#' # load temporary demonstration project
+#' x <- RPhosFate(
+#'   cv_dir = cv_dir,
+#'   ls_ini = TRUE
+#' )
+#'
+#' x <- snapGauges(x)}
 #'
 #' @aliases snapGauges
 #'
@@ -303,6 +360,20 @@ setGeneric(
 #' @seealso [`snapGauges`], [`autoCalibrate`], [`hydroGOF::NSE`],
 #'   [`hydroGOF::mNSE`], [`hydroGOF::rmse`], [`hydroGOF::nrmse`],
 #'   [`hydroGOF::pbias`], [`hydroGOF::rsr`]
+#'
+#' @examples
+#' \dontrun{
+#' # create temporary demonstration project
+#' cv_dir <- demoProject()
+#' # load temporary demonstration project
+#' x <- RPhosFate(
+#'   cv_dir = cv_dir,
+#'   ls_ini = TRUE
+#' )
+#' # presupposed function call
+#' x <- firstRun(x, "SS")
+#'
+#' x <- calibrationQuality(x, "SS", "SS_load")}
 #'
 #' @aliases calibrationQuality
 #'
@@ -417,6 +488,20 @@ setGeneric(
 #'
 #' @seealso [`optimize`]
 #'
+#' @examples
+#' \dontrun{
+#' # create temporary demonstration project
+#' cv_dir <- demoProject()
+#' # load temporary demonstration project
+#' x <- RPhosFate(
+#'   cv_dir = cv_dir,
+#'   ls_ini = TRUE
+#' )
+#' # presupposed function call
+#' x <- firstRun(x, "SS")
+#'
+#' x <- autoCalibrate(x, "SS", "SS_load", c(1e-5, 1e-3), "NSE")}
+#'
 #' @aliases autoCalibrate
 #'
 #' @export
@@ -490,6 +575,18 @@ setGeneric(
 #' @inheritParams erosionPrerequisites,RPhosFate-method
 #'
 #' @return `NULL` invisibly.
+#'
+#' @examples
+#' \dontrun{
+#' # create temporary demonstration project
+#' cv_dir <- demoProject()
+#' # load temporary demonstration project
+#' x <- RPhosFate(
+#'   cv_dir = cv_dir,
+#'   ls_ini = TRUE
+#' )
+#'
+#' saveState(x)}
 #'
 #' @aliases saveState
 #'

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>First run — firstRun,RPhosFate-method • RPhosFate</title>
+<title>Changelog • RPhosFate</title>
 
 
 <!-- jquery -->
@@ -39,12 +39,7 @@
 
 
 
-<meta property="og:title" content="First run — firstRun,RPhosFate-method" />
-<meta property="og:description" content="Calls erosionPrerequisites, erosion, emission,
-transportPrerequisites, transportCalcOrder and transport in the
-mentioned order. While transport is called for the specified substance
-only, emission is called for all substances whose top soil concentrations
-have been provided." />
+<meta property="og:title" content="Changelog" />
 
 
 <meta name="robots" content="noindex">
@@ -63,7 +58,7 @@ have been provided." />
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    <div class="container template-reference-topic">
+    <div class="container template-news">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -133,59 +128,26 @@ have been provided." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>First run</h1>
-    <small class="dont-index">Source: <a href='https://github.com/gisler/RPhosFate/blob/master/R/interface.R'><code>R/interface.R</code></a></small>
-    <div class="hidden name"><code>firstRun-RPhosFate-method.Rd</code></div>
+      <h1 data-toc-skip>Changelog <small></small></h1>
+      <small>Source: <a href='https://github.com/gisler/RPhosFate/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div class="ref-description">
-    <p>Calls <code><a href='erosionPrerequisites-RPhosFate-method.html'>erosionPrerequisites</a></code>, <code><a href='erosion-RPhosFate-method.html'>erosion</a></code>, <code><a href='emission-RPhosFate-method.html'>emission</a></code>,
-<code><a href='transportPrerequisites-RPhosFate-method.html'>transportPrerequisites</a></code>, <code><a href='transportCalcOrder-RPhosFate-method.html'>transportCalcOrder</a></code> and <code><a href='transport-RPhosFate-method.html'>transport</a></code> in the
-mentioned order. While <code><a href='transport-RPhosFate-method.html'>transport</a></code> is called for the specified substance
-only, <code><a href='emission-RPhosFate-method.html'>emission</a></code> is called for all substances whose top soil concentrations
-have been provided.</p>
-    </div>
-
-    <pre class="usage"><span class='co'># S4 method for RPhosFate</span>
-<span class='fu'>firstRun</span>(<span class='no'>x</span>, <span class='kw'>substance</span> <span class='kw'>=</span> <span class='st'>"PP"</span>)</pre>
-
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>x</th>
-      <td><p>An S4 <code><a href='RPhosFate-class.html'>RPhosFate</a></code> river catchment object.</p></td>
-    </tr>
-    <tr>
-      <th>substance</th>
-      <td><p>A character string specifying the substance to calculate.</p></td>
-    </tr>
-    </table>
-
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p>An S4 <code><a href='RPhosFate-class.html'>RPhosFate</a></code> river catchment object.</p>
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
-    <div class='dont-index'><p><code><a href='subsequentRun-RPhosFate-method.html'>subsequentRun</a></code></p></div>
-
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='co'># create temporary demonstration project</span>
-<span class='no'>cv_dir</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='demoProject.html'>demoProject</a></span>()
-<span class='co'># load temporary demonstration project</span>
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='catchment.html'>RPhosFate</a></span>(
-  <span class='kw'>cv_dir</span> <span class='kw'>=</span> <span class='no'>cv_dir</span>,
-  <span class='kw'>ls_ini</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
-)
-
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>firstRun</span>(<span class='no'>x</span>, <span class='st'>"SS"</span>)}</div></pre>
+    <div id="rphosfate-v099000" class="section level1">
+<h1 class="page-header" data-toc-text="0.9.9000">
+<a href="#rphosfate-v099000" class="anchor"></a>RPhosFate v0.9.9000</h1>
+<ul>
+<li>Added function <code><a href="../reference/demoProject.html">demoProject()</a></code> providing training input data</li>
+<li>Added examples to documentation</li>
+</ul>
+</div>
   </div>
+
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
       <h2 data-toc-skip>Contents</h2>
     </nav>
   </div>
+
 </div>
 
 

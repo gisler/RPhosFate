@@ -73,7 +73,7 @@ section search and successive parabolic interpolation." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">RPhosFate</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.8.0.9000</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.9.9000</span>
       </span>
     </div>
 
@@ -87,9 +87,6 @@ section search and successive parabolic interpolation." />
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
-</li>
-<li>
-  <a href="https://gisler.github.io/RPhosFateBook">Handbook</a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -195,6 +192,19 @@ dedicated parameter utilised for optimisation via a character string
 
     <div class='dont-index'><p><code><a href='https://rdrr.io/r/stats/optimize.html'>optimize</a></code></p></div>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='co'># create temporary demonstration project</span>
+<span class='no'>cv_dir</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='demoProject.html'>demoProject</a></span>()
+<span class='co'># load temporary demonstration project</span>
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='catchment.html'>RPhosFate</a></span>(
+  <span class='kw'>cv_dir</span> <span class='kw'>=</span> <span class='no'>cv_dir</span>,
+  <span class='kw'>ls_ini</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+)
+<span class='co'># presupposed function call</span>
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='firstRun-RPhosFate-method.html'>firstRun</a></span>(<span class='no'>x</span>, <span class='st'>"SS"</span>)
+
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>autoCalibrate</span>(<span class='no'>x</span>, <span class='st'>"SS"</span>, <span class='st'>"SS_load"</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1e-5</span>, <span class='fl'>1e-3</span>), <span class='st'>"NSE"</span>)}</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

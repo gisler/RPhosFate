@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">RPhosFate</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.8.0.9000</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.9.9000</span>
       </span>
     </div>
 
@@ -86,9 +86,6 @@
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
-</li>
-<li>
-  <a href="https://gisler.github.io/RPhosFateBook">Handbook</a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -157,6 +154,17 @@
 
     <p>An S4 <code><a href='RPhosFate-class.html'>RPhosFate</a></code> river catchment object.</p>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='co'># create temporary demonstration project</span>
+<span class='no'>cv_dir</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='demoProject.html'>demoProject</a></span>()
+<span class='co'># load temporary demonstration project</span>
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='catchment.html'>RPhosFate</a></span>(
+  <span class='kw'>cv_dir</span> <span class='kw'>=</span> <span class='no'>cv_dir</span>,
+  <span class='kw'>ls_ini</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+)
+
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>transportCalcOrder</span>(<span class='no'>x</span>)}</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

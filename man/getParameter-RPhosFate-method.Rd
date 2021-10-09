@@ -71,6 +71,20 @@ t/yr (no default):
 }
 }
 
+\examples{
+\dontrun{
+# create temporary demonstration project
+cv_dir <- demoProject()
+# load temporary demonstration project
+x <- RPhosFate(
+  cv_dir = cv_dir,
+  ls_ini = TRUE
+)
+
+getParameter(x)
+getParameter(x, "ns_dep_ovl")}
+
+}
 \seealso{
 \code{\link{setParameter}}
 }

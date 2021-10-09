@@ -25,6 +25,22 @@ setGeneric(
 #'
 #' @return A [`raster::RasterLayer-class`] object.
 #'
+#' @examples
+#' \dontrun{
+#' # create temporary demonstration project
+#' cv_dir <- demoProject()
+#' # load temporary demonstration project
+#' x <- RPhosFate(
+#'   cv_dir = cv_dir,
+#'   ls_ini = TRUE
+#' )
+#' # presupposed function call
+#' x <- firstRun(x, "SS")
+#'
+#' getLayer(x, "dir")
+#' getLayer(x, "xxt", "SS")
+#' getLayer(x, "xxe", "PP")}
+#'
 #' @aliases getLayer
 #'
 #' @export
@@ -86,6 +102,19 @@ setGeneric(
 #'
 #' @seealso [`setParameter`]
 #'
+#' @examples
+#' \dontrun{
+#' # create temporary demonstration project
+#' cv_dir <- demoProject()
+#' # load temporary demonstration project
+#' x <- RPhosFate(
+#'   cv_dir = cv_dir,
+#'   ls_ini = TRUE
+#' )
+#'
+#' getParameter(x)
+#' getParameter(x, "ns_dep_ovl")}
+#'
 #' @aliases getParameter
 #'
 #' @export
@@ -123,6 +152,23 @@ setGeneric(
 #' @inherit catchment return
 #'
 #' @seealso [`getParameter`]
+#'
+#' @examples
+#' \dontrun{
+#' # create temporary demonstration project
+#' cv_dir <- demoProject()
+#' # load temporary demonstration project
+#' x <- RPhosFate(
+#'   cv_dir = cv_dir,
+#'   ls_ini = TRUE
+#' )
+#'
+#' x <- setParameter(x, ns_dep_ovl = 25.0e-4)
+#' x <- setParameter(
+#'   x,
+#'   nv_enr_rto = c(PP = 2.0),
+#'   nv_tfc_inl = c(SS = 0.6, PP = 0.6)
+#' )}
 #'
 #' @aliases setParameter
 #'

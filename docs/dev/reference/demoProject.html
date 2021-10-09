@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>First run — firstRun,RPhosFate-method • RPhosFate</title>
+<title>Demonstration project — demoProject • RPhosFate</title>
 
 
 <!-- jquery -->
@@ -39,12 +39,17 @@
 
 
 
-<meta property="og:title" content="First run — firstRun,RPhosFate-method" />
-<meta property="og:description" content="Calls erosionPrerequisites, erosion, emission,
-transportPrerequisites, transportCalcOrder and transport in the
-mentioned order. While transport is called for the specified substance
-only, emission is called for all substances whose top soil concentrations
-have been provided." />
+<meta property="og:title" content="Demonstration project — demoProject" />
+<meta property="og:description" content="Copies a demonstration project to an existing or a temporary directory.
+The demonstration project data are a derivative of the
+Geoland.at (digital elevation model),
+AMA (field data),
+BMLRT (channel data) and
+GIP.at (road data)
+
+
+data sets, used and licensed under
+(CC BY 4.0) by Gerold Hepp." />
 
 
 <meta name="robots" content="noindex">
@@ -133,53 +138,40 @@ have been provided." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>First run</h1>
-    <small class="dont-index">Source: <a href='https://github.com/gisler/RPhosFate/blob/master/R/interface.R'><code>R/interface.R</code></a></small>
-    <div class="hidden name"><code>firstRun-RPhosFate-method.Rd</code></div>
+    <h1>Demonstration project</h1>
+    <small class="dont-index">Source: <a href='https://github.com/gisler/RPhosFate/blob/master/R/input.R'><code>R/input.R</code></a></small>
+    <div class="hidden name"><code>demoProject.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Calls <code><a href='erosionPrerequisites-RPhosFate-method.html'>erosionPrerequisites</a></code>, <code><a href='erosion-RPhosFate-method.html'>erosion</a></code>, <code><a href='emission-RPhosFate-method.html'>emission</a></code>,
-<code><a href='transportPrerequisites-RPhosFate-method.html'>transportPrerequisites</a></code>, <code><a href='transportCalcOrder-RPhosFate-method.html'>transportCalcOrder</a></code> and <code><a href='transport-RPhosFate-method.html'>transport</a></code> in the
-mentioned order. While <code><a href='transport-RPhosFate-method.html'>transport</a></code> is called for the specified substance
-only, <code><a href='emission-RPhosFate-method.html'>emission</a></code> is called for all substances whose top soil concentrations
-have been provided.</p>
+    <p>Copies a demonstration project to an existing or a temporary directory.</p>
+<p>The demonstration project data are a derivative of the</p><ul>
+<li><p><em><a href='https://www.data.gv.at/katalog/dataset/d88a1246-9684-480b-a480-ff63286b35b7'>Geoland.at</a></em> (digital elevation model),</p></li>
+<li><p><em><a href='https://www.data.gv.at/katalog/dataset/35e36014-ec69-439b-8629-389f52ffaa92'>AMA</a></em> (field data),</p></li>
+<li><p><em><a href='https://www.data.gv.at/katalog/dataset/c2287ccb-f44c-48cd-bf7c-ac107b771246'>BMLRT</a></em> (channel data) and</p></li>
+<li><p><em><a href='https://www.data.gv.at/katalog/dataset/3fefc838-791d-4dde-975b-a4131a54e7c5'>GIP.at</a></em> (road data)</p></li>
+</ul>
+
+<p>data sets, used and licensed under
+<em><a href='https://creativecommons.org/licenses/by/4.0'>(CC BY 4.0)</a></em> by Gerold Hepp.</p>
     </div>
 
-    <pre class="usage"><span class='co'># S4 method for RPhosFate</span>
-<span class='fu'>firstRun</span>(<span class='no'>x</span>, <span class='kw'>substance</span> <span class='kw'>=</span> <span class='st'>"PP"</span>)</pre>
+    <pre class="usage"><span class='fu'>demoProject</span>(<span class='kw'>cs_dir</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span>(<span class='fl'>TRUE</span>))</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>x</th>
-      <td><p>An S4 <code><a href='RPhosFate-class.html'>RPhosFate</a></code> river catchment object.</p></td>
-    </tr>
-    <tr>
-      <th>substance</th>
-      <td><p>A character string specifying the substance to calculate.</p></td>
+      <th>cs_dir</th>
+      <td><p>An optional character string specifying an existing directory.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>An S4 <code><a href='RPhosFate-class.html'>RPhosFate</a></code> river catchment object.</p>
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+    <p>A character string containing the demonstration project root
+directory.</p>
 
-    <div class='dont-index'><p><code><a href='subsequentRun-RPhosFate-method.html'>subsequentRun</a></code></p></div>
-
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='co'># create temporary demonstration project</span>
-<span class='no'>cv_dir</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='demoProject.html'>demoProject</a></span>()
-<span class='co'># load temporary demonstration project</span>
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='catchment.html'>RPhosFate</a></span>(
-  <span class='kw'>cv_dir</span> <span class='kw'>=</span> <span class='no'>cv_dir</span>,
-  <span class='kw'>ls_ini</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
-)
-
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>firstRun</span>(<span class='no'>x</span>, <span class='st'>"SS"</span>)}</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

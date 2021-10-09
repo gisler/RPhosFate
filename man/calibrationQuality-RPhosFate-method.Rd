@@ -39,6 +39,21 @@ modelled loads on the y-axis is displayed and provides a visual impression of
 the model performance. Other elements of this plot are an identity line
 (solid) and plus/minus 30\% deviation lines (dashed).
 }
+\examples{
+\dontrun{
+# create temporary demonstration project
+cv_dir <- demoProject()
+# load temporary demonstration project
+x <- RPhosFate(
+  cv_dir = cv_dir,
+  ls_ini = TRUE
+)
+# presupposed function call
+x <- firstRun(x, "SS")
+
+x <- calibrationQuality(x, "SS", "SS_load")}
+
+}
 \seealso{
 \code{\link{snapGauges}}, \code{\link{autoCalibrate}}, \code{\link[hydroGOF:NSE]{hydroGOF::NSE}},
 \code{\link[hydroGOF:mNSE]{hydroGOF::mNSE}}, \code{\link[hydroGOF:rmse]{hydroGOF::rmse}}, \code{\link[hydroGOF:nrmse]{hydroGOF::nrmse}},

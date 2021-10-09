@@ -36,8 +36,7 @@ setGeneric(
 #'   ls_ini = TRUE
 #' )
 #'
-#' x <- erosionPrerequisites(x)
-#' }
+#' x <- erosionPrerequisites(x)}
 #'
 #' @aliases erosionPrerequisites
 #'
@@ -158,11 +157,10 @@ setGeneric(
 #'   cv_dir = cv_dir,
 #'   ls_ini = TRUE
 #' )
-#' # presupposed functions calls
+#' # presupposed function call
 #' x <- erosionPrerequisites(x)
 #'
-#' x <- erosion(x)
-#' }
+#' x <- erosion(x)}
 #'
 #' @aliases erosion
 #'
@@ -230,12 +228,11 @@ setGeneric(
 #'   cv_dir = cv_dir,
 #'   ls_ini = TRUE
 #' )
-#' # presupposed functions calls
+#' # presupposed function calls
 #' x <- erosionPrerequisites(x)
 #' x <- erosion(x)
 #'
-#' x <- emission(x, "PP")
-#' }
+#' x <- emission(x, "PP")}
 #'
 #' @aliases emission
 #'
@@ -304,8 +301,7 @@ setGeneric(
 #'   ls_ini = TRUE
 #' )
 #'
-#' x <- transportPrerequisites(x)
-#' }
+#' x <- transportPrerequisites(x)}
 #'
 #' @aliases transportPrerequisites
 #'
@@ -419,8 +415,7 @@ setGeneric(
 #'   ls_ini = TRUE
 #' )
 #'
-#' x <- transportCalcOrder(x)
-#' }
+#' x <- transportCalcOrder(x)}
 #'
 #' @aliases transportCalcOrder
 #'
@@ -506,15 +501,14 @@ setGeneric(
 #'   cv_dir = cv_dir,
 #'   ls_ini = TRUE
 #' )
-#' # presupposed functions calls
+#' # presupposed function calls
 #' x <- erosionPrerequisites(x)
 #' x <- erosion(x)
 #' x <- emission(x, "PP")
 #' x <- transportPrerequisites(x)
 #' x <- transportCalcOrder(x)
 #'
-#' x <- transport(x, "PP")
-#' }
+#' x <- transport(x, "PP")}
 #'
 #' @aliases transport
 #'

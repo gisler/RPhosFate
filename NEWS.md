@@ -1,3 +1,4 @@
 # RPhosFate v0.9.9000
 
-* Added demonstration data, examples and tests
+* Added function `demoProject()` providing training input data
+* Added examples to documentation

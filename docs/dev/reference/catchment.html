@@ -81,7 +81,7 @@ catchment is an alias for RPhosFate." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">RPhosFate</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.8.0.9000</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.9.9000</span>
       </span>
     </div>
 
@@ -95,9 +95,6 @@ catchment is an alias for RPhosFate." />
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
-</li>
-<li>
-  <a href="https://gisler.github.io/RPhosFateBook">Handbook</a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -303,6 +300,24 @@ t/yr (no default):</p><ul>
 </ul>
 
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='co'># create temporary demonstration project</span>
+<span class='no'>cv_dir</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='demoProject.html'>demoProject</a></span>()
+
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>RPhosFate</span>(
+  <span class='kw'>cv_dir</span> <span class='kw'>=</span> <span class='no'>cv_dir</span>,
+  <span class='kw'>ns_dep_ovl</span> <span class='kw'>=</span> <span class='fl'>25.0e-4</span>,
+  <span class='kw'>ns_dep_cha</span> <span class='kw'>=</span>  <span class='fl'>0.0</span>,
+  <span class='kw'>nv_enr_rto</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>PP</span> <span class='kw'>=</span> <span class='fl'>2.0</span>),
+  <span class='kw'>nv_tfc_inl</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>SS</span> <span class='kw'>=</span> <span class='fl'>0.6</span>, <span class='kw'>PP</span> <span class='kw'>=</span> <span class='fl'>0.6</span>),
+  <span class='kw'>nm_olc</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>4704255</span>, <span class='fl'>2795195</span>), <span class='fl'>1L</span>),
+  <span class='kw'>df_cdt</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/utils/read.table.html'>read.table</a></span>(
+    <span class='fu'><a href='https://rdrr.io/r/base/file.path.html'>file.path</a></span>(<span class='no'>cv_dir</span>, <span class='st'>"cdt.txt"</span>),
+    <span class='kw'>header</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+    <span class='kw'>stringsAsFactors</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
+  )
+)}</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

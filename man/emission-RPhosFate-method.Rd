@@ -28,11 +28,10 @@ x <- RPhosFate(
   cv_dir = cv_dir,
   ls_ini = TRUE
 )
-# presupposed functions calls
+# presupposed function calls
 x <- erosionPrerequisites(x)
 x <- erosion(x)
 
-x <- emission(x, "PP")
-}
+x <- emission(x, "PP")}
 
 }

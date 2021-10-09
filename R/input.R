@@ -21,7 +21,9 @@
 #' @export
 demoProject <- function(cs_dir = tempdir(TRUE)) {
   assertDirectoryExists(cs_dir, access = "w")
+
   demoRoot <- file.path(cs_dir, "demoProject")
+
   if (dir.exists(demoRoot)) {
     warning(
       'A folder called "demoProject" already exists and is left as is.',
@@ -30,6 +32,7 @@ demoProject <- function(cs_dir = tempdir(TRUE)) {
   } else {
     dir.create(demoRoot)
     testRoot <- system.file("tinytest", "testProject", package = "RPhosFate")
+
     file.copy(file.path(testRoot, "Input"), demoRoot, recursive = TRUE)
     file.copy(file.path(testRoot, "cdt.txt"), demoRoot)
     file.copy(file.path(testRoot, "LICENSE.md"), demoRoot)

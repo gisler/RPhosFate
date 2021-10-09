@@ -23,6 +23,19 @@ mentioned order. While \code{\link{transport}} is called for the specified subst
 only, \code{\link{emission}} is called for all substances whose top soil concentrations
 have been provided.
 }
+\examples{
+\dontrun{
+# create temporary demonstration project
+cv_dir <- demoProject()
+# load temporary demonstration project
+x <- RPhosFate(
+  cv_dir = cv_dir,
+  ls_ini = TRUE
+)
+
+x <- firstRun(x, "SS")}
+
+}
 \seealso{
 \code{\link{subsequentRun}}
 }
