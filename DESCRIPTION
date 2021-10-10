@@ -26,6 +26,7 @@ Imports:
     utils,
     yaml
 Suggests:
+    covr,
     tinytest,
     whitebox
 LinkingTo:
