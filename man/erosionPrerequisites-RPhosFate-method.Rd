@@ -28,7 +28,8 @@ x <- RPhosFate(
   ls_ini = TRUE
 )
 
-x <- erosionPrerequisites(x)}
+x <- erosionPrerequisites(x)
+}
 
 }
 \references{

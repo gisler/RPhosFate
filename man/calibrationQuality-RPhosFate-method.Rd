@@ -51,7 +51,8 @@ x <- RPhosFate(
 # presupposed function call
 x <- firstRun(x, "SS")
 
-x <- calibrationQuality(x, "SS", "SS_load")}
+x <- calibrationQuality(x, "SS", "SS_load")
+}
 
 }
 \seealso{

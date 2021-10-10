@@ -57,7 +57,8 @@ x <- autoCalibrate(
   col = "SS_load",
   interval = c(1e-5, 1e-3),
   metric = "NSE"
-)}
+)
+}
 
 }
 \seealso{

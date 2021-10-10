@@ -39,7 +39,8 @@ setGeneric(
 #'
 #' getLayer(x, "dir")
 #' getLayer(x, "xxt", "SS")
-#' getLayer(x, "xxe", "PP")}
+#' getLayer(x, "xxe", "PP")
+#' }
 #'
 #' @aliases getLayer
 #'
@@ -113,7 +114,8 @@ setGeneric(
 #' )
 #'
 #' getParameter(x)
-#' getParameter(x, "ns_dep_ovl")}
+#' getParameter(x, "ns_dep_ovl")
+#' }
 #'
 #' @aliases getParameter
 #'
@@ -168,7 +170,8 @@ setGeneric(
 #'   x,
 #'   nv_enr_rto = c(PP = 2.0),
 #'   nv_tfc_inl = c(SS = 0.6, PP = 0.6)
-#' )}
+#' )
+#' }
 #'
 #' @aliases setParameter
 #'

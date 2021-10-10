@@ -172,6 +172,7 @@ x <- RPhosFate(
     header = TRUE,
     stringsAsFactors = FALSE
   )
-)}
+)
+}
 
 }

@@ -82,7 +82,8 @@ x <- RPhosFate(
 )
 
 getParameter(x)
-getParameter(x, "ns_dep_ovl")}
+getParameter(x, "ns_dep_ovl")
+}
 
 }
 \seealso{

@@ -36,7 +36,8 @@ x <- emission(x, "PP")
 x <- transportPrerequisites(x)
 x <- transportCalcOrder(x)
 
-x <- transport(x, "PP")}
+x <- transport(x, "PP")
+}
 
 }
 \references{

@@ -84,7 +84,8 @@ x <- setParameter(
   x,
   nv_enr_rto = c(PP = 2.0),
   nv_tfc_inl = c(SS = 0.6, PP = 0.6)
-)}
+)
+}
 
 }
 \seealso{

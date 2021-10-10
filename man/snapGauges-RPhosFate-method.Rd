@@ -28,7 +28,8 @@ x <- RPhosFate(
   ls_ini = TRUE
 )
 
-x <- snapGauges(x)}
+x <- snapGauges(x)
+}
 
 }
 \seealso{

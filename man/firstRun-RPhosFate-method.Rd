@@ -33,7 +33,8 @@ x <- RPhosFate(
   ls_ini = TRUE
 )
 
-x <- firstRun(x, "SS")}
+x <- firstRun(x, "SS")
+}
 
 }
 \seealso{

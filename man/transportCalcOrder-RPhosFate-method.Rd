@@ -27,6 +27,7 @@ x <- RPhosFate(
   ls_ini = TRUE
 )
 
-x <- transportCalcOrder(x)}
+x <- transportCalcOrder(x)
+}
 
 }

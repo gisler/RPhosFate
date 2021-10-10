@@ -29,7 +29,8 @@ x <- RPhosFate(
 # presupposed function call
 x <- erosionPrerequisites(x)
 
-x <- erosion(x)}
+x <- erosion(x)
+}
 
 }
 \references{
