@@ -1,4 +1,6 @@
 #### preparations ####
+cs_wd <- getwd()
+
 cs_dir_ctl <- system.file("tinytest", "testProject", package = "RPhosFate")
 control <- RPhosFate(
   cv_dir = cs_dir_ctl,
@@ -62,21 +64,24 @@ for (emissiveSubstance in setdiff(slotNames(control@substances), "SS")) {
 }
 
 #### snapGauges ####
-x <- snapGauges(x)
+df_cdt <- getParameter(snapGauges(x), "df_cdt")
 
 expect_identical(
-  getParameter(x, "df_cdt")$ID,
-  c("G3", "G2", "G1")
+  df_cdt$ID,
+  c("G3", "G2", "G1"),
+  info = "IDs of gauges are left untouched"
 )
 
-expect_equal(
-  getParameter(x, "df_cdt")$x,
-  c(4704255, 4704195, 4704065)
+expect_identical(
+  df_cdt$x,
+  c(4704255, 4704195, 4704065),
+  info = "x-coordinates are correct"
 )
 
-expect_equal(
-  getParameter(x, "df_cdt")$y,
-  c(2795195, 2795375, 2795585)
+expect_identical(
+  df_cdt$y,
+  c(2795195, 2795375, 2795585),
+  info = "y-coordinates are correct"
 )
 
 #### calibrationQuality ####
@@ -88,13 +93,21 @@ saveState(x)
 
 expect_identical(
   readRDS(file.path(cs_dir_tst, "order.rds")),
-  readRDS(file.path(cs_dir_ctl, "order.rds"))
+  readRDS(file.path(cs_dir_ctl, "order.rds")),
+  info = '"order.rds" is written correctly'
 )
 
 expect_identical(
   yaml::read_yaml(file.path(cs_dir_tst, "parameters.yaml"))[-1L],
-  yaml::read_yaml(file.path(cs_dir_ctl, "parameters.yaml"))[-1L]
+  yaml::read_yaml(file.path(cs_dir_ctl, "parameters.yaml"))[-1L],
+  info = '"parameters.yaml" is written correctly'
 )
 
 #### clean-up ####
+expect_identical(
+  cs_wd,
+  getwd(),
+  info = "working directory is left untouched (high level interface)"
+)
+
 unlink(cs_dir_tst, recursive = TRUE)

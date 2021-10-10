@@ -1,4 +1,6 @@
 #### preparations ####
+cs_wd <- getwd()
+
 cs_dir_ctl <- system.file("tinytest", "testProject", package = "RPhosFate")
 control <- RPhosFate(
   cv_dir = cs_dir_ctl,
@@ -42,7 +44,7 @@ for (emissiveSubstance in setdiff(slotNames(control@substances), "SS")) {
       getLayer(x      , "xxe", emissiveSubstance),
       getLayer(control, "xxe", emissiveSubstance)
     ),
-    info = sprintf('%s "emission" outputs are correct', emissiveSubstance)
+    info = sprintf('%s "emission" output is correct', emissiveSubstance)
   )
 }
 
@@ -83,4 +85,10 @@ for (substance in slotNames(control@substances)) {
 }
 
 #### clean-up ####
+expect_identical(
+  cs_wd,
+  getwd(),
+  info = "working directory is left untouched (low level interface)"
+)
+
 unlink(cs_dir_tst, recursive = TRUE)
