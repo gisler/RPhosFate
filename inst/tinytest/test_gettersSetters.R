@@ -7,13 +7,13 @@ control <- RPhosFate(
   ls_ini = TRUE
 )
 
-source("parameters.R") # nolint
-
 cs_dir_tst <- demoProject()
 x <- RPhosFate(
   cv_dir = cs_dir_tst,
   ls_ini = TRUE
 )
+
+source("parameters.R") # nolint
 
 #### getLayer ####
 
