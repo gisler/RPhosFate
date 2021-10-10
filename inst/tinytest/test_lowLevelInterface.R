@@ -34,14 +34,14 @@ expect_true(
 )
 
 #### emission ####
-for (substance in setdiff(slotNames(control@substances), "SS")) {
-  x <- emission(x, substance)
+for (emissiveSubstance in setdiff(slotNames(control@substances), "SS")) {
+  x <- emission(x, emissiveSubstance)
   expect_true(
     raster::all.equal(
-      getLayer(x      , "xxe", substance),
-      getLayer(control, "xxe", substance)
+      getLayer(x      , "xxe", emissiveSubstance),
+      getLayer(control, "xxe", emissiveSubstance)
     ),
-    info = sprintf('%s "emission" outputs are correct', substance)
+    info = sprintf('%s "emission" outputs are correct', emissiveSubstance)
   )
 }
 

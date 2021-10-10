@@ -204,13 +204,13 @@ setMethod(
 
     x <- erosionPrerequisites(x)
     x <- erosion(x)
-    for (emmisiveSubstance in setdiff(slotNames(x@substances), "SS")) {
+    for (emissiveSubstance in setdiff(slotNames(x@substances), "SS")) {
       if (compareRaster(
         x@topo@rl_acc_wtd,
-        slot(x@substances, emmisiveSubstance)@rl_xxc,
+        slot(x@substances, emissiveSubstance)@rl_xxc,
         stopiffalse = FALSE
       )) {
-        x <- emission(x, emmisiveSubstance)
+        x <- emission(x, emissiveSubstance)
       }
     }
     x <- transportPrerequisites(x)
