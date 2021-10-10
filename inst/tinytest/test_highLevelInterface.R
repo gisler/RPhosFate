@@ -13,7 +13,7 @@ x <- RPhosFate(
   ls_ini = TRUE
 )
 
-source("parameters.R") # nolint
+source("parameters.R", local = TRUE) # nolint
 
 #### RPhosFate and catchment ####
 y <- do.call(RPhosFate, parameters)
