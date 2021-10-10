@@ -2,3 +2,4 @@
 
 * Added function `demoProject()` providing training input data
 * Added examples to documentation
+* Added tests utilising the `tinytest` package

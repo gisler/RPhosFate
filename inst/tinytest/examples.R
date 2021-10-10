@@ -1,0 +1,41 @@
+#### input ####
+example("DEMrelatedInput", "RPhosFate", run.dontrun = TRUE)
+unlink(cv_dir, recursive = TRUE)
+
+#### low level interface ####
+example("erosionPrerequisites", "RPhosFate", run.dontrun = TRUE)
+unlink(cv_dir, recursive = TRUE)
+example("erosion", "RPhosFate", run.dontrun = TRUE)
+unlink(cv_dir, recursive = TRUE)
+example("emission", "RPhosFate", run.dontrun = TRUE)
+unlink(cv_dir, recursive = TRUE)
+example("transportPrerequisites", "RPhosFate", run.dontrun = TRUE)
+unlink(cv_dir, recursive = TRUE)
+example("transportCalcOrder", "RPhosFate", run.dontrun = TRUE)
+unlink(cv_dir, recursive = TRUE)
+example("transport", "RPhosFate", run.dontrun = TRUE)
+unlink(cv_dir, recursive = TRUE)
+
+#### high level interface ####
+example("RPhosFate", "RPhosFate", run.dontrun = TRUE)
+unlink(cv_dir, recursive = TRUE)
+example("firstRun", "RPhosFate", run.dontrun = TRUE)
+unlink(cv_dir, recursive = TRUE)
+example("subsequentRun", "RPhosFate", run.dontrun = TRUE)
+unlink(cv_dir, recursive = TRUE)
+example("snapGauges", "RPhosFate", run.dontrun = TRUE)
+unlink(cv_dir, recursive = TRUE)
+example("calibrationQuality", "RPhosFate", run.dontrun = TRUE)
+unlink(cv_dir, recursive = TRUE)
+example("autoCalibrate", "RPhosFate", run.dontrun = TRUE)
+unlink(cv_dir, recursive = TRUE)
+example("saveState", "RPhosFate", run.dontrun = TRUE)
+unlink(cv_dir, recursive = TRUE)
+
+#### getters and setters ####
+example("getLayer", "RPhosFate", run.dontrun = TRUE)
+unlink(cv_dir, recursive = TRUE)
+example("getParameter", "RPhosFate", run.dontrun = TRUE)
+unlink(cv_dir, recursive = TRUE)
+example("setParameter", "RPhosFate", run.dontrun = TRUE)
+unlink(cv_dir, recursive = TRUE)
