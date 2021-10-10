@@ -14,27 +14,14 @@ x <- RPhosFate(
 )
 
 #### RPhosFate and catchment ####
-parameters <- list(
-  cv_dir = cs_dir_tst,
-  ns_slp_min = 11.1,
-  ns_slp_max = 99.9,
-  ns_rhy_a = 0.11,
-  ns_rhy_b = 0.99,
-  ns_cha_rto = 0.9,
-  ns_man_rip = 0.99,
-  ns_man_cha = 0.11,
-  ns_dep_ovl = 99.9e-4,
-  ns_dep_cha = 11.1e-4,
-  nv_enr_rto = c(PP = 11.0),
-  nv_tfc_inl = c(SS = 0.9, PP = 0.9),
-  iv_fDo = rev(c(32L, 16L, 8L, 64L, 0L, 4L, 128L, 1L, 2L)),
-  nm_olc = matrix(c(4704255, 2795195), 1L),
-  df_cdt = read.table(
-    file.path(cs_dir_tst, "cdt.txt"),
-    header = TRUE,
-    stringsAsFactors = FALSE
-  )
+parameters <- c(
+  list(cv_dir = cs_dir_tst),
+  yaml::read_yaml(file.path(cs_dir_ctl, "testParameters.yaml"))
 )
+parameters$nv_enr_rto <- unlist(parameters$nv_enr_rto)
+parameters$nv_tfc_inl <- unlist(parameters$nv_tfc_inl)
+parameters$nm_olc <- matrix(parameters$nm_olc, 1L)
+parameters$df_cdt <- as.data.frame(parameters$df_cdt, stringsAsFactors = FALSE)
 
 y <- do.call(RPhosFate, parameters)
 z <- do.call(catchment, parameters)
@@ -47,7 +34,7 @@ expect_identical(
 
 expect_identical(
   getParameter(y),
-  parameters[-1L],
+  parameters[-(1:2)],
   info = "parameters are created correctly"
 )
 
@@ -74,7 +61,7 @@ expect_identical(
 
 expect_identical(
   getParameter(y),
-  parameters[-1L],
+  parameters[-(1:2)],
   info = "parameters are loaded correctly"
 )
 
