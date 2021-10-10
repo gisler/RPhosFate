@@ -1,15 +1,16 @@
+#### preparations ####
 control <- RPhosFate(
   cv_dir = system.file("tinytest", "testProject", package = "RPhosFate"),
   ls_ini = TRUE
 )
 
 cs_dir_tst <- demoProject()
-
 x <- RPhosFate(
   cv_dir = cs_dir_tst,
   ls_ini = TRUE
 )
 
+#### firstRun ####
 x <- firstRun(x, "SS")
 
 layers <- list(
@@ -25,6 +26,8 @@ for (i in seq_along(layers$layer)) {
   )
 }
 
+# setdiff(slotNames(control@substances), "SS")
+
 layers <- list(
   layer = c("xxe", "xxr", "xxt", "xxt_cld", "xxt_ctf", "xxt_inp", "xxt_out"),
   substance = c("PP", rep("SS", 6L))
@@ -38,6 +41,7 @@ for (i in seq_along(layers$layer)) {
   )
 }
 
+#### subsequentRun ####
 x <- subsequentRun(x)
 
 layers <- list(
@@ -53,4 +57,10 @@ for (i in seq_along(layers$layer)) {
   )
 }
 
+
+#### saveState ####
+# file(file.path(x@cv_dir, "order.rds"), raw = TRUE)
+
+
+#### clean-up ####
 unlink(cs_dir_tst, recursive = TRUE)

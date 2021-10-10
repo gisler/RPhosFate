@@ -1,15 +1,85 @@
+#### preparations ####
 control <- RPhosFate(
   cv_dir = system.file("tinytest", "testProject", package = "RPhosFate"),
   ls_ini = TRUE
 )
 
 cs_dir_tst <- demoProject()
-
 x <- RPhosFate(
   cv_dir = cs_dir_tst,
   ls_ini = TRUE
 )
 
+#### erosionPrerequisites ####
+x <- erosionPrerequisites(x)
+layers <- c("LFa", "SFa", "slp_cap")
+for (layer in layers) {
+  expect_true(
+    raster::all.equal(
+      getLayer(x      , layer),
+      getLayer(control, layer)
+    ),
+    info = '"erosionPrerequisites" outputs are correct'
+  )
+}
 
+#### erosion ####
+x <- erosion(x)
+expect_true(
+  raster::all.equal(
+    getLayer(x      , "ero"),
+    getLayer(control, "ero")
+  ),
+  info = '"erosion" output is correct'
+)
 
+#### emission ####
+for (substance in setdiff(slotNames(control@substances), "SS")) {
+  x <- emission(x, substance)
+  expect_true(
+    raster::all.equal(
+      getLayer(x      , "xxe", substance),
+      getLayer(control, "xxe", substance)
+    ),
+    info = sprintf('%s "emission" outputs are correct', substance)
+  )
+}
+
+#### transportPrerequisites ####
+x <- transportPrerequisites(x)
+layers <- c("inl", "rhy", "rip")
+for (layer in layers) {
+  expect_true(
+    raster::all.equal(
+      getLayer(x      , layer),
+      getLayer(control, layer)
+    ),
+    info = '"transportPrerequisites" outputs are correct'
+  )
+}
+
+#### transportCalcOrder ####
+x <- transportCalcOrder(x)
+expect_identical(
+  x@helpers@order,
+  control@helpers@order,
+  info = '"transportCalcOrder" is correct'
+)
+
+#### transport ####
+layers <- c("xxr", "xxt", "xxt_cld", "xxt_ctf", "xxt_inp", "xxt_out")
+for (substance in slotNames(control@substances)) {
+  x <- transport(x, substance)
+  for (layer in layers) {
+    expect_true(
+      raster::all.equal(
+        getLayer(x      , layer, substance),
+        getLayer(control, layer, substance)
+      ),
+      info = sprintf('%s "transport" outputs are correct', substance)
+    )
+  }
+}
+
+#### clean-up ####
 unlink(cs_dir_tst, recursive = TRUE)

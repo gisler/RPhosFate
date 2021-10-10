@@ -369,7 +369,10 @@ setMethod(
   function(.Object, arguments) {
     argumentNames <- names(arguments)
 
-    .Object@cv_dir <- arguments$cv_dir
+    .Object@cv_dir <- normalizePath(
+      arguments$cv_dir,
+      winslash = .Platform$file.sep
+    )
     if ("ls_ini" %in% argumentNames) {
       .Object@ls_ini <- arguments$ls_ini
     }

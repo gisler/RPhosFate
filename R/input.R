@@ -1,3 +1,4 @@
+#f use as inline markdown code once switching to roxygen2 >= 7.1.0
 dataLicense <- c(
   "",
   "* _[Geoland.at](https://www.data.gv.at/katalog/dataset/d88a1246-9684-480b-a480-ff63286b35b7)_ (digital elevation model),",
