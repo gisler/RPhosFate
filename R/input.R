@@ -28,6 +28,13 @@ dataLicense <- c(
 #' @return A character string containing the demonstration project root
 #'   directory.
 #'
+#' @seealso [`RPhosFate`], [`catchment`]
+#'
+#' @examples
+#' \dontrun{
+#' demoProject()
+#' }
+#'
 #' @export
 demoProject <- function(cs_dir = tempdir(TRUE)) {
   assertDirectoryExists(cs_dir, access = "w")

@@ -27,3 +27,12 @@ The demonstration project data are a derivative of the
 data sets, used and licensed under
 \emph{\href{https://creativecommons.org/licenses/by/4.0}{(CC BY 4.0)}} by Gerold Hepp.
 }
+\examples{
+\dontrun{
+demoProject()
+}
+
+}
+\seealso{
+\code{\link{RPhosFate}}, \code{\link{catchment}}
+}

@@ -1,4 +1,6 @@
 #### input ####
+example("demoProject", "RPhosFate", run.dontrun = TRUE)
+unlink(cv_dir, recursive = TRUE)
 example("DEMrelatedInput", "RPhosFate", run.dontrun = TRUE)
 unlink(cv_dir, recursive = TRUE)
 
