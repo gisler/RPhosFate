@@ -62,6 +62,22 @@ for (emissiveSubstance in setdiff(slotNames(control@substances), "SS")) {
 }
 
 #### snapGauges ####
+x <- snapGauges(x)
+
+expect_identical(
+  getParameter(x, "df_cdt")$ID,
+  c("G3", "G2", "G1")
+)
+
+expect_equal(
+  getParameter(x, "df_cdt")$x,
+  c(4704255, 4704195, 4704065)
+)
+
+expect_equal(
+  getParameter(x, "df_cdt")$y,
+  c(2795195, 2795375, 2795585)
+)
 
 #### calibrationQuality ####
 
