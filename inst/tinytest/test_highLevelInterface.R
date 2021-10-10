@@ -1,6 +1,7 @@
 #### preparations ####
+cs_dir_ctl <- system.file("tinytest", "testProject", package = "RPhosFate")
 control <- RPhosFate(
-  cv_dir = system.file("tinytest", "testProject", package = "RPhosFate"),
+  cv_dir = cs_dir_ctl,
   ls_ini = TRUE
 )
 
@@ -67,6 +68,17 @@ for (emissiveSubstance in setdiff(slotNames(control@substances), "SS")) {
 #### autoCalibrate ####
 
 #### saveState ####
+saveState(x)
+
+expect_identical(
+  readRDS(file.path(cs_dir_tst, "order.rds")),
+  readRDS(file.path(cs_dir_ctl, "order.rds"))
+)
+
+expect_identical(
+  yaml::read_yaml(file.path(cs_dir_tst, "parameters.yaml"))[-1L],
+  yaml::read_yaml(file.path(cs_dir_ctl, "parameters.yaml"))[-1L]
+)
 
 #### clean-up ####
 unlink(cs_dir_tst, recursive = TRUE)

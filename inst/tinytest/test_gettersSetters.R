@@ -1,6 +1,7 @@
 #### preparations ####
+cs_dir_ctl <- system.file("tinytest", "testProject", package = "RPhosFate")
 control <- RPhosFate(
-  cv_dir = system.file("tinytest", "testProject", package = "RPhosFate"),
+  cv_dir = cs_dir_ctl,
   ls_ini = TRUE
 )
 
