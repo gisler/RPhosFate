@@ -38,9 +38,22 @@ for (layer in layers) {
   )
 }
 
-#### getParameter ####
+#### setParameter and getParameter ####
+x <- do.call(setParameter, c(list(x), parameters[-(1:2)]))
 
-#### setParameter ####
+expect_identical(
+  getParameter(x),
+  parameters[-(1:2)],
+  info = "setting and getting all parameters at once works correctly"
+)
+
+for (parameter in names(parameters[-(1:2)])) {
+  expect_identical(
+    getParameter(x, parameter),
+    parameters[[parameter]],
+    info = sprintf('getting parameter "%s" works correctly', parameter)
+  )
+}
 
 #### clean-up ####
 expect_identical(

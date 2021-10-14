@@ -58,6 +58,25 @@ expect_identical(
   info = "parameters are loaded correctly"
 )
 
+y <- RPhosFate(
+  cv_dir = cs_dir_tst,
+  ls_ini = TRUE,
+  nv_enr_rto = c(PP = 99.0)
+)
+parameters$nv_enr_rto <- c(PP = 99.0)
+
+expect_identical(
+  getParameter(y, "nv_enr_rto"),
+  c(PP = 99.0),
+  info = "overriding saved parameter works correctly"
+)
+
+expect_identical(
+  getParameter(y),
+  parameters[-(1:2)],
+  info = "correct parameter is overridden"
+)
+
 #### firstRun ####
 x <- firstRun(x, "SS")
 
