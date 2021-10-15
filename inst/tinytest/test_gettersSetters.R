@@ -55,12 +55,12 @@ for (parameter in names(parameters[-(1:2)])) {
   )
 }
 
-x <- setParameter(x, nv_tfc_inl = c(PP = 0.1))
+x <- setParameter(x, nv_tfc_inl = c(PP = 0.1, Hg = 0.1))
 
 expect_identical(
   getParameter(x, "nv_tfc_inl"),
-  c(SS = 0.9, PP = 0.1),
-  info = "setting substance parameter values works"
+  c(SS = 0.9, PP = 0.1, Hg = 0.1),
+  info = "updating and adding substance parameter values works"
 )
 
 #### clean-up ####
