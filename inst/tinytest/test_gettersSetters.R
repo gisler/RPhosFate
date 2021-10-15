@@ -55,10 +55,18 @@ for (parameter in names(parameters[-(1:2)])) {
   )
 }
 
+x <- setParameter(x, nv_tfc_inl = c(PP = 0.1))
+
+expect_identical(
+  getParameter(x, "nv_tfc_inl"),
+  c(SS = 0.9, PP = 0.1),
+  info = "setting substance parameter values works"
+)
+
 #### clean-up ####
 expect_identical(
-  cs_wd,
   getwd(),
+  cs_wd,
   info = "working directory is left untouched (getters and setters)"
 )
 

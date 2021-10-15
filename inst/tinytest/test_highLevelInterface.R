@@ -68,7 +68,7 @@ parameters$nv_enr_rto <- c(PP = 99.0)
 expect_identical(
   getParameter(y, "nv_enr_rto"),
   c(PP = 99.0),
-  info = "overriding saved parameter works correctly"
+  info = "overriding saved parameter works"
 )
 
 expect_identical(
@@ -167,8 +167,8 @@ expect_identical(
 
 #### clean-up ####
 expect_identical(
-  cs_wd,
   getwd(),
+  cs_wd,
   info = "working directory is left untouched (high level interface)"
 )
 

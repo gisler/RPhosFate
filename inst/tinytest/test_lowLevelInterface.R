@@ -86,8 +86,8 @@ for (substance in slotNames(control@substances)) {
 
 #### clean-up ####
 expect_identical(
-  cs_wd,
   getwd(),
+  cs_wd,
   info = "working directory is left untouched (low level interface)"
 )
 
