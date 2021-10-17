@@ -1,8 +1,8 @@
 #### demoProject ####
 expect_warning(
   {
-    demoProject()
     cs_dir_tst <- demoProject()
+    demoProject()
   },
   info = 'existing "demoProject" returns warning'
 )

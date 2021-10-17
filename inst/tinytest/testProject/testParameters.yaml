@@ -8,11 +8,11 @@ ns_man_rip: 0.99
 ns_man_cha: 0.11
 ns_dep_ovl: 99.9e-4
 ns_dep_cha: 11.1e-4
-nv_enr_rto:
-  PP: 11.0
 nv_tfc_inl:
   SS: 0.9
   PP: 0.9
+nv_enr_rto:
+  PP: 11.0
 iv_fDo:
   - 2
   - 1

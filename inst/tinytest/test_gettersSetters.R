@@ -15,7 +15,7 @@ x <- RPhosFate(
 
 source("parameters.R", local = TRUE) # nolint
 
-#### getLayer ####
+#### getLayer and [ ####
 layers <- list.files(cs_dir_ctl, "\\.img$", full.names = TRUE, recursive = TRUE)
 for (layer in layers) {
   expect_true(
@@ -28,18 +28,30 @@ for (layer in layers) {
           paste(tolower(slotNames(control@substances)), collapse = "|^")
         ), layer))
         if (length(substance) == 0L) {
-          getLayer(control, layer)
+          rl <- getLayer(control, layer)
         } else {
-          getLayer(control, sub(substance, "xx", layer), toupper(substance))
+          rl <- getLayer(control, sub(substance, "xx", layer), toupper(substance))
         }
+
+        rl
       }
     ),
     info = '"getLayer" works correctly'
   )
+
+  expect_identical(
+    if (length(substance) == 0L) {
+      control[layer]@file@name
+    } else {
+      control[sub(substance, "xx", layer), toupper(substance)]@file@name
+    },
+    rl@file@name,
+    info = '"[" and "getLayer" refer to the same raster layer'
+  )
 }
 
 #### setParameter and getParameter ####
-x <- do.call(setParameter, c(list(x), parameters[-(1:2)]))
+x <- do.call(setParameter, c(list(x), rev(parameters[-(1:2)])))
 
 expect_identical(
   getParameter(x),
@@ -55,12 +67,12 @@ for (parameter in names(parameters[-(1:2)])) {
   )
 }
 
-x <- setParameter(x, nv_tfc_inl = c(PP = 0.1, Hg = 0.1))
+x <- setParameter(x, nv_tfc_inl = c(Hg = 0.1, PP = 0.1))
 
 expect_identical(
   getParameter(x, "nv_tfc_inl"),
   c(SS = 0.9, PP = 0.1, Hg = 0.1),
-  info = "updating and adding substance parameter values works"
+  info = "updating and adding substance parameter values works correctly"
 )
 
 #### clean-up ####

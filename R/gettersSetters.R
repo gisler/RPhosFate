@@ -168,8 +168,8 @@ setGeneric(
 #' x <- setParameter(x, ns_dep_ovl = 25.0e-4)
 #' x <- setParameter(
 #'   x,
-#'   nv_enr_rto = c(PP = 2.0),
-#'   nv_tfc_inl = c(SS = 0.6, PP = 0.6)
+#'   nv_tfc_inl = c(SS = 0.6, PP = 0.6),
+#'   nv_enr_rto = c(PP = 2.0)
 #' )
 #' }
 #'

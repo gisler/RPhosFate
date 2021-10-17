@@ -15,6 +15,7 @@ x <- RPhosFate(
 
 #### erosionPrerequisites ####
 x <- erosionPrerequisites(x)
+
 layers <- c("LFa", "SFa", "slp_cap")
 for (layer in layers) {
   expect_true(
@@ -28,6 +29,7 @@ for (layer in layers) {
 
 #### erosion ####
 x <- erosion(x)
+
 expect_true(
   raster::all.equal(
     getLayer(x      , "ero"),
@@ -39,6 +41,7 @@ expect_true(
 #### emission ####
 for (emissiveSubstance in setdiff(slotNames(control@substances), "SS")) {
   x <- emission(x, emissiveSubstance)
+
   expect_true(
     raster::all.equal(
       getLayer(x      , "xxe", emissiveSubstance),
@@ -50,6 +53,7 @@ for (emissiveSubstance in setdiff(slotNames(control@substances), "SS")) {
 
 #### transportPrerequisites ####
 x <- transportPrerequisites(x)
+
 layers <- c("inl", "rhy", "rip")
 for (layer in layers) {
   expect_true(
@@ -63,6 +67,7 @@ for (layer in layers) {
 
 #### transportCalcOrder ####
 x <- transportCalcOrder(x)
+
 expect_identical(
   x@helpers@order,
   control@helpers@order,
@@ -73,6 +78,7 @@ expect_identical(
 layers <- c("xxr", "xxt", "xxt_cld", "xxt_ctf", "xxt_inp", "xxt_out")
 for (substance in slotNames(control@substances)) {
   x <- transport(x, substance)
+
   for (layer in layers) {
     expect_true(
       raster::all.equal(

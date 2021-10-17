@@ -61,13 +61,13 @@ expect_identical(
 y <- RPhosFate(
   cv_dir = cs_dir_tst,
   ls_ini = TRUE,
-  nv_enr_rto = c(PP = 99.0)
+  ns_slp_min = 33.3
 )
-parameters$nv_enr_rto <- c(PP = 99.0)
+parameters$ns_slp_min <- 33.3
 
 expect_identical(
-  getParameter(y, "nv_enr_rto"),
-  c(PP = 99.0),
+  getParameter(y, "ns_slp_min"),
+  33.3,
   info = "overriding saved parameter works"
 )
 
@@ -147,6 +147,10 @@ expect_identical(
 )
 
 #### calibrationQuality ####
+# for (substance in substances) {
+#   calibrationQuality(snapGauges(x), substance, sprintf("%s_load", substance))
+#   calibrationQuality(snapGauges(x), substance, sprintf("%s_load", substance))
+# }
 
 #### autoCalibrate ####
 

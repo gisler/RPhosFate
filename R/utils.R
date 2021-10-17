@@ -51,21 +51,19 @@ populateParameterSlots <- function(parameters, arguments) {
   assertSubset(argumentNames, parameterNames)
 
   for (i in seq_along(arguments)) {
-    if (argumentNames[i] %in% c("nv_enr_rto", "nv_tfc_inl")) {
-      slot(parameters, argumentNames[i])[intersect(
-        names(slot(parameters, argumentNames[i])),
-        names(arguments[[i]])
-      )] <- arguments[[i]][intersect(
-        names(slot(parameters, argumentNames[i])),
-        names(arguments[[i]])
-      )]
-      slot(parameters, argumentNames[i]) <- c(
-        slot(parameters, argumentNames[i]),
-        arguments[[i]][setdiff(
-          names(arguments[[i]]),
-          names(slot(parameters, argumentNames[i]))
-        )]
+    if (argumentNames[i] %in% c("nv_tfc_inl", "nv_enr_rto")) {
+      assertCharacter(
+        names(arguments[[i]]),
+        min.chars = 1L,
+        any.missing = FALSE,
+        unique = TRUE,
+        .var.name = sprintf("names(%s)", argumentNames[i])
       )
+
+      slot(parameters, argumentNames[i]) <- unlist(modifyList(
+        as.list(slot(parameters, argumentNames[i])),
+        as.list(arguments[[i]])
+      ))
     } else {
       slot(parameters, argumentNames[i]) <- arguments[[i]]
     }
@@ -100,8 +98,8 @@ readLayer <- function(
 readParameters <- function(arguments) {
   parameters <- read_yaml("parameters.yaml")
 
-  parameters[["nv_enr_rto"]] <- unlist(parameters[["nv_enr_rto"]])
   parameters[["nv_tfc_inl"]] <- unlist(parameters[["nv_tfc_inl"]])
+  parameters[["nv_enr_rto"]] <- unlist(parameters[["nv_enr_rto"]])
   parameters[["nm_olc"]] <- matrix(parameters[["nm_olc"]], 1L)
   parameters[["df_cdt"]] <- as.data.frame(
     parameters[["df_cdt"]],

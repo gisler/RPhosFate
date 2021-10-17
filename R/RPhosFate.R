@@ -541,32 +541,18 @@ setMethod(
     )
     qassert(x@parameters@ns_dep_ovl, "N1(0,)", .var.name = "ns_dep_ovl")
     qassert(x@parameters@ns_dep_cha, "N1[0,)", .var.name = "ns_dep_cha")
+    qassert(
+      x@parameters@nv_tfc_inl[substance],
+      "N1[0,1]",
+      .var.name = "nv_tfc_inl[substance]"
+    )
     if (substance != "SS") {
-      assertCharacter(
-        names(x@parameters@nv_enr_rto),
-        min.chars = 1L,
-        any.missing = FALSE,
-        unique = TRUE,
-        .var.name = "names(nv_enr_rto)"
-      )
       qassert(
         x@parameters@nv_enr_rto[substance],
         "N1[1,)",
         .var.name = "nv_enr_rto[substance]"
       )
     }
-    assertCharacter(
-      names(x@parameters@nv_tfc_inl),
-      min.chars = 1L,
-      any.missing = FALSE,
-      unique = TRUE,
-      .var.name = "names(nv_tfc_inl)"
-    )
-    qassert(
-      x@parameters@nv_tfc_inl[substance],
-      "N1[0,1]",
-      .var.name = "nv_tfc_inl[substance]"
-    )
 
     cs_dir_old <- setwd(file.path(x@cv_dir[1L], "Result"))
     on.exit(setwd(cs_dir_old))
