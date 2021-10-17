@@ -1,6 +1,6 @@
 #### input ####
-example("demoProject", "RPhosFate", run.dontrun = TRUE)
-unlink(cv_dir, recursive = TRUE)
+li_dir <- example("demoProject", "RPhosFate", run.dontrun = TRUE)
+unlink(li_dir$value, recursive = TRUE)
 example("DEMrelatedInput", "RPhosFate", run.dontrun = TRUE)
 unlink(cv_dir, recursive = TRUE)
 
