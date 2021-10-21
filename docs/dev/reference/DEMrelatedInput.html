@@ -77,7 +77,7 @@ binary if needed." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">RPhosFate</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.8.0.9000</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.9.9000</span>
       </span>
     </div>
 
@@ -91,9 +91,6 @@ binary if needed." />
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
-</li>
-<li>
-  <a href="https://gisler.github.io/RPhosFateBook">Handbook</a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -115,6 +112,9 @@ binary if needed." />
       <a href="https://doi.org/10.31223/X5FG89">2021: Particulate PhozzyLogic Index (PPLI)</a>
     </li>
   </ul>
+</li>
+<li>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -152,8 +152,8 @@ binary if needed.</p>
     </div>
 
     <pre class="usage"><span class='fu'>DEMrelatedInput</span>(<span class='no'>cv_dir</span>, <span class='no'>cs_dem</span>, <span class='no'>cs_cha</span>, <span class='no'>sp_msk</span>, <span class='no'>sp_olp</span>, <span class='no'>sp_sds</span>,
-  <span class='kw'>cs_rds</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>cs_wgs</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>ns_brn</span> <span class='kw'>=</span> <span class='fl'>50</span>, <span class='kw'>is_adj</span> <span class='kw'>=</span> <span class='fl'>1L</span>,
-  <span class='kw'>is_ths</span> <span class='kw'>=</span> <span class='fl'>1L</span>, <span class='kw'>ls_tmp</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+  <span class='kw'>cs_rds</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>cs_wgs</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>cs_dir</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>ns_brn</span> <span class='kw'>=</span> <span class='fl'>50</span>,
+  <span class='kw'>is_adj</span> <span class='kw'>=</span> <span class='fl'>1L</span>, <span class='kw'>is_ths</span> <span class='kw'>=</span> <span class='fl'>1L</span>, <span class='kw'>ls_tmp</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -198,6 +198,14 @@ large raster providing roads.</p></td>
       <th>cs_wgs</th>
       <td><p>An optional character string specifying a path to a potentially
 large raster providing flow accumulation weights.</p></td>
+    </tr>
+    <tr>
+      <th>cs_dir</th>
+      <td><p>An optional character string specifying a path to a potentially
+large raster providing D8 flow directions using <em>ArcGIS</em> codes. Providing
+existing flow directions prevents calculating them, which may be useful,
+for example, in case the effect of tillage directions has been enforced on
+topographic flow directions in advance.</p></td>
     </tr>
     <tr>
       <th>ns_brn</th>

@@ -25,6 +25,8 @@ navbar:
           href: https://doi.org/10.3390/w11102161
         - text: "2021: Particulate PhozzyLogic Index (PPLI)"
           href: https://doi.org/10.31223/X5FG89
+    - text: "Changelog"
+      href: news/index.html
 
 reference:
   - title: "Input data"
