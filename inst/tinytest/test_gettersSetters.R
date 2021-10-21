@@ -15,7 +15,7 @@ x <- RPhosFate(
 
 source("parameters.R", local = TRUE) # nolint
 
-#### getLayer and [ ####
+#### getLayer and [ extract operator ####
 layers <- list.files(cs_dir_ctl, "\\.img$", full.names = TRUE, recursive = TRUE)
 for (layer in layers) {
   expect_true(
