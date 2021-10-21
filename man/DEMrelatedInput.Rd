@@ -5,8 +5,8 @@
 \title{DEM related input}
 \usage{
 DEMrelatedInput(cv_dir, cs_dem, cs_cha, sp_msk, sp_olp, sp_sds,
-  cs_rds = NULL, cs_wgs = NULL, ns_brn = 50, is_adj = 1L,
-  is_ths = 1L, ls_tmp = FALSE)
+  cs_rds = NULL, cs_wgs = NULL, cs_dir = NULL, ns_brn = 50,
+  is_adj = 1L, is_ths = 1L, ls_tmp = FALSE)
 }
 \arguments{
 \item{cv_dir}{A character vector specifying the desired project root
@@ -33,6 +33,12 @@ large raster providing roads.}
 
 \item{cs_wgs}{An optional character string specifying a path to a potentially
 large raster providing flow accumulation weights.}
+
+\item{cs_dir}{An optional character string specifying a path to a potentially
+large raster providing D8 flow directions using \emph{ArcGIS} codes. Providing
+existing flow directions prevents calculating them, which may be useful,
+for example, in case the effect of tillage directions has been enforced on
+topographic flow directions in advance.}
 
 \item{ns_brn}{A numeric scalar specifying the stream burning step size in m.}
 
