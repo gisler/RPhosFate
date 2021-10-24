@@ -31,10 +31,7 @@ adjustExtent <- function(rl, ex) {
 #' @param cs_wgs An optional character string specifying a path to a potentially
 #'   large raster providing flow accumulation weights.
 #' @param cs_dir An optional character string specifying a path to a potentially
-#'   large raster providing D8 flow directions using _ArcGIS_ codes. Providing
-#'   existing flow directions prevents calculating them, which may be useful,
-#'   for example, in case the effect of tillage directions has been enforced on
-#'   topographic flow directions in advance.
+#'   large raster providing D8 flow directions using _ArcGIS_ codes.
 #' @param ns_brn A numeric scalar specifying the stream burning step size in m.
 #' @param is_adj A numeric scalar specifying how many cells adjacent to channels
 #'   shall be burnt.
@@ -51,8 +48,16 @@ adjustExtent <- function(rl, ex) {
 #' * Depression breaching.
 #' * Tracing of downslope flowpaths from the provided channel sources.
 #'
+#' When roads are provided, they are considered as flow obstacles breaking the
+#' continuity of the calculated flow accumulation.
+#'
 #' In case no flow accumulation weights are provided, _acc_ and \emph{acc_wtd}
 #' are identical.
+#'
+#' Providing existing flow directions prevents calculating them, which, for
+#' example, may be useful in case the effect of tillage directions has been
+#' enforced on topographic flow directions in advance. Please note that doing so
+#' renders stream burning and depression breaching without effect.
 #'
 #' _slp_ is calculated from the original, unprocessed DEM and represents D8
 #' slopes.

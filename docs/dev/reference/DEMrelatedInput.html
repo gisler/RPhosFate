@@ -202,10 +202,7 @@ large raster providing flow accumulation weights.</p></td>
     <tr>
       <th>cs_dir</th>
       <td><p>An optional character string specifying a path to a potentially
-large raster providing D8 flow directions using <em>ArcGIS</em> codes. Providing
-existing flow directions prevents calculating them, which may be useful,
-for example, in case the effect of tillage directions has been enforced on
-topographic flow directions in advance.</p></td>
+large raster providing D8 flow directions using <em>ArcGIS</em> codes.</p></td>
     </tr>
     <tr>
       <th>ns_brn</th>
@@ -241,8 +238,14 @@ approximately into the direction of channel cells (optional).</p></li>
 <li><p>Tracing of downslope flowpaths from the provided channel sources.</p></li>
 </ul>
 
+<p>When roads are provided, they are considered as flow obstacles breaking the
+continuity of the calculated flow accumulation.</p>
 <p>In case no flow accumulation weights are provided, <em>acc</em> and <em>acc_wtd</em>
 are identical.</p>
+<p>Providing existing flow directions prevents calculating them, which, for
+example, may be useful in case the effect of tillage directions has been
+enforced on topographic flow directions in advance. Please note that doing so
+renders stream burning and depression breaching without effect.</p>
 <p><em>slp</em> is calculated from the original, unprocessed DEM and represents D8
 slopes.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
