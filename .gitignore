@@ -2,6 +2,7 @@
 .Rhistory
 .RData
 .Ruserdata
+inst/**/*.xml
 R/RcppExports.R
 src/*.o
 src/*.dll

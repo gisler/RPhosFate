@@ -20,6 +20,26 @@ An S4 \code{\linkS4class{RPhosFate}} river catchment object.
 Calculates substance retentions, transports and cell loads as well as
 transfers among others.
 }
+\examples{
+\dontrun{
+# create temporary demonstration project
+cv_dir <- demoProject()
+# load temporary demonstration project
+x <- RPhosFate(
+  cv_dir = cv_dir,
+  ls_ini = TRUE
+)
+# presupposed function calls
+x <- erosionPrerequisites(x)
+x <- erosion(x)
+x <- emission(x, "PP")
+x <- transportPrerequisites(x)
+x <- transportCalcOrder(x)
+
+x <- transport(x, "PP")
+}
+
+}
 \references{
 \cite{Engman, E.T., 1986. Roughness coefficients for routing surface runoff.
 Journal of Irrigation and Drainage Engineering 112, 39–53.}

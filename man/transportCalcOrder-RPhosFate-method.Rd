@@ -17,3 +17,17 @@ An S4 \code{\linkS4class{RPhosFate}} river catchment object.
 \description{
 Determines the cell transport calculation order.
 }
+\examples{
+\dontrun{
+# create temporary demonstration project
+cv_dir <- demoProject()
+# load temporary demonstration project
+x <- RPhosFate(
+  cv_dir = cv_dir,
+  ls_ini = TRUE
+)
+
+x <- transportCalcOrder(x)
+}
+
+}

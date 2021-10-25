@@ -18,3 +18,17 @@
 Saves parameters \emph{(parameters.yaml)} and transport calculation order
 \emph{(order.rds)} to disk.
 }
+\examples{
+\dontrun{
+# create temporary demonstration project
+cv_dir <- demoProject()
+# load temporary demonstration project
+x <- RPhosFate(
+  cv_dir = cv_dir,
+  ls_ini = TRUE
+)
+
+saveState(x)
+}
+
+}
