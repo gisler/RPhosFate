@@ -218,7 +218,7 @@ setMethod(
   function(.Object, cmt) {
     slots <- slotNames(.Object)
     layers <- file.path(
-      rep("Result", length(slots)),
+      "Result",
       sub("^rl_xx", "ss", slots)
     )
 

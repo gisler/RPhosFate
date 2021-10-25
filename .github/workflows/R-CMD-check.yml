@@ -38,7 +38,7 @@ jobs:
 
       - name: Query dependencies
         run: |
-          install.packages('remotes')
+          install.packages("remotes")
           saveRDS(remotes::dev_package_deps(dependencies = TRUE), ".github/depends.Rds", version = 2)
           writeLines(sprintf("R-%i.%i", getRversion()$major, getRversion()$minor), ".github/R-version")
         shell: Rscript {0}
@@ -47,23 +47,31 @@ jobs:
         if: matrix.config.r == '3.5.3'
         run: |
           remotes::install_cran(
-            c("checkmate", "hydroGOF", "raster", "Rcpp", "spatstat", "yaml", "whitebox"),
+            c("checkmate", "hydroGOF", "raster", "Rcpp", "RcppArmadillo", "spatstat", "yaml", "whitebox", "rcmdcheck", "xml2"),
             repos = c("https://gisler.github.io/drat", "https://mran.microsoft.com/snapshot/2019-04-15"),
             type = "win.binary",
-            dependencies = TRUE
+            dependencies = TRUE,
+            lib = .libPaths()[2L]
           )
           remotes::install_deps(
             dependencies = TRUE,
             type = "win.binary",
-            upgrade = "never"
+            upgrade = "never",
+            lib = .libPaths()[2L]
           )
-          remotes::install_cran("rcmdcheck")
         shell: Rscript {0}
 
       - name: Check
         env:
           _R_CHECK_CRAN_INCOMING_REMOTE_: false
-        run: rcmdcheck::rcmdcheck(args = c("--no-manual", "--as-cran"), error_on = "warning", check_dir = "check")
+        run: |
+          Rcpp::compileAttributes()
+          rcmdcheck::rcmdcheck(
+            args = c("--no-manual", "--as-cran"),
+            check_dir = "check",
+            libpath = .libPaths()[2L],
+            error_on = "warning"
+          )
         shell: Rscript {0}
 
       - name: Upload check results
@@ -73,7 +81,9 @@ jobs:
           name: ${{ runner.os }}-r${{ matrix.config.r }}-results
           path: check
 
-      - name: Test coverage
-        if: runner.os == 'Windows' && matrix.config.r == '3.5.3'
-        run: covr::codecov()
-        shell: Rscript {0}
+      # - name: Test coverage
+      #   if: runner.os == 'Windows' && matrix.config.r == '3.5.3'
+      #   run: |
+      #     Rcpp::compileAttributes()
+      #     covr::codecov()
+      #   shell: Rscript {0}

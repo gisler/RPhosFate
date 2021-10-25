@@ -20,15 +20,15 @@ y <- do.call(RPhosFate, parameters)
 z <- do.call(catchment, parameters)
 
 expect_identical(
-  y,
-  z,
-  info = '"RPhosFate" and "catchment" yield identical results (creation)'
-)
-
-expect_identical(
   getParameter(y),
   parameters[-(1:2)],
   info = "parameters are created correctly"
+)
+
+expect_identical(
+  y,
+  z,
+  info = '"RPhosFate" and "catchment" yield identical results (creation)'
 )
 
 file.copy(
@@ -47,15 +47,15 @@ z <- catchment(
 )
 
 expect_identical(
-  y,
-  z,
-  info = '"RPhosFate" and "catchment" yield identical results (loading)'
-)
-
-expect_identical(
   getParameter(y),
   parameters[-(1:2)],
   info = "parameters are loaded correctly"
+)
+
+expect_identical(
+  y,
+  z,
+  info = '"RPhosFate" and "catchment" yield identical results (loading)'
 )
 
 y <- RPhosFate(
@@ -125,8 +125,25 @@ for (emissiveSubstance in setdiff(slotNames(control@substances), "SS")) {
   }
 }
 
+#### saveState ####
+saveState(x)
+
+expect_identical(
+  readRDS(file.path(cs_dir_tst, "order.rds")),
+  readRDS(file.path(cs_dir_ctl, "order.rds")),
+  info = '"order.rds" is written correctly'
+)
+
+expect_identical(
+  yaml::read_yaml(file.path(cs_dir_tst, "parameters.yaml"))[-1L],
+  yaml::read_yaml(file.path(cs_dir_ctl, "parameters.yaml"))[-1L],
+  info = '"parameters.yaml" is written correctly'
+)
+
 #### snapGauges ####
-df_cdt <- getParameter(snapGauges(x), "df_cdt")
+x <- snapGauges(x)
+
+df_cdt <- getParameter(x, "df_cdt")
 
 expect_identical(
   df_cdt$ID,
@@ -147,27 +164,18 @@ expect_identical(
 )
 
 #### calibrationQuality ####
-# for (substance in substances) {
-#   calibrationQuality(snapGauges(x), substance, sprintf("%s_load", substance))
-#   calibrationQuality(snapGauges(x), substance, sprintf("%s_load", substance))
-# }
+for (substance in substances) {
+  expect_identical(
+    calibrationQuality(x, substance, sprintf("%s_load", substance)),
+    readRDS(file.path(cs_dir_ctl, "calibrationQuality.rds"))[[substance]],
+    info = "calibration quality is assessed correctly"
+  )
 
-#### autoCalibrate ####
-
-#### saveState ####
-saveState(x)
-
-expect_identical(
-  readRDS(file.path(cs_dir_tst, "order.rds")),
-  readRDS(file.path(cs_dir_ctl, "order.rds")),
-  info = '"order.rds" is written correctly'
-)
-
-expect_identical(
-  yaml::read_yaml(file.path(cs_dir_tst, "parameters.yaml"))[-1L],
-  yaml::read_yaml(file.path(cs_dir_ctl, "parameters.yaml"))[-1L],
-  info = '"parameters.yaml" is written correctly'
-)
+  # expect_stdout(
+  #   calibrationQuality(x, substance, sprintf("%s_load", substance)),
+  #   info = "calibration quality is printed"
+  # )
+}
 
 #### clean-up ####
 expect_identical(

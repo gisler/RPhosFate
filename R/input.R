@@ -94,6 +94,8 @@ demoProject <- function(cs_dir = tempdir(TRUE)) {
 #'   large raster providing roads.
 #' @param cs_wgs An optional character string specifying a path to a potentially
 #'   large raster providing flow accumulation weights.
+#' @param cs_dir An optional character string specifying a path to a potentially
+#'   large raster providing D8 flow directions using _ArcGIS_ codes.
 #' @param ns_brn A numeric scalar specifying the stream burning step size in m.
 #' @param is_adj A numeric scalar specifying how many cells adjacent to channels
 #'   shall be burnt.
@@ -111,8 +113,16 @@ demoProject <- function(cs_dir = tempdir(TRUE)) {
 #' * Depression breaching.
 #' * Tracing of downslope flowpaths from the provided channel sources.
 #'
+#' When roads are provided, they are considered as flow obstacles breaking the
+#' continuity of the calculated flow accumulation.
+#'
 #' In case no flow accumulation weights are provided, _acc_ and \emph{acc_wtd}
 #' are identical.
+#'
+#' Providing existing flow directions prevents calculating them, which, for
+#' example, may be useful in case the effect of tillage directions has been
+#' enforced on topographic flow directions in advance. Please note that doing so
+#' renders stream burning and depression breaching without effect.
 #'
 #' _slp_ is calculated from the original, unprocessed DEM and represents D8
 #' slopes.
@@ -156,6 +166,7 @@ DEMrelatedInput <- function(
   sp_sds,
   cs_rds = NULL,
   cs_wgs = NULL,
+  cs_dir = NULL,
   ns_brn = 50,
   is_adj = 1L,
   is_ths = 1L,
@@ -185,6 +196,9 @@ DEMrelatedInput <- function(
   }
   if (!is.null(cs_wgs)) {
     qassert(cs_wgs, "S1")
+  }
+  if (!is.null(cs_dir)) {
+    qassert(cs_dir, "S1")
   }
   qassert(ns_brn, "N1[0,)")
   qassert(is_adj, "X1[0,)")
@@ -258,12 +272,25 @@ DEMrelatedInput <- function(
     output = file.path(normalizePath("."), "dem_brd.tif")
   )
 
-  # Calculate D8 flow directions (oversized DEM)
-  whitebox::wbt_d8_pointer(
-    dem = file.path(normalizePath("."), "dem_brd.tif"),
-    output = file.path(normalizePath("."), "dir_ovr.tif"),
-    esri_pntr = TRUE
-  )
+  # Calculate or extract D8 flow directions (oversized DEM)
+  if (is.null(cs_dir)) {
+    whitebox::wbt_d8_pointer(
+      dem = file.path(normalizePath("."), "dem_brd.tif"),
+      output = file.path(normalizePath("."), "dir_ovr.tif"),
+      esri_pntr = TRUE
+    )
+  } else {
+    rl_dir_ovr <- raster(cs_dir)
+    rl_dir_ovr <- adjustExtent(rl_dir_ovr, sp_msk)
+    rl_dir_ovr <- mask(
+      rl_dir_ovr,
+      sp_msk,
+      filename = "dir_ovr.tif",
+      datatype = "INT4S",
+      options = "COMPRESSED=YES",
+      overwrite = TRUE
+    )
+  }
 
   # Identify watershed
   shapefile(sp_olp, "olp.shp", overwrite = TRUE)

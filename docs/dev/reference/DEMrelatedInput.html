@@ -86,7 +86,7 @@ binary if needed." />
         <li>
   <a href="../index.html">
     <span class="fa fa-home fa-lg"></span>
-     
+
   </a>
 </li>
 <li>
@@ -95,7 +95,7 @@ binary if needed." />
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
     Papers
-     
+
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
@@ -121,16 +121,16 @@ binary if needed." />
         <li>
   <a href="https://github.com/gisler/RPhosFate/">
     <span class="fab fa-github fa-lg"></span>
-     
+
   </a>
 </li>
       </ul>
-      
+
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
 
-      
+
 
       </header>
 
@@ -152,8 +152,8 @@ binary if needed.</p>
     </div>
 
     <pre class="usage"><span class='fu'>DEMrelatedInput</span>(<span class='no'>cv_dir</span>, <span class='no'>cs_dem</span>, <span class='no'>cs_cha</span>, <span class='no'>sp_msk</span>, <span class='no'>sp_olp</span>, <span class='no'>sp_sds</span>,
-  <span class='kw'>cs_rds</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>cs_wgs</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>ns_brn</span> <span class='kw'>=</span> <span class='fl'>50</span>, <span class='kw'>is_adj</span> <span class='kw'>=</span> <span class='fl'>1L</span>,
-  <span class='kw'>is_ths</span> <span class='kw'>=</span> <span class='fl'>1L</span>, <span class='kw'>ls_tmp</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+  <span class='kw'>cs_rds</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>cs_wgs</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>cs_dir</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>ns_brn</span> <span class='kw'>=</span> <span class='fl'>50</span>,
+  <span class='kw'>is_adj</span> <span class='kw'>=</span> <span class='fl'>1L</span>, <span class='kw'>is_ths</span> <span class='kw'>=</span> <span class='fl'>1L</span>, <span class='kw'>ls_tmp</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -200,6 +200,11 @@ large raster providing roads.</p></td>
 large raster providing flow accumulation weights.</p></td>
     </tr>
     <tr>
+      <th>cs_dir</th>
+      <td><p>An optional character string specifying a path to a potentially
+large raster providing D8 flow directions using <em>ArcGIS</em> codes.</p></td>
+    </tr>
+    <tr>
       <th>ns_brn</th>
       <td><p>A numeric scalar specifying the stream burning step size in m.</p></td>
     </tr>
@@ -233,8 +238,14 @@ approximately into the direction of channel cells (optional).</p></li>
 <li><p>Tracing of downslope flowpaths from the provided channel sources.</p></li>
 </ul>
 
+<p>When roads are provided, they are considered as flow obstacles breaking the
+continuity of the calculated flow accumulation.</p>
 <p>In case no flow accumulation weights are provided, <em>acc</em> and <em>acc_wtd</em>
 are identical.</p>
+<p>Providing existing flow directions prevents calculating them, which, for
+example, may be useful in case the effect of tillage directions has been
+enforced on topographic flow directions in advance. Please note that doing so
+renders stream burning and depression breaching without effect.</p>
 <p><em>slp</em> is calculated from the original, unprocessed DEM and represents D8
 slopes.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
@@ -286,7 +297,7 @@ Processes 30, 846–857.</cite></p>
       </footer>
    </div>
 
-  
+
 
 
   </body>
