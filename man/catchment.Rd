@@ -135,11 +135,11 @@ of the channel within channel cells required for substance transport
 second required for substance transport (no default).
 \item \code{ns_dep_cha}: A numeric scalar specifying the channel deposition rate per
 second required for substance transport (no default).
+\item \code{nv_tfc_inl}: A named numeric vector specifying the inlet transfer
+coefficients required for substance transport, for example, \code{c(SS = 0.6, PP = 0.6)} (no default).
 \item \code{nv_enr_rto} A named numeric vector specifying the substance enrichment
 ratios required for substance except SS transport, for example, \code{c(PP = 2.0)}
 (no default).
-\item \code{nv_tfc_inl}: A named numeric vector specifying the inlet transfer
-coefficients required for substance transport, for example, \code{c(SS = 0.6, PP = 0.6)} (no default).
 \item \code{iv_fDo}: An integer vector specifying the outflow direction vector
 required for substance transport (defaults to \emph{ArcGIS} codes).
 \item \code{nm_olc}: A numeric \code{\link{matrix}} specifying the catchment outlet coordinates
@@ -155,3 +155,24 @@ t/yr (no default):
 }
 }
 
+\examples{
+\dontrun{
+# create temporary demonstration project
+cv_dir <- demoProject()
+
+x <- RPhosFate(
+  cv_dir = cv_dir,
+  ns_dep_ovl = 25.0e-4,
+  ns_dep_cha =  0.0,
+  nv_tfc_inl = c(SS = 0.6, PP = 0.6),
+  nv_enr_rto = c(PP = 2.0),
+  nm_olc = matrix(c(4704255, 2795195), 1L),
+  df_cdt = read.table(
+    file.path(cv_dir, "cdt.txt"),
+    header = TRUE,
+    stringsAsFactors = FALSE
+  )
+)
+}
+
+}

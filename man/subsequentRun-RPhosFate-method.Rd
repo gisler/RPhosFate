@@ -20,6 +20,22 @@ An S4 \code{\linkS4class{RPhosFate}} river catchment object.
 Calls \code{\link{transport}} for the specified substance. In Monte Carlo simulation
 mode \code{\link{erosion}} and, if applicable, \code{\link{emission}} are called as well.
 }
+\examples{
+\dontrun{
+# create temporary demonstration project
+cv_dir <- demoProject()
+# load temporary demonstration project
+x <- RPhosFate(
+  cv_dir = cv_dir,
+  ls_ini = TRUE
+)
+# presupposed function call
+x <- firstRun(x, "SS")
+
+x <- subsequentRun(x, "PP")
+}
+
+}
 \seealso{
 \code{\link{firstRun}}
 }

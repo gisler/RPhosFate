@@ -13,6 +13,7 @@ RPhosFate <- function(...) {
 #' Creates a project from scratch or loads an existing one utilising _Erdas
 #' Imagine_ raster files (*.img) from, by convention, the following three
 #' project root subdirectories:
+#'
 #' * _Input_
 #' * _Intermediate_
 #' * _Result_
@@ -28,6 +29,7 @@ RPhosFate <- function(...) {
 #' This directory holds all possible user input raster data (flow obstacles like
 #' roads must be considered during generation of the flow accumulation layers
 #' and also be cut out from them in order to be properly respected):
+#'
 #' * _acc:_ Flow accumulations required for transport.
 #' * \emph{acc_wtd:} Weighted flow accumulations (can be equal to _acc_).
 #' * _CFa:_ (R)USLE C-factors.
@@ -49,6 +51,7 @@ RPhosFate <- function(...) {
 #'
 #' @section _Intermediate_ subdirectory:
 #' This directory holds intermediate calculations:
+#'
 #' * _inl:_ Cells representing inlets at roads (storm drains).
 #' * _LFa:_ L-factors.
 #' * _rhy:_ Hydraulic radii in m.
@@ -58,6 +61,7 @@ RPhosFate <- function(...) {
 #'
 #' @section _Result_ subdirectory:
 #' This directory holds the model results:
+#'
 #' * _ero:_ Erosion in t/cell/yr.
 #' * _xxe:_ Substance emissions in kg/cell/yr, for example, _ppe_ for PP
 #' emissions.
@@ -111,12 +115,12 @@ RPhosFate <- function(...) {
 #' second required for substance transport (no default).
 #' * `ns_dep_cha`: A numeric scalar specifying the channel deposition rate per
 #' second required for substance transport (no default).
-#' * `nv_enr_rto` A named numeric vector specifying the substance enrichment
-#' ratios required for substance except SS transport, for example, `c(PP = 2.0)`
-#' (no default).
 #' * `nv_tfc_inl`: A named numeric vector specifying the inlet transfer
 #' coefficients required for substance transport, for example, `c(SS = 0.6, PP =
 #' 0.6)` (no default).
+#' * `nv_enr_rto` A named numeric vector specifying the substance enrichment
+#' ratios required for substance except SS transport, for example, `c(PP = 2.0)`
+#' (no default).
 #' * `iv_fDo`: An integer vector specifying the outflow direction vector
 #' required for substance transport (defaults to _ArcGIS_ codes).
 #' * `nm_olc`: A numeric [`matrix`] specifying the catchment outlet coordinates
@@ -124,11 +128,32 @@ RPhosFate <- function(...) {
 #' * `df_cdt`: A [`data.frame`] with calibration data, which must have at least
 #' the following three columns and one or more columns with substance loads in
 #' t/yr (no default):
+#'
 #'   * _ID:_ ID(s) of the gauge(s)
 #'   * _x:_ x-coordinate(s) of the gauge(s)
 #'   * _y:_ y-coordinate(s) of the gauge(s)
 #'
 #' @return An S4 [`RPhosFate-class`] river catchment object.
+#'
+#' @examples
+#' \dontrun{
+#' # create temporary demonstration project
+#' cv_dir <- demoProject()
+#'
+#' x <- RPhosFate(
+#'   cv_dir = cv_dir,
+#'   ns_dep_ovl = 25.0e-4,
+#'   ns_dep_cha =  0.0,
+#'   nv_tfc_inl = c(SS = 0.6, PP = 0.6),
+#'   nv_enr_rto = c(PP = 2.0),
+#'   nm_olc = matrix(c(4704255, 2795195), 1L),
+#'   df_cdt = read.table(
+#'     file.path(cv_dir, "cdt.txt"),
+#'     header = TRUE,
+#'     stringsAsFactors = FALSE
+#'   )
+#' )
+#' }
 #'
 #' @export
 catchment <- function(...) {
@@ -155,6 +180,19 @@ setGeneric(
 #'
 #' @seealso [`subsequentRun`]
 #'
+#' @examples
+#' \dontrun{
+#' # create temporary demonstration project
+#' cv_dir <- demoProject()
+#' # load temporary demonstration project
+#' x <- RPhosFate(
+#'   cv_dir = cv_dir,
+#'   ls_ini = TRUE
+#' )
+#'
+#' x <- firstRun(x, "SS")
+#' }
+#'
 #' @aliases firstRun
 #'
 #' @export
@@ -166,13 +204,13 @@ setMethod(
 
     x <- erosionPrerequisites(x)
     x <- erosion(x)
-    for (emmisiveSubstance in setdiff(slotNames(x@substances), "SS")) {
+    for (emissiveSubstance in setdiff(slotNames(x@substances), "SS")) {
       if (compareRaster(
         x@topo@rl_acc_wtd,
-        slot(x@substances, emmisiveSubstance)@rl_xxc,
+        slot(x@substances, emissiveSubstance)@rl_xxc,
         stopiffalse = FALSE
       )) {
-        x <- emission(x, emmisiveSubstance)
+        x <- emission(x, emissiveSubstance)
       }
     }
     x <- transportPrerequisites(x)
@@ -199,6 +237,21 @@ setGeneric(
 #' @inherit catchment return
 #'
 #' @seealso [`firstRun`]
+#'
+#' @examples
+#' \dontrun{
+#' # create temporary demonstration project
+#' cv_dir <- demoProject()
+#' # load temporary demonstration project
+#' x <- RPhosFate(
+#'   cv_dir = cv_dir,
+#'   ls_ini = TRUE
+#' )
+#' # presupposed function call
+#' x <- firstRun(x, "SS")
+#'
+#' x <- subsequentRun(x, "PP")
+#' }
 #'
 #' @aliases subsequentRun
 #'
@@ -242,6 +295,19 @@ setGeneric(
 #'
 #' @seealso [`calibrationQuality`]
 #'
+#' @examples
+#' \dontrun{
+#' # create temporary demonstration project
+#' cv_dir <- demoProject()
+#' # load temporary demonstration project
+#' x <- RPhosFate(
+#'   cv_dir = cv_dir,
+#'   ls_ini = TRUE
+#' )
+#'
+#' x <- snapGauges(x)
+#' }
+#'
 #' @aliases snapGauges
 #'
 #' @export
@@ -272,6 +338,7 @@ setGeneric(
 #'
 #' @description
 #' Assesses the model's calibration quality via the following metrics:
+#'
 #' * _NSE:_ Nash-Sutcliffe Efficiency
 #' * _mNSE:_ Modified Nash-Sutcliffe Efficiency (`j = 1`)
 #' * _RMSE:_ Root Mean Square Error
@@ -297,6 +364,21 @@ setGeneric(
 #' @seealso [`snapGauges`], [`autoCalibrate`], [`hydroGOF::NSE`],
 #'   [`hydroGOF::mNSE`], [`hydroGOF::rmse`], [`hydroGOF::nrmse`],
 #'   [`hydroGOF::pbias`], [`hydroGOF::rsr`]
+#'
+#' @examples
+#' \dontrun{
+#' # create temporary demonstration project
+#' cv_dir <- demoProject()
+#' # load temporary demonstration project
+#' x <- RPhosFate(
+#'   cv_dir = cv_dir,
+#'   ls_ini = TRUE
+#' )
+#' # presupposed function call
+#' x <- firstRun(x, "SS")
+#'
+#' x <- calibrationQuality(x, "SS", "SS_load")
+#' }
 #'
 #' @aliases calibrationQuality
 #'
@@ -411,6 +493,27 @@ setGeneric(
 #'
 #' @seealso [`optimize`]
 #'
+#' @examples
+#' \dontrun{
+#' # create temporary demonstration project
+#' cv_dir <- demoProject()
+#' # load temporary demonstration project
+#' x <- RPhosFate(
+#'   cv_dir = cv_dir,
+#'   ls_ini = TRUE
+#' )
+#' # presupposed function call
+#' x <- firstRun(x, "SS")
+#'
+#' x <- autoCalibrate(
+#'   x,
+#'   "SS",
+#'   col = "SS_load",
+#'   interval = c(1e-5, 1e-3),
+#'   metric = "NSE"
+#' )
+#' }
+#'
 #' @aliases autoCalibrate
 #'
 #' @export
@@ -484,6 +587,19 @@ setGeneric(
 #' @inheritParams erosionPrerequisites,RPhosFate-method
 #'
 #' @return `NULL` invisibly.
+#'
+#' @examples
+#' \dontrun{
+#' # create temporary demonstration project
+#' cv_dir <- demoProject()
+#' # load temporary demonstration project
+#' x <- RPhosFate(
+#'   cv_dir = cv_dir,
+#'   ls_ini = TRUE
+#' )
+#'
+#' saveState(x)
+#' }
 #'
 #' @aliases saveState
 #'

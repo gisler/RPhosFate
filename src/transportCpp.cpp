@@ -52,16 +52,16 @@ void moving_data_window(int is_ord_row, int is_ord_col, int is_rws, int is_cls, 
   }
 }
 
-double focal_sum_int_cond(NumericMatrix nm_sum, IntegerMatrix im_foc, int is_cond) {
-  double total = 0.0;
-  int n = nm_sum.nrow() * nm_sum.ncol();
-  for (int i = 0; i < n; ++i) {
-    if (!NumericMatrix::is_na(nm_sum[i]) && im_foc[i] == is_cond) {
-      total += nm_sum[i];
-    }
-  }
-  return total;
-}
+// double focal_sum_int_cond(NumericMatrix nm_sum, IntegerMatrix im_foc, int is_cond) {
+//   double total = 0.0;
+//   int n = nm_sum.nrow() * nm_sum.ncol();
+//   for (int i = 0; i < n; ++i) {
+//     if (!NumericMatrix::is_na(nm_sum[i]) && im_foc[i] == is_cond) {
+//       total += nm_sum[i];
+//     }
+//   }
+//   return total;
+// }
 
 double focal_sum_matrix_cond(NumericMatrix nm_sum, IntegerMatrix im_foc, IntegerMatrix im_cond) {
   double total = 0.0;

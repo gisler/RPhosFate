@@ -24,8 +24,8 @@ setClass(
     ns_man_cha = "numeric",
     ns_dep_ovl = "numeric",
     ns_dep_cha = "numeric",
-    nv_enr_rto = "numeric",
     nv_tfc_inl = "numeric",
+    nv_enr_rto = "numeric",
     iv_fDo     = "integer",
     nm_olc     = "matrix",
     df_cdt     = "data.frame"
@@ -40,8 +40,8 @@ setClass(
     ns_man_cha = 0.04,
     ns_dep_ovl = numeric(),
     ns_dep_cha = numeric(),
-    nv_enr_rto = numeric(),
     nv_tfc_inl = numeric(),
+    nv_enr_rto = numeric(),
     iv_fDo     = c(32L, 16L, 8L, 64L, 0L, 4L, 128L, 1L, 2L),
     nm_olc     = matrix(NA_real_),
     df_cdt     = data.frame()
@@ -218,7 +218,7 @@ setMethod(
   function(.Object, cmt) {
     slots <- slotNames(.Object)
     layers <- file.path(
-      rep("Result", length(slots)),
+      "Result",
       sub("^rl_xx", "ss", slots)
     )
 
@@ -369,7 +369,10 @@ setMethod(
   function(.Object, arguments) {
     argumentNames <- names(arguments)
 
-    .Object@cv_dir <- arguments$cv_dir
+    .Object@cv_dir <- normalizePath(
+      arguments$cv_dir,
+      winslash = .Platform$file.sep
+    )
     if ("ls_ini" %in% argumentNames) {
       .Object@ls_ini <- arguments$ls_ini
     }

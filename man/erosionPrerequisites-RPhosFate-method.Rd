@@ -18,6 +18,20 @@ An S4 \code{\linkS4class{RPhosFate}} river catchment object.
 Calculates capped slopes, L- and RUSLE S-factors. Weighted flow accumulations
 less than one are set to one for the calculation of the L-factors.
 }
+\examples{
+\dontrun{
+# create temporary demonstration project
+cv_dir <- demoProject()
+# load temporary demonstration project
+x <- RPhosFate(
+  cv_dir = cv_dir,
+  ls_ini = TRUE
+)
+
+x <- erosionPrerequisites(x)
+}
+
+}
 \references{
 \cite{Desmet, P.J.J., Govers, G., 1996. A GIS procedure for automatically
 calculating the USLE LS factor on topographically complex landscape units.

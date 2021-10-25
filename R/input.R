@@ -1,5 +1,69 @@
-adjustExtent <- function(rl, ex) {
-  extend(crop(rl, ex), ex)
+#f use as inline markdown code once switching to roxygen2 >= 7.1.0
+dataLicense <- c(
+  "",
+  "* _[Geoland.at](https://www.data.gv.at/katalog/dataset/d88a1246-9684-480b-a480-ff63286b35b7)_ (digital elevation model),",
+  "* _[AMA](https://www.data.gv.at/katalog/dataset/35e36014-ec69-439b-8629-389f52ffaa92)_ (field data),",
+  "* _[BMLRT](https://www.data.gv.at/katalog/dataset/c2287ccb-f44c-48cd-bf7c-ac107b771246)_ (channel data) and",
+  "* _[GIP.at](https://www.data.gv.at/katalog/dataset/3fefc838-791d-4dde-975b-a4131a54e7c5)_ (road data)",
+  "",
+  "data sets, used and licensed under _[(CC BY 4.0)](https://creativecommons.org/licenses/by/4.0)_ by Gerold Hepp."
+)
+#' Demonstration project
+#'
+#' @description
+#' Copies a demonstration project to an existing or a temporary directory.
+#'
+#' The demonstration project data are a derivative of the
+#'
+#' * _[Geoland.at](https://www.data.gv.at/katalog/dataset/d88a1246-9684-480b-a480-ff63286b35b7)_ (digital elevation model),
+#' * _[AMA](https://www.data.gv.at/katalog/dataset/35e36014-ec69-439b-8629-389f52ffaa92)_ (field data),
+#' * _[BMLRT](https://www.data.gv.at/katalog/dataset/c2287ccb-f44c-48cd-bf7c-ac107b771246)_ (channel data) and
+#' * _[GIP.at](https://www.data.gv.at/katalog/dataset/3fefc838-791d-4dde-975b-a4131a54e7c5)_ (road data)
+#'
+#' data sets, used and licensed under
+#' _[(CC BY 4.0)](https://creativecommons.org/licenses/by/4.0)_ by Gerold Hepp.
+#'
+#' @param cs_dir An optional character string specifying an existing directory.
+#'
+#' @return A character string containing the demonstration project root
+#'   directory.
+#'
+#' @seealso [`RPhosFate`], [`catchment`]
+#'
+#' @examples
+#' \dontrun{
+#' demoProject()
+#' }
+#'
+#' @export
+demoProject <- function(cs_dir = tempdir(TRUE)) {
+  assertDirectoryExists(cs_dir, access = "w")
+
+  demoRoot <- file.path(cs_dir, "demoProject")
+
+  if (dir.exists(demoRoot)) {
+    warning(
+      'A folder called "demoProject" already exists and is left as is.',
+      call. = FALSE
+    )
+  } else {
+    dir.create(demoRoot)
+    testRoot <- system.file("tinytest", "testProject", package = "RPhosFate")
+
+    file.copy(file.path(testRoot, "Input"), demoRoot, recursive = TRUE)
+    file.copy(file.path(testRoot, "cdt.txt"), demoRoot)
+    file.copy(file.path(testRoot, "parameters.yaml"), demoRoot)
+
+    writeLines(
+      c(
+        "These _[RPhosFate](https://gisler.github.io/RPhosFate)_ demonstration project data are a derivative of the",
+        dataLicense
+      ),
+      file.path(demoRoot, "LICENSE.md")
+    )
+  }
+
+  normalizePath(demoRoot, winslash = .Platform$file.sep)
 }
 
 #' DEM related input
@@ -43,6 +107,7 @@ adjustExtent <- function(rl, ex) {
 #' @details
 #' This function applies the following (pre-processing) steps to ensure
 #' hydrologic consistency of the generated input data:
+#'
 #' * Stream burning and orientation of cells adjacent to channel cells
 #' approximately into the direction of channel cells (optional).
 #' * Depression breaching.
@@ -70,6 +135,26 @@ adjustExtent <- function(rl, ex) {
 #' Processes 30, 846–857.}
 #'
 #' @seealso [`RPhosFate`], [`catchment`]
+#'
+#' @examples
+#' \dontrun{
+#' # create temporary project root directory
+#' cv_dir <- tempfile("cmt")
+#' # obtain directory holding "large" rasters and other required data sets
+#' cs_dir_lrg <- system.file("tinytest", "largeData", package = "RPhosFate")
+#'
+#' nm_olc <- DEMrelatedInput(
+#'   cv_dir = cv_dir,
+#'   cs_dem = file.path(cs_dir_lrg, "dem_lrg.tif"),
+#'   cs_cha = file.path(cs_dir_lrg, "cha_lrg.tif"),
+#'   sp_msk = raster::shapefile(file.path(cs_dir_lrg, "msk.shp")),
+#'   sp_olp = raster::shapefile(file.path(cs_dir_lrg, "olp.shp")),
+#'   sp_sds = raster::shapefile(file.path(cs_dir_lrg, "sds.shp")),
+#'   cs_rds = file.path(cs_dir_lrg, "rds_lrg.tif"),
+#'   cs_wgs = file.path(cs_dir_lrg, "wgs_lrg.tif"),
+#'   ls_tmp = TRUE
+#' )
+#' }
 #'
 #' @export
 DEMrelatedInput <- function(

@@ -84,6 +84,27 @@ renders stream burning and depression breaching without effect.
 \emph{slp} is calculated from the original, unprocessed DEM and represents D8
 slopes.
 }
+\examples{
+\dontrun{
+# create temporary project root directory
+cv_dir <- tempfile("cmt")
+# obtain directory holding "large" rasters and other required data sets
+cs_dir_lrg <- system.file("tinytest", "largeData", package = "RPhosFate")
+
+nm_olc <- DEMrelatedInput(
+  cv_dir = cv_dir,
+  cs_dem = file.path(cs_dir_lrg, "dem_lrg.tif"),
+  cs_cha = file.path(cs_dir_lrg, "cha_lrg.tif"),
+  sp_msk = raster::shapefile(file.path(cs_dir_lrg, "msk.shp")),
+  sp_olp = raster::shapefile(file.path(cs_dir_lrg, "olp.shp")),
+  sp_sds = raster::shapefile(file.path(cs_dir_lrg, "sds.shp")),
+  cs_rds = file.path(cs_dir_lrg, "rds_lrg.tif"),
+  cs_wgs = file.path(cs_dir_lrg, "wgs_lrg.tif"),
+  ls_tmp = TRUE
+)
+}
+
+}
 \references{
 \cite{Lindsay, J.B., 2016. Efficient hybrid breaching-filling sink removal
 methods for flow path enforcement in digital elevation models. Hydrological

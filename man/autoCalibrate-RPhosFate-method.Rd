@@ -39,6 +39,28 @@ An S4 \code{\linkS4class{RPhosFate}} river catchment object.
 Automatically calibrates the model with the help of a combination of golden
 section search and successive parabolic interpolation.
 }
+\examples{
+\dontrun{
+# create temporary demonstration project
+cv_dir <- demoProject()
+# load temporary demonstration project
+x <- RPhosFate(
+  cv_dir = cv_dir,
+  ls_ini = TRUE
+)
+# presupposed function call
+x <- firstRun(x, "SS")
+
+x <- autoCalibrate(
+  x,
+  "SS",
+  col = "SS_load",
+  interval = c(1e-5, 1e-3),
+  metric = "NSE"
+)
+}
+
+}
 \seealso{
 \code{\link{optimize}}
 }
