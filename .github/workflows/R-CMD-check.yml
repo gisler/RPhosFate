@@ -60,7 +60,7 @@ jobs:
             lib = .libPaths()[2L]
           )
           remotes::install_cran(
-            c("covr", "xml2"),
+            "covr",
             type = "win.binary",
             lib = .libPaths()[2L]
           )
