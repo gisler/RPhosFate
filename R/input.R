@@ -208,7 +208,7 @@ DEMrelatedInput <- function(
   qassert(is_adj, "X1[0,)")
   qassert(is_ths, "X1[1,)")
   qassert(ls_tmp, "B1")
-  match.arg(cs_fex)
+  cs_fex <- match.arg(cs_fex)
 
   dir.create(
     file.path(cv_dir[1L], "Input", "temp"),
