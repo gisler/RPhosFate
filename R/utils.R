@@ -45,10 +45,9 @@ populateLayerSlots <- function(
 }
 
 populateParameterSlots <- function(parameters, arguments) {
-  parameterNames <- slotNames(parameters)
   argumentNames <- names(arguments)
 
-  assertSubset(argumentNames, parameterNames)
+  assertSubset(argumentNames, slotNames(parameters))
 
   for (i in seq_along(arguments)) {
     if (argumentNames[i] %in% c("nv_tfc_inl", "nv_enr_rto")) {
@@ -84,7 +83,7 @@ readLayer <- function(
     on.exit(setwd(cs_dir_old))
   }
 
-  filename <- paste0(layer, cmt@is_MCi, ".img")
+  filename <- paste0(layer, cmt@is_MCi, cmt@cs_fex)
 
   if (isRequiredInputLayer) {
     raster(filename)

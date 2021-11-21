@@ -10,9 +10,9 @@ RPhosFate <- function(...) {
 #' Initialise project
 #'
 #' @description
-#' Creates a project from scratch or loads an existing one utilising _Erdas
-#' Imagine_ raster files (*.img) from, by convention, the following three
-#' project root subdirectories:
+#' Creates a project from scratch or loads an existing one utilising _GeoTIFF_
+#' (\*.tif) raster files from, by convention, the following three project root
+#' subdirectories:
 #'
 #' * _Input_
 #' * _Intermediate_
