@@ -141,8 +141,12 @@ demoProject <- function(cs_dir = tempdir(TRUE)) {
 #'
 #' @examples
 #' \dontrun{
-#' # create temporary project root directory
-#' cv_dir <- tempfile("cmt")
+#' # obtain temporary project root directory
+#' cv_dir <- normalizePath(
+#'   tempfile("cmt"),
+#'   winslash = .Platform$file.sep,
+#'   mustWork = FALSE
+#' )
 #' # obtain directory holding "large" rasters and other required data sets
 #' cs_dir_lrg <- system.file("tinytest", "largeData", package = "RPhosFate")
 #'
