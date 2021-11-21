@@ -332,6 +332,9 @@ setMethod(
 #'   from disk (defaults to `FALSE`).
 #' @slot is_MCi An integer scalar holding the current Monte Carlo iteration if
 #'   applicable (defaults to `integer()`).
+#' @slot cs_fex A character string holding the automatically determined file
+#'   extension of the provided raster files (either ".tif" or ".img" for
+#'   backward compatibility).
 #' @slot parameters An S4 object holding the model parameters.
 #' @slot topo An S4 object holding the raster layers related to topography in
 #'   the broader sense.
@@ -350,6 +353,7 @@ setClass(
     cv_dir     = "character",
     ls_ini     = "logical",
     is_MCi     = "integer",
+    cs_fex     = "character",
     parameters = "RPhosFateParameters2",
     topo       = "RPhosFateTopo",
     erosion    = "RPhosFateErosion",
@@ -389,6 +393,12 @@ setMethod(
     }
     if (!dir.exists("Result")) {
       dir.create("Result")
+    }
+
+    .Object@cs_fex <- if (file.exists(file.path("Input", "acc_wtd.img"))) {
+      ".img"
+    } else {
+      ".tif"
     }
 
     .Object@substances <- new("RPhosFateSubstances", .Object)

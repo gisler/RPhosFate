@@ -16,13 +16,13 @@ x <- RPhosFate(
 source("parameters.R", local = TRUE) # nolint
 
 #### getLayer and [ extract operator ####
-layers <- list.files(cs_dir_ctl, "\\.img$", full.names = TRUE, recursive = TRUE)
+layers <- list.files(cs_dir_ctl, "\\.tif$", full.names = TRUE, recursive = TRUE)
 for (layer in layers) {
   expect_true(
     raster::all.equal(
       raster::raster(layer),
       {
-        layer <- sub("\\.img$", "", basename(layer))
+        layer <- sub("\\.tif$", "", basename(layer))
         substance <- regmatches(layer, regexpr(sprintf(
           "(^%s)",
           paste(tolower(slotNames(control@substances)), collapse = "|^")

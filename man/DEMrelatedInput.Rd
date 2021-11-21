@@ -6,7 +6,8 @@
 \usage{
 DEMrelatedInput(cv_dir, cs_dem, cs_cha, sp_msk, sp_olp, sp_sds,
   cs_rds = NULL, cs_wgs = NULL, cs_dir = NULL, ns_brn = 50,
-  is_adj = 1L, is_ths = 1L, ls_tmp = FALSE)
+  is_adj = 1L, is_ths = 1L, ls_tmp = FALSE, cs_fex = c("tif",
+  "img"))
 }
 \arguments{
 \item{cv_dir}{A character vector specifying the desired project root
@@ -47,6 +48,10 @@ during computation.}
 
 \item{ls_tmp}{A logical scalar specifying if the temporary files created
 during computation shall be kept.}
+
+\item{cs_fex}{A character string specifying the file extension of the created
+raster files (either the default "tif" or "img" for backward
+compatibility).}
 }
 \value{
 A numeric \code{\link{matrix}} specifying the catchment outlet coordinates.

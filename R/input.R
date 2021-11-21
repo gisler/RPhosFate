@@ -103,6 +103,9 @@ demoProject <- function(cs_dir = tempdir(TRUE)) {
 #'   during computation.
 #' @param ls_tmp A logical scalar specifying if the temporary files created
 #'   during computation shall be kept.
+#' @param cs_fex A character string specifying the file extension of the created
+#'   raster files (either the default "tif" or "img" for backward
+#'   compatibility).
 #'
 #' @details
 #' This function applies the following (pre-processing) steps to ensure
@@ -170,7 +173,8 @@ DEMrelatedInput <- function(
   ns_brn = 50,
   is_adj = 1L,
   is_ths = 1L,
-  ls_tmp = FALSE
+  ls_tmp = FALSE,
+  cs_fex = c("tif", "img")
 ) {
   if (!requireNamespace("whitebox", quietly = TRUE)) {
     stop(paste(
@@ -204,6 +208,7 @@ DEMrelatedInput <- function(
   qassert(is_adj, "X1[0,)")
   qassert(is_ths, "X1[1,)")
   qassert(ls_tmp, "B1")
+  match.arg(cs_fex)
 
   dir.create(
     file.path(cv_dir[1L], "Input", "temp"),
@@ -222,7 +227,6 @@ DEMrelatedInput <- function(
     sp_msk,
     filename = "dem_ovr.tif",
     datatype = "FLT4S",
-    options = "COMPRESSED=YES",
     overwrite = TRUE
   )
 
@@ -260,7 +264,6 @@ DEMrelatedInput <- function(
     rl_dem_bnt,
     filename = "dem_bnt.tif",
     datatype = "FLT4S",
-    options = "COMPRESSED=YES",
     overwrite = TRUE
   )
   rl_dem_bnt <- raster("dem_bnt.tif")
@@ -287,7 +290,6 @@ DEMrelatedInput <- function(
       sp_msk,
       filename = "dir_ovr.tif",
       datatype = "INT4S",
-      options = "COMPRESSED=YES",
       overwrite = TRUE
     )
   }
@@ -305,7 +307,6 @@ DEMrelatedInput <- function(
     raster("wsh_ovr.tif"),
     filename = "wsh.tif",
     datatype = "INT1U",
-    options = "COMPRESSED=YES",
     overwrite = TRUE
   )
 
@@ -315,7 +316,6 @@ DEMrelatedInput <- function(
     rl_wsh,
     filename = "dem.tif",
     datatype = "FLT4S",
-    options = "COMPRESSED=YES",
     overwrite = TRUE
   )
 
@@ -325,7 +325,6 @@ DEMrelatedInput <- function(
     rl_wsh,
     filename = "dir.tif",
     datatype = "INT4S",
-    options = "COMPRESSED=YES",
     overwrite = TRUE
   )
 
@@ -344,7 +343,6 @@ DEMrelatedInput <- function(
     rl_cha,
     filename = "cha.tif",
     datatype = "INT1U",
-    options = "COMPRESSED=YES",
     overwrite = TRUE
   )
   rl_cha <- raster("cha.tif")
@@ -359,7 +357,6 @@ DEMrelatedInput <- function(
       rl_wsh,
       filename = "rds.tif",
       datatype = "INT1U",
-      options = "COMPRESSED=YES",
       overwrite = TRUE
     )
   } else {
@@ -369,7 +366,6 @@ DEMrelatedInput <- function(
       rl_rds,
       filename = "rds.tif",
       datatype = "INT1U",
-      options = "COMPRESSED=YES",
       overwrite = TRUE
     )
     rl_rds <- raster("rds.tif")
@@ -384,7 +380,6 @@ DEMrelatedInput <- function(
     ),
     filename = "dir_tau.tif",
     datatype = "INT1U",
-    options = "COMPRESSED=YES",
     overwrite = TRUE
   )
 
@@ -406,7 +401,6 @@ DEMrelatedInput <- function(
       rl_wsh,
       filename = "wgs.tif",
       datatype = "FLT4S",
-      options = "COMPRESSED=YES",
       overwrite = TRUE
     )
 
@@ -434,7 +428,6 @@ DEMrelatedInput <- function(
       },
       filename = "dir_tau_rds.tif",
       datatype = "INT1U",
-      options = "COMPRESSED=YES",
       overwrite = TRUE
     )
 
@@ -457,7 +450,6 @@ DEMrelatedInput <- function(
       },
       filename = "acc.tif",
       datatype = "INT4S",
-      options = "COMPRESSED=YES",
       overwrite = TRUE
     )
 
@@ -485,7 +477,6 @@ DEMrelatedInput <- function(
       },
       filename = "acc_wtd.tif",
       datatype = "FLT4S",
-      options = "COMPRESSED=YES",
       overwrite = TRUE
     )
   } else {
@@ -510,7 +501,6 @@ DEMrelatedInput <- function(
     rl_wsh,
     filename = "slp.tif",
     datatype = "FLT4S",
-    options = "COMPRESSED=YES",
     overwrite = TRUE
   )
   rm(nm_slp_ovr)
@@ -536,7 +526,7 @@ DEMrelatedInput <- function(
         overwrite = TRUE
       )
     },
-    toInput, file.path("..", sprintf("%s.%s", names(toInput), "img"))
+    toInput, file.path("..", sprintf("%s.%s", names(toInput), cs_fex))
   )
 
   # Determine outlet coordinates

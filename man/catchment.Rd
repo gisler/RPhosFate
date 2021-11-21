@@ -17,9 +17,9 @@ for further information.}
 An S4 \code{\linkS4class{RPhosFate}} river catchment object.
 }
 \description{
-Creates a project from scratch or loads an existing one utilising \emph{Erdas
-Imagine} raster files (*.img) from, by convention, the following three
-project root subdirectories:
+Creates a project from scratch or loads an existing one utilising \emph{GeoTIFF}
+(*.tif) raster files from, by convention, the following three project root
+subdirectories:
 \itemize{
 \item \emph{Input}
 \item \emph{Intermediate}

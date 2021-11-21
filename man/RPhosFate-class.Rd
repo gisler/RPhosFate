@@ -19,6 +19,10 @@ from disk (defaults to \code{FALSE}).}
 \item{\code{is_MCi}}{An integer scalar holding the current Monte Carlo iteration if
 applicable (defaults to \code{integer()}).}
 
+\item{\code{cs_fex}}{A character string holding the automatically determined file
+extension of the provided raster files (either ".tif" or ".img" for
+backward compatibility).}
+
 \item{\code{parameters}}{An S4 object holding the model parameters.}
 
 \item{\code{topo}}{An S4 object holding the raster layers related to topography in
