@@ -139,8 +139,10 @@
 <h1 class="page-header" data-toc-text="0.9.9000">
 <a href="#rphosfate-v099000" class="anchor"></a>RPhosFate v0.9.9000</h1>
 <ul>
+<li>Switched to utilising <em>GeoTIFF</em> (*.tif) instead of <em>Erdas Imagine</em> (*.img) raster files</li>
+<li>Added <code>cs_fex</code> argument to <code>DEMrelatedInput</code>: allows for creating <em>Erdas Imagine</em> raster files for backward compatibility</li>
 <li>Added <code>cs_dir</code> argument to <code>DEMrelatedInput</code>: allows for utilising an existing D8 flow directions raster using <em>ArcGIS</em> codes</li>
-<li>Added function <code>demoProject()</code> providing training data</li>
+<li>Added function <code><a href="../reference/demoProject.html">demoProject()</a></code> providing training data</li>
 <li>Added examples to documentation</li>
 <li>Added tests utilising the unit testing framework of the <code>tinytest</code> package</li>
 <li>Added means to measure code coverage with the help of <code>covr</code>

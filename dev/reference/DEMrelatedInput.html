@@ -153,7 +153,8 @@ binary if needed.</p>
 
     <pre class="usage"><span class='fu'>DEMrelatedInput</span>(<span class='no'>cv_dir</span>, <span class='no'>cs_dem</span>, <span class='no'>cs_cha</span>, <span class='no'>sp_msk</span>, <span class='no'>sp_olp</span>, <span class='no'>sp_sds</span>,
   <span class='kw'>cs_rds</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>cs_wgs</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>cs_dir</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>ns_brn</span> <span class='kw'>=</span> <span class='fl'>50</span>,
-  <span class='kw'>is_adj</span> <span class='kw'>=</span> <span class='fl'>1L</span>, <span class='kw'>is_ths</span> <span class='kw'>=</span> <span class='fl'>1L</span>, <span class='kw'>ls_tmp</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+  <span class='kw'>is_adj</span> <span class='kw'>=</span> <span class='fl'>1L</span>, <span class='kw'>is_ths</span> <span class='kw'>=</span> <span class='fl'>1L</span>, <span class='kw'>ls_tmp</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>cs_fex</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"tif"</span>,
+  <span class='st'>"img"</span>))</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -222,6 +223,12 @@ during computation.</p></td>
       <th>ls_tmp</th>
       <td><p>A logical scalar specifying if the temporary files created
 during computation shall be kept.</p></td>
+    </tr>
+    <tr>
+      <th>cs_fex</th>
+      <td><p>A character string specifying the file extension of the created
+raster files (either the default "tif" or "img" for backward
+compatibility).</p></td>
     </tr>
     </table>
 

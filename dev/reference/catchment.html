@@ -40,9 +40,9 @@
 
 
 <meta property="og:title" content="Initialise project — RPhosFate" />
-<meta property="og:description" content="Creates a project from scratch or loads an existing one utilising Erdas
-Imagine raster files (*.img) from, by convention, the following three
-project root subdirectories:
+<meta property="og:description" content="Creates a project from scratch or loads an existing one utilising GeoTIFF
+(*.tif) raster files from, by convention, the following three project root
+subdirectories:
 Input
 Intermediate
 Result
@@ -147,9 +147,9 @@ catchment is an alias for RPhosFate." />
     </div>
 
     <div class="ref-description">
-    <p>Creates a project from scratch or loads an existing one utilising <em>Erdas
-Imagine</em> raster files (*.img) from, by convention, the following three
-project root subdirectories:</p><ul>
+    <p>Creates a project from scratch or loads an existing one utilising <em>GeoTIFF</em>
+(*.tif) raster files from, by convention, the following three project root
+subdirectories:</p><ul>
 <li><p><em>Input</em></p></li>
 <li><p><em>Intermediate</em></p></li>
 <li><p><em>Result</em></p></li>
@@ -306,7 +306,7 @@ t/yr (no default):</p><ul>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='co'># create temporary demonstration project</span>
-<span class='no'>cv_dir</span> <span class='kw'>&lt;-</span> <span class='fu'>demoProject</span>()
+<span class='no'>cv_dir</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='demoProject.html'>demoProject</a></span>()
 
 <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>RPhosFate</span>(
   <span class='kw'>cv_dir</span> <span class='kw'>=</span> <span class='no'>cv_dir</span>,
