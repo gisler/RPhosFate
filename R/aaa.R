@@ -364,7 +364,8 @@ setClass(
   prototype = list(
     cv_dir = character(),
     ls_ini = FALSE,
-    is_MCi = integer()
+    is_MCi = integer(),
+    cs_fex = ".tif"
   )
 )
 setMethod(
@@ -395,10 +396,8 @@ setMethod(
       dir.create("Result")
     }
 
-    .Object@cs_fex <- if (file.exists(file.path("Input", "acc_wtd.img"))) {
-      ".img"
-    } else {
-      ".tif"
+    if (file.exists(file.path("Input", "acc_wtd.img"))) {
+      .Object@cs_fex <- ".img"
     }
 
     .Object@substances <- new("RPhosFateSubstances", .Object)
