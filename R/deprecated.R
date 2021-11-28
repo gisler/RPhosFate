@@ -26,6 +26,7 @@ parametersRDS2YAML <- function(substances) {
     rep(arguments[["ns_tfc_inl"]], length(substances)),
     substances
   )
+  arguments[["ns_tfc_inl"]] <- NULL
 
   parameters <- new("RPhosFateParameters2", arguments)
   writeParameters(parameters)
