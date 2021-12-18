@@ -112,7 +112,8 @@ demoProject <- function(cs_dir = tempdir(TRUE)) {
 #' hydrologic consistency of the generated input data:
 #'
 #' * Stream burning and orientation of cells adjacent to channel cells
-#' approximately into the direction of channel cells (optional).
+#' approximately into the direction of channel cells (no effect with `ns_brn =
+#' 0`).
 #' * Depression breaching.
 #' * Tracing of downslope flowpaths from the provided channel sources.
 #'
@@ -127,8 +128,8 @@ demoProject <- function(cs_dir = tempdir(TRUE)) {
 #' enforced on topographic flow directions in advance. Please note that doing so
 #' renders stream burning and depression breaching without effect.
 #'
-#' _slp_ is calculated from the original, unprocessed DEM and represents D8
-#' slopes.
+#' _slp_ is calculated from the breached DEM (stream burning is undone
+#' beforehand) and represents D8 slopes.
 #'
 #' @return A numeric [`matrix`] specifying the catchment outlet coordinates.
 #'
@@ -276,13 +277,13 @@ DEMrelatedInput <- function(
   # Breach depressions (oversized DEM)
   whitebox::wbt_breach_depressions(
     dem = file.path(normalizePath("."), "dem_bnt.tif"),
-    output = file.path(normalizePath("."), "dem_brd.tif")
+    output = file.path(normalizePath("."), "dem_bnt_brd.tif")
   )
 
   # Calculate or extract D8 flow directions (oversized DEM)
   if (is.null(cs_dir)) {
     whitebox::wbt_d8_pointer(
-      dem = file.path(normalizePath("."), "dem_brd.tif"),
+      dem = file.path(normalizePath("."), "dem_bnt_brd.tif"),
       output = file.path(normalizePath("."), "dir_ovr.tif"),
       esri_pntr = TRUE
     )
@@ -488,10 +489,48 @@ DEMrelatedInput <- function(
     rl_acc_wtd <- raster("acc_wtd.tif")
   }
 
+  # Undo stream burning (breached DEM)
+  rl_cha_map <- raster(cs_cha)
+  rl_cha_map <- adjustExtent(rl_cha_map, sp_msk)
+
+  rl_dem_brd <- raster("dem_bnt_brd.tif")
+  rl_dem_brd <- overlay(
+    x = rl_dem_brd,
+    y = rl_cha_map,
+    fun = function(x, y) {
+      ifelse(is.na(y), x, x + ns_brn)
+    }
+  )
+
+  for (i in seq_len(is_adj)) {
+    rl_cha_map[adjacent(
+      rl_cha_map,
+      Which(!is.na(rl_cha_map), cells = TRUE),
+      directions = 8,
+      pairs = FALSE,
+      include = TRUE
+    )] <- 1L
+
+    rl_dem_brd <- overlay(
+      x = rl_dem_brd,
+      y = rl_cha_map,
+      fun = function(x, y) {
+        ifelse(is.na(y), x, x + ns_brn)
+      }
+    )
+  }
+
+  writeRaster(
+    rl_dem_brd,
+    filename = "dem_brd.tif",
+    datatype = "FLT4S",
+    overwrite = TRUE
+  )
+
   # Calculate D8 slopes (oversized DEM)
   nm_slp_ovr <- D8slope(
     im_dir = as.matrix(raster("dir_ovr.tif")),
-    nm_dem = as.matrix(rl_dem_ovr),
+    nm_dem = as.matrix(rl_dem_brd),
     im_fDo = matrix(
       c(32L, 16L, 8L, 64L, 0L, 4L, 128L, 1L, 2L),
       3L

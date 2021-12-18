@@ -70,7 +70,7 @@ This function applies the following (pre-processing) steps to ensure
 hydrologic consistency of the generated input data:
 \itemize{
 \item Stream burning and orientation of cells adjacent to channel cells
-approximately into the direction of channel cells (optional).
+approximately into the direction of channel cells (no effect with \code{ns_brn = 0}).
 \item Depression breaching.
 \item Tracing of downslope flowpaths from the provided channel sources.
 }
@@ -86,8 +86,8 @@ example, may be useful in case the effect of tillage directions has been
 enforced on topographic flow directions in advance. Please note that doing so
 renders stream burning and depression breaching without effect.
 
-\emph{slp} is calculated from the original, unprocessed DEM and represents D8
-slopes.
+\emph{slp} is calculated from the breached DEM (stream burning is undone
+beforehand) and represents D8 slopes.
 }
 \examples{
 \dontrun{
