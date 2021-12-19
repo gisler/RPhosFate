@@ -32,8 +32,7 @@ LinkingTo:
     Rcpp,
     RcppArmadillo
 Additional_repositories:
-    https://gisler.github.io/drat,
-    http://R-Forge.R-project.org
+    https://gisler.github.io/drat
 RoxygenNote: 6.1.1
 Roxygen: list(markdown = TRUE)
 Collate:
