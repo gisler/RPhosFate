@@ -69,7 +69,7 @@ jobs:
         run: |
           Rcpp::compileAttributes()
           rcmdcheck::rcmdcheck(
-            args = c("--no-manual", "--as-cran"),
+            args = c("--no-manual", "--as-cran", "--no-multiarch"),
             check_dir = "check",
             libpath = .libPaths()[2L],
             error_on = "warning"
