@@ -74,8 +74,8 @@ demoProject <- function(cs_dir = tempdir(TRUE)) {
 #' cha, dem, dir, rds, slp,} and _wsh._
 #'
 #' Requires _[TauDEM](http://hydrology.usu.edu/taudem/taudem5/downloads.html)_
-#' 5.3.7 to be installed on your computer and will download the _WhiteboxTools_
-#' binary if needed.
+#' 5.3.7 and the _WhiteboxTools_ binary (`whitebox::install_whitebox()`) to be
+#' installed on your computer.
 #'
 #' @param cv_dir A character vector specifying the desired project root
 #'   directory (first position).
@@ -183,14 +183,19 @@ DEMrelatedInput <- function(
 ) {
   if (!requireNamespace("whitebox", quietly = TRUE)) {
     stop(paste(
-      'Package "whitebox" must be installed',
-      'from "http://R-Forge.R-project.org" for this functionality.'
-    ), call. = FALSE)
+      'Package "whitebox" (v2.0.0 or higher) must be installed for this',
+      'functionality.',
+      ), call. = FALSE)
   }
-  whitebox::wbt_init()
+  if (!whitebox::check_whitebox_binary()) {
+    stop(paste(
+      'The "WhiteboxTools" binary must be installed for this functionality.',
+      'Consider calling "whitebox::install_whitebox()" first.'
+      ), call. = FALSE)
+  }
   if (Sys.which("mpiexec") == "" || Sys.which("AreaD8") == "") {
     stop(paste(
-      '"TauDEM" must be installed and added to "PATH" environment variable',
+      '"TauDEM" must be installed and added to the "PATH" environment variable',
       'for this functionality.'
     ), call. = FALSE)
   }

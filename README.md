@@ -16,7 +16,7 @@ Currently, no [CRAN](https://cran.r-project.org/) release is planned. A Windows 
 
 ``` r
 install.packages(
-  c("RPhosFate", "raster"),
+  c("RPhosFate", "raster", "whitebox"),
   repos = c("https://gisler.github.io/drat", options("repos")),
   type = "win.binary",
   dependencies = TRUE

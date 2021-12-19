@@ -62,8 +62,8 @@ the digital elevation model (DEM) in the broader sense: \emph{acc, acc_wtd,
 cha, dem, dir, rds, slp,} and \emph{wsh.}
 
 Requires \emph{\href{http://hydrology.usu.edu/taudem/taudem5/downloads.html}{TauDEM}}
-5.3.7 to be installed on your computer and will download the \emph{WhiteboxTools}
-binary if needed.
+5.3.7 and the \emph{WhiteboxTools} binary (\code{whitebox::install_whitebox()}) to be
+installed on your computer.
 }
 \details{
 This function applies the following (pre-processing) steps to ensure
