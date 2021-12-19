@@ -1,3 +1,7 @@
+# RPhosFate v0.10.9000
+
+* CI: check main sub-architecture only
+
 # RPhosFate v0.10.0
 
 * `DEMrelatedInput()` function now calculates the slopes from the breached DEM (stream burning is undone beforehand)
