@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>NA • RPhosFate</title>
+<title>Changelog • RPhosFate</title>
 
 
 <!-- jquery -->
@@ -18,8 +18,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
 
 <!-- bootstrap-toc -->
-<link rel="stylesheet" href="bootstrap-toc.css">
-<script src="bootstrap-toc.js"></script>
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
@@ -33,13 +33,13 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
-<link href="pkgdown.css" rel="stylesheet">
-<script src="pkgdown.js"></script>
+<link href="../pkgdown.css" rel="stylesheet">
+<script src="../pkgdown.js"></script>
 
 
 
 
-<meta property="og:title" content="NA" />
+<meta property="og:title" content="Changelog" />
 
 
 
@@ -58,7 +58,7 @@
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    <div class="container template-title-body">
+    <div class="container template-news">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -70,7 +70,7 @@
         <span class="icon-bar"></span>
       </button>
       <span class="navbar-brand">
-        <a class="navbar-link" href="index.html">RPhosFate</a>
+        <a class="navbar-link" href="../index.html">RPhosFate</a>
         <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.10.0</span>
       </span>
     </div>
@@ -78,13 +78,13 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="index.html">
+  <a href="../index.html">
     <span class="fa fa-home fa-lg"></span>
      
   </a>
 </li>
 <li>
-  <a href="reference/index.html">Reference</a>
+  <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -108,7 +108,7 @@
   </ul>
 </li>
 <li>
-  <a href="news/index.html">Changelog</a>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -129,28 +129,29 @@
       </header>
 
 <div class="row">
-  <div class="contents col-md-9">
+  <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>NA</h1>
+      <h1 data-toc-skip>Changelog <small></small></h1>
+      <small>Source: <a href='https://github.com/gisler/RPhosFate/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-
-<p><strong>Purpose.</strong> Describe the problem or feature in addition to the possible link(s) to the issue(s).</p>
-<p><strong>Approach.</strong> How does this change address the problem?</p>
-<p><strong>Pre-Merge To-Do List:</strong></p>
-<ul class="task-list">
+    <div id="rphosfate-v0100" class="section level1">
+<h1 class="page-header" data-toc-text="0.10.0">
+<a href="#rphosfate-v0100" class="anchor"></a>RPhosFate v0.10.0</h1>
+<ul>
 <li>
-<input type="checkbox" disabled>
-Documentation</li>
-<li>
-<input type="checkbox" disabled>
-Test(s)</li>
-<li>
-<input type="checkbox" disabled>
-…</li>
+<code><a href="../reference/DEMrelatedInput.html">DEMrelatedInput()</a></code> function now calculates the slopes from the breached DEM (stream burning is undone beforehand)</li>
+<li>Switched to utilising <em>GeoTIFF</em> (*.tif) instead of <em>Erdas Imagine</em> (*.img) raster files</li>
+<li>Added <code>cs_fex</code> argument to <code><a href="../reference/DEMrelatedInput.html">DEMrelatedInput()</a></code> function: allows for creating <em>Erdas Imagine</em> raster files for backward compatibility</li>
+<li>Added <code>cs_dir</code> argument to <code><a href="../reference/DEMrelatedInput.html">DEMrelatedInput()</a></code> function: allows for utilising an existing D8 flow directions raster using <em>ArcGIS</em> codes</li>
+<li>Added <code><a href="../reference/demoProject.html">demoProject()</a></code> function providing training data</li>
+<li>Added examples to documentation</li>
+<li>Added tests utilising the unit testing framework of the <code>tinytest</code> package</li>
+<li>Added means to measure code coverage with the help of <code>covr</code>
+</li>
+<li>Fixed backward incompatibility</li>
 </ul>
-
-
+</div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -160,7 +161,6 @@ Test(s)</li>
   </div>
 
 </div>
-
 
 
       <footer>

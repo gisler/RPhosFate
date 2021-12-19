@@ -32,7 +32,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">RPhosFate</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.10.0</span>
       </span>
     </div>
 
@@ -68,6 +68,9 @@
     </li>
   </ul>
 </li>
+<li>
+  <a href="news/index.html">Changelog</a>
+</li>
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
@@ -94,13 +97,13 @@
 <p>This program is free software: you can redistribute it and/or modify it under the terms of the GNU Affero General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.</p>
 <p>This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more details.</p>
 <p>You should have received a copy of the GNU Affero General Public License along with this program. If not, see <a href="https://www.gnu.org/licenses/" class="uri">https://www.gnu.org/licenses/</a>.</p>
-<p><a href="https://github.com/gisler/RPhosFate/actions?query=workflow%3A%22Lint+Code+Base%22"><img src="https://github.com/gisler/RPhosFate/workflows/Lint%20Code%20Base/badge.svg" alt="GitHub Super-Linter"></a></p>
+<p><a href="https://github.com/gisler/RPhosFate/actions?query=workflow%3AR-CMD-check"><img src="https://github.com/gisler/RPhosFate/workflows/R-CMD-check/badge.svg" alt="R build status"></a> <a href="https://app.codecov.io/gh/gisler/RPhosFate"><img src="https://codecov.io/gh/gisler/RPhosFate/branch/main/graph/badge.svg?token=SrmeMV0ohC" alt="codecov"></a> <a href="https://github.com/gisler/RPhosFate/actions?query=workflow%3A%22Lint+Code+Base%22"><img src="https://github.com/gisler/RPhosFate/workflows/Lint%20Code%20Base/badge.svg" alt="GitHub Super-Linter"></a></p>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
 <p>Currently, no <a href="https://cran.r-project.org/">CRAN</a> release is planned. A Windows binary package built for <a href="https://mran.microsoft.com/release-history">Microsoft R Open</a> 3.5.3 is nonetheless available from a <a href="https://github.com/eddelbuettel/drat"><code>drat</code></a> repository. It can be installed along with its most important dependencies via the following command:</p>
 <div class="sourceCode" id="cb1"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(
-  <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"RPhosFate"</span>, <span class="st">"raster"</span>),
+  <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"RPhosFate"</span>, <span class="st">"raster"</span>, <span class="st">"whitebox"</span>),
   <span class="kw">repos</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"https://gisler.github.io/drat"</span>, <span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span>(<span class="st">"repos"</span>)),
   <span class="kw">type</span> <span class="kw">=</span> <span class="st">"win.binary"</span>,
   <span class="kw">dependencies</span> <span class="kw">=</span> <span class="fl">TRUE</span>
