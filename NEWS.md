@@ -1,4 +1,4 @@
-# RPhosFate v0.9.9000
+# RPhosFate v0.10.0
 
 * `DEMrelatedInput()` function now calculates the slopes from the breached DEM (stream burning is undone beforehand)
 * Switched to utilising _GeoTIFF_ (\*.tif) instead of _Erdas Imagine_ (\*.img) raster files
