@@ -447,19 +447,39 @@ setMethod(
       "\n\n", sep = ""
     )
 
+    clippingRectangle <- c(
+      0,
+      max(nv_old, na.rm = TRUE),
+      0,
+      max(nv_mld, na.rm = TRUE)
+    )
     plot(
+      NULL,
+      NULL,
+      xlab = sprintf("Observed load(s) in t/yr: %s", col),
+      ylab = "Modelled load(s) in t/yr",
+      xlim = clippingRectangle[1:2],
+      ylim = clippingRectangle[3:4],
+      asp = 1
+    )
+    clip(
+      clippingRectangle[1L],
+      clippingRectangle[2L],
+      clippingRectangle[3L],
+      clippingRectangle[4L]
+    )
+    abline(0, 0.7, col = "grey50", lty = "longdash")
+    abline(0, 1.3, col = "grey50", lty = "longdash")
+    abline(0, 1.0)
+    par(xpd = NA)
+    points(
       nv_old,
       nv_mld,
-      pch = 16L,
-      xlab = col,
-      ylab = "Modelled load(s)",
-      xlim = c(0, max(nv_old, na.rm = TRUE)),
-      ylim = c(0, max(nv_mld, na.rm = TRUE))
+      pch = 21L,
+      col = "black",
+      bg = "#e69800",
+      cex = 1.2
     )
-    clip(0, max(nv_old, na.rm = TRUE), 0, max(nv_mld, na.rm = TRUE))
-    abline(0, 1.3, col = "grey50", lty = 2L)
-    abline(0, 1.0)
-    abline(0, 0.7, col = "grey50", lty = 2L)
 
     metrics
   }

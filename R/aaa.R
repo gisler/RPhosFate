@@ -1,7 +1,7 @@
 #' @import checkmate
 #' @import methods
 #' @import raster
-#' @importFrom graphics abline clip
+#' @importFrom graphics abline clip par points
 #' @importFrom hydroGOF mNSE NSE pbias rmse nrmse rsr
 #' @importFrom Rcpp sourceCpp
 #' @importFrom spatstat as.owin as.ppp nncross
