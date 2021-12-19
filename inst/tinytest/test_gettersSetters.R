@@ -48,6 +48,11 @@ for (layer in layers) {
     rl@file@name,
     info = '"[" and "getLayer" refer to the same raster layer'
   )
+
+  expect_error(
+    getLayer(x, "non-existent"),
+    info = "non-existent layer returns error"
+  )
 }
 
 #### setParameter and getParameter ####
