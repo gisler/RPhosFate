@@ -79,11 +79,11 @@ x <- RPhosFate(
   ls_ini = TRUE
 )
 
-x <- setParameter(x, ns_dep_ovl = 25.0e-4)
+x <- setParameter(x, ns_dep_ovl = 15e-4)
 x <- setParameter(
   x,
   nv_tfc_inl = c(SS = 0.6, PP = 0.6),
-  nv_enr_rto = c(PP = 2.0)
+  nv_enr_rto = c(PP = 1.4)
 )
 }
 

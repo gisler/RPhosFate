@@ -50,12 +50,13 @@ x <- RPhosFate(
 )
 # presupposed function call
 x <- firstRun(x, "SS")
+x <- snapGauges(x)
 
 x <- autoCalibrate(
   x,
   "SS",
   col = "SS_load",
-  interval = c(1e-5, 1e-3),
+  interval = c(10e-4, 20e-4),
   metric = "NSE"
 )
 }
