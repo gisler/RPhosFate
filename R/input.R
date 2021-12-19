@@ -236,7 +236,7 @@ DEMrelatedInput <- function(
     rl_dem_ovr,
     sp_msk,
     filename = "dem_ovr.tif",
-    datatype = "FLT4S",
+    datatype = "FLT8S",
     overwrite = TRUE
   )
 
@@ -273,7 +273,7 @@ DEMrelatedInput <- function(
   writeRaster(
     rl_dem_bnt,
     filename = "dem_bnt.tif",
-    datatype = "FLT4S",
+    datatype = "FLT8S",
     overwrite = TRUE
   )
   rl_dem_bnt <- raster("dem_bnt.tif")
@@ -325,7 +325,7 @@ DEMrelatedInput <- function(
     crop(raster("dem_ovr.tif"), rl_wsh),
     rl_wsh,
     filename = "dem.tif",
-    datatype = "FLT4S",
+    datatype = "FLT8S",
     overwrite = TRUE
   )
 
@@ -410,7 +410,7 @@ DEMrelatedInput <- function(
       rl_wgs,
       rl_wsh,
       filename = "wgs.tif",
-      datatype = "FLT4S",
+      datatype = "FLT8S",
       overwrite = TRUE
     )
 
@@ -486,7 +486,7 @@ DEMrelatedInput <- function(
         ifelse(is.na(x), y, z)
       },
       filename = "acc_wtd.tif",
-      datatype = "FLT4S",
+      datatype = "FLT8S",
       overwrite = TRUE
     )
   } else {
@@ -528,7 +528,7 @@ DEMrelatedInput <- function(
   writeRaster(
     rl_dem_brd,
     filename = "dem_brd.tif",
-    datatype = "FLT4S",
+    datatype = "FLT8S",
     overwrite = TRUE
   )
 
@@ -548,7 +548,7 @@ DEMrelatedInput <- function(
     crop(raster(nm_slp_ovr, template = rl_dem_ovr), rl_wsh),
     rl_wsh,
     filename = "slp.tif",
-    datatype = "FLT4S",
+    datatype = "FLT8S",
     overwrite = TRUE
   )
   rm(nm_slp_ovr)

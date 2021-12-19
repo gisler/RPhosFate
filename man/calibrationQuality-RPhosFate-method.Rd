@@ -50,6 +50,7 @@ x <- RPhosFate(
 )
 # presupposed function call
 x <- firstRun(x, "SS")
+x <- snapGauges(x)
 
 x <- calibrationQuality(x, "SS", "SS_load")
 }

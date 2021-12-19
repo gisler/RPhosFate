@@ -94,7 +94,7 @@ setMethod(
           (is_res * 22.13^y)
       },
       filename = sprintf("LFa%s", x@cs_fex),
-      datatype = "FLT4S",
+      datatype = "FLT8S",
       options = "COMPRESSED=YES",
       overwrite = TRUE
     )
@@ -107,7 +107,7 @@ setMethod(
         ifelse(y < 9, 10.8 * sin(x) + 0.03, 16.8 * sin(x) - 0.5)
       },
       filename = sprintf("SFa%s", x@cs_fex),
-      datatype = "FLT4S",
+      datatype = "FLT8S",
       options = "COMPRESSED=YES",
       overwrite = TRUE
     )
@@ -116,7 +116,7 @@ setMethod(
     writeRaster(
       x@topo@rl_slp_cap,
       filename = filename,
-      datatype = "FLT4S",
+      datatype = "FLT8S",
       options = "COMPRESSED=YES",
       overwrite = TRUE
     )
@@ -197,7 +197,7 @@ setMethod(
     writeRaster(
       x@erosion@rl_ero,
       filename = filename,
-      datatype = "FLT4S",
+      datatype = "FLT8S",
       options = "COMPRESSED=YES",
       overwrite = TRUE
     )
@@ -266,7 +266,7 @@ setMethod(
         x * y * (1 + z * 1e-2) * 1e-3
       },
       filename = filename,
-      datatype = "FLT4S",
+      datatype = "FLT8S",
       options = "COMPRESSED=YES",
       overwrite = TRUE
     )
@@ -335,7 +335,7 @@ setMethod(
         ns_rhy_a * (x * is_siz * 1e-6)^ns_rhy_b
       },
       filename = sprintf("rhy%s", x@cs_fex),
-      datatype = "FLT4S",
+      datatype = "FLT8S",
       options = "COMPRESSED=YES",
       overwrite = TRUE
     )
@@ -608,11 +608,11 @@ setMethod(
     )
 
     if (length(x@is_MCi) == 0L) {
-      writeRaster(raster(li_tpt$nm_xxr    , template = x@topo@rl_acc_wtd), filename = filenames["xxr"    ], datatype = "FLT4S", options = "COMPRESSED=YES", overwrite = TRUE)
-      writeRaster(raster(li_tpt$nm_xxt_inp, template = x@topo@rl_acc_wtd), filename = filenames["xxt_inp"], datatype = "FLT4S", options = "COMPRESSED=YES", overwrite = TRUE)
-      writeRaster(raster(li_tpt$nm_xxt_out, template = x@topo@rl_acc_wtd), filename = filenames["xxt_out"], datatype = "FLT4S", options = "COMPRESSED=YES", overwrite = TRUE)
-      writeRaster(raster(li_tpt$nm_xxt_cld, template = x@topo@rl_acc_wtd), filename = filenames["xxt_cld"], datatype = "FLT4S", options = "COMPRESSED=YES", overwrite = TRUE)
-      writeRaster(raster(li_tpt$nm_xxt_ctf, template = x@topo@rl_acc_wtd), filename = filenames["xxt_ctf"], datatype = "FLT4S", options = "COMPRESSED=YES", overwrite = TRUE)
+      writeRaster(raster(li_tpt$nm_xxr    , template = x@topo@rl_acc_wtd), filename = filenames["xxr"    ], datatype = "FLT8S", options = "COMPRESSED=YES", overwrite = TRUE)
+      writeRaster(raster(li_tpt$nm_xxt_inp, template = x@topo@rl_acc_wtd), filename = filenames["xxt_inp"], datatype = "FLT8S", options = "COMPRESSED=YES", overwrite = TRUE)
+      writeRaster(raster(li_tpt$nm_xxt_out, template = x@topo@rl_acc_wtd), filename = filenames["xxt_out"], datatype = "FLT8S", options = "COMPRESSED=YES", overwrite = TRUE)
+      writeRaster(raster(li_tpt$nm_xxt_cld, template = x@topo@rl_acc_wtd), filename = filenames["xxt_cld"], datatype = "FLT8S", options = "COMPRESSED=YES", overwrite = TRUE)
+      writeRaster(raster(li_tpt$nm_xxt_ctf, template = x@topo@rl_acc_wtd), filename = filenames["xxt_ctf"], datatype = "FLT8S", options = "COMPRESSED=YES", overwrite = TRUE)
       slot(x@substances, substance)@rl_xxr     <- raster(filenames["xxr"    ])
       slot(x@substances, substance)@rl_xxt_inp <- raster(filenames["xxt_inp"])
       slot(x@substances, substance)@rl_xxt_out <- raster(filenames["xxt_out"])
@@ -622,7 +622,7 @@ setMethod(
     writeRaster(
       raster(li_tpt$nm_xxt, template = x@topo@rl_acc_wtd),
       filename = filenames["xxt"],
-      datatype = "FLT4S",
+      datatype = "FLT8S",
       options = "COMPRESSED=YES",
       overwrite = TRUE
     )
