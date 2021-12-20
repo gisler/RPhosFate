@@ -525,12 +525,14 @@ DEMrelatedInput <- function(
     )
   }
 
-  writeRaster(
-    rl_dem_brd,
-    filename = "dem_brd.tif",
-    datatype = "FLT8S",
-    overwrite = TRUE
-  )
+  if (ls_tmp) {
+    writeRaster(
+      rl_dem_brd,
+      filename = "dem_brd.tif",
+      datatype = "FLT8S",
+      overwrite = TRUE
+    )
+  }
 
   # Calculate D8 slopes (oversized DEM)
   nm_slp_ovr <- D8slope(
