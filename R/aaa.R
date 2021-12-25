@@ -144,9 +144,9 @@ setMethod(
     on.exit(setwd(cs_dir_old))
 
     setwd("Input")
-    .Object@rl_RFa <- readLayer(cmt, "RFa", TRUE      )
-    .Object@rl_KFa <- readLayer(cmt, "KFa", TRUE      )
-    .Object@rl_CFa <- readLayer(cmt, "CFa", TRUE, TRUE)
+    .Object@rl_RFa <- readLayer(cmt, "RFa", TRUE)
+    .Object@rl_KFa <- readLayer(cmt, "KFa", TRUE)
+    .Object@rl_CFa <- readLayer(cmt, "CFa", TRUE)
 
     setwd("../Intermediate")
     .Object@rl_LFa <- readLayer(cmt, "LFa")
@@ -175,7 +175,7 @@ setMethod(
     on.exit(setwd(cs_dir_old))
 
     setwd("Input")
-    .Object@rl_man <- readLayer(cmt, "man", FALSE, TRUE)
+    .Object@rl_man <- readLayer(cmt, "man")
 
     setwd("../Intermediate")
     .Object@rl_rhy <- readLayer(cmt, "rhy")

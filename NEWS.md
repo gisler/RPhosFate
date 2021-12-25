@@ -1,5 +1,12 @@
 # RPhosFate v0.10.9000
 
+* Monte Carlo simulation mode can now make use of repeated random samples, i.e. raster data, of distributions of about all input data
+* Added the following arguments to the `subsequentRun()` method, which allow for calling the respective method:
+  * `erosionPrerequisites`
+  * `erosion`
+  * `emission`
+  * `transportPrerequisites`
+  * `transportCalcOrder`
 * `RPhosFate` now depends on the `spatstat.geom` instead of the `spatstat` package
 * Fixed minimum required version of the `whitebox` package (≥ 2.0.0)
 * Added test for the standard use case of the `DEMrelatedInput()` function

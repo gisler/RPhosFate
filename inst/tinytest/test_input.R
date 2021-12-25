@@ -39,7 +39,7 @@ if (.Platform$OS.type == "windows" &&
 
   layers <- list.files(
     file.path(cv_dir, "Input"),
-    pattern = "\\.tif",
+    pattern = "^\\D+\\.tif$",
     full.names = TRUE
   )
   for (layer in layers) {

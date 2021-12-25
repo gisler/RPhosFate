@@ -26,8 +26,7 @@ populateLayerSlots <- function(
   object,
   slots,
   layers,
-  areRequiredInputLayers = rep(FALSE, length(slots)),
-  areMCinputLayers = rep(FALSE, length(slots))
+  areRequiredInputLayers = rep(FALSE, length(slots))
 ) {
   cs_dir_old <- setwd(cmt@cv_dir[1L])
   on.exit(setwd(cs_dir_old))
@@ -36,8 +35,7 @@ populateLayerSlots <- function(
     slot(object, slots[i]) <- readLayer(
       cmt,
       layers[i],
-      areRequiredInputLayers[i],
-      areMCinputLayers[i]
+      areRequiredInputLayers[i]
     )
   }
 
@@ -75,15 +73,18 @@ populateParameterSlots <- function(parameters, arguments) {
 readLayer <- function(
   cmt,
   layer,
-  isRequiredInputLayer = FALSE,
-  isMCinputLayer = FALSE
+  isRequiredInputLayer = FALSE
 ) {
-  if (length(cmt@is_MCi) == 1L && isMCinputLayer) {
-    cs_dir_old <- setwd(cmt@cv_dir[2L])
-    on.exit(setwd(cs_dir_old))
-  }
+  MCfilename <- file.path(
+    cmt@cv_dir[2L],
+    paste0(basename(layer), cmt@is_MCi, cmt@cs_fex)
+  )
 
-  filename <- paste0(layer, cmt@is_MCi, cmt@cs_fex)
+  if (length(cmt@is_MCi) == 1L && file.exists(MCfilename)) {
+    filename <- MCfilename
+  } else {
+    filename <- paste0(layer, cmt@cs_fex)
+  }
 
   if (isRequiredInputLayer) {
     raster(filename)

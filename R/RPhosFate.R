@@ -611,22 +611,16 @@ setMethod(
       writeRaster(raster(li_tpt$nm_xxr    , template = x@topo@rl_acc_wtd), filename = filenames["xxr"    ], datatype = "FLT8S", options = "COMPRESSED=YES", overwrite = TRUE)
       writeRaster(raster(li_tpt$nm_xxt_inp, template = x@topo@rl_acc_wtd), filename = filenames["xxt_inp"], datatype = "FLT8S", options = "COMPRESSED=YES", overwrite = TRUE)
       writeRaster(raster(li_tpt$nm_xxt_out, template = x@topo@rl_acc_wtd), filename = filenames["xxt_out"], datatype = "FLT8S", options = "COMPRESSED=YES", overwrite = TRUE)
-      writeRaster(raster(li_tpt$nm_xxt_cld, template = x@topo@rl_acc_wtd), filename = filenames["xxt_cld"], datatype = "FLT8S", options = "COMPRESSED=YES", overwrite = TRUE)
       writeRaster(raster(li_tpt$nm_xxt_ctf, template = x@topo@rl_acc_wtd), filename = filenames["xxt_ctf"], datatype = "FLT8S", options = "COMPRESSED=YES", overwrite = TRUE)
       slot(x@substances, substance)@rl_xxr     <- raster(filenames["xxr"    ])
       slot(x@substances, substance)@rl_xxt_inp <- raster(filenames["xxt_inp"])
       slot(x@substances, substance)@rl_xxt_out <- raster(filenames["xxt_out"])
-      slot(x@substances, substance)@rl_xxt_cld <- raster(filenames["xxt_cld"])
       slot(x@substances, substance)@rl_xxt_ctf <- raster(filenames["xxt_ctf"])
     }
-    writeRaster(
-      raster(li_tpt$nm_xxt, template = x@topo@rl_acc_wtd),
-      filename = filenames["xxt"],
-      datatype = "FLT8S",
-      options = "COMPRESSED=YES",
-      overwrite = TRUE
-    )
-    slot(x@substances, substance)@rl_xxt <- raster(filenames["xxt"])
+    writeRaster(raster(li_tpt$nm_xxt    , template = x@topo@rl_acc_wtd), filename = filenames["xxt"    ], datatype = "FLT8S", options = "COMPRESSED=YES", overwrite = TRUE)
+    writeRaster(raster(li_tpt$nm_xxt_cld, template = x@topo@rl_acc_wtd), filename = filenames["xxt_cld"], datatype = "FLT8S", options = "COMPRESSED=YES", overwrite = TRUE)
+    slot(x@substances, substance)@rl_xxt     <- raster(filenames["xxt"    ])
+    slot(x@substances, substance)@rl_xxt_cld <- raster(filenames["xxt_cld"])
 
     x
   }

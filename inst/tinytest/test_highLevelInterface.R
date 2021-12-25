@@ -179,6 +179,29 @@ for (substance in substances) {
   # nolint end
 }
 
+#### Monte Carlo simulation mode ####
+x <- RPhosFate(
+  cv_dir = c(cs_dir_tst, cs_dir_ctl),
+  ls_ini = TRUE,
+  is_MCi = 1L
+)
+
+expect_identical(
+  basename(x@erosion@rl_CFa@file@name),
+  "CFa1.tif",
+  info = "Monte Carlo input data is detected"
+)
+
+x <- subsequentRun(x, "PP", erosion = TRUE, emission = TRUE)
+
+layers <- c("ero1", "ppe1", "ppt1", "ppt_cld1")
+for (layer in layers) {
+  expect_true(
+    file.exists(file.path(cs_dir_tst, "Result", sprintf("%s.tif", layer))),
+    info = "Monte Carlo simulation mode outputs exist"
+  )
+}
+
 #### clean-up ####
 expect_identical(
   getwd(),

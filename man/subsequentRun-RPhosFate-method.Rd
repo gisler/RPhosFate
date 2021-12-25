@@ -5,19 +5,42 @@
 \alias{subsequentRun}
 \title{Subsequent run}
 \usage{
-\S4method{subsequentRun}{RPhosFate}(x, substance = "PP")
+\S4method{subsequentRun}{RPhosFate}(
+  x,
+  substance = "PP",
+  erosionPrerequisites = FALSE,
+  erosion = FALSE,
+  emission = FALSE,
+  transportPrerequisites = FALSE,
+  transportCalcOrder = FALSE
+)
 }
 \arguments{
 \item{x}{An S4 \code{\linkS4class{RPhosFate}} river catchment object.}
 
 \item{substance}{A character string specifying the substance to calculate.}
+
+\item{erosionPrerequisites}{A logical scalar specifying if
+\code{\link{erosionPrerequisites}} is called.}
+
+\item{erosion}{A logical scalar specifying if \code{\link{erosion}} is called.}
+
+\item{emission}{A logical scalar specifying if \code{\link{emission}} is called. It is
+never called with \code{substance = "SS"} though.}
+
+\item{transportPrerequisites}{A logical scalar specifying if
+\code{\link{transportPrerequisites}} is called.}
+
+\item{transportCalcOrder}{A logical scalar specifying if
+\code{\link{transportCalcOrder}} is called.}
 }
 \value{
 An S4 \code{\linkS4class{RPhosFate}} river catchment object.
 }
 \description{
-Calls \code{\link{transport}} for the specified substance. In Monte Carlo simulation
-mode \code{\link{erosion}} and, if applicable, \code{\link{emission}} are called as well.
+Calls \code{\link{transport}} for the specified substance and optionally
+\code{\link{erosionPrerequisites}}, \code{\link{erosion}}, \code{\link{emission}},
+\code{\link{transportPrerequisites}} and/or \code{\link{transportCalcOrder}} beforehand.
 }
 \examples{
 \dontrun{

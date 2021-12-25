@@ -133,6 +133,22 @@ RPhosFate <- function(...) {
 #'   * _x:_ x-coordinate(s) of the gauge(s)
 #'   * _y:_ y-coordinate(s) of the gauge(s)
 #'
+#' @section Monte Carlo simulation mode:
+#' This mode can make use of repeated random samples, i.e. raster data, of
+#' distributions of about all input data. The filenames of the Monte Carlo input
+#' data must contain the respective iteration, for example, _CFa12.tif_ for the
+#' twelfth iteration of the C-factors input data, and have to be put into a
+#' separate directory. In case no Monte Carlo input file is found in the
+#' dedicated directory, the equivalent input data in the project directory is
+#' utilised. In order to save disk space, only the following model results are
+#' written to hard disk with the respective iteration in their filenames upon
+#' calling the appropriate methods (please note that some model results are not
+#' written/updated at all):
+#' * _ero_
+#' * _xxe_
+#' * _xxt_
+#' * \emph{xxt_cld}
+#'
 #' @return An S4 [`RPhosFate-class`] river catchment object.
 #'
 #' @examples
@@ -215,9 +231,7 @@ setMethod(
     }
     x <- transportPrerequisites(x)
     x <- transportCalcOrder(x)
-    x <- transport(x, substance)
-
-    x
+    transport(x, substance)
   }
 )
 
@@ -229,10 +243,20 @@ setGeneric(
 )
 #' Subsequent run
 #'
-#' Calls [`transport`] for the specified substance. In Monte Carlo simulation
-#' mode [`erosion`] and, if applicable, [`emission`] are called as well.
+#' Calls [`transport`] for the specified substance and optionally
+#' [`erosionPrerequisites`], [`erosion`], [`emission`],
+#' [`transportPrerequisites`] and/or [`transportCalcOrder`] beforehand.
 #'
 #' @inheritParams emission,RPhosFate-method
+#' @param erosionPrerequisites A logical scalar specifying if
+#'   [`erosionPrerequisites`] is called.
+#' @param erosion A logical scalar specifying if [`erosion`] is called.
+#' @param emission A logical scalar specifying if [`emission`] is called. It is
+#'   never called with `substance = "SS"` though.
+#' @param transportPrerequisites A logical scalar specifying if
+#'   [`transportPrerequisites`] is called.
+#' @param transportCalcOrder A logical scalar specifying if
+#'   [`transportCalcOrder`] is called.
 #'
 #' @inherit catchment return
 #'
@@ -259,22 +283,34 @@ setGeneric(
 setMethod(
   "subsequentRun",
   "RPhosFate",
-  function(x, substance = "PP") {
+  function(
+    x,
+    substance = "PP",
+    erosionPrerequisites = FALSE,
+    erosion = FALSE,
+    emission = FALSE,
+    transportPrerequisites = FALSE,
+    transportCalcOrder = FALSE
+  ) {
     assertSubstance(x, substance)
 
-    if (length(x@is_MCi) == 1L) {
-      x <- erosion(x)
-
-      if (substance != "SS") {
-        x <- emission(x, substance)
-      }
+    if (erosionPrerequisites) {
+      x <- erosionPrerequisites(x)
     }
-    if (length(x@helpers@order@iv_ord_row) == 0L) {
+    if (erosion) {
+      x <- erosion(x)
+    }
+    if (emission && substance != "SS") {
+      x <- emission(x, substance)
+    }
+    if (transportPrerequisites) {
+      x <- transportPrerequisites(x)
+    }
+    if (transportCalcOrder || length(x@helpers@order@iv_ord_row) == 0L) {
       x <- transportCalcOrder(x)
     }
-    x <- transport(x, substance)
 
-    x
+    transport(x, substance)
   }
 )
 
