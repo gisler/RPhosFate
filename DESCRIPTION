@@ -21,7 +21,7 @@ Imports:
     methods,
     raster,
     Rcpp,
-    spatstat (<= 1.64-1),
+    spatstat.geom,
     stats,
     utils,
     yaml

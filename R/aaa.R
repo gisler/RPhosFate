@@ -4,7 +4,7 @@
 #' @importFrom graphics abline clip par points
 #' @importFrom hydroGOF mNSE NSE pbias rmse nrmse rsr
 #' @importFrom Rcpp sourceCpp
-#' @importFrom spatstat as.owin as.ppp nncross
+#' @importFrom spatstat.geom as.owin as.ppp nncross
 #' @importFrom stats median optimize setNames
 #' @importFrom yaml read_yaml write_yaml
 #' @importFrom utils modifyList packageVersion
