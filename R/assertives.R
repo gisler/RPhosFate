@@ -40,7 +40,7 @@ assertCol <- function(cmt, col) {
     finite = TRUE,
     all.missing = FALSE,
     min.len = 1L,
-    .var.name =  "df_cdt[[col]]"
+    .var.name = "df_cdt[[col]]"
   )
 }
 
