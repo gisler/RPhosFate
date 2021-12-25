@@ -1,6 +1,7 @@
 # RPhosFate v0.10.9000
 
 * Fixed minimum required version of the `whitebox` package (≥ 2.0.0)
+* Added test for the standard use case of the `DEMrelatedInput()` function
 * Slightly improved documentation
 
 # RPhosFate v0.10.0
