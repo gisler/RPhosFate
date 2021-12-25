@@ -223,6 +223,20 @@ t/yr (no default):</p><ul><li><p><em>ID:</em> ID(s) of the gauge(s)</p></li>
 <li><p><em>y:</em> y-coordinate(s) of the gauge(s)</p></li>
 </ul></li>
 </ul></div>
+    <div id="monte-carlo-simulation-mode">
+    <h2>Monte Carlo simulation mode</h2>
+    
+
+<p>This mode can make use of repeated random samples, i.e. raster data, of
+distributions of about all input data. The filenames of the Monte Carlo input
+data must contain the respective Monte Carlo iteration, for example,
+<em>CFa12.tif</em> for the twelfth iteration of the C-factors input data, and are
+read from a separate directory. In order to save disk space, only the
+following model results are written to hard disk:</p><ul><li><p><em>ero</em></p></li>
+<li><p><em>xxe</em></p></li>
+<li><p><em>xxt</em></p></li>
+<li><p><em>xxt_cld</em></p></li>
+</ul></div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
