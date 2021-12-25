@@ -181,7 +181,8 @@ DEMrelatedInput <- function(
   ls_tmp = FALSE,
   cs_fex = c("tif", "img")
 ) {
-  if (!requireNamespace("whitebox", quietly = TRUE)) {
+  if (!requireNamespace("whitebox", quietly = TRUE) ||
+      packageVersion("whitebox") < package_version("2.0.0")) {
     stop(paste(
       'Package "whitebox" (v2.0.0 or higher) must be installed for this',
       'functionality.',
