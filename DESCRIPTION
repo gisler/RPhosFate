@@ -27,7 +27,7 @@ Imports:
     yaml
 Suggests:
     tinytest,
-    whitebox
+    whitebox (>= 2.0.0)
 LinkingTo:
     Rcpp,
     RcppArmadillo
