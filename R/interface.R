@@ -143,7 +143,7 @@ RPhosFate <- function(...) {
 #' x <- RPhosFate(
 #'   cv_dir = cv_dir,
 #'   ns_dep_ovl = 25e-4,
-#'   ns_dep_cha =  0.0,
+#'   ns_dep_cha = 0.0,
 #'   nv_tfc_inl = c(SS = 0.6, PP = 0.6),
 #'   nv_enr_rto = c(PP = 2.0),
 #'   nm_olc = matrix(c(4704255, 2795195), 1L),

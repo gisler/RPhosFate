@@ -74,8 +74,9 @@ demoProject <- function(cs_dir = tempdir(TRUE)) {
 #' cha, dem, dir, rds, slp,} and _wsh._
 #'
 #' Requires _[TauDEM](http://hydrology.usu.edu/taudem/taudem5/downloads.html)_
-#' 5.3.7 and the _WhiteboxTools_ binary (`whitebox::install_whitebox()`) to be
-#' installed on your computer.
+#' 5.3.7 and the
+#' _[WhiteboxTools](https://www.whiteboxgeo.com/download-whiteboxtools/)_ binary
+#' ([`whitebox::install_whitebox`]) to be installed on your computer.
 #'
 #' @param cv_dir A character vector specifying the desired project root
 #'   directory (first position).
