@@ -1,7 +1,7 @@
 # RPhosFate v0.10.9000
 
 * Fixed minimum required version of the `whitebox` package (≥ 2.0.0)
-* CI: check main sub-architecture only
+* Slightly improved documentation
 
 # RPhosFate v0.10.0
 
