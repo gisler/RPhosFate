@@ -34,7 +34,7 @@ RPhosFate <- function(...) {
 #' * \emph{acc_wtd:} Weighted flow accumulations (can be equal to _acc_).
 #' * _CFa:_ (R)USLE C-factors.
 #' * _cha:_ Channel cells (`1`: channel cell, `NA`: no channel cell).
-#' * _clc:_ Clay contents of top soils in \% required for substance emissions.
+#' * _clc:_ Clay contents of top soils in % required for substance emissions.
 #' * _dem:_ Digital elevation model in m a.s.l. (optional).
 #' * _dir:_ D8 flow directions required for transport.
 #' * _fid:_ Field IDs (optional).
@@ -46,7 +46,7 @@ RPhosFate <- function(...) {
 #' * _rds:_ Road cells required for transport (`0`: road cell without subsurface
 #' drainage, `1`: road cell with subsurface drainage, `NA`: no road cell).
 #' * _RFa:_ (R)USLE R-factors.
-#' * _slp:_ Slopes in \%.
+#' * _slp:_ Slopes in %.
 #' * _wsh:_ Watershed (optional).
 #'
 #' @section _Intermediate_ subdirectory:
@@ -57,7 +57,7 @@ RPhosFate <- function(...) {
 #' * _rhy:_ Hydraulic radii in m.
 #' * _rip:_ Cells representing the riparian zones within channel cells.
 #' * _SFa:_ RUSLE S-factors.
-#' * \emph{slp_cap:} Capped slopes in \%.
+#' * \emph{slp_cap:} Capped slopes in %.
 #'
 #' @section _Result_ subdirectory:
 #' This directory holds the model results:
@@ -89,9 +89,9 @@ RPhosFate <- function(...) {
 #' is disabled).
 #'
 #' @section Model parameter arguments:
-#' * `ns_slp_min`: A numeric scalar specifying the minimum bounding slope in \%
+#' * `ns_slp_min`: A numeric scalar specifying the minimum bounding slope in %
 #' (defaults to `0.001`).
-#' * `ns_slp_max`: A numeric scalar specifying the maximum bounding slope in \%
+#' * `ns_slp_max`: A numeric scalar specifying the maximum bounding slope in %
 #' (defaults to `999.0`).
 #' * `ns_rhy_a`: A numeric scalar specifying a network constant depending on the
 #' discharge frequency needed for the calculation of the hydraulic radius, which
@@ -352,7 +352,7 @@ setGeneric(
 #' In addition, a scatter plot with the observed loads on the x- and the
 #' modelled loads on the y-axis is displayed and provides a visual impression of
 #' the model performance. Other elements of this plot are an identity line
-#' (solid) and plus/minus 30\% deviation lines (dashed).
+#' (solid) and plus/minus 30% deviation lines (dashed).
 #'
 #' @inheritParams emission,RPhosFate-method
 #' @param col A character string specifying the calibration data column with the

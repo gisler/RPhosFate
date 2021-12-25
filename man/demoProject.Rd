@@ -24,8 +24,7 @@ The demonstration project data are a derivative of the
 \item \emph{\href{https://www.data.gv.at/katalog/dataset/3fefc838-791d-4dde-975b-a4131a54e7c5}{GIP.at}} (road data)
 }
 
-data sets, used and licensed under
-\emph{\href{https://creativecommons.org/licenses/by/4.0}{(CC BY 4.0)}} by Gerold Hepp.
+data sets, used and licensed under \emph{\href{https://creativecommons.org/licenses/by/4.0}{(CC BY 4.0)}} by Gerold Hepp.
 }
 \examples{
 \dontrun{

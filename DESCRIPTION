@@ -33,7 +33,7 @@ LinkingTo:
     RcppArmadillo
 Additional_repositories:
     https://gisler.github.io/drat
-RoxygenNote: 6.1.1
+RoxygenNote: 7.1.2
 Roxygen: list(markdown = TRUE)
 Collate:
     'aaa.R'

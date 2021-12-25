@@ -18,7 +18,7 @@ An S4 \code{\linkS4class{RPhosFate}} river catchment object.
 }
 \description{
 Creates a project from scratch or loads an existing one utilising \emph{GeoTIFF}
-(*.tif) raster files from, by convention, the following three project root
+(\*.tif) raster files from, by convention, the following three project root
 subdirectories:
 \itemize{
 \item \emph{Input}
@@ -99,7 +99,7 @@ example, \emph{ppt_out} for PP outlet loads.
 and optionally the Monte Carlo input data directory (second position).
 \item \code{ls_ini}: A logical scalar specifying if an existing project shall be
 loaded from disk (defaults to \code{FALSE}). Parameters or substance parameter
-values specified via the \code{\dots} argument take precedence over saved ones.
+values specified via the \verb{\\dots} argument take precedence over saved ones.
 \item \code{is_MCi}: An integer scalar specifying the current Monte Carlo iteration if
 applicable (defaults to \code{integer()}, which means Monte Carlo simulation mode
 is disabled).

@@ -4,10 +4,22 @@
 \alias{DEMrelatedInput}
 \title{DEM related input}
 \usage{
-DEMrelatedInput(cv_dir, cs_dem, cs_cha, sp_msk, sp_olp, sp_sds,
-  cs_rds = NULL, cs_wgs = NULL, cs_dir = NULL, ns_brn = 50,
-  is_adj = 1L, is_ths = 1L, ls_tmp = FALSE, cs_fex = c("tif",
-  "img"))
+DEMrelatedInput(
+  cv_dir,
+  cs_dem,
+  cs_cha,
+  sp_msk,
+  sp_olp,
+  sp_sds,
+  cs_rds = NULL,
+  cs_wgs = NULL,
+  cs_dir = NULL,
+  ns_brn = 50,
+  is_adj = 1L,
+  is_ths = 1L,
+  ls_tmp = FALSE,
+  cs_fex = c("tif", "img")
+)
 }
 \arguments{
 \item{cv_dir}{A character vector specifying the desired project root
