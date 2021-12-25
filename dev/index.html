@@ -21,6 +21,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-home">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -33,7 +35,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">RPhosFate</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.9.9000</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.10.9000</span>
       </span>
     </div>
 
@@ -56,16 +58,16 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="https://doi.org/10.2166/wst.2008.264">2008: Best management practice applications</a>
+      <a href="https://doi.org/10.2166/wst.2008.264" class="external-link">2008: Best management practice applications</a>
     </li>
     <li>
-      <a href="https://doi.org/10.1016/j.scitotenv.2012.06.024">2012: Phosphorus emission hotspots</a>
+      <a href="https://doi.org/10.1016/j.scitotenv.2012.06.024" class="external-link">2012: Phosphorus emission hotspots</a>
     </li>
     <li>
-      <a href="https://doi.org/10.3390/w11102161">2019: Storm drains at road embankments</a>
+      <a href="https://doi.org/10.3390/w11102161" class="external-link">2019: Storm drains at road embankments</a>
     </li>
     <li>
-      <a href="https://doi.org/10.31223/X5FG89">2021: Particulate PhozzyLogic Index (PPLI)</a>
+      <a href="https://doi.org/10.31223/X5FG89" class="external-link">2021: Particulate PhozzyLogic Index (PPLI)</a>
     </li>
   </ul>
 </li>
@@ -75,7 +77,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/gisler/RPhosFate/">
+  <a href="https://github.com/gisler/RPhosFate/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -97,73 +99,80 @@
 <p>Copyright (C) 2021 RPhosFate authors</p>
 <p>This program is free software: you can redistribute it and/or modify it under the terms of the GNU Affero General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.</p>
 <p>This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more details.</p>
-<p>You should have received a copy of the GNU Affero General Public License along with this program. If not, see <a href="https://www.gnu.org/licenses/" class="uri">https://www.gnu.org/licenses/</a>.</p>
-<p><a href="https://github.com/gisler/RPhosFate/actions?query=workflow%3AR-CMD-check"><img src="https://github.com/gisler/RPhosFate/workflows/R-CMD-check/badge.svg" alt="R build status"></a> <a href="https://app.codecov.io/gh/gisler/RPhosFate"><img src="https://codecov.io/gh/gisler/RPhosFate/branch/main/graph/badge.svg?token=SrmeMV0ohC" alt="codecov"></a> <a href="https://github.com/gisler/RPhosFate/actions?query=workflow%3A%22Lint+Code+Base%22"><img src="https://github.com/gisler/RPhosFate/workflows/Lint%20Code%20Base/badge.svg" alt="GitHub Super-Linter"></a></p>
-<div id="installation" class="section level2">
-<h2 class="hasAnchor">
-<a href="#installation" class="anchor"></a>Installation</h2>
-<p>Currently, no <a href="https://cran.r-project.org/">CRAN</a> release is planned. A Windows binary package built for <a href="https://mran.microsoft.com/release-history">Microsoft R Open</a> 3.5.3 is nonetheless available from a <a href="https://github.com/eddelbuettel/drat"><code>drat</code></a> repository. It can be installed along with its most important dependencies via the following command:</p>
-<div class="sourceCode" id="cb1"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(
-  <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"RPhosFate"</span>, <span class="st">"raster"</span>),
-  <span class="kw">repos</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"https://gisler.github.io/drat"</span>, <span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span>(<span class="st">"repos"</span>)),
-  <span class="kw">type</span> <span class="kw">=</span> <span class="st">"win.binary"</span>,
-  <span class="kw">dependencies</span> <span class="kw">=</span> <span class="fl">TRUE</span>
-)</pre></div>
+<p>You should have received a copy of the GNU Affero General Public License along with this program. If not, see <a href="https://www.gnu.org/licenses/" class="external-link uri">https://www.gnu.org/licenses/</a>.</p>
+<p><a href="https://github.com/gisler/RPhosFate/actions?query=workflow%3AR-CMD-check" class="external-link"><img src="https://github.com/gisler/RPhosFate/workflows/R-CMD-check/badge.svg" alt="R build status"></a> <a href="https://github.com/gisler/RPhosFate/actions?query=workflow%3A%22Lint+Code+Base%22" class="external-link"><img src="https://github.com/gisler/RPhosFate/workflows/Lint%20Code%20Base/badge.svg" alt="GitHub Super-Linter"></a></p>
+<div class="section level2">
+<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
+</h2>
+<p>Currently, no <a href="https://cran.r-project.org/" class="external-link">CRAN</a> release is planned. A Windows binary package built for <a href="https://mran.microsoft.com/release-history" class="external-link">Microsoft R Open</a> 3.5.3 is nonetheless available from a <a href="https://github.com/eddelbuettel/drat" class="external-link"><code>drat</code></a> repository. It can be installed along with its most important dependencies via the following command:</p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"RPhosFate"</span>, <span class="st">"raster"</span>, <span class="st">"whitebox"</span><span class="op">)</span>,
+  repos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"https://gisler.github.io/drat"</span>, <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span><span class="st">"repos"</span><span class="op">)</span><span class="op">)</span>,
+  type <span class="op">=</span> <span class="st">"win.binary"</span>,
+  dependencies <span class="op">=</span> <span class="cn">TRUE</span>
+<span class="op">)</span></code></pre></div>
 </div>
-<div id="semantic-versioning" class="section level2">
-<h2 class="hasAnchor">
-<a href="#semantic-versioning" class="anchor"></a>Semantic versioning</h2>
-<p>Releases of this project are versioned following the rules of <a href="https://semver.org">SemVer</a>.</p>
+<div class="section level2">
+<h2 id="semantic-versioning">Semantic versioning<a class="anchor" aria-label="anchor" href="#semantic-versioning"></a>
+</h2>
+<p>Releases of this project are versioned following the rules of <a href="https://semver.org" class="external-link">SemVer</a>.</p>
 </div>
 
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <div class="links">
-<h2>Links</h2>
+<h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
-<li>Browse source code at <br><a href="https://github.com/gisler/RPhosFate/">https://​github.com/​gisler/​RPhosFate/​</a>
-</li>
-<li>Report a bug at <br><a href="https://github.com/gisler/RPhosFate/issues">https://​github.com/​gisler/​RPhosFate/​issues</a>
-</li>
+<li><a href="https://github.com/gisler/RPhosFate/" class="external-link">Browse source code</a></li>
+<li><a href="https://github.com/gisler/RPhosFate/issues" class="external-link">Report a bug</a></li>
 </ul>
 </div>
+
 <div class="license">
-<h2>License</h2>
+<h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
 <li>file <a href="LICENSE-text.html">LICENSE</a>
 </li>
 </ul>
 </div>
+
 <div class="community">
-<h2>Community</h2>
+<h2 data-toc-skip>Community</h2>
 <ul class="list-unstyled">
 <li><a href="CONTRIBUTING.html">Contributing guide</a></li>
 </ul>
 </div>
+
 <div class="citation">
-<h2>Citation</h2>
+<h2 data-toc-skip>Citation</h2>
 <ul class="list-unstyled">
-<li><a href="authors.html">Citing RPhosFate</a></li>
+<li><a href="authors.html#citation">Citing RPhosFate</a></li>
 </ul>
 </div>
+
 <div class="developers">
-<h2>Developers</h2>
+<h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
 <li>Gerold Hepp <br><small class="roles"> Author, maintainer </small>  </li>
 </ul>
 </div>
+
+
 
   </div>
 </div>
 
 
       <footer><div class="copyright">
-  <p>Developed by Gerold Hepp.</p>
+  <p></p>
+<p>Developed by Gerold Hepp.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
 </div>
 
       </footer>
@@ -171,6 +180,8 @@
 
   
 
+
+  
 
   </body>
 </html>
