@@ -20,6 +20,6 @@
 * Added `cs_dir` argument to `DEMrelatedInput()` function: allows for utilising an existing D8 flow directions raster using _ArcGIS_ codes
 * Added `demoProject()` function providing training data
 * Added examples to documentation
+* Fixed backward incompatibility
 * Added tests utilising the unit testing framework of the `tinytest` package
 * Added means to measure code coverage with the help of `covr`
-* Fixed backward incompatibility

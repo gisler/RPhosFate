@@ -18,7 +18,7 @@ An S4 \code{\linkS4class{RPhosFate}} river catchment object.
 }
 \description{
 Creates a project from scratch or loads an existing one utilising \emph{GeoTIFF}
-(\*.tif) raster files from, by convention, the following three project root
+(*.tif) raster files from, by convention, the following three project root
 subdirectories:
 \itemize{
 \item \emph{Input}

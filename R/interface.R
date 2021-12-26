@@ -11,7 +11,7 @@ RPhosFate <- function(...) {
 #'
 #' @description
 #' Creates a project from scratch or loads an existing one utilising _GeoTIFF_
-#' (\*.tif) raster files from, by convention, the following three project root
+#' (*.tif) raster files from, by convention, the following three project root
 #' subdirectories:
 #'
 #' * _Input_
