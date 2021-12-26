@@ -171,12 +171,10 @@ for (substance in substances) {
     info = "calibration quality is assessed correctly"
   )
 
-  # nolint start
-  # expect_stdout(
-  #   calibrationQuality(x, substance, sprintf("%s_load", substance)),
-  #   info = "calibration quality is printed"
-  # )
-  # nolint end
+  expect_stdout(
+    calibrationQuality(x, substance, sprintf("%s_load", substance)),
+    info = "calibration quality is printed"
+  )
 }
 
 #### Monte Carlo simulation mode ####
