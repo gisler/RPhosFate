@@ -51,7 +51,7 @@ x <- RPhosFate(
 x <- firstRun(x, "SS")
 x <- snapGauges(x)
 
-x <- calibrationQuality(x, "SS", "SS_load")
+calibrationQuality(x, "SS", "SS_load")
 }
 
 }

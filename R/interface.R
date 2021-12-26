@@ -414,7 +414,7 @@ setGeneric(
 #' x <- firstRun(x, "SS")
 #' x <- snapGauges(x)
 #'
-#' x <- calibrationQuality(x, "SS", "SS_load")
+#' calibrationQuality(x, "SS", "SS_load")
 #' }
 #'
 #' @aliases calibrationQuality
@@ -517,6 +517,7 @@ setMethod(
       bg = "#e69800",
       cex = 1.2
     )
+    par(xpd = FALSE)
 
     metrics
   }

@@ -7,6 +7,7 @@
   * `emission`
   * `transportPrerequisites`
   * `transportCalcOrder`
+* Calibration quality plot is now prettier
 * `RPhosFate` now depends on the `spatstat.geom` instead of the `spatstat` package
 * Fixed minimum required version of the `whitebox` package (≥ 2.0.0)
 * Added test for the standard use case of the `DEMrelatedInput()` function
