@@ -382,6 +382,8 @@ setMethod(
       .Object@ls_ini <- arguments$ls_ini
     }
     if ("is_MCi" %in% argumentNames) {
+      assertDirectoryExists(.Object@cv_dir[2L], .var.name = "cv_dir[2L]")
+
       .Object@is_MCi <- arguments$is_MCi
     }
     validObject(.Object)
