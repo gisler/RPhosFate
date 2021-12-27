@@ -172,7 +172,7 @@ example, <em>ppt_out</em> for PP outlet loads.</p></li>
 and optionally the Monte Carlo input data directory (second position).</p></li>
 <li><p><code>ls_ini</code>: A logical scalar specifying if an existing project shall be
 loaded from disk (defaults to <code>FALSE</code>). Parameters or substance parameter
-values specified via the <code>\dots</code> argument take precedence over saved ones.</p></li>
+values specified via the <code>...</code> argument take precedence over saved ones.</p></li>
 <li><p><code>is_MCi</code>: An integer scalar specifying the current Monte Carlo iteration if
 applicable (defaults to <code><a href="https://rdrr.io/r/base/integer.html" class="external-link">integer()</a></code>, which means Monte Carlo simulation mode
 is disabled).</p></li>
@@ -232,7 +232,7 @@ distributions of about all input data. The filenames of the Monte Carlo input
 data must contain the respective iteration, for example, <em>CFa12.tif</em> for the
 twelfth iteration of the C-factors input data, and have to be put into a
 separate directory. In case no Monte Carlo input file is found in the
-dedicated directory, the equivalent input data in the project directory is
+designated directory, the equivalent input data in the project directory is
 utilised. In order to save disk space, only the following model results are
 written to hard disk with the respective iteration in their filenames upon
 calling the appropriate methods (please note that some model results are not
