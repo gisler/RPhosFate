@@ -99,7 +99,7 @@ example, \emph{ppt_out} for PP outlet loads.
 and optionally the Monte Carlo input data directory (second position).
 \item \code{ls_ini}: A logical scalar specifying if an existing project shall be
 loaded from disk (defaults to \code{FALSE}). Parameters or substance parameter
-values specified via the \verb{\\dots} argument take precedence over saved ones.
+values specified via the \code{...} argument take precedence over saved ones.
 \item \code{is_MCi}: An integer scalar specifying the current Monte Carlo iteration if
 applicable (defaults to \code{integer()}, which means Monte Carlo simulation mode
 is disabled).
@@ -162,7 +162,7 @@ distributions of about all input data. The filenames of the Monte Carlo input
 data must contain the respective iteration, for example, \emph{CFa12.tif} for the
 twelfth iteration of the C-factors input data, and have to be put into a
 separate directory. In case no Monte Carlo input file is found in the
-dedicated directory, the equivalent input data in the project directory is
+designated directory, the equivalent input data in the project directory is
 utilised. In order to save disk space, only the following model results are
 written to hard disk with the respective iteration in their filenames upon
 calling the appropriate methods (please note that some model results are not

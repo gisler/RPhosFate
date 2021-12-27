@@ -83,7 +83,7 @@ RPhosFate <- function(...) {
 #' and optionally the Monte Carlo input data directory (second position).
 #' * `ls_ini`: A logical scalar specifying if an existing project shall be
 #' loaded from disk (defaults to `FALSE`). Parameters or substance parameter
-#' values specified via the `\dots` argument take precedence over saved ones.
+#' values specified via the `...` argument take precedence over saved ones.
 #' * `is_MCi`: An integer scalar specifying the current Monte Carlo iteration if
 #' applicable (defaults to `integer()`, which means Monte Carlo simulation mode
 #' is disabled).
@@ -139,7 +139,7 @@ RPhosFate <- function(...) {
 #' data must contain the respective iteration, for example, _CFa12.tif_ for the
 #' twelfth iteration of the C-factors input data, and have to be put into a
 #' separate directory. In case no Monte Carlo input file is found in the
-#' dedicated directory, the equivalent input data in the project directory is
+#' designated directory, the equivalent input data in the project directory is
 #' utilised. In order to save disk space, only the following model results are
 #' written to hard disk with the respective iteration in their filenames upon
 #' calling the appropriate methods (please note that some model results are not
