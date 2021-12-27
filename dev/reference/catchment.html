@@ -176,6 +176,8 @@ values specified via the <code>...</code> argument take precedence over saved on
 <li><p><code>is_MCi</code>: An integer scalar specifying the current Monte Carlo iteration if
 applicable (defaults to <code><a href="https://rdrr.io/r/base/integer.html" class="external-link">integer()</a></code>, which means Monte Carlo simulation mode
 is disabled).</p></li>
+<li><p><code>cv_MCl</code> A character vector specifying the names of the layers, which shall
+be written to hard disk for every Monte Carlo iteration.</p></li>
 </ul></div>
     <div id="model-parameter-arguments">
     <h2>Model parameter arguments</h2>
@@ -230,17 +232,12 @@ t/yr (no default):</p><ul><li><p><em>ID:</em> ID(s) of the gauge(s)</p></li>
 <p>This mode can make use of repeated random samples, i.e. raster data, of
 distributions of about all input data. The filenames of the Monte Carlo input
 data must contain the respective iteration, for example, <em>CFa12.tif</em> for the
-twelfth iteration of the C-factors input data, and have to be put into a
+twelfth iteration of the C-factors input data, and have to reside in a
 separate directory. In case no Monte Carlo input file is found in the
 designated directory, the equivalent input data in the project directory is
-utilised. In order to save disk space, only the following model results are
-written to hard disk with the respective iteration in their filenames upon
-calling the appropriate methods (please note that some model results are not
-written/updated at all):</p><ul><li><p><em>ero</em></p></li>
-<li><p><em>xxe</em></p></li>
-<li><p><em>xxt</em></p></li>
-<li><p><em>xxt_cld</em></p></li>
-</ul></div>
+utilised. Please note that the loaded project may be in a inconsistent state
+after running one or more Monte Carlo iterations.</p>
+    </div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
