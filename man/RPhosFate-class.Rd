@@ -19,6 +19,9 @@ from disk (defaults to \code{FALSE}).}
 \item{\code{is_MCi}}{An integer scalar holding the current Monte Carlo iteration if
 applicable (defaults to \code{integer()}).}
 
+\item{\code{cv_MCl}}{A character vector holding the names of the layers, which shall
+be written to hard disk for every Monte Carlo iteration.}
+
 \item{\code{cs_fex}}{A character string holding the automatically determined file
 extension of the provided raster files (either ".tif" or ".img" for
 backward compatibility).}

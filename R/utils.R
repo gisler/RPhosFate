@@ -70,11 +70,7 @@ populateParameterSlots <- function(parameters, arguments) {
   parameters
 }
 
-readLayer <- function(
-  cmt,
-  layer,
-  isRequiredInputLayer = FALSE
-) {
+readLayer <- function(cmt, layer, isRequiredInputLayer = FALSE) {
   MCfilename <- file.path(
     cmt@cv_dir[2L],
     paste0(basename(layer), cmt@is_MCi, cmt@cs_fex)
@@ -117,6 +113,28 @@ slots2list <- function(parameters) {
     function(name, parameters) {slot(parameters, name)},
     parameters = parameters
   ), parameterNames)
+}
+
+writeLayer <- function(cmt, layer, rl, datatype, substance = NULL) {
+  if (length(cmt@is_MCi) == 0L || (length(cmt@is_MCi) == 1L &&
+      layer %in% cmt@cv_MCl)) {
+    if (!is.null(substance)) {
+      layer <- sub("^xx", tolower(substance), layer)
+    }
+    filename <- paste0(layer, cmt@is_MCi, cmt@cs_fex)
+
+    writeRaster(
+      rl,
+      filename = filename,
+      datatype = datatype,
+      options = "COMPRESSED=YES",
+      overwrite = TRUE
+    )
+
+    raster(filename)
+  } else {
+    rl
+  }
 }
 
 writeParameters <- function(parameters) {

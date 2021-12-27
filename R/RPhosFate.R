@@ -92,11 +92,7 @@ setMethod(
       fun = function(x, y) {
         ((x * is_res)^(1 + y) - ((x - 1) * is_res)^(1 + y)) / # nolint
           (is_res * 22.13^y)
-      },
-      filename = sprintf("LFa%s", x@cs_fex),
-      datatype = "FLT8S",
-      options = "COMPRESSED=YES",
-      overwrite = TRUE
+      }
     )
 
     # S factor
@@ -105,22 +101,12 @@ setMethod(
       y = x@topo@rl_slp_cap,
       fun = function(x, y) {
         ifelse(y < 9, 10.8 * sin(x) + 0.03, 16.8 * sin(x) - 0.5)
-      },
-      filename = sprintf("SFa%s", x@cs_fex),
-      datatype = "FLT8S",
-      options = "COMPRESSED=YES",
-      overwrite = TRUE
+      }
     )
 
-    filename <- sprintf("slp_cap%s", x@cs_fex)
-    writeRaster(
-      x@topo@rl_slp_cap,
-      filename = filename,
-      datatype = "FLT8S",
-      options = "COMPRESSED=YES",
-      overwrite = TRUE
-    )
-    x@topo@rl_slp_cap <- raster(filename)
+    x@topo@rl_slp_cap <- writeLayer(x, "slp_cap", x@topo@rl_slp_cap, "FLT8S")
+    x@erosion@rl_LFa  <- writeLayer(x, "LFa"    , x@erosion@rl_LFa , "FLT8S")
+    x@erosion@rl_SFa  <- writeLayer(x, "SFa"    , x@erosion@rl_SFa , "FLT8S")
 
     x
   }
@@ -193,15 +179,7 @@ setMethod(
       x@erosion@rl_CFa *
       x@helpers@is_siz * 1e-4
 
-    filename <- paste0("ero", x@is_MCi, x@cs_fex)
-    writeRaster(
-      x@erosion@rl_ero,
-      filename = filename,
-      datatype = "FLT8S",
-      options = "COMPRESSED=YES",
-      overwrite = TRUE
-    )
-    x@erosion@rl_ero <- raster(filename)
+    x@erosion@rl_ero <- writeLayer(x, "ero", x@erosion@rl_ero, "FLT8S")
 
     x
   }
@@ -264,11 +242,15 @@ setMethod(
       z = x@topo@rl_clc,
       fun = function(x, y, z) {
         x * y * (1 + z * 1e-2) * 1e-3
-      },
-      filename = filename,
-      datatype = "FLT8S",
-      options = "COMPRESSED=YES",
-      overwrite = TRUE
+      }
+    )
+
+    slot(x@substances, substance)@rl_xxe <- writeLayer(
+      x,
+      "xxe",
+      slot(x@substances, substance)@rl_xxe,
+      "FLT8S",
+      substance
     )
 
     x
@@ -333,11 +315,7 @@ setMethod(
       x@topo@rl_acc_wtd,
       function(x) {
         ns_rhy_a * (x * is_siz * 1e-6)^ns_rhy_b
-      },
-      filename = sprintf("rhy%s", x@cs_fex),
-      datatype = "FLT8S",
-      options = "COMPRESSED=YES",
-      overwrite = TRUE
+      }
     )
 
     # Riparian zone cells
@@ -387,25 +365,9 @@ setMethod(
     # Bug in subs() {raster}: use default by and which
     x@topo@rl_inl <- subs(x@topo@rl_inl, y = df_out[c(3L, 8L)])
 
-    filename <- sprintf("rip%s", x@cs_fex)
-    writeRaster(
-      x@topo@rl_rip,
-      filename = filename,
-      datatype = "INT4S",
-      options = "COMPRESSED=YES",
-      overwrite = TRUE
-    )
-    x@topo@rl_rip <- raster(filename)
-
-    filename <- sprintf("inl%s", x@cs_fex)
-    writeRaster(
-      x@topo@rl_inl,
-      filename = filename,
-      datatype = "INT4S",
-      options = "COMPRESSED=YES",
-      overwrite = TRUE
-    )
-    x@topo@rl_inl <- raster(filename)
+    x@transport@rl_rhy <- writeLayer(x, "rhy", x@transport@rl_rhy, "FLT8S")
+    x@topo@rl_rip      <- writeLayer(x, "rip", x@topo@rl_rip     , "INT4S")
+    x@topo@rl_inl      <- writeLayer(x, "inl", x@topo@rl_inl     , "INT4S")
 
     x
   }
@@ -597,30 +559,12 @@ setMethod(
       nm_slp     = as.matrix(x@topo@rl_slp_cap)
     )
 
-    layers <- paste0("xx", c("r", "t_inp", "t_out", "t_cld", "t_ctf", "t"))
-    filenames <- setNames(
-      paste0(
-        sub("^xx", tolower(substance), layers),
-        x@is_MCi,
-        x@cs_fex
-      ),
-      layers
-    )
-
-    if (length(x@is_MCi) == 0L) {
-      writeRaster(raster(li_tpt$nm_xxr    , template = x@topo@rl_acc_wtd), filename = filenames["xxr"    ], datatype = "FLT8S", options = "COMPRESSED=YES", overwrite = TRUE)
-      writeRaster(raster(li_tpt$nm_xxt_inp, template = x@topo@rl_acc_wtd), filename = filenames["xxt_inp"], datatype = "FLT8S", options = "COMPRESSED=YES", overwrite = TRUE)
-      writeRaster(raster(li_tpt$nm_xxt_out, template = x@topo@rl_acc_wtd), filename = filenames["xxt_out"], datatype = "FLT8S", options = "COMPRESSED=YES", overwrite = TRUE)
-      writeRaster(raster(li_tpt$nm_xxt_ctf, template = x@topo@rl_acc_wtd), filename = filenames["xxt_ctf"], datatype = "FLT8S", options = "COMPRESSED=YES", overwrite = TRUE)
-      slot(x@substances, substance)@rl_xxr     <- raster(filenames["xxr"    ])
-      slot(x@substances, substance)@rl_xxt_inp <- raster(filenames["xxt_inp"])
-      slot(x@substances, substance)@rl_xxt_out <- raster(filenames["xxt_out"])
-      slot(x@substances, substance)@rl_xxt_ctf <- raster(filenames["xxt_ctf"])
-    }
-    writeRaster(raster(li_tpt$nm_xxt    , template = x@topo@rl_acc_wtd), filename = filenames["xxt"    ], datatype = "FLT8S", options = "COMPRESSED=YES", overwrite = TRUE)
-    writeRaster(raster(li_tpt$nm_xxt_cld, template = x@topo@rl_acc_wtd), filename = filenames["xxt_cld"], datatype = "FLT8S", options = "COMPRESSED=YES", overwrite = TRUE)
-    slot(x@substances, substance)@rl_xxt     <- raster(filenames["xxt"    ])
-    slot(x@substances, substance)@rl_xxt_cld <- raster(filenames["xxt_cld"])
+    slot(x@substances, substance)@rl_xxr     <- writeLayer(x, "xxr"    , raster(li_tpt$nm_xxr    , template = x@topo@rl_acc_wtd), "FLT8S", substance)
+    slot(x@substances, substance)@rl_xxt_inp <- writeLayer(x, "xxt_inp", raster(li_tpt$nm_xxt_inp, template = x@topo@rl_acc_wtd), "FLT8S", substance)
+    slot(x@substances, substance)@rl_xxt_out <- writeLayer(x, "xxt_out", raster(li_tpt$nm_xxt_out, template = x@topo@rl_acc_wtd), "FLT8S", substance)
+    slot(x@substances, substance)@rl_xxt     <- writeLayer(x, "xxt"    , raster(li_tpt$nm_xxt    , template = x@topo@rl_acc_wtd), "FLT8S", substance)
+    slot(x@substances, substance)@rl_xxt_ctf <- writeLayer(x, "xxt_ctf", raster(li_tpt$nm_xxt_ctf, template = x@topo@rl_acc_wtd), "FLT8S", substance)
+    slot(x@substances, substance)@rl_xxt_cld <- writeLayer(x, "xxt_cld", raster(li_tpt$nm_xxt_cld, template = x@topo@rl_acc_wtd), "FLT8S", substance)
 
     x
   }

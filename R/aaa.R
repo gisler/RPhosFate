@@ -332,6 +332,8 @@ setMethod(
 #'   from disk (defaults to `FALSE`).
 #' @slot is_MCi An integer scalar holding the current Monte Carlo iteration if
 #'   applicable (defaults to `integer()`).
+#' @slot cv_MCl A character vector holding the names of the layers, which shall
+#'   be written to hard disk for every Monte Carlo iteration.
 #' @slot cs_fex A character string holding the automatically determined file
 #'   extension of the provided raster files (either ".tif" or ".img" for
 #'   backward compatibility).
@@ -353,6 +355,7 @@ setClass(
     cv_dir     = "character",
     ls_ini     = "logical",
     is_MCi     = "integer",
+    cv_MCl     = "character",
     cs_fex     = "character",
     parameters = "RPhosFateParameters2",
     topo       = "RPhosFateTopo",
@@ -365,6 +368,7 @@ setClass(
     cv_dir = character(),
     ls_ini = FALSE,
     is_MCi = integer(),
+    cv_MCl = character(),
     cs_fex = ".tif"
   )
 )
@@ -385,6 +389,7 @@ setMethod(
       assertDirectoryExists(.Object@cv_dir[2L], .var.name = "cv_dir[2L]")
 
       .Object@is_MCi <- arguments$is_MCi
+      .Object@cv_MCl <- arguments$cv_MCl
     }
     validObject(.Object)
 
@@ -413,7 +418,7 @@ setMethod(
     }
     arguments <- arguments[setdiff(
       argumentNames,
-      c("RPhosFate", "cv_dir", "ls_ini", "is_MCi")
+      c("RPhosFate", "cv_dir", "ls_ini", "is_MCi", "cv_MCl")
     )]
 
     .Object@parameters <- new("RPhosFateParameters2", arguments)
