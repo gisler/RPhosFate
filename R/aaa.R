@@ -287,7 +287,6 @@ setClass(
     iv_fDo_dgl = "integer",       # Diagonal outflow direction vector
     im_fDo     = "matrix",        # Outflow direction matrix
     im_fDi     = "matrix",        # Inflow direction matrix
-    cv_rlo     = "character",     # Objects holding raster layers
     cv_met     = "character",     # Implemented calibration quality metrics
     order      = "RPhosFateOrder" # Transport calculation order
   )
@@ -307,7 +306,6 @@ setMethod(
     .Object@iv_fDo_dgl <- cmt@parameters@iv_fDo[c(1L, 3L, 7L, 9L)]
     .Object@im_fDo     <- matrix(cmt@parameters@iv_fDo, 3L)
     .Object@im_fDi     <- matrix(rev(cmt@parameters@iv_fDo), 3L)
-    .Object@cv_rlo     <- c("topo", "erosion", "transport")
 
     .Object@cv_met <- c(
       "NSE", "mNSE", "RMSE", "NRMSE",
