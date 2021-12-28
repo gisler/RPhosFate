@@ -83,12 +83,13 @@ RPhosFate <- function(...) {
 #' and optionally the Monte Carlo input data directory (second position).
 #' * `ls_ini`: A logical scalar specifying if an existing project shall be
 #' loaded from disk (defaults to `FALSE`). Parameters or substance parameter
-#' values specified via the `...` argument take precedence over saved ones.
+#' values specified via the `...` argument take precedence over loaded ones.
 #' * `is_MCi`: An integer scalar specifying the current Monte Carlo iteration if
 #' applicable (defaults to `integer()`, which means Monte Carlo simulation mode
 #' is disabled).
 #' * `cv_MCl` A character vector specifying the names of the layers, which shall
-#' be written to hard disk for every Monte Carlo iteration.
+#' be written to disk with the respective iteration in their filenames upon
+#' calling the appropriate methods.
 #'
 #' @section Model parameter arguments:
 #' * `ns_slp_min`: A numeric scalar specifying the minimum bounding slope in %
@@ -141,9 +142,9 @@ RPhosFate <- function(...) {
 #' data must contain the respective iteration, for example, _CFa12.tif_ for the
 #' twelfth iteration of the C-factors input data, and have to reside in a
 #' separate directory. In case no Monte Carlo input file is found in the
-#' designated directory, the equivalent input data in the project directory is
-#' utilised. Please note that the loaded project may be in a inconsistent state
-#' after running one or more Monte Carlo iterations.
+#' designated directory, the equivalent input data in the project directories is
+#' utilised. Please note that the project may be in an inconsistent state after
+#' running one or more Monte Carlo iterations.
 #'
 #' @return An S4 [`RPhosFate-class`] river catchment object.
 #'
@@ -152,6 +153,7 @@ RPhosFate <- function(...) {
 #' # create temporary demonstration project
 #' cv_dir <- demoProject()
 #'
+#' # create project from scratch
 #' x <- RPhosFate(
 #'   cv_dir = cv_dir,
 #'   ns_dep_ovl = 25e-4,
@@ -164,6 +166,17 @@ RPhosFate <- function(...) {
 #'     header = TRUE,
 #'     stringsAsFactors = FALSE
 #'   )
+#' )
+#'
+#' # load project in Monte Carlo simulation mode
+#' x <- RPhosFate(
+#'   cv_dir = c(
+#'     cv_dir,
+#'     system.file("tinytest", "testProject", package = "RPhosFate")
+#'   ),
+#'   ls_ini = TRUE,
+#'   is_MCi = 1L,
+#'   cv_MCl = c("xxt", "xxt_cld")
 #' )
 #' }
 #'

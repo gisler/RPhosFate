@@ -99,12 +99,13 @@ example, \emph{ppt_out} for PP outlet loads.
 and optionally the Monte Carlo input data directory (second position).
 \item \code{ls_ini}: A logical scalar specifying if an existing project shall be
 loaded from disk (defaults to \code{FALSE}). Parameters or substance parameter
-values specified via the \code{...} argument take precedence over saved ones.
+values specified via the \code{...} argument take precedence over loaded ones.
 \item \code{is_MCi}: An integer scalar specifying the current Monte Carlo iteration if
 applicable (defaults to \code{integer()}, which means Monte Carlo simulation mode
 is disabled).
 \item \code{cv_MCl} A character vector specifying the names of the layers, which shall
-be written to hard disk for every Monte Carlo iteration.
+be written to disk with the respective iteration in their filenames upon
+calling the appropriate methods.
 }
 }
 
@@ -164,9 +165,9 @@ distributions of about all input data. The filenames of the Monte Carlo input
 data must contain the respective iteration, for example, \emph{CFa12.tif} for the
 twelfth iteration of the C-factors input data, and have to reside in a
 separate directory. In case no Monte Carlo input file is found in the
-designated directory, the equivalent input data in the project directory is
-utilised. Please note that the loaded project may be in a inconsistent state
-after running one or more Monte Carlo iterations.
+designated directory, the equivalent input data in the project directories is
+utilised. Please note that the project may be in an inconsistent state after
+running one or more Monte Carlo iterations.
 }
 
 \examples{
@@ -174,6 +175,7 @@ after running one or more Monte Carlo iterations.
 # create temporary demonstration project
 cv_dir <- demoProject()
 
+# create project from scratch
 x <- RPhosFate(
   cv_dir = cv_dir,
   ns_dep_ovl = 25e-4,
@@ -186,6 +188,17 @@ x <- RPhosFate(
     header = TRUE,
     stringsAsFactors = FALSE
   )
+)
+
+# load project in Monte Carlo simulation mode
+x <- RPhosFate(
+  cv_dir = c(
+    cv_dir,
+    system.file("tinytest", "testProject", package = "RPhosFate")
+  ),
+  ls_ini = TRUE,
+  is_MCi = 1L,
+  cv_MCl = c("xxt", "xxt_cld")
 )
 }
 

@@ -7,7 +7,7 @@
   * `emission`
   * `transportPrerequisites`
   * `transportCalcOrder`
-* Added `cv_MCl` argument to `RPhosFate()` and `catchment()` methods: allows for specifying the names of the layers, which shall be written to hard disk for every Monte Carlo iteration
+* Added `cv_MCl` argument to `RPhosFate()` and `catchment()` methods: allows for specifying the names of the layers, which shall be written to disk with the respective iteration in their filenames upon calling the appropriate methods
 * Plot produced by `calibrationQuality()` is now prettier
 * `RPhosFate` now depends on the `spatstat.geom` instead of the `spatstat` package
 * Fixed minimum required version of the `whitebox` package (≥ 2.0.0)
