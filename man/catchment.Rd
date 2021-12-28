@@ -103,9 +103,9 @@ values specified via the \code{...} argument take precedence over loaded ones.
 \item \code{is_MCi}: An integer scalar specifying the current Monte Carlo iteration if
 applicable (defaults to \code{integer()}, which means Monte Carlo simulation mode
 is disabled).
-\item \code{cv_MCl} A character vector specifying the names of the layers, which shall
-be written to disk with the respective iteration in their filenames upon
-calling the appropriate methods.
+\item \code{cv_MCl}: A character vector specifying the names of the layers, which
+shall be written to disk with the respective iteration in their filenames
+upon calling the appropriate methods (defaults to \code{"xxt"}).
 }
 }
 

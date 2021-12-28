@@ -369,7 +369,7 @@ setClass(
     cv_dir = character(),
     ls_ini = FALSE,
     is_MCi = integer(),
-    cv_MCl = character(),
+    cv_MCl = "xxt",
     cs_fex = ".tif"
   )
 )
@@ -390,6 +390,8 @@ setMethod(
       assertDirectoryExists(.Object@cv_dir[2L], .var.name = "cv_dir[2L]")
 
       .Object@is_MCi <- arguments$is_MCi
+    }
+    if ("cv_MCl" %in% argumentNames) {
       .Object@cv_MCl <- arguments$cv_MCl
     }
     validObject(.Object)
@@ -437,6 +439,7 @@ setValidity(
     qassert(object@cv_dir, "S+"    , .var.name = "cv_dir")
     qassert(object@ls_ini, "B1"    , .var.name = "ls_ini")
     qassert(object@is_MCi, "I?[0,)", .var.name = "is_MCi")
+    qassert(object@cv_MCl, "S+"    , .var.name = "cv_MCl")
 
     TRUE
   }
