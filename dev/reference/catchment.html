@@ -26,7 +26,7 @@ catchment is an alias for RPhosFate."><meta name="robots" content="noindex"><!--
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">RPhosFate</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.10.9000</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.10.0.9000</span>
       </span>
     </div>
 
@@ -232,12 +232,12 @@ t/yr (no default):</p><ul><li><p><em>ID:</em> ID(s) of the gauge(s)</p></li>
 
 <p>This mode can make use of repeated random samples, i.e. raster data, of
 distributions of about all input data. The filenames of the Monte Carlo input
-data must contain the respective iteration, for example, <em>CFa12.tif</em> for the
-twelfth iteration of the C-factors input data, and have to reside in a
-separate directory. In case no Monte Carlo input file is found in the
-designated directory, the equivalent input data in the project directories is
-utilised. Please note that the project may be in an inconsistent state after
-running one or more Monte Carlo iterations.</p>
+raster data must contain the respective iteration, for example, <em>CFa12.tif</em>
+for the twelfth iteration of the C-factors input data, and can reside in a
+separate directory. In case no Monte Carlo raster file is found for a certain
+layer in the designated directory, the respective project directory is
+searched for one and finally the “normal” project input raster data is
+utilised.</p>
     </div>
 
     <div id="ref-examples">
