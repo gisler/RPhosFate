@@ -21,6 +21,25 @@ calibrate <- function(value, cmt, substance, col, metric, parameter) {
   }
 }
 
+determineMCfilename <- function(cmt, layer) {
+  if (length(cmt@cv_dir) == 2L) {
+    MCfilename <- file.path(
+      cmt@cv_dir[2L],
+      paste0(basename(layer), cmt@is_MCi, cmt@cs_fex)
+    )
+    if (file.exists(MCfilename)) {
+      return(MCfilename)
+    }
+  }
+
+  MCfilename <- paste0(layer, cmt@is_MCi, cmt@cs_fex)
+  if (file.exists(MCfilename)) {
+    MCfilename
+  } else {
+    paste0(layer, cmt@cs_fex)
+  }
+}
+
 populateLayerSlots <- function(
   cmt,
   object,
@@ -71,13 +90,8 @@ populateParameterSlots <- function(parameters, arguments) {
 }
 
 readLayer <- function(cmt, layer, isRequiredInputLayer = FALSE) {
-  MCfilename <- file.path(
-    cmt@cv_dir[2L],
-    paste0(basename(layer), cmt@is_MCi, cmt@cs_fex)
-  )
-
-  if (length(cmt@is_MCi) == 1L && file.exists(MCfilename)) {
-    filename <- MCfilename
+  if (length(cmt@is_MCi) == 1L) {
+    filename <- determineMCfilename(cmt, layer)
   } else {
     filename <- paste0(layer, cmt@cs_fex)
   }

@@ -139,12 +139,12 @@ RPhosFate <- function(...) {
 #' @section Monte Carlo simulation mode:
 #' This mode can make use of repeated random samples, i.e. raster data, of
 #' distributions of about all input data. The filenames of the Monte Carlo input
-#' data must contain the respective iteration, for example, _CFa12.tif_ for the
-#' twelfth iteration of the C-factors input data, and have to reside in a
-#' separate directory. In case no Monte Carlo input file is found in the
-#' designated directory, the equivalent input data in the project directories is
-#' utilised. Please note that the project may be in an inconsistent state after
-#' running one or more Monte Carlo iterations.
+#' raster data must contain the respective iteration, for example, _CFa12.tif_
+#' for the twelfth iteration of the C-factors input data, and can reside in a
+#' separate directory. In case no Monte Carlo raster file is found for a certain
+#' layer in the designated directory, the respective project directory is
+#' searched for one and finally the \dQuote{normal} project input raster data is
+#' utilised.
 #'
 #' @return An S4 [`RPhosFate-class`] river catchment object.
 #'

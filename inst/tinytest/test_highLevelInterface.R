@@ -188,7 +188,7 @@ x <- RPhosFate(
 expect_identical(
   basename(x@erosion@rl_CFa@file@name),
   "CFa1.tif",
-  info = "Monte Carlo input data is detected"
+  info = "Monte Carlo input data is detected (separate directory)"
 )
 
 x <- subsequentRun(
@@ -211,6 +211,18 @@ for (layer in layers) {
     info = "Monte Carlo simulation mode outputs exist"
   )
 }
+
+x <- RPhosFate(
+  cv_dir = cs_dir_tst,
+  ls_ini = TRUE,
+  is_MCi = 1L
+)
+
+expect_identical(
+  basename(x@substances@PP@rl_xxt_cld@file@name),
+  "ppt_cld1.tif",
+  info = "Monte Carlo input data is detected (project directories)"
+)
 
 #### clean-up ####
 expect_identical(

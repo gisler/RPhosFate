@@ -385,8 +385,6 @@ setMethod(
       .Object@ls_ini <- arguments$ls_ini
     }
     if ("is_MCi" %in% argumentNames) {
-      assertDirectoryExists(.Object@cv_dir[2L], .var.name = "cv_dir[2L]")
-
       .Object@is_MCi <- arguments$is_MCi
     }
     if ("cv_MCl" %in% argumentNames) {
@@ -434,7 +432,13 @@ setMethod(
 setValidity(
   "RPhosFate",
   function(object) {
-    qassert(object@cv_dir, "S+"    , .var.name = "cv_dir")
+    if (length(object@cv_dir) <= 2L) {
+      assertDirectoryExists(object@cv_dir[1L], .var.name = "cv_dir[1L]")
+    }
+    if (length(object@cv_dir) > 1L) {
+      qassert(object@cv_dir, "S2", .var.name = "cv_dir")
+      assertDirectoryExists(object@cv_dir[2L], .var.name = "cv_dir[2L]")
+    }
     qassert(object@ls_ini, "B1"    , .var.name = "ls_ini")
     qassert(object@is_MCi, "I?[0,)", .var.name = "is_MCi")
     qassert(object@cv_MCl, "S+"    , .var.name = "cv_MCl")
