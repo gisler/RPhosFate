@@ -88,7 +88,7 @@ RPhosFate <- function(...) {
 #' applicable (defaults to `integer()`, which means Monte Carlo simulation mode
 #' is disabled).
 #' * `cv_MCl`: A character vector specifying the names of the layers, which
-#' shall be written to disk with the respective iteration in their filenames
+#' shall be written to disk with the associated iteration in their filenames
 #' upon calling the appropriate methods (defaults to `"xxt"`).
 #'
 #' @section Model parameter arguments:
@@ -139,7 +139,7 @@ RPhosFate <- function(...) {
 #' @section Monte Carlo simulation mode:
 #' This mode can make use of repeated random samples, i.e. raster data, of
 #' distributions of about all input data. The filenames of the Monte Carlo input
-#' raster data must contain the respective iteration, for example, _CFa12.tif_
+#' raster data must contain the specified iteration, for example, _CFa12.tif_
 #' for the twelfth iteration of the C-factors input data, and can reside in a
 #' separate directory. In case no Monte Carlo raster file is found for a certain
 #' layer in the designated directory, the respective project directory is

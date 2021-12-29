@@ -331,7 +331,7 @@ setMethod(
 #' @slot is_MCi An integer scalar holding the current Monte Carlo iteration if
 #'   applicable (defaults to `integer()`).
 #' @slot cv_MCl A character vector holding the names of the layers, which shall
-#'   be written to disk with the respective iteration in their filenames upon
+#'   be written to disk with the associated iteration in their filenames upon
 #'   calling the appropriate methods.
 #' @slot cs_fex A character string holding the automatically determined file
 #'   extension of the provided raster files (either ".tif" or ".img" for

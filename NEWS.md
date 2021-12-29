@@ -1,14 +1,14 @@
 # RPhosFate v0.10.0.9000
 
 * Monte Carlo simulation mode can now make use of repeated random samples, i.e. raster data, of distributions of about all input data
-* Added the following arguments to the `subsequentRun()` method, which allow for calling the respective method:
+* Added the following arguments to the `subsequentRun()` method, which allow for calling the respective methods:
   * `erosionPrerequisites`
   * `erosion`
   * `emission`
   * `transportPrerequisites`
   * `transportCalcOrder`
-* Added `cv_MCl` argument to `RPhosFate()` and `catchment()` methods: allows for specifying the names of the layers, which shall be written to disk with the respective iteration in their filenames upon calling the appropriate methods
-* Initialising a project in Monte Carlo simulation mode now also reads model results produced by a possible earlier run with the respective iteration. This implies that Monte Carlo input data can reside in the project directories instead of a separate directory.
+* Added `cv_MCl` argument to `RPhosFate()` and `catchment()` methods: allows for specifying the names of the layers, which shall be written to disk with the associated iteration in their filenames upon calling the appropriate methods
+* Initialising a project in Monte Carlo simulation mode now also reads model results produced by a possible earlier run associated with the specified iteration. This implies that Monte Carlo input data additionally can reside in the project directories and not only in a separate directory.
 * Plot produced by `calibrationQuality()` is now prettier
 * `RPhosFate` now depends on the `spatstat.geom` instead of the `spatstat` package
 * Fixed minimum required version of the `whitebox` package (≥ 2.0.0)

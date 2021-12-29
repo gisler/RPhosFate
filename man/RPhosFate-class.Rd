@@ -20,7 +20,7 @@ from disk (defaults to \code{FALSE}).}
 applicable (defaults to \code{integer()}).}
 
 \item{\code{cv_MCl}}{A character vector holding the names of the layers, which shall
-be written to disk with the respective iteration in their filenames upon
+be written to disk with the associated iteration in their filenames upon
 calling the appropriate methods.}
 
 \item{\code{cs_fex}}{A character string holding the automatically determined file
