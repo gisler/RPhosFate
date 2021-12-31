@@ -165,10 +165,11 @@ expect_identical(
 
 #### calibrationQuality ####
 for (substance in substances) {
-  expect_identical(
+  expect_equal(
     calibrationQuality(x, substance, sprintf("%s_load", substance)),
     readRDS(file.path(cs_dir_ctl, "calibrationQuality.rds"))[[substance]],
-    info = "calibration quality is assessed correctly"
+    info = "calibration quality is assessed correctly",
+    scale = 1
   )
 
   expect_stdout(
