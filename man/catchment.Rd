@@ -148,8 +148,8 @@ required for substance transport (defaults to \emph{ArcGIS} codes).
 \item \code{nm_olc}: A numeric \code{\link{matrix}} specifying the catchment outlet coordinates
 required for calibration (no default).
 \item \code{df_cdt}: A \code{\link{data.frame}} with calibration data, which must have at least
-the following three columns and one or more columns with substance loads in
-t/yr (no default):
+the following three columns and one or more columns with substance river
+loads in t/yr (no default):
 \itemize{
 \item \emph{ID:} ID(s) of the gauge(s)
 \item \emph{x:} x-coordinate(s) of the gauge(s)

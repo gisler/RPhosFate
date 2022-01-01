@@ -1,3 +1,6 @@
+#' @include aaa.R
+NULL
+
 #### getLayer ####
 #' @export
 setGeneric(

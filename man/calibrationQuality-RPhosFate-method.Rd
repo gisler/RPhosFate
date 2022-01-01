@@ -13,7 +13,7 @@
 \item{substance}{A character string specifying the substance to calculate.}
 
 \item{col}{A character string specifying the calibration data column with the
-respective substance loads.}
+respective substance river loads.}
 }
 \value{
 A named numeric vector containing the assessed metrics along with the
@@ -33,10 +33,10 @@ deviation of the observations)
 \item \emph{MdRAE:} Median Relative Absolute Error
 }
 
-In addition, a scatter plot with the observed loads on the x- and the
-modelled loads on the y-axis is displayed and provides a visual impression of
-the model performance. Other elements of this plot are an identity line
-(solid) and plus/minus 30\% deviation lines (dashed).
+In addition, a scatter plot with the observed river loads on the x- and the
+modelled river loads on the y-axis is displayed and provides a visual
+impression of the model performance. Other elements of this plot are an
+identity line (solid) and plus/minus 30\% deviation lines (dashed).
 }
 \examples{
 \dontrun{

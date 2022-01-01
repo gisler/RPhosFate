@@ -3,8 +3,9 @@ Type: Package
 Title: Soil and Chemical Substance Emission and Transport Model
 Version: 0.10.0.9000
 Authors@R: person("Gerold", "Hepp", email = "ghepp@iwag.tuwien.ac.at", role = c("aut", "cre"))
-Description: An enhanced version of the PhosFate model implemented in R
-    supporting suspended solids (SS) and particulate phosphorus (PP).
+Description: An enhanced version of the semi-empirical, spatially distributed
+    emission and transport model PhosFate implemented in R. It currently
+    supports suspended solids (SS) and particulate phosphorus (PP).
 License: file LICENSE
 URL: https://gisler.github.io/RPhosFate/
 BugReports: https://github.com/gisler/RPhosFate/issues
@@ -31,8 +32,6 @@ Suggests:
 LinkingTo:
     Rcpp,
     RcppArmadillo
-Additional_repositories:
-    https://gisler.github.io/drat
 RoxygenNote: 7.1.2
 Roxygen: list(markdown = TRUE)
 Collate:

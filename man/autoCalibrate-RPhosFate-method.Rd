@@ -21,7 +21,7 @@
 \item{substance}{A character string specifying the substance to calculate.}
 
 \item{col}{A character string specifying the calibration data column with the
-respective substance loads.}
+respective substance river loads.}
 
 \item{interval}{A numeric vector specifying the end-points of the interval to
 be searched.}

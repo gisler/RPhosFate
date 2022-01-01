@@ -25,6 +25,8 @@ The demonstration project data are a derivative of the
 }
 
 data sets, used and licensed under \emph{\href{https://creativecommons.org/licenses/by/4.0}{(CC BY 4.0)}} by Gerold Hepp.
+
+While the data represent a real catchment, some of them are fictitious, but plausible. These are, among others, R- and C-factors, soil and related data as well as substance river loads.
 }
 \examples{
 \dontrun{

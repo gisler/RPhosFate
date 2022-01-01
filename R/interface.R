@@ -129,8 +129,8 @@ RPhosFate <- function(...) {
 #' * `nm_olc`: A numeric [`matrix`] specifying the catchment outlet coordinates
 #' required for calibration (no default).
 #' * `df_cdt`: A [`data.frame`] with calibration data, which must have at least
-#' the following three columns and one or more columns with substance loads in
-#' t/yr (no default):
+#' the following three columns and one or more columns with substance river
+#' loads in t/yr (no default):
 #'
 #'   * _ID:_ ID(s) of the gauge(s)
 #'   * _x:_ x-coordinate(s) of the gauge(s)
@@ -394,14 +394,14 @@ setGeneric(
 #' * _GMRAE:_ Geometric Mean Relative Absolute Error
 #' * _MdRAE:_ Median Relative Absolute Error
 #'
-#' In addition, a scatter plot with the observed loads on the x- and the
-#' modelled loads on the y-axis is displayed and provides a visual impression of
-#' the model performance. Other elements of this plot are an identity line
-#' (solid) and plus/minus 30% deviation lines (dashed).
+#' In addition, a scatter plot with the observed river loads on the x- and the
+#' modelled river loads on the y-axis is displayed and provides a visual
+#' impression of the model performance. Other elements of this plot are an
+#' identity line (solid) and plus/minus 30% deviation lines (dashed).
 #'
 #' @inheritParams emission,RPhosFate-method
 #' @param col A character string specifying the calibration data column with the
-#'   respective substance loads.
+#'   respective substance river loads.
 #'
 #' @return A named numeric vector containing the assessed metrics along with the
 #'   in-channel retention.

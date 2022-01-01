@@ -6,3 +6,5 @@ These example and test data are a derivative of the
 * _[GIP.at](https://www.data.gv.at/katalog/dataset/3fefc838-791d-4dde-975b-a4131a54e7c5)_ (road data)
 
 data sets, used and licensed under _[(CC BY 4.0)](https://creativecommons.org/licenses/by/4.0)_ by Gerold Hepp.
+
+While the data represent a real catchment, some of them are fictitious, but plausible. These are, among others, R- and C-factors, soil and related data as well as substance river loads.
