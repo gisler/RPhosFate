@@ -61,10 +61,6 @@ jobs:
             eval sudo $cmd
           done < <(Rscript -e 'writeLines(remotes::system_requirements("ubuntu", "20.04"))')
 
-      - name: Install system dependencies (MacOS)
-        if: runner.os == 'macOS'
-        run: brew install libomp
-
       - name: Install dependencies (4.1.2)
         if: matrix.config.r == '4.1.2'
         run: |
@@ -79,11 +75,6 @@ jobs:
             dependencies = TRUE,
             type = "win.binary",
             upgrade = "never",
-            lib = .libPaths()[2L]
-          )
-          remotes::install_cran(
-            "covr",
-            type = "win.binary",
             lib = .libPaths()[2L]
           )
         shell: Rscript {0}

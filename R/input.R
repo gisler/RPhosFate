@@ -94,7 +94,8 @@ demoProject <- function(cs_dir = tempdir(TRUE)) {
 #' @param is_adj A numeric scalar specifying how many cells adjacent to channels
 #'   shall be burnt.
 #' @param is_ths An integer scalar specifying the number of threads to use
-#'   during computation.
+#'   during computation (no effect in case _OpenMP_ is not supported by the
+#'   toolchain and/or platform).
 #' @param ls_tmp A logical scalar specifying if the temporary files created
 #'   during computation shall be kept.
 #' @param cs_fex A character string specifying the file extension of the created

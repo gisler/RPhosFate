@@ -1,5 +1,7 @@
 #include <RcppArmadillo.h>
+#ifdef _OPENMP
 #include <omp.h>
+#endif
 
 // [[Rcpp::export]]
 arma::imat dir_sth(
