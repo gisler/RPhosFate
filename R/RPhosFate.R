@@ -234,7 +234,6 @@ setMethod(
     cs_dir_old <- setwd(file.path(x@cv_dir[1L], "Result"))
     on.exit(setwd(cs_dir_old))
 
-    filename <- paste0(tolower(substance), "e", x@is_MCi, x@cs_fex)
     # Emission in kg/cell/yr
     slot(x@substances, substance)@rl_xxe <- overlay(
       x = x@erosion@rl_ero,
