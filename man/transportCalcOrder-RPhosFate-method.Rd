@@ -30,3 +30,6 @@ x <- transportCalcOrder(x)
 }
 
 }
+\seealso{
+\code{\link{firstRun}}, \code{\link{subsequentRun}}
+}

@@ -11,10 +11,11 @@
 \item{x}{An S4 \code{\linkS4class{RPhosFate}} river catchment object.}
 }
 \value{
-An S4 \code{\linkS4class{RPhosFate}} river catchment object.
+An S4 \code{\linkS4class{RPhosFate}} river catchment object and side effects in
+the form of raster files.
 }
 \description{
-Calculates (R)USLE erosion.
+Calculates and writes (R)USLE erosion to disk.
 }
 \examples{
 \dontrun{
@@ -41,4 +42,7 @@ Government Printing Office, Washington, DC.}
 \cite{Wischmeier, W.H., Smith, D.D., 1978. Predicting rainfall erosion
 losses. A guide to conservation planning, Agriculture Handbook. U.S.
 Government Printing Office, Washington, DC.}
+}
+\seealso{
+\code{\link{firstRun}}, \code{\link{subsequentRun}}
 }

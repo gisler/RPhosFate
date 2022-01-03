@@ -11,11 +11,12 @@
 \item{x}{An S4 \code{\linkS4class{RPhosFate}} river catchment object.}
 }
 \value{
-An S4 \code{\linkS4class{RPhosFate}} river catchment object.
+An S4 \code{\linkS4class{RPhosFate}} river catchment object and side effects in
+the form of raster files.
 }
 \description{
 Calculates hydraulic radii and determines cells representing inlets as well
-as riparian zones.
+as riparian zones before writing them to disk.
 }
 \examples{
 \dontrun{
@@ -35,4 +36,7 @@ x <- transportPrerequisites(x)
 \cite{Molnár, P., Ramírez, J.A., 1998. Energy dissipation theories and
 optimal channel characteristics of river networks. Water Resources Research
 34, 1809–1818.}
+}
+\seealso{
+\code{\link{firstRun}}, \code{\link{subsequentRun}}
 }

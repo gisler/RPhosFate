@@ -11,7 +11,7 @@
 \item{x}{An S4 \code{\linkS4class{RPhosFate}} river catchment object.}
 }
 \value{
-\code{NULL} invisibly.
+\code{NULL} invisibly and side effects in the form of files.
 }
 \description{
 Saves parameters \emph{(parameters.yaml)} and transport calculation order
@@ -30,4 +30,7 @@ x <- RPhosFate(
 saveState(x)
 }
 
+}
+\seealso{
+\code{\link{RPhosFate}}, \code{\link{catchment}}
 }

@@ -13,15 +13,15 @@ An S4 object representing a river catchment.
 \item{\code{cv_dir}}{A character vector holding the project root (first position) and
 optionally the Monte Carlo input data directory (second position).}
 
-\item{\code{ls_ini}}{A logical scalar specifying if an existing project was loaded
-from disk (defaults to \code{FALSE}).}
+\item{\code{ls_ini}}{A logical scalar specifying if the state of an existing project
+was loaded from disk.}
 
 \item{\code{is_MCi}}{An integer scalar holding the current Monte Carlo iteration if
-applicable (defaults to \code{integer()}).}
+applicable.}
 
 \item{\code{cv_MCl}}{A character vector holding the names of the layers, which shall
-be written to disk with the associated iteration in their filenames upon
-calling the appropriate methods.}
+be written to disk with the associated Monte Carlo iteration in their
+filenames upon calling the appropriate methods.}
 
 \item{\code{cs_fex}}{A character string holding the automatically determined file
 extension of the provided raster files (either ".tif" or ".img" for

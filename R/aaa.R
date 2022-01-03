@@ -326,13 +326,13 @@ setMethod(
 #'
 #' @slot cv_dir A character vector holding the project root (first position) and
 #'   optionally the Monte Carlo input data directory (second position).
-#' @slot ls_ini A logical scalar specifying if an existing project was loaded
-#'   from disk (defaults to `FALSE`).
+#' @slot ls_ini A logical scalar specifying if the state of an existing project
+#'   was loaded from disk.
 #' @slot is_MCi An integer scalar holding the current Monte Carlo iteration if
-#'   applicable (defaults to `integer()`).
+#'   applicable.
 #' @slot cv_MCl A character vector holding the names of the layers, which shall
-#'   be written to disk with the associated iteration in their filenames upon
-#'   calling the appropriate methods.
+#'   be written to disk with the associated Monte Carlo iteration in their
+#'   filenames upon calling the appropriate methods.
 #' @slot cs_fex A character string holding the automatically determined file
 #'   extension of the provided raster files (either ".tif" or ".img" for
 #'   backward compatibility).

@@ -13,10 +13,11 @@
 \item{substance}{A character string specifying the substance to calculate.}
 }
 \value{
-An S4 \code{\linkS4class{RPhosFate}} river catchment object.
+An S4 \code{\linkS4class{RPhosFate}} river catchment object and side effects in
+the form of raster files.
 }
 \description{
-Calculates substance emissions.
+Calculates and writes substance emissions to disk.
 }
 \examples{
 \dontrun{
@@ -34,4 +35,7 @@ x <- erosion(x)
 x <- emission(x, "PP")
 }
 
+}
+\seealso{
+\code{\link{firstRun}}, \code{\link{subsequentRun}}
 }

@@ -10,9 +10,9 @@ RPhosFate <- function(...) {
 #' Initialise project
 #'
 #' @description
-#' Creates a project from scratch or loads an existing one utilising _GeoTIFF_
-#' (*.tif) raster files from, by convention, the following three project root
-#' subdirectories:
+#' Creates a project from scratch or loads the state of an existing one
+#' utilising _GeoTIFF_ (*.tif) raster files from, by convention, the following
+#' three project root subdirectories:
 #'
 #' * _Input_
 #' * _Intermediate_
@@ -81,15 +81,17 @@ RPhosFate <- function(...) {
 #' @section Data management arguments:
 #' * `cv_dir`: A character vector specifying the project root (first position)
 #' and optionally the Monte Carlo input data directory (second position).
-#' * `ls_ini`: A logical scalar specifying if an existing project shall be
-#' loaded from disk (defaults to `FALSE`). Parameters or substance parameter
-#' values specified via the `...` argument take precedence over loaded ones.
+#' * `ls_ini`: A logical scalar specifying if the state of an existing project
+#' shall be loaded from disk (defaults to `FALSE`). Parameters or substance
+#' parameter values specified via the `...` argument take precedence over loaded
+#' ones.
 #' * `is_MCi`: An integer scalar specifying the current Monte Carlo iteration if
 #' applicable (defaults to `integer()`, which means Monte Carlo simulation mode
 #' is disabled).
 #' * `cv_MCl`: A character vector specifying the names of the layers, which
-#' shall be written to disk with the associated iteration in their filenames
-#' upon calling the appropriate methods (defaults to `"xxt"`).
+#' shall be written to disk with the associated Monte Carlo iteration in their
+#' filenames upon calling the appropriate methods (defaults to `"xxt"`; no
+#' effect in case Monte Carlo simulation mode is disabled).
 #'
 #' @section Model parameter arguments:
 #' * `ns_slp_min`: A numeric scalar specifying the minimum bounding slope in %
@@ -148,6 +150,8 @@ RPhosFate <- function(...) {
 #'
 #' @return An S4 [`RPhosFate-class`] river catchment object.
 #'
+#' @seealso [`saveState`], [`demoProject`]
+#'
 #' @examples
 #' \dontrun{
 #' # create temporary demonstration project
@@ -168,7 +172,7 @@ RPhosFate <- function(...) {
 #'   )
 #' )
 #'
-#' # load project in Monte Carlo simulation mode
+#' # load state of existing project in Monte Carlo simulation mode
 #' x <- RPhosFate(
 #'   cv_dir = c(
 #'     cv_dir,
@@ -201,7 +205,7 @@ setGeneric(
 #'
 #' @inheritParams emission,RPhosFate-method
 #'
-#' @inherit catchment return
+#' @inherit erosionPrerequisites,RPhosFate-method return
 #'
 #' @seealso [`subsequentRun`]
 #'
@@ -267,7 +271,7 @@ setGeneric(
 #' @param transportCalcOrder A logical scalar specifying if
 #'   [`transportCalcOrder`] is called.
 #'
-#' @inherit catchment return
+#' @inherit erosionPrerequisites,RPhosFate-method return
 #'
 #' @seealso [`firstRun`]
 #'
@@ -338,7 +342,7 @@ setGeneric(
 #'
 #' @inherit catchment return
 #'
-#' @seealso [`calibrationQuality`]
+#' @seealso [`calibrationQuality`], [`autoCalibrate`]
 #'
 #' @examples
 #' \dontrun{
@@ -556,9 +560,9 @@ setGeneric(
 #'   dedicated parameter utilised for optimisation via a character string
 #'   (overland (`"ns_dep_ovl"`) or channel deposition rate (`"ns_dep_cha"`)).
 #'
-#' @inherit catchment return
+#' @inherit erosionPrerequisites,RPhosFate-method return
 #'
-#' @seealso [`optimize`]
+#' @seealso [`snapGauges`], [`optimize`]
 #'
 #' @examples
 #' \dontrun{
@@ -654,7 +658,9 @@ setGeneric(
 #'
 #' @inheritParams erosionPrerequisites,RPhosFate-method
 #'
-#' @return `NULL` invisibly.
+#' @return `NULL` invisibly and side effects in the form of files.
+#'
+#' @seealso [`RPhosFate`], [`catchment`]
 #'
 #' @examples
 #' \dontrun{

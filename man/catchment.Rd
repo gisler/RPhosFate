@@ -17,9 +17,9 @@ for further information.}
 An S4 \code{\linkS4class{RPhosFate}} river catchment object.
 }
 \description{
-Creates a project from scratch or loads an existing one utilising \emph{GeoTIFF}
-(*.tif) raster files from, by convention, the following three project root
-subdirectories:
+Creates a project from scratch or loads the state of an existing one
+utilising \emph{GeoTIFF} (*.tif) raster files from, by convention, the following
+three project root subdirectories:
 \itemize{
 \item \emph{Input}
 \item \emph{Intermediate}
@@ -97,15 +97,17 @@ example, \emph{ppt_out} for PP outlet loads.
 \itemize{
 \item \code{cv_dir}: A character vector specifying the project root (first position)
 and optionally the Monte Carlo input data directory (second position).
-\item \code{ls_ini}: A logical scalar specifying if an existing project shall be
-loaded from disk (defaults to \code{FALSE}). Parameters or substance parameter
-values specified via the \code{...} argument take precedence over loaded ones.
+\item \code{ls_ini}: A logical scalar specifying if the state of an existing project
+shall be loaded from disk (defaults to \code{FALSE}). Parameters or substance
+parameter values specified via the \code{...} argument take precedence over loaded
+ones.
 \item \code{is_MCi}: An integer scalar specifying the current Monte Carlo iteration if
 applicable (defaults to \code{integer()}, which means Monte Carlo simulation mode
 is disabled).
 \item \code{cv_MCl}: A character vector specifying the names of the layers, which
-shall be written to disk with the associated iteration in their filenames
-upon calling the appropriate methods (defaults to \code{"xxt"}).
+shall be written to disk with the associated Monte Carlo iteration in their
+filenames upon calling the appropriate methods (defaults to \code{"xxt"}; no
+effect in case Monte Carlo simulation mode is disabled).
 }
 }
 
@@ -190,7 +192,7 @@ x <- RPhosFate(
   )
 )
 
-# load project in Monte Carlo simulation mode
+# load state of existing project in Monte Carlo simulation mode
 x <- RPhosFate(
   cv_dir = c(
     cv_dir,
@@ -202,4 +204,7 @@ x <- RPhosFate(
 )
 }
 
+}
+\seealso{
+\code{\link{saveState}}, \code{\link{demoProject}}
 }

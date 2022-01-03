@@ -4,8 +4,12 @@ Title: Soil and Chemical Substance Emission and Transport Model
 Version: 0.10.0.9000
 Authors@R: person("Gerold", "Hepp", email = "ghepp@iwag.tuwien.ac.at", role = c("aut", "cre"))
 Description: An enhanced version of the semi-empirical, spatially distributed
-    emission and transport model PhosFate implemented in R. It currently
-    supports suspended solids (SS) and particulate phosphorus (PP).
+    emission and transport model PhosFate implemented in R and C++. It currently
+    supports suspended solids (SS) and particulate phosphorus (PP). A major
+    feature is the allocation of substance loads entering surface waters to
+    their sources of origin, which is a basic requirement for the identification
+    of critical source areas and in consequence a cost-effective implementation
+    of mitigation measures.
 License: file LICENSE
 URL: https://gisler.github.io/RPhosFate/
 BugReports: https://github.com/gisler/RPhosFate/issues
@@ -40,7 +44,6 @@ Collate:
     'RcppExports.R'
     'assertives.R'
     'deprecated.R'
-    'findNearestNeighbour.R'
     'gettersSetters.R'
     'input.R'
     'interface.R'

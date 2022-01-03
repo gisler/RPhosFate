@@ -13,7 +13,8 @@
 \item{substance}{A character string specifying the substance to calculate.}
 }
 \value{
-An S4 \code{\linkS4class{RPhosFate}} river catchment object.
+An S4 \code{\linkS4class{RPhosFate}} river catchment object and side effects in
+the form of raster files.
 }
 \description{
 Calls \code{\link{erosionPrerequisites}}, \code{\link{erosion}}, \code{\link{emission}},

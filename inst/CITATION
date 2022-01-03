@@ -1,28 +1,11 @@
 citEntry(
-  entry       = "Article",
-  author      = personList(person("Adam", "Kovacs"), person("Mark", "Honti"), person("Adrienne", "Clement")),
-  title       = "Design of Best Management Practice Applications for Diffuse Phosphorus Pollution Using Interactive {{GIS}}",
-  journal     = "Water Science and Technology",
-  volume      = "57",
-  year        = "2008",
-  number      = "11",
-  pages       = "1727--1733",
-  ISSN        = "0273-1223",
-  DOI         = "10.2166/wst.2008.264",
-  textVersion = "Kovacs, A., Honti, M., Clement, A., 2008. Design of best management practice applications for diffuse phosphorus pollution using interactive GIS. Water Science and Technology 57, 1727–1733. https://doi.org/10.2166/wst.2008.264."
-)
-
-citEntry(
-  entry       = "Article",
-  author      = personList(person("Adam", "Kovacs"), person("Mark", "Honti"), person("Matthias", "Zessner"), person("Alexander", "Eder"), person("Adrienne", "Clement"), person("G\\\"unter", "Bl\\\"oschl")),
-  title       = "Identification of Phosphorus Emission Hotspots in Agricultural Catchments",
-  journal     = "Science of The Total Environment",
-  volume      = "433",
-  year        = "2012",
-  pages       = "74--88",
-  ISSN        = "0048-9697",
-  DOI         = "10.1016/j.scitotenv.2012.06.024",
-  textVersion = "Kovacs, A., Honti, M., Zessner, M., Eder, A., Clement, A., Blöschl, G., 2012. Identification of phosphorus emission hotspots in agricultural catchments. Science of The Total Environment 433, 74–88. https://doi.org/10.1016/j.scitotenv.2012.06.024."
+  entry       = "PhdThesis",
+  author      = person("{\\\'A}d{\\\'a}m", "Kov{\\\'a}cs"),
+  title       = "Quantification of Diffuse Phosphorous Inputs into Surface Water Systems",
+  year        = "2013",
+  address     = "Vienna",
+  school      = "Technische Universit\\\"at Wien",
+  textVersion = "Kovács, Á., 2013. Quantification of diffuse phosphorous inputs into surface water systems. Ph.D. thesis. Technische Universität Wien, Vienna."
 )
 
 citEntry(

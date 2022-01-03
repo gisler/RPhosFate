@@ -39,7 +39,8 @@ dedicated parameter utilised for optimisation via a character string
 (overland (\code{"ns_dep_ovl"}) or channel deposition rate (\code{"ns_dep_cha"})).}
 }
 \value{
-An S4 \code{\linkS4class{RPhosFate}} river catchment object.
+An S4 \code{\linkS4class{RPhosFate}} river catchment object and side effects in
+the form of raster files.
 }
 \description{
 Automatically calibrates the model with the help of a combination of golden
@@ -69,5 +70,5 @@ x <- autoCalibrate(
 
 }
 \seealso{
-\code{\link{optimize}}
+\code{\link{snapGauges}}, \code{\link{optimize}}
 }

@@ -11,10 +11,12 @@
 \item{x}{An S4 \code{\linkS4class{RPhosFate}} river catchment object.}
 }
 \value{
-An S4 \code{\linkS4class{RPhosFate}} river catchment object.
+An S4 \code{\linkS4class{RPhosFate}} river catchment object and side effects in
+the form of raster files.
 }
 \description{
-Calculates capped slopes, L- and RUSLE S-factors. Weighted flow accumulations
+Calculates and writes capped slopes, L- and RUSLE S-factors (equations for
+summer conditions and slopes ≥ 15 ft) to disk. Weighted flow accumulations
 less than one are set to one for the calculation of the L-factors.
 }
 \examples{
@@ -32,12 +34,11 @@ x <- erosionPrerequisites(x)
 
 }
 \references{
-\cite{Desmet, P.J.J., Govers, G., 1996. A GIS procedure for automatically
-calculating the USLE LS factor on topographically complex landscape units.
-Journal of Soil and Water Conservation 51, 427–433.}
-
 \cite{Renard, K.G., Foster, G.R., Weesies, G.A., McCool, D.K., Yoder, D.C.,
 1997. Predicting soil erosion by water: a guide to conservation planning with
 the Revised Universal Soil Loss Equation (RUSLE), Agriculture Handbook. U.S.
 Government Printing Office, Washington, DC.}
+}
+\seealso{
+\code{\link{firstRun}}, \code{\link{subsequentRun}}
 }

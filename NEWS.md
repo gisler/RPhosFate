@@ -7,7 +7,7 @@
   * `emission`
   * `transportPrerequisites`
   * `transportCalcOrder`
-* Added `cv_MCl` argument to `RPhosFate()` and `catchment()` methods: allows for specifying the names of the layers, which shall be written to disk with the associated iteration in their filenames upon calling the appropriate methods
+* Added `cv_MCl` argument to `RPhosFate()` and `catchment()` methods: allows for specifying the names of the layers, which shall be written to disk with the associated Monte Carlo iteration in their filenames upon calling the appropriate methods
 * Initialising a project in Monte Carlo simulation mode now also reads model results produced by a possible earlier run associated with the specified iteration. This implies that Monte Carlo input data additionally can reside in the project directories and not only in a separate directory.
 * Plot produced by `calibrationQuality()` is now prettier
 * `RPhosFate` now depends on the `spatstat.geom` instead of the `spatstat` package

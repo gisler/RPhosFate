@@ -9,22 +9,22 @@ setGeneric(
 )
 #' Erosion prerequisites
 #'
-#' Calculates capped slopes, L- and RUSLE S-factors. Weighted flow accumulations
+#' Calculates and writes capped slopes, L- and RUSLE S-factors (equations for
+#' summer conditions and slopes ≥ 15 ft) to disk. Weighted flow accumulations
 #' less than one are set to one for the calculation of the L-factors.
 #'
 #' @param x An S4 [`RPhosFate-class`] river catchment object.
 #'
-#' @inherit catchment return
+#' @return An S4 [`RPhosFate-class`] river catchment object and side effects in
+#'   the form of raster files.
 #'
 #' @references
-#' \cite{Desmet, P.J.J., Govers, G., 1996. A GIS procedure for automatically
-#' calculating the USLE LS factor on topographically complex landscape units.
-#' Journal of Soil and Water Conservation 51, 427–433.}
-#'
 #' \cite{Renard, K.G., Foster, G.R., Weesies, G.A., McCool, D.K., Yoder, D.C.,
 #' 1997. Predicting soil erosion by water: a guide to conservation planning with
 #' the Revised Universal Soil Loss Equation (RUSLE), Agriculture Handbook. U.S.
 #' Government Printing Office, Washington, DC.}
+#'
+#' @seealso [`firstRun`], [`subsequentRun`]
 #'
 #' @examples
 #' \dontrun{
@@ -120,11 +120,11 @@ setGeneric(
 )
 #' Erosion
 #'
-#' Calculates (R)USLE erosion.
+#' Calculates and writes (R)USLE erosion to disk.
 #'
 #' @inheritParams erosionPrerequisites,RPhosFate-method
 #'
-#' @inherit catchment return
+#' @inherit erosionPrerequisites,RPhosFate-method return
 #'
 #' @references
 #' \cite{Renard, K.G., Foster, G.R., Weesies, G.A., McCool, D.K., Yoder, D.C.,
@@ -135,6 +135,8 @@ setGeneric(
 #' \cite{Wischmeier, W.H., Smith, D.D., 1978. Predicting rainfall erosion
 #' losses. A guide to conservation planning, Agriculture Handbook. U.S.
 #' Government Printing Office, Washington, DC.}
+#'
+#' @seealso [`firstRun`], [`subsequentRun`]
 #'
 #' @examples
 #' \dontrun{
@@ -193,12 +195,14 @@ setGeneric(
 )
 #' Emission
 #'
-#' Calculates substance emissions.
+#' Calculates and writes substance emissions to disk.
 #'
 #' @inheritParams erosionPrerequisites,RPhosFate-method
 #' @param substance A character string specifying the substance to calculate.
 #'
-#' @inherit catchment return
+#' @inherit erosionPrerequisites,RPhosFate-method return
+#'
+#' @seealso [`firstRun`], [`subsequentRun`]
 #'
 #' @examples
 #' \dontrun{
@@ -265,16 +269,18 @@ setGeneric(
 #' Transport prerequisites
 #'
 #' Calculates hydraulic radii and determines cells representing inlets as well
-#' as riparian zones.
+#' as riparian zones before writing them to disk.
 #'
 #' @inheritParams erosionPrerequisites,RPhosFate-method
 #'
-#' @inherit catchment return
+#' @inherit erosionPrerequisites,RPhosFate-method return
 #'
 #' @references
 #' \cite{Molnár, P., Ramírez, J.A., 1998. Energy dissipation theories and
 #' optimal channel characteristics of river networks. Water Resources Research
 #' 34, 1809–1818.}
+#'
+#' @seealso [`firstRun`], [`subsequentRun`]
 #'
 #' @examples
 #' \dontrun{
@@ -386,6 +392,8 @@ setGeneric(
 #'
 #' @inherit catchment return
 #'
+#' @seealso [`firstRun`], [`subsequentRun`]
+#'
 #' @examples
 #' \dontrun{
 #' # create temporary demonstration project
@@ -463,16 +471,18 @@ setGeneric(
 )
 #' Transport
 #'
-#' Calculates substance retentions, transports and cell loads as well as
-#' transfers among others.
+#' Calculates and writes substance retentions, transports and cell loads as well
+#' as transfers to disk.
 #'
 #' @inheritParams emission,RPhosFate-method
 #'
-#' @inherit catchment return
+#' @inherit erosionPrerequisites,RPhosFate-method return
 #'
 #' @references
 #' \cite{Engman, E.T., 1986. Roughness coefficients for routing surface runoff.
 #' Journal of Irrigation and Drainage Engineering 112, 39–53.}
+#'
+#' @seealso [`firstRun`], [`subsequentRun`]
 #'
 #' @examples
 #' \dontrun{

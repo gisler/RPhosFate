@@ -13,11 +13,12 @@
 \item{substance}{A character string specifying the substance to calculate.}
 }
 \value{
-An S4 \code{\linkS4class{RPhosFate}} river catchment object.
+An S4 \code{\linkS4class{RPhosFate}} river catchment object and side effects in
+the form of raster files.
 }
 \description{
-Calculates substance retentions, transports and cell loads as well as
-transfers among others.
+Calculates and writes substance retentions, transports and cell loads as well
+as transfers to disk.
 }
 \examples{
 \dontrun{
@@ -42,4 +43,7 @@ x <- transport(x, "PP")
 \references{
 \cite{Engman, E.T., 1986. Roughness coefficients for routing surface runoff.
 Journal of Irrigation and Drainage Engineering 112, 39–53.}
+}
+\seealso{
+\code{\link{firstRun}}, \code{\link{subsequentRun}}
 }
