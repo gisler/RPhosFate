@@ -10,8 +10,7 @@ expect_warning(
 unlink(cs_dir_tst, recursive = TRUE)
 
 #### DEMrelatedInput ####
-if (.Platform$OS.type == "windows" &&
-    isTRUE(as.logical(Sys.getenv("RPhosFate_DEVELOPER")))) {
+if (.Platform$OS.type == "windows" && tinytest::at_home()) {
   cs_dir_ctl <- system.file("tinytest", "testProject", package = "RPhosFate")
   control <- RPhosFate(
     cv_dir = cs_dir_ctl,
