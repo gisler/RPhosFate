@@ -96,6 +96,7 @@ jobs:
           Rcpp::compileAttributes()
           rcmdcheck::rcmdcheck(
             args = c("--no-manual", "--as-cran"),
+            build_args = "--no-manual",
             check_dir = "check",
             lib = .libPaths()[2L],
             error_on = "warning"
