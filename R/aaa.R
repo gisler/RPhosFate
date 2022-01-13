@@ -334,7 +334,7 @@ setMethod(
 #'   be written to disk with the associated Monte Carlo iteration in their
 #'   filenames upon calling the appropriate methods.
 #' @slot cs_fex A character string holding the automatically determined file
-#'   extension of the provided raster files (either ".tif" or ".img" for
+#'   extension of the provided raster files (either `".tif"` or `".img"` for
 #'   backward compatibility).
 #' @slot parameters An S4 object holding the model parameters.
 #' @slot topo An S4 object holding the raster layers related to topography in

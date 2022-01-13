@@ -222,7 +222,7 @@ x <- RPhosFate(
 expect_identical(
   basename(x@substances@PP@rl_xxt_cld@file@name),
   "ppt_cld1.tif",
-  info = "Monte Carlo input data is detected (project directories)"
+  info = "Monte Carlo input data is detected (project root subdirectories)"
 )
 
 #### clean-up ####

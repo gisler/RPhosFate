@@ -63,7 +63,7 @@ toolchain and/or platform).}
 during computation shall be kept.}
 
 \item{cs_fex}{A character string specifying the file extension of the created
-raster files (either the default "tif" or "img" for backward
+raster files (either the default \code{"tif"} or \code{"img"} for backward
 compatibility).}
 }
 \value{

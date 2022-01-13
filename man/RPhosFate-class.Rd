@@ -24,7 +24,7 @@ be written to disk with the associated Monte Carlo iteration in their
 filenames upon calling the appropriate methods.}
 
 \item{\code{cs_fex}}{A character string holding the automatically determined file
-extension of the provided raster files (either ".tif" or ".img" for
+extension of the provided raster files (either \code{".tif"} or \code{".img"} for
 backward compatibility).}
 
 \item{\code{parameters}}{An S4 object holding the model parameters.}

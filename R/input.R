@@ -40,7 +40,7 @@ demoProject <- function(cs_dir = tempdir(TRUE)) {
 
     writeLines(
       c(
-        "These _[RPhosFate](https://gisler.github.io/RPhosFate)_ demonstration project data are a derivative of the",
+        "These _[RPhosFate](https://gisler.github.io/RPhosFate/)_ demonstration project data are a derivative of the",
         dataLicense
       ),
       file.path(demoRoot, "LICENSE.md")
@@ -90,7 +90,7 @@ demoProject <- function(cs_dir = tempdir(TRUE)) {
 #' @param ls_tmp A logical scalar specifying if the temporary files created
 #'   during computation shall be kept.
 #' @param cs_fex A character string specifying the file extension of the created
-#'   raster files (either the default "tif" or "img" for backward
+#'   raster files (either the default `"tif"` or `"img"` for backward
 #'   compatibility).
 #'
 #' @details

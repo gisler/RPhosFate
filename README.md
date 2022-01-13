@@ -17,7 +17,7 @@ A [CRAN](https://cran.r-project.org/) release is planned in the near future. Unt
 ``` r
 install.packages(
   c("RPhosFate", "raster", "whitebox"),
-  repos = c("https://gisler.github.io/drat", options("repos")),
+  repos = c("https://gisler.github.io/drat/", options("repos")),
   type = "win.binary",
   dependencies = TRUE
 )

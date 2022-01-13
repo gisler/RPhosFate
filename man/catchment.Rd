@@ -167,9 +167,9 @@ distributions of about all input data. The filenames of the Monte Carlo input
 raster data must contain the specified iteration, for example, \emph{CFa12.tif}
 for the twelfth iteration of the C-factors input data, and can reside in a
 separate directory. In case no Monte Carlo raster file is found for a certain
-layer in the designated directory, the respective project directory is
-searched for one and finally the \dQuote{normal} project input raster data is
-utilised.
+layer in the designated directory, the respective project root subdirectory
+is searched for one and finally the \dQuote{normal} project input raster data
+is utilised.
 }
 
 \examples{
