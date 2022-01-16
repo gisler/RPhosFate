@@ -32,6 +32,9 @@ section search and successive parabolic interpolation."><meta name="robots" cont
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
+<li>
+  <a href="../articles/basicWorkflow.html">Basic modelling workflow</a>
+</li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
     Papers
@@ -130,14 +133,14 @@ the form of raster files.</p>
     <div id="ref-examples">
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in"><span class="co"># create temporary demonstration project</span></span>
+<span class="r-in"><span class="co"># temporary demonstration project copy</span></span>
 <span class="r-in"><span class="va">cv_dir</span> <span class="op">&lt;-</span> <span class="fu"><a href="demoProject.html">demoProject</a></span><span class="op">(</span><span class="op">)</span></span>
 <span class="r-in"><span class="co"># load temporary demonstration project</span></span>
 <span class="r-in"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="catchment.html">RPhosFate</a></span><span class="op">(</span></span>
 <span class="r-in">  cv_dir <span class="op">=</span> <span class="va">cv_dir</span>,</span>
 <span class="r-in">  ls_ini <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span class="r-in"><span class="op">)</span></span>
-<span class="r-in"><span class="co"># presupposed function call</span></span>
+<span class="r-in"><span class="co"># presupposed method call</span></span>
 <span class="r-in"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="firstRun-RPhosFate-method.html">firstRun</a></span><span class="op">(</span><span class="va">x</span>, <span class="st">"SS"</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="snapGauges-RPhosFate-method.html">snapGauges</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
 <span class="r-in"></span>
