@@ -19,7 +19,7 @@ nearest channel cell.
 }
 \examples{
 \dontrun{
-# create temporary demonstration project
+# temporary demonstration project copy
 cv_dir <- demoProject()
 # load temporary demonstration project
 x <- RPhosFate(

@@ -10,7 +10,7 @@ RPhosFate <- function(...) {
 #' Initialise project
 #'
 #' @description
-#' Creates a project from scratch or loads the state of an existing one
+#' Initialises a project from scratch or loads the state of an existing one
 #' utilising _GeoTIFF_ (*.tif) raster files from, by convention, the following
 #' three project root subdirectories:
 #'
@@ -117,15 +117,15 @@ RPhosFate <- function(...) {
 #' of the channel within channel cells required for substance transport
 #' (defaults to `0.04`).
 #' * `ns_dep_ovl`: A numeric scalar specifying the overland deposition rate per
-#' second required for substance transport (no default).
+#' second required for substance transport (calibration parameter; no default).
 #' * `ns_dep_cha`: A numeric scalar specifying the channel deposition rate per
-#' second required for substance transport (no default).
+#' second required for substance transport (calibration parameter; no default).
 #' * `nv_tfc_inl`: A named numeric vector specifying the inlet transfer
 #' coefficients required for substance transport, for example, `c(SS = 0.6, PP =
 #' 0.6)` (no default).
 #' * `nv_enr_rto` A named numeric vector specifying the substance enrichment
 #' ratios required for substance except SS transport, for example, `c(PP = 2.0)`
-#' (no default).
+#' (calibration parameter; no default).
 #' * `iv_fDo`: An integer vector specifying the outflow direction vector
 #' required for substance transport (defaults to _ArcGIS_ codes).
 #' * `nm_olc`: A numeric [`matrix`] specifying the catchment outlet coordinates
@@ -154,10 +154,10 @@ RPhosFate <- function(...) {
 #'
 #' @examples
 #' \dontrun{
-#' # create temporary demonstration project
+#' # temporary demonstration project copy
 #' cv_dir <- demoProject()
 #'
-#' # create project from scratch
+#' # initialise project from scratch
 #' x <- RPhosFate(
 #'   cv_dir = cv_dir,
 #'   ns_dep_ovl = 25e-4,
@@ -211,7 +211,7 @@ setGeneric(
 #'
 #' @examples
 #' \dontrun{
-#' # create temporary demonstration project
+#' # temporary demonstration project copy
 #' cv_dir <- demoProject()
 #' # load temporary demonstration project
 #' x <- RPhosFate(
@@ -277,14 +277,14 @@ setGeneric(
 #'
 #' @examples
 #' \dontrun{
-#' # create temporary demonstration project
+#' # temporary demonstration project copy
 #' cv_dir <- demoProject()
 #' # load temporary demonstration project
 #' x <- RPhosFate(
 #'   cv_dir = cv_dir,
 #'   ls_ini = TRUE
 #' )
-#' # presupposed function call
+#' # presupposed method call
 #' x <- firstRun(x, "SS")
 #'
 #' x <- subsequentRun(x, "PP")
@@ -346,7 +346,7 @@ setGeneric(
 #'
 #' @examples
 #' \dontrun{
-#' # create temporary demonstration project
+#' # temporary demonstration project copy
 #' cv_dir <- demoProject()
 #' # load temporary demonstration project
 #' x <- RPhosFate(
@@ -416,14 +416,14 @@ setGeneric(
 #'
 #' @examples
 #' \dontrun{
-#' # create temporary demonstration project
+#' # temporary demonstration project copy
 #' cv_dir <- demoProject()
 #' # load temporary demonstration project
 #' x <- RPhosFate(
 #'   cv_dir = cv_dir,
 #'   ls_ini = TRUE
 #' )
-#' # presupposed function call
+#' # presupposed method call
 #' x <- firstRun(x, "SS")
 #' x <- snapGauges(x)
 #'
@@ -566,14 +566,14 @@ setGeneric(
 #'
 #' @examples
 #' \dontrun{
-#' # create temporary demonstration project
+#' # temporary demonstration project copy
 #' cv_dir <- demoProject()
 #' # load temporary demonstration project
 #' x <- RPhosFate(
 #'   cv_dir = cv_dir,
 #'   ls_ini = TRUE
 #' )
-#' # presupposed function call
+#' # presupposed method call
 #' x <- firstRun(x, "SS")
 #' x <- snapGauges(x)
 #'
@@ -664,7 +664,7 @@ setGeneric(
 #'
 #' @examples
 #' \dontrun{
-#' # create temporary demonstration project
+#' # temporary demonstration project copy
 #' cv_dir <- demoProject()
 #' # load temporary demonstration project
 #' x <- RPhosFate(

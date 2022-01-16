@@ -28,7 +28,7 @@ setGeneric(
 #'
 #' @examples
 #' \dontrun{
-#' # create temporary demonstration project
+#' # temporary demonstration project copy
 #' cv_dir <- demoProject()
 #' # load temporary demonstration project
 #' x <- RPhosFate(
@@ -140,14 +140,14 @@ setGeneric(
 #'
 #' @examples
 #' \dontrun{
-#' # create temporary demonstration project
+#' # temporary demonstration project copy
 #' cv_dir <- demoProject()
 #' # load temporary demonstration project
 #' x <- RPhosFate(
 #'   cv_dir = cv_dir,
 #'   ls_ini = TRUE
 #' )
-#' # presupposed function call
+#' # presupposed method call
 #' x <- erosionPrerequisites(x)
 #'
 #' x <- erosion(x)
@@ -206,14 +206,14 @@ setGeneric(
 #'
 #' @examples
 #' \dontrun{
-#' # create temporary demonstration project
+#' # temporary demonstration project copy
 #' cv_dir <- demoProject()
 #' # load temporary demonstration project
 #' x <- RPhosFate(
 #'   cv_dir = cv_dir,
 #'   ls_ini = TRUE
 #' )
-#' # presupposed function calls
+#' # presupposed method calls
 #' x <- erosionPrerequisites(x)
 #' x <- erosion(x)
 #'
@@ -284,7 +284,7 @@ setGeneric(
 #'
 #' @examples
 #' \dontrun{
-#' # create temporary demonstration project
+#' # temporary demonstration project copy
 #' cv_dir <- demoProject()
 #' # load temporary demonstration project
 #' x <- RPhosFate(
@@ -396,7 +396,7 @@ setGeneric(
 #'
 #' @examples
 #' \dontrun{
-#' # create temporary demonstration project
+#' # temporary demonstration project copy
 #' cv_dir <- demoProject()
 #' # load temporary demonstration project
 #' x <- RPhosFate(
@@ -486,14 +486,14 @@ setGeneric(
 #'
 #' @examples
 #' \dontrun{
-#' # create temporary demonstration project
+#' # temporary demonstration project copy
 #' cv_dir <- demoProject()
 #' # load temporary demonstration project
 #' x <- RPhosFate(
 #'   cv_dir = cv_dir,
 #'   ls_ini = TRUE
 #' )
-#' # presupposed function calls
+#' # presupposed method calls
 #' x <- erosionPrerequisites(x)
 #' x <- erosion(x)
 #' x <- emission(x, "PP")

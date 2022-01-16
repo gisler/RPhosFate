@@ -4,7 +4,7 @@ unlink(li_dir$value, recursive = TRUE)
 example("DEMrelatedInput", "RPhosFate", run.dontrun = TRUE)
 unlink(cv_dir, recursive = TRUE)
 
-#### low level interface ####
+#### low-level interface ####
 example("erosionPrerequisites", "RPhosFate", run.dontrun = TRUE)
 unlink(cv_dir, recursive = TRUE)
 example("erosion", "RPhosFate", run.dontrun = TRUE)
@@ -18,7 +18,7 @@ unlink(cv_dir, recursive = TRUE)
 example("transport", "RPhosFate", run.dontrun = TRUE)
 unlink(cv_dir, recursive = TRUE)
 
-#### high level interface ####
+#### high-level interface ####
 example("RPhosFate", "RPhosFate", run.dontrun = TRUE)
 unlink(cv_dir, recursive = TRUE)
 example("firstRun", "RPhosFate", run.dontrun = TRUE)

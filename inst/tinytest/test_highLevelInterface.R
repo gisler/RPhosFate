@@ -229,7 +229,7 @@ expect_identical(
 expect_identical(
   getwd(),
   cs_wd,
-  info = "working directory is left untouched (high level interface)"
+  info = "working directory is left untouched (high-level interface)"
 )
 
 unlink(cs_dir_tst, recursive = TRUE)

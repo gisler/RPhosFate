@@ -94,7 +94,7 @@ for (substance in slotNames(control@substances)) {
 expect_identical(
   getwd(),
   cs_wd,
-  info = "working directory is left untouched (low level interface)"
+  info = "working directory is left untouched (low-level interface)"
 )
 
 unlink(cs_dir_tst, recursive = TRUE)

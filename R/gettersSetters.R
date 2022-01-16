@@ -30,14 +30,14 @@ setGeneric(
 #'
 #' @examples
 #' \dontrun{
-#' # create temporary demonstration project
+#' # temporary demonstration project copy
 #' cv_dir <- demoProject()
 #' # load temporary demonstration project
 #' x <- RPhosFate(
 #'   cv_dir = cv_dir,
 #'   ls_ini = TRUE
 #' )
-#' # presupposed function call
+#' # presupposed method call
 #' x <- firstRun(x, "SS")
 #'
 #' getLayer(x, "dir")
@@ -108,7 +108,7 @@ setGeneric(
 #'
 #' @examples
 #' \dontrun{
-#' # create temporary demonstration project
+#' # temporary demonstration project copy
 #' cv_dir <- demoProject()
 #' # load temporary demonstration project
 #' x <- RPhosFate(
@@ -160,7 +160,7 @@ setGeneric(
 #'
 #' @examples
 #' \dontrun{
-#' # create temporary demonstration project
+#' # temporary demonstration project copy
 #' cv_dir <- demoProject()
 #' # load temporary demonstration project
 #' x <- RPhosFate(

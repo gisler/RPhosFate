@@ -37,7 +37,7 @@ reference:
     contents:
       - catchment
       - saveState
-  - title: "High level interface"
+  - title: "High-level interface"
     contents:
       - firstRun
       - subsequentRun
@@ -49,7 +49,7 @@ reference:
       - snapGauges
       - calibrationQuality
       - autoCalibrate
-  - title: "Low level interface"
+  - title: "Low-level interface"
     contents:
       - erosionPrerequisites
       - erosion
