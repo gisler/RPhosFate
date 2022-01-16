@@ -2,7 +2,7 @@ pandoc: 2.14.2
 pkgdown: 2.0.1
 pkgdown_sha: ~
 articles: {}
-last_built: 2022-01-10T21:54Z
+last_built: 2022-01-16T11:49Z
 urls:
   reference: https://gisler.github.io/RPhosFate/reference
   article: https://gisler.github.io/RPhosFate/articles
