@@ -1,0 +1,128 @@
+---
+title: "Basic modelling workflow"
+author: "Gerold Hepp"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Basic modelling workflow}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+This vignette provides an overview of the basic modelling workflow with the `RPhosFate` package.
+
+---
+
+## Preparations
+
+Load the package and obtain a copy of the demonstration project:
+
+```{r eval=FALSE}
+library(RPhosFate)
+
+cv_dir <- demoProject()
+```
+
+## Project initialisation
+
+Use `RPhosFate()` or `catchment()` to initialise the project:
+
+```{r eval=FALSE}
+x <- RPhosFate(
+  cv_dir = cv_dir,
+  ns_dep_ovl = 25e-4,
+  ns_dep_cha = 0.0,
+  nv_tfc_inl = c(SS = 0.6, PP = 0.6),
+  nv_enr_rto = c(PP = 2.0),
+  nm_olc = matrix(c(4704255, 2795195), 1L),
+  df_cdt = read.table(
+    file.path(cv_dir, "cdt.txt"),
+    header = TRUE,
+    stringsAsFactors = FALSE
+  )
+)
+```
+
+## First model run for suspended solids (SS)
+
+`firstRun()` calls all low-level interface methods for the specified substance in the required order:
+
+```{r eval=FALSE}
+x <- firstRun(x, substance = "SS")
+```
+
+## Check calibration quality for SS
+
+Snap gauges to the midpoint of the nearest channel cell if necessary and check calibration quality:
+
+```{r eval=FALSE}
+x <- snapGauges(x)
+
+metrics <- calibrationQuality(x, substance = "SS", col = "SS_load")
+```
+
+## Calibrate SS
+
+SS is calibrated by iteratively specifying better parameter values for `ns_dep_ovl` (overland deposition rate) and/or `ns_dep_cha` (channel deposition rate) as well as calling `subsequentRun()` for SS afterwards until pleased with the metrics. By default, `subsequentRun()` only calls the `transport()` low-level interface method for the specified substance:
+
+```{r eval=FALSE}
+x <- setParameter(x, ns_dep_ovl = 15e-4)
+
+x <- subsequentRun(x, substance = "SS")
+
+metrics <- calibrationQuality(x, substance = "SS", col = "SS_load")
+```
+
+The `autoCalibrate()` method may provide a more comfortable alternative to this process.
+
+## Check calibration quality for particulate phosphorus (PP)
+
+First, a further call to `subsequentRun()` for PP is necessary:
+
+```{r eval=FALSE}
+x <- subsequentRun(x, substance = "PP")
+
+metrics <- calibrationQuality(x, substance = "PP", col = "PP_load")
+```
+
+## Calibrate PP
+
+Same procedure as with SS apart from iteratively specifying better parameter values for the enrichment ratio:
+
+```{r eval=FALSE}
+x <- setParameter(x, nv_enr_rto = c(PP = 1.4))
+
+x <- subsequentRun(x, substance = "PP")
+
+metrics <- calibrationQuality(x, substance = "PP", col = "PP_load")
+```
+
+In case the only substance of interest is PP, it is possible to set its enrichment ratio to one and directly calibrate it via `ns_dep_ovl` and/or `ns_dep_cha`.
+
+## Save state
+
+Save parameters and transport calculation order to disk:
+
+```{r eval=FALSE}
+saveState(x)
+```
+
+---
+
+## Load calibrated project at a later time
+
+Load the previously saved state of the project via the `ls_ini` argument:
+
+```{r eval=FALSE}
+x <- RPhosFate(
+  cv_dir = cv_dir,
+  ls_ini = TRUE
+)
+```

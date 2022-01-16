@@ -13,8 +13,10 @@ navbar:
       href: index.html
     - text: "Reference"
       href: reference/index.html
+    - text: "Basic modelling workflow"
+      href: articles/basicWorkflow.html
     # - text: "Handbook"
-    #   href: https://gisler.github.io/RPhosFateBook
+    #   href: https://gisler.github.io/RPhosFateBook/
     - text: "Papers"
       menu:
         - text: "2008: Best management practice applications"
