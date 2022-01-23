@@ -241,7 +241,10 @@ List transportCpp(
     if (IntegerMatrix::is_na(im_cha(iv_ord_row[i], iv_ord_col[i]))) { // Overland
       nm_xxr(iv_ord_row[i], iv_ord_col[i]) = nm_xxe(iv_ord_row[i], iv_ord_col[i]) * (1.0 - nm_tfc_lcl(iv_ord_row[i], iv_ord_col[i])) + focal_sum_matrix_cond(nm_xxt_foc, im_fDi_foc, im_foc) * (1.0 - nm_tfc_tpt(iv_ord_row[i], iv_ord_col[i])); // Retention
       nm_xxt(iv_ord_row[i], iv_ord_col[i]) = nm_xxe(iv_ord_row[i], iv_ord_col[i]) + focal_sum_matrix_cond(nm_xxt_foc, im_fDi_foc, im_foc) - nm_xxr(iv_ord_row[i], iv_ord_col[i]); // Transport
-      if (!IntegerMatrix::is_na(im_inl(iv_ord_row[i], iv_ord_col[i]))) { // Inlet
+      if (!IntegerMatrix::is_na(im_rip(iv_ord_row[i], iv_ord_col[i]))) { // Riparian zone
+        nm_xxr_inp(iv_ord_row[i], iv_ord_col[i]) = nm_xxt(iv_ord_row[i], iv_ord_col[i]) * (1.0 - nm_tfc_rip(iv_ord_row[i], iv_ord_col[i])); // Retention of riparian zone
+        nm_xxt_inp(iv_ord_row[i], iv_ord_col[i]) = nm_xxt(iv_ord_row[i], iv_ord_col[i]) - nm_xxr_inp(iv_ord_row[i], iv_ord_col[i]); // Transport of riparian zone
+      } else if (!IntegerMatrix::is_na(im_inl(iv_ord_row[i], iv_ord_col[i]))) { // Inlet
         nm_xxr_inp(iv_ord_row[i], iv_ord_col[i]) = nm_xxt(iv_ord_row[i], iv_ord_col[i]) * (1.0 - ns_tfc_inl); // Retention of inlet
         nm_xxt_inp(iv_ord_row[i], iv_ord_col[i]) = nm_xxt(iv_ord_row[i], iv_ord_col[i]) - nm_xxr_inp(iv_ord_row[i], iv_ord_col[i]); // Transport of inlet
         code = div(im_inl(iv_ord_row[i], iv_ord_col[i]), is_cls);
@@ -252,10 +255,6 @@ List transportCpp(
         } else {
           nm_xxt_out(is_row, is_col) += nm_xxt_inp(iv_ord_row[i], iv_ord_col[i]);
         }
-      }
-      if (!IntegerMatrix::is_na(im_rip(iv_ord_row[i], iv_ord_col[i]))) { // Riparian zone
-        nm_xxr_inp(iv_ord_row[i], iv_ord_col[i]) = nm_xxt(iv_ord_row[i], iv_ord_col[i]) * (1.0 - nm_tfc_rip(iv_ord_row[i], iv_ord_col[i])); // Retention of riparian zone
-        nm_xxt_inp(iv_ord_row[i], iv_ord_col[i]) = nm_xxt(iv_ord_row[i], iv_ord_col[i]) - nm_xxr_inp(iv_ord_row[i], iv_ord_col[i]); // Transport of riparian zone
       }
     } else { // Channel
       nm_xxt_inp_foc = nm_xxt_inp(Range(is_row_min, is_row_max), Range(is_col_min, is_col_max)); // Moving transport of riparian zone and inlet data window
