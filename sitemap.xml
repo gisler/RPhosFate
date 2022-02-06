@@ -1,7 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://gisler.github.io/RPhosFate/404.html</loc>
+  </url>
+  <url>
+    <loc>https://gisler.github.io/RPhosFate/CONTRIBUTING.html</loc>
+  </url>
+  <url>
+    <loc>https://gisler.github.io/RPhosFate/LICENSE-text.html</loc>
+  </url>
+  <url>
+    <loc>https://gisler.github.io/RPhosFate/articles/basicWorkflow.html</loc>
+  </url>
+  <url>
+    <loc>https://gisler.github.io/RPhosFate/articles/index.html</loc>
+  </url>
+  <url>
+    <loc>https://gisler.github.io/RPhosFate/authors.html</loc>
+  </url>
+  <url>
     <loc>https://gisler.github.io/RPhosFate/index.html</loc>
+  </url>
+  <url>
+    <loc>https://gisler.github.io/RPhosFate/news/index.html</loc>
+  </url>
+  <url>
+    <loc>https://gisler.github.io/RPhosFate/pull_request_template.html</loc>
+  </url>
+  <url>
+    <loc>https://gisler.github.io/RPhosFate/reference/DEMrelatedInput.html</loc>
+  </url>
+  <url>
+    <loc>https://gisler.github.io/RPhosFate/reference/RPhosFate-class.html</loc>
   </url>
   <url>
     <loc>https://gisler.github.io/RPhosFate/reference/autoCalibrate-RPhosFate-method.html</loc>
@@ -14,9 +44,6 @@
   </url>
   <url>
     <loc>https://gisler.github.io/RPhosFate/reference/demoProject.html</loc>
-  </url>
-  <url>
-    <loc>https://gisler.github.io/RPhosFate/reference/DEMrelatedInput.html</loc>
   </url>
   <url>
     <loc>https://gisler.github.io/RPhosFate/reference/emission-RPhosFate-method.html</loc>
@@ -37,7 +64,7 @@
     <loc>https://gisler.github.io/RPhosFate/reference/getParameter-RPhosFate-method.html</loc>
   </url>
   <url>
-    <loc>https://gisler.github.io/RPhosFate/reference/RPhosFate-class.html</loc>
+    <loc>https://gisler.github.io/RPhosFate/reference/index.html</loc>
   </url>
   <url>
     <loc>https://gisler.github.io/RPhosFate/reference/saveState-RPhosFate-method.html</loc>
