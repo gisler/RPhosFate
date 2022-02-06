@@ -1,4 +1,4 @@
-# RPhosFate v0.10.0.9000
+# RPhosFate v0.11.0
 
 * Monte Carlo simulation mode can now make use of repeated random samples, i.e. raster data, of distributions of about all input data
 * Added the following arguments to the `subsequentRun()` method, which allow for calling the respective methods:
