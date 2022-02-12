@@ -30,21 +30,24 @@ RPhosFate <- function(...) {
 #' roads must be considered during generation of the flow accumulation layers
 #' and also be cut out from them in order to be properly respected):
 #'
-#' * _acc:_ Flow accumulations required for transport.
+#' * _acc:_ Flow accumulations required for substance [`transport`].
 #' * \emph{acc_wtd:} Weighted flow accumulations (can be equal to _acc_).
 #' * _CFa:_ (R)USLE C-factors.
 #' * _cha:_ Channel cells (`1`: channel cell, `NA`: no channel cell).
-#' * _clc:_ Clay contents of top soils in % required for substance emissions.
+#' * _clc:_ Clay contents of top soils in % required for substance
+#' [`emission`]s.
 #' * _dem:_ Digital elevation model in m a.s.l. (optional).
-#' * _dir:_ D8 flow directions required for transport.
+#' * _dir:_ D8 flow directions required for substance [`transport`].
 #' * _fid:_ Field IDs (optional).
 #' * _KFa:_ (R)USLE K-factors.
 #' * _lue:_ Land use classes (optional).
-#' * _man:_ Manning's roughness coefficients required for transport.
+#' * _man:_ Manning's roughness coefficients required for substance
+#' [`transport`].
 #' * _xxc:_ Substance contents of top soils in mg/kg required for substance
-#' emissions, for example, _ppc_ for PP top soil contents.
-#' * _rds:_ Road cells required for transport (`0`: road cell without subsurface
-#' drainage, `1`: road cell with subsurface drainage, `NA`: no road cell).
+#' [`emission`]s, for example, _ppc_ for PP top soil contents.
+#' * _rds:_ Road cells required for substance [`transport`] (`0`: road cell
+#' without subsurface drainage, `1`: road cell with subsurface drainage, `NA`:
+#' no road cell).
 #' * _RFa:_ (R)USLE R-factors.
 #' * _slp:_ Slopes in %.
 #' * _wsh:_ Watershed (optional).
@@ -109,27 +112,30 @@ RPhosFate <- function(...) {
 #' years).
 #' * `ns_cha_rto`: A numeric scalar specifying the ratio of the channel to the
 #' cell width determining the widths of the riparian zones required for
-#' substance transport (defaults to `0.5`).
+#' substance [`transport`] (defaults to `0.5`).
 #' * `ns_man_rip`: A numeric scalar specifying Manning's roughness coefficient
-#' of the riparian zones within channel cells required for substance transport
-#' (defaults to `0.32`).
+#' of the riparian zones within channel cells required for substance
+#' [`transport`] (defaults to `0.32`).
 #' * `ns_man_cha`: A numeric scalar specifying Manning's roughness coefficient
-#' of the channel within channel cells required for substance transport
+#' of the channel within channel cells required for substance [`transport`]
 #' (defaults to `0.04`).
 #' * `ns_dep_ovl`: A numeric scalar specifying the overland deposition rate per
-#' second required for substance transport (calibration parameter; no default).
+#' second required for substance [`transport`] (calibration parameter; no
+#' default).
 #' * `ns_dep_cha`: A numeric scalar specifying the channel deposition rate per
-#' second required for substance transport (calibration parameter; no default).
+#' second required for substance [`transport`] (calibration parameter; no
+#' default).
 #' * `nv_tfc_inl`: A named numeric vector specifying the inlet transfer
-#' coefficients required for substance transport, for example, `c(SS = 0.6, PP =
-#' 0.6)` (no default).
+#' coefficients required for substance [`transport`], for example, `c(SS = 0.6,
+#' PP = 0.6)` (no default).
 #' * `nv_enr_rto` A named numeric vector specifying the substance enrichment
-#' ratios required for substance except SS transport, for example, `c(PP = 2.0)`
-#' (calibration parameter; no default).
+#' ratios required for substance except SS [`transport`], for example, `c(PP =
+#' 2.0)` (calibration parameter; no default).
 #' * `iv_fDo`: An integer vector specifying the outflow direction vector
-#' required for substance transport (defaults to _ArcGIS_ codes).
+#' required for substance [`transport`] (defaults to _ArcGIS_ codes).
 #' * `nm_olc`: A numeric [`matrix`] specifying the catchment outlet coordinates
-#' required for calibration (no default).
+#' required for the in-channel retention ratio of [`calibrationQuality`] (no
+#' default).
 #' * `df_cdt`: A [`data.frame`] with calibration data, which must have at least
 #' the following three columns and one or more columns with substance river
 #' loads in t/yr (no default):

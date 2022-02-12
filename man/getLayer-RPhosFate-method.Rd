@@ -34,21 +34,24 @@ This directory holds all possible user input raster data (flow obstacles like
 roads must be considered during generation of the flow accumulation layers
 and also be cut out from them in order to be properly respected):
 \itemize{
-\item \emph{acc:} Flow accumulations required for transport.
+\item \emph{acc:} Flow accumulations required for substance \code{\link{transport}}.
 \item \emph{acc_wtd:} Weighted flow accumulations (can be equal to \emph{acc}).
 \item \emph{CFa:} (R)USLE C-factors.
 \item \emph{cha:} Channel cells (\code{1}: channel cell, \code{NA}: no channel cell).
-\item \emph{clc:} Clay contents of top soils in \% required for substance emissions.
+\item \emph{clc:} Clay contents of top soils in \% required for substance
+\code{\link{emission}}s.
 \item \emph{dem:} Digital elevation model in m a.s.l. (optional).
-\item \emph{dir:} D8 flow directions required for transport.
+\item \emph{dir:} D8 flow directions required for substance \code{\link{transport}}.
 \item \emph{fid:} Field IDs (optional).
 \item \emph{KFa:} (R)USLE K-factors.
 \item \emph{lue:} Land use classes (optional).
-\item \emph{man:} Manning's roughness coefficients required for transport.
+\item \emph{man:} Manning's roughness coefficients required for substance
+\code{\link{transport}}.
 \item \emph{xxc:} Substance contents of top soils in mg/kg required for substance
-emissions, for example, \emph{ppc} for PP top soil contents.
-\item \emph{rds:} Road cells required for transport (\code{0}: road cell without subsurface
-drainage, \code{1}: road cell with subsurface drainage, \code{NA}: no road cell).
+\code{\link{emission}}s, for example, \emph{ppc} for PP top soil contents.
+\item \emph{rds:} Road cells required for substance \code{\link{transport}} (\code{0}: road cell
+without subsurface drainage, \code{1}: road cell with subsurface drainage, \code{NA}:
+no road cell).
 \item \emph{RFa:} (R)USLE R-factors.
 \item \emph{slp:} Slopes in \%.
 \item \emph{wsh:} Watershed (optional).

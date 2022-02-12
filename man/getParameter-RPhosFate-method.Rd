@@ -39,26 +39,28 @@ hydraulic radius, which in turn is a prerequisite for substance transport
 years).
 \item \code{ns_cha_rto}: A numeric scalar specifying the ratio of the channel to the
 cell width determining the widths of the riparian zones required for
-substance transport (defaults to \code{0.5}).
+substance \code{\link{transport}} (defaults to \code{0.5}).
 \item \code{ns_man_rip}: A numeric scalar specifying Manning's roughness coefficient
-of the riparian zones within channel cells required for substance transport
-(defaults to \code{0.32}).
+of the riparian zones within channel cells required for substance
+\code{\link{transport}} (defaults to \code{0.32}).
 \item \code{ns_man_cha}: A numeric scalar specifying Manning's roughness coefficient
-of the channel within channel cells required for substance transport
+of the channel within channel cells required for substance \code{\link{transport}}
 (defaults to \code{0.04}).
 \item \code{ns_dep_ovl}: A numeric scalar specifying the overland deposition rate per
-second required for substance transport (calibration parameter; no default).
+second required for substance \code{\link{transport}} (calibration parameter; no
+default).
 \item \code{ns_dep_cha}: A numeric scalar specifying the channel deposition rate per
-second required for substance transport (calibration parameter; no default).
+second required for substance \code{\link{transport}} (calibration parameter; no
+default).
 \item \code{nv_tfc_inl}: A named numeric vector specifying the inlet transfer
-coefficients required for substance transport, for example, \code{c(SS = 0.6, PP = 0.6)} (no default).
+coefficients required for substance \code{\link{transport}}, for example, \code{c(SS = 0.6, PP = 0.6)} (no default).
 \item \code{nv_enr_rto} A named numeric vector specifying the substance enrichment
-ratios required for substance except SS transport, for example, \code{c(PP = 2.0)}
-(calibration parameter; no default).
+ratios required for substance except SS \code{\link{transport}}, for example, \code{c(PP = 2.0)} (calibration parameter; no default).
 \item \code{iv_fDo}: An integer vector specifying the outflow direction vector
-required for substance transport (defaults to \emph{ArcGIS} codes).
+required for substance \code{\link{transport}} (defaults to \emph{ArcGIS} codes).
 \item \code{nm_olc}: A numeric \code{\link{matrix}} specifying the catchment outlet coordinates
-required for calibration (no default).
+required for the in-channel retention ratio of \code{\link{calibrationQuality}} (no
+default).
 \item \code{df_cdt}: A \code{\link{data.frame}} with calibration data, which must have at least
 the following three columns and one or more columns with substance river
 loads in t/yr (no default):
