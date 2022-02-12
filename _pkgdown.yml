@@ -53,6 +53,7 @@ reference:
       - snapGauges
       - calibrationQuality
       - autoCalibrate
+      - autoCalibrate2
   - title: "Low-level interface"
     contents:
       - erosionPrerequisites
