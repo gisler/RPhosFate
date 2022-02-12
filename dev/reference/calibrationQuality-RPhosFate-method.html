@@ -132,7 +132,8 @@ respective substance river loads.</p></dd>
     <div id="value">
     <h2>Value</h2>
     <p>A named numeric vector containing the assessed metrics along with the
-in-channel retention ratio.</p>
+in-channel retention ratio (one minus <em>xxt</em> at catchment outlet divided by
+sum of <em>xxt_inp</em>).</p>
     </div>
     <div id="see-also">
     <h2>See also</h2>
@@ -151,7 +152,7 @@ in-channel retention ratio.</p>
 <span class="r-in">  cv_dir <span class="op">=</span> <span class="va">cv_dir</span>,</span>
 <span class="r-in">  ls_ini <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span class="r-in"><span class="op">)</span></span>
-<span class="r-in"><span class="co"># presupposed method call</span></span>
+<span class="r-in"><span class="co"># presupposed method calls</span></span>
 <span class="r-in"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="firstRun-RPhosFate-method.html">firstRun</a></span><span class="op">(</span><span class="va">x</span>, <span class="st">"SS"</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="snapGauges-RPhosFate-method.html">snapGauges</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
 <span class="r-in"></span>
