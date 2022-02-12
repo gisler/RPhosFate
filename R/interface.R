@@ -414,7 +414,7 @@ setGeneric(
 #'   respective substance river loads.
 #'
 #' @return A named numeric vector containing the assessed metrics along with the
-#'   in-channel retention.
+#'   in-channel retention ratio.
 #'
 #' @seealso [`snapGauges`], [`autoCalibrate`], [`hydroGOF::NSE`],
 #'   [`hydroGOF::mNSE`], [`hydroGOF::rmse`], [`hydroGOF::nrmse`],
@@ -488,7 +488,7 @@ setMethod(
           cellStats(slot(x@substances, substance)@rl_xxt_inp, sum)
       )
     )
-    names(metrics) <- c(x@helpers@cv_met, "inChannelRetention")
+    names(metrics) <- c(x@helpers@cv_met, "inChannelRetentionRatio")
 
     cat("NSE:   ", metrics["NSE"  ], "\n", sep = "")
     cat("mNSE:  ", metrics["mNSE" ], "\n", sep = "")
@@ -499,7 +499,7 @@ setMethod(
     cat("GMRAE: ", metrics["GMRAE"], "\n", sep = "")
     cat("MdRAE: ", metrics["MdRAE"], "\n", sep = "")
     cat(
-      "\nIn-channel retention: ", metrics["inChannelRetention"],
+      "\nIn-channel retention ratio: ", metrics["inChannelRetentionRatio"],
       "\n\n", sep = ""
     )
 
