@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">RPhosFate</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.10.0.9000</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.11.0.9000</span>
       </span>
     </div>
 
@@ -123,26 +123,28 @@ hydraulic radius, which in turn is a prerequisite for substance transport
 years).</p></li>
 <li><p><code>ns_cha_rto</code>: A numeric scalar specifying the ratio of the channel to the
 cell width determining the widths of the riparian zones required for
-substance transport (defaults to <code>0.5</code>).</p></li>
+substance <code><a href="transport-RPhosFate-method.html">transport</a></code> (defaults to <code>0.5</code>).</p></li>
 <li><p><code>ns_man_rip</code>: A numeric scalar specifying Manning's roughness coefficient
-of the riparian zones within channel cells required for substance transport
-(defaults to <code>0.32</code>).</p></li>
+of the riparian zones within channel cells required for substance
+<code><a href="transport-RPhosFate-method.html">transport</a></code> (defaults to <code>0.32</code>).</p></li>
 <li><p><code>ns_man_cha</code>: A numeric scalar specifying Manning's roughness coefficient
-of the channel within channel cells required for substance transport
+of the channel within channel cells required for substance <code><a href="transport-RPhosFate-method.html">transport</a></code>
 (defaults to <code>0.04</code>).</p></li>
 <li><p><code>ns_dep_ovl</code>: A numeric scalar specifying the overland deposition rate per
-second required for substance transport (calibration parameter; no default).</p></li>
+second required for substance <code><a href="transport-RPhosFate-method.html">transport</a></code> (calibration parameter; no
+default).</p></li>
 <li><p><code>ns_dep_cha</code>: A numeric scalar specifying the channel deposition rate per
-second required for substance transport (calibration parameter; no default).</p></li>
+second required for substance <code><a href="transport-RPhosFate-method.html">transport</a></code> (calibration parameter; no
+default).</p></li>
 <li><p><code>nv_tfc_inl</code>: A named numeric vector specifying the inlet transfer
-coefficients required for substance transport, for example, <code>c(SS = 0.6, PP = 0.6)</code> (no default).</p></li>
+coefficients required for substance <code><a href="transport-RPhosFate-method.html">transport</a></code>, for example, <code>c(SS = 0.6, PP = 0.6)</code> (no default).</p></li>
 <li><p><code>nv_enr_rto</code> A named numeric vector specifying the substance enrichment
-ratios required for substance except SS transport, for example, <code>c(PP = 2.0)</code>
-(calibration parameter; no default).</p></li>
+ratios required for substance except SS <code><a href="transport-RPhosFate-method.html">transport</a></code>, for example, <code>c(PP = 2.0)</code> (calibration parameter; no default).</p></li>
 <li><p><code>iv_fDo</code>: An integer vector specifying the outflow direction vector
-required for substance transport (defaults to <em>ArcGIS</em> codes).</p></li>
+required for substance <code><a href="transport-RPhosFate-method.html">transport</a></code> (defaults to <em>ArcGIS</em> codes).</p></li>
 <li><p><code>nm_olc</code>: A numeric <code><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></code> specifying the catchment outlet coordinates
-required for calibration (no default).</p></li>
+required for the in-channel retention ratio of <code><a href="calibrationQuality-RPhosFate-method.html">calibrationQuality</a></code> (no
+default).</p></li>
 <li><p><code>df_cdt</code>: A <code><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></code> with calibration data, which must have at least
 the following three columns and one or more columns with substance river
 loads in t/yr (no default):</p><ul><li><p><em>ID:</em> ID(s) of the gauge(s)</p></li>
