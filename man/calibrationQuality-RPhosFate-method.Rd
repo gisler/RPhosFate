@@ -47,7 +47,7 @@ x <- RPhosFate(
   cv_dir = cv_dir,
   ls_ini = TRUE
 )
-# presupposed method call
+# presupposed method calls
 x <- firstRun(x, "SS")
 x <- snapGauges(x)
 

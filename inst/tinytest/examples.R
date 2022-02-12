@@ -31,6 +31,8 @@ example("calibrationQuality", "RPhosFate", ask = FALSE, run.dontrun = TRUE)
 unlink(cv_dir, recursive = TRUE)
 example("autoCalibrate", "RPhosFate", ask = FALSE, run.dontrun = TRUE)
 unlink(cv_dir, recursive = TRUE)
+example("autoCalibrate2", "RPhosFate", ask = FALSE, run.dontrun = TRUE)
+unlink(cv_dir, recursive = TRUE)
 example("saveState", "RPhosFate", run.dontrun = TRUE)
 unlink(cv_dir, recursive = TRUE)
 

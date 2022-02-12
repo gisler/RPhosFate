@@ -429,7 +429,7 @@ setGeneric(
 #'   cv_dir = cv_dir,
 #'   ls_ini = TRUE
 #' )
-#' # presupposed method call
+#' # presupposed method calls
 #' x <- firstRun(x, "SS")
 #' x <- snapGauges(x)
 #'
@@ -579,7 +579,7 @@ setGeneric(
 #'   cv_dir = cv_dir,
 #'   ls_ini = TRUE
 #' )
-#' # presupposed method call
+#' # presupposed method calls
 #' x <- firstRun(x, "SS")
 #' x <- snapGauges(x)
 #'
@@ -646,6 +646,97 @@ setMethod(
         "Optimum may not have been found."
       ), call. = FALSE)
     }
+
+    x
+  }
+)
+
+#### autoCalibrate2 ####
+#' @export
+setGeneric(
+  "autoCalibrate2",
+  function(x, ...) standardGeneric("autoCalibrate2")
+)
+#' Automatic model calibration 2
+#'
+#' Automatically calibrates the model with the help of the Nelder–Mead or a
+#' simulated annealing optimisation method. In contrast to [`autoCalibrate`],
+#' this method calibrates the overland and channel deposition rate in one go.
+#' Beware of local optima and use at own risk.
+#'
+#' @inheritParams autoCalibrate,RPhosFate-method
+#' @param method A character string specifying the utilised optimisation method.
+#'   Either `"Nelder-Mead"` or `"SANN"` for simulated annealing.
+#' @param control A [`list`] of control parameters passed on to [`optim`].
+#'
+#' @inherit erosionPrerequisites,RPhosFate-method return
+#'
+#' @seealso [`snapGauges`]
+#'
+#' @examples
+#' \dontrun{
+#' # temporary demonstration project copy
+#' cv_dir <- demoProject()
+#' # load temporary demonstration project
+#' x <- RPhosFate(
+#'   cv_dir = cv_dir,
+#'   ls_ini = TRUE
+#' )
+#' # presupposed method calls
+#' x <- firstRun(x, "SS")
+#' x <- snapGauges(x)
+#'
+#' x <- autoCalibrate2(
+#'   x,
+#'   "SS",
+#'   col = "SS_load",
+#'   interval = c(1e-6, 1e-2),
+#'   metric = "NSE",
+#'   control = list(fnscale = -1, parscale = c(1e-3, 1e-3))
+#' )
+#' }
+#'
+#' @aliases autoCalibrate2
+#'
+#' @export
+setMethod(
+  "autoCalibrate2",
+  "RPhosFate",
+  function(
+    x,
+    substance,
+    col,
+    interval,
+    metric,
+    method = c("Nelder-Mead", "SANN"),
+    control = list(fnscale = if (metric %in% c("NSE", "mNSE")) -1 else 1)
+  ) {
+    assertSubstance(x, substance)
+    assertCol(x, col)
+    qassert(interval, "N2(0,)")
+    qassert(metric, "S1")
+    assertSubset(metric, x@helpers@cv_met)
+    method <- match.arg(method)
+
+    interval <- sort(interval)
+
+    values <- optim(
+      c(x@parameters@ns_dep_ovl, x@parameters@ns_dep_cha),
+      calibrate2,
+      method = method,
+      cmt = x,
+      substance = substance,
+      col = col,
+      metric = metric,
+      lower = interval[1L],
+      upper = interval[2L],
+      control = control
+    )
+
+    print(values)
+
+    x@parameters@ns_dep_ovl <- values$par[1L]
+    x@parameters@ns_dep_cha <- values$par[2L]
 
     x
   }

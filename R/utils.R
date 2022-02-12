@@ -21,6 +21,20 @@ calibrate <- function(value, cmt, substance, col, metric, parameter) {
   }
 }
 
+calibrate2 <- function(values, cmt, substance, col, metric) {
+  cmt@parameters@ns_dep_ovl <- values[1L]
+  cmt@parameters@ns_dep_cha <- values[2L]
+
+  subsequentRun(cmt, substance)
+  metrics <- calibrationQuality(cmt, substance, col)
+
+  if (metric == "PBIAS") {
+    abs(metrics[metric])
+  } else {
+    metrics[metric]
+  }
+}
+
 determineMCfilename <- function(cmt, layer) {
   if (length(cmt@cv_dir) == 2L) {
     MCfilename <- file.path(
