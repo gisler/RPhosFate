@@ -17,7 +17,8 @@ respective substance river loads.}
 }
 \value{
 A named numeric vector containing the assessed metrics along with the
-in-channel retention ratio.
+in-channel retention ratio (one minus \emph{xxt} at catchment outlet divided by
+sum of \emph{xxt_inp}).
 }
 \description{
 Assesses the model's calibration quality via the following metrics:

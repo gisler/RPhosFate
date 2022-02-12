@@ -30,14 +30,15 @@ RPhosFate <- function(...) {
 #' roads must be considered during generation of the flow accumulation layers
 #' and also be cut out from them in order to be properly respected):
 #'
-#' * _acc:_ Flow accumulations required for substance [`transport`].
+#' * _acc:_ Flow accumulations required for [`transportCalcOrder`].
 #' * \emph{acc_wtd:} Weighted flow accumulations (can be equal to _acc_).
 #' * _CFa:_ (R)USLE C-factors.
 #' * _cha:_ Channel cells (`1`: channel cell, `NA`: no channel cell).
 #' * _clc:_ Clay contents of top soils in % required for substance
 #' [`emission`]s.
 #' * _dem:_ Digital elevation model in m a.s.l. (optional).
-#' * _dir:_ D8 flow directions required for substance [`transport`].
+#' * _dir:_ D8 flow directions required for substance [`transport`] and its
+#' prerequisites.
 #' * _fid:_ Field IDs (optional).
 #' * _KFa:_ (R)USLE K-factors.
 #' * _lue:_ Land use classes (optional).
@@ -45,7 +46,7 @@ RPhosFate <- function(...) {
 #' [`transport`].
 #' * _xxc:_ Substance contents of top soils in mg/kg required for substance
 #' [`emission`]s, for example, _ppc_ for PP top soil contents.
-#' * _rds:_ Road cells required for substance [`transport`] (`0`: road cell
+#' * _rds:_ Road cells required for [`transportPrerequisites`] (`0`: road cell
 #' without subsurface drainage, `1`: road cell with subsurface drainage, `NA`:
 #' no road cell).
 #' * _RFa:_ (R)USLE R-factors.
@@ -414,7 +415,8 @@ setGeneric(
 #'   respective substance river loads.
 #'
 #' @return A named numeric vector containing the assessed metrics along with the
-#'   in-channel retention ratio.
+#'   in-channel retention ratio (one minus _xxt_ at catchment outlet divided by
+#'   sum of \emph{xxt_inp}).
 #'
 #' @seealso [`snapGauges`], [`autoCalibrate`], [`hydroGOF::NSE`],
 #'   [`hydroGOF::mNSE`], [`hydroGOF::rmse`], [`hydroGOF::nrmse`],
