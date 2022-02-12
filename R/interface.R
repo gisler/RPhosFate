@@ -37,8 +37,8 @@ RPhosFate <- function(...) {
 #' * _clc:_ Clay contents of top soils in % required for substance
 #' [`emission`]s.
 #' * _dem:_ Digital elevation model in m a.s.l. (optional).
-#' * _dir:_ D8 flow directions required for substance [`transport`] and its
-#' prerequisites.
+#' * _dir:_ D8 flow directions required for [`transportPrerequisites`] and
+#' substance [`transport`].
 #' * _fid:_ Field IDs (optional).
 #' * _KFa:_ (R)USLE K-factors.
 #' * _lue:_ Land use classes (optional).
@@ -659,12 +659,12 @@ setGeneric(
   "autoCalibrate2",
   function(x, ...) standardGeneric("autoCalibrate2")
 )
-#' Automatic model calibration 2
+#' Multidimensional automatic model calibration
 #'
 #' Automatically calibrates the model with the help of the Nelder–Mead or a
 #' simulated annealing optimisation method. In contrast to [`autoCalibrate`],
 #' this method calibrates the overland and channel deposition rate in one go.
-#' Beware of local optima and use at own risk.
+#' Beware of local optima.
 #'
 #' @inheritParams autoCalibrate,RPhosFate-method
 #' @param method A character string specifying the utilised optimisation method.

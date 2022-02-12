@@ -3,7 +3,7 @@
 \name{autoCalibrate2,RPhosFate-method}
 \alias{autoCalibrate2,RPhosFate-method}
 \alias{autoCalibrate2}
-\title{Automatic model calibration 2}
+\title{Multidimensional automatic model calibration}
 \usage{
 \S4method{autoCalibrate2}{RPhosFate}(
   x,
@@ -42,7 +42,7 @@ the form of raster files.
 Automatically calibrates the model with the help of the Nelder–Mead or a
 simulated annealing optimisation method. In contrast to \code{\link{autoCalibrate}},
 this method calibrates the overland and channel deposition rate in one go.
-Beware of local optima and use at own risk.
+Beware of local optima.
 }
 \examples{
 \dontrun{

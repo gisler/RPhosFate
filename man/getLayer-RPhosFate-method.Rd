@@ -41,8 +41,8 @@ and also be cut out from them in order to be properly respected):
 \item \emph{clc:} Clay contents of top soils in \% required for substance
 \code{\link{emission}}s.
 \item \emph{dem:} Digital elevation model in m a.s.l. (optional).
-\item \emph{dir:} D8 flow directions required for substance \code{\link{transport}} and its
-prerequisites.
+\item \emph{dir:} D8 flow directions required for \code{\link{transportPrerequisites}} and
+substance \code{\link{transport}}.
 \item \emph{fid:} Field IDs (optional).
 \item \emph{KFa:} (R)USLE K-factors.
 \item \emph{lue:} Land use classes (optional).
