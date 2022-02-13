@@ -526,7 +526,7 @@ setMethod(
       x@transport@rl_rhy,
       x@topo@rl_slp_cap
     )
-    qassert(x@parameters@ns_dep_ovl, "N1(0,)", .var.name = "ns_dep_ovl")
+    qassert(x@parameters@ns_dep_ovl, "N1[0,)", .var.name = "ns_dep_ovl")
     qassert(x@parameters@ns_dep_cha, "N1[0,)", .var.name = "ns_dep_cha")
     qassert(
       x@parameters@nv_tfc_inl[substance],

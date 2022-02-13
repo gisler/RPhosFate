@@ -3,15 +3,16 @@
 \name{autoCalibrate2,RPhosFate-method}
 \alias{autoCalibrate2,RPhosFate-method}
 \alias{autoCalibrate2}
-\title{Multidimensional automatic model calibration}
+\title{Two dimensional automatic model calibration}
 \usage{
 \S4method{autoCalibrate2}{RPhosFate}(
   x,
   substance,
   col,
-  interval,
   metric,
-  method = c("Nelder-Mead", "SANN"),
+  method = "Nelder-Mead",
+  lower = 0,
+  upper = 0.1,
   control = list(fnscale = if (metric \%in\% c("NSE", "mNSE")) -1 else 1)
 )
 }
@@ -23,26 +24,33 @@
 \item{col}{A character string specifying the calibration data column with the
 respective substance river loads.}
 
-\item{interval}{A numeric vector specifying the end-points of the interval to
-be searched.}
-
 \item{metric}{A character string specifying the metric to optimise. See
 \code{\link{calibrationQuality}} for available metrics.}
 
 \item{method}{A character string specifying the utilised optimisation method.
-Either \code{"Nelder-Mead"} or \code{"SANN"} for simulated annealing.}
+See \code{\link{optim}} for further information (use \code{\link{autoCalibrate}} instead of
+method \code{"Brent"}).}
 
-\item{control}{A \code{\link{list}} of control parameters passed on to \code{\link{optim}}.}
+\item{lower}{A numeric scalar or vector specifying the lower end-point(s) of
+the interval(s) to be searched.}
+
+\item{upper}{A numeric scalar or vector specifying the upper end-point(s) of
+the interval(s) to be searched.}
+
+\item{control}{A \code{\link{list}} of control parameters passed on to \code{\link{optim}}. See
+\code{\link{optim}} for further information.}
 }
 \value{
 An S4 \code{\linkS4class{RPhosFate}} river catchment object and side effects in
 the form of raster files.
 }
 \description{
-Automatically calibrates the model with the help of the Nelder–Mead or a
-simulated annealing optimisation method. In contrast to \code{\link{autoCalibrate}},
-this method calibrates the overland and channel deposition rate in one go.
-Beware of local optima.
+Automatically calibrates the model with the help of a general-purpose
+optimisation function. In contrast to \code{\link{autoCalibrate}}, this method always
+utilises the overland and channel deposition rate at the same time and never
+the respective enrichment ratio for calibration. Beware of local optima and
+parameters approximately within the convergence tolerance of interval
+end-points.
 }
 \examples{
 \dontrun{
@@ -61,9 +69,11 @@ x <- autoCalibrate2(
   x,
   "SS",
   col = "SS_load",
-  interval = c(1e-6, 1e-2),
   metric = "NSE",
-  control = list(fnscale = -1, parscale = c(1e-3, 1e-3))
+  method = "L-BFGS-B",
+  lower = c(10e-4, 0),
+  upper = c(20e-4, 20e-4),
+  control = list(fnscale = -1, parscale = c(1e-3, 1e-3), factr = 1e12)
 )
 }
 

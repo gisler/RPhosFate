@@ -657,17 +657,25 @@ setGeneric(
   "autoCalibrate2",
   function(x, ...) standardGeneric("autoCalibrate2")
 )
-#' Multidimensional automatic model calibration
+#' Two dimensional automatic model calibration
 #'
-#' Automatically calibrates the model with the help of the Nelder–Mead or a
-#' simulated annealing optimisation method. In contrast to [`autoCalibrate`],
-#' this method calibrates the overland and channel deposition rate in one go.
-#' Beware of local optima.
+#' Automatically calibrates the model with the help of a general-purpose
+#' optimisation function. In contrast to [`autoCalibrate`], this method always
+#' utilises the overland and channel deposition rate at the same time and never
+#' the respective enrichment ratio for calibration. Beware of local optima and
+#' parameters approximately within the convergence tolerance of interval
+#' end-points.
 #'
 #' @inheritParams autoCalibrate,RPhosFate-method
 #' @param method A character string specifying the utilised optimisation method.
-#'   Either `"Nelder-Mead"` or `"SANN"` for simulated annealing.
-#' @param control A [`list`] of control parameters passed on to [`optim`].
+#'   See [`optim`] for further information (use [`autoCalibrate`] instead of
+#'   method `"Brent"`).
+#' @param lower A numeric scalar or vector specifying the lower end-point(s) of
+#'   the interval(s) to be searched.
+#' @param upper A numeric scalar or vector specifying the upper end-point(s) of
+#'   the interval(s) to be searched.
+#' @param control A [`list`] of control parameters passed on to [`optim`]. See
+#'   [`optim`] for further information.
 #'
 #' @inherit erosionPrerequisites,RPhosFate-method return
 #'
@@ -690,9 +698,11 @@ setGeneric(
 #'   x,
 #'   "SS",
 #'   col = "SS_load",
-#'   interval = c(1e-6, 1e-2),
 #'   metric = "NSE",
-#'   control = list(fnscale = -1, parscale = c(1e-3, 1e-3))
+#'   method = "L-BFGS-B",
+#'   lower = c(10e-4, 0),
+#'   upper = c(20e-4, 20e-4),
+#'   control = list(fnscale = -1, parscale = c(1e-3, 1e-3), factr = 1e12)
 #' )
 #' }
 #'
@@ -706,19 +716,20 @@ setMethod(
     x,
     substance,
     col,
-    interval,
     metric,
-    method = c("Nelder-Mead", "SANN"),
+    method = "Nelder-Mead",
+    lower = 0,
+    upper = 0.1,
     control = list(fnscale = if (metric %in% c("NSE", "mNSE")) -1 else 1)
   ) {
-    assertSubstance(x, substance)
+    assertChoice(substance, slotNames(x@substances))
     assertCol(x, col)
-    qassert(interval, "N2(0,)")
-    qassert(metric, "S1")
-    assertSubset(metric, x@helpers@cv_met)
-    method <- match.arg(method)
-
-    interval <- sort(interval)
+    assertChoice(metric, x@helpers@cv_met)
+    qassert(method, "S1")
+    assertDisjunct(method, "Brent")
+    qassert(lower, "N+[0,)")
+    qassert(upper, "N+[0,)")
+    qassert(control, "L*")
 
     values <- optim(
       c(x@parameters@ns_dep_ovl, x@parameters@ns_dep_cha),
@@ -728,8 +739,8 @@ setMethod(
       substance = substance,
       col = col,
       metric = metric,
-      lower = interval[1L],
-      upper = interval[2L],
+      lower = lower,
+      upper = upper,
       control = control
     )
 
