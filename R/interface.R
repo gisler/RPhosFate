@@ -136,9 +136,9 @@ RPhosFate <- function(...) {
 #' 2.0)` (calibration parameter; no default).
 #' * `iv_fDo`: An integer vector specifying the outflow direction vector
 #' required for substance [`transport`] (defaults to _ArcGIS_ codes).
-#' * `nm_olc`: A numeric [`matrix`] specifying the catchment outlet coordinates
-#' required for the in-channel retention ratio of [`calibrationQuality`] (no
-#' default).
+#' * `nm_olc`: A two column numeric [`matrix`] specifying one or more catchment
+#' outlet coordinates required for the in-channel retention ratio of
+#' [`calibrationQuality`] (no default).
 #' * `df_cdt`: A [`data.frame`] with calibration data, which must have at least
 #' the following three columns and one or more columns with substance river
 #' loads in t/yr (no default):
@@ -417,8 +417,8 @@ setGeneric(
 #'   respective substance river loads.
 #'
 #' @return A named numeric vector containing the assessed metrics along with the
-#'   in-channel retention ratio (one minus _xxt_ at catchment outlet divided by
-#'   sum of \emph{xxt_inp}).
+#'   in-channel retention ratio (one minus sum of _xxt_ at catchment outlet(s)
+#'   divided by sum of \emph{xxt_inp}).
 #'
 #' @seealso [`snapGauges`], [`autoCalibrate`], [`hydroGOF::NSE`],
 #'   [`hydroGOF::mNSE`], [`hydroGOF::rmse`], [`hydroGOF::nrmse`],
@@ -453,7 +453,7 @@ setMethod(
       x@parameters@nm_olc,
       "numeric",
       any.missing = FALSE,
-      nrows = 1L,
+      min.rows = 1L,
       ncols = 2L,
       .var.name = "nm_olc"
     )
@@ -487,10 +487,10 @@ setMethod(
       tryCatch(rsr(  nv_mld, nv_old), error = function(e) NA_real_),
       exp(mean(log(nv_rae), na.rm = TRUE))                         ,
       median(nv_rae, na.rm = TRUE)                                 ,
-      1 - (
-        extract(slot(x@substances, substance)@rl_xxt, x@parameters@nm_olc) /
-          cellStats(slot(x@substances, substance)@rl_xxt_inp, sum)
-      )
+      1 - (sum(extract(
+        slot(x@substances, substance)@rl_xxt,
+        x@parameters@nm_olc
+      )) / cellStats(slot(x@substances, substance)@rl_xxt_inp, sum))
     )
     names(metrics) <- c(x@helpers@cv_met, "inChannelRetentionRatio")
 

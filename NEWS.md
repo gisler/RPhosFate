@@ -1,6 +1,7 @@
 # RPhosFate v0.11.0.9000
 
 * Added `autoCalibrate2()` method: allows for calibrating the overland and channel deposition rate in one go
+* `DEMrelatedInput()` can handle multiple catchment outlets now and so does `calibrationQuality()`
 * Renamed `"inChannelRetention"` output of `calibrationQuality()` to `"inChannelRetentionRatio"`
 * `RPhosFate` requires R ≥ 3.5.0 now
 * Improved documentation

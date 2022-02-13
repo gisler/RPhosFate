@@ -51,5 +51,11 @@ if (.Platform$OS.type == "windows" && tinytest::at_home()) {
     )
   }
 
+  expect_identical(
+    nm_olc,
+    matrix(c(4704255, 2795195), 1L, dimnames = list(NULL, c("x", "y"))),
+    info = "catchment outlet coordinates are correct"
+  )
+
   unlink(cv_dir, recursive = TRUE)
 }

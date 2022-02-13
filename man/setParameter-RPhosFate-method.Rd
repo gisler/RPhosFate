@@ -56,9 +56,9 @@ coefficients required for substance \code{\link{transport}}, for example, \code{
 ratios required for substance except SS \code{\link{transport}}, for example, \code{c(PP = 2.0)} (calibration parameter; no default).
 \item \code{iv_fDo}: An integer vector specifying the outflow direction vector
 required for substance \code{\link{transport}} (defaults to \emph{ArcGIS} codes).
-\item \code{nm_olc}: A numeric \code{\link{matrix}} specifying the catchment outlet coordinates
-required for the in-channel retention ratio of \code{\link{calibrationQuality}} (no
-default).
+\item \code{nm_olc}: A two column numeric \code{\link{matrix}} specifying one or more catchment
+outlet coordinates required for the in-channel retention ratio of
+\code{\link{calibrationQuality}} (no default).
 \item \code{df_cdt}: A \code{\link{data.frame}} with calibration data, which must have at least
 the following three columns and one or more columns with substance river
 loads in t/yr (no default):

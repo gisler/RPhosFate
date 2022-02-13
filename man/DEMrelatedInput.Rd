@@ -36,7 +36,7 @@ oversized catchment mask used to clip the potentially large input rasters
 for further processing.}
 
 \item{sp_olp}{An \code{\link[sp:SpatialPointsDataFrame-class]{sp::SpatialPointsDataFrame}} providing the desired
-catchment outlet.}
+catchment outlet(s).}
 
 \item{sp_sds}{An \code{\link[sp:SpatialPointsDataFrame-class]{sp::SpatialPointsDataFrame}} providing channel
 sources.}
@@ -67,7 +67,8 @@ raster files (either the default \code{"tif"} or \code{"img"} for backward
 compatibility).}
 }
 \value{
-A numeric \code{\link{matrix}} specifying the catchment outlet coordinates.
+A two column numeric \code{\link{matrix}} specifying one or more catchment
+outlet coordinates.
 }
 \description{
 Clips, pre-processes and calculates or determines all input data related to

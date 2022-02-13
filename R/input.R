@@ -72,7 +72,7 @@ demoProject <- function(cs_dir = tempdir(TRUE)) {
 #'   oversized catchment mask used to clip the potentially large input rasters
 #'   for further processing.
 #' @param sp_olp An [`sp::SpatialPointsDataFrame-class`] providing the desired
-#'   catchment outlet.
+#'   catchment outlet(s).
 #' @param sp_sds An [`sp::SpatialPointsDataFrame-class`] providing channel
 #'   sources.
 #' @param cs_rds An optional character string specifying a path to a potentially
@@ -117,7 +117,8 @@ demoProject <- function(cs_dir = tempdir(TRUE)) {
 #' _slp_ is calculated from the breached DEM (stream burning is undone
 #' beforehand) and represents D8 slopes.
 #'
-#' @return A numeric [`matrix`] specifying the catchment outlet coordinates.
+#' @return A two column numeric [`matrix`] specifying one or more catchment
+#'   outlet coordinates.
 #'
 #' @references
 #' \cite{Lindsay, J.B., 2016. Efficient hybrid breaching-filling sink removal
@@ -529,7 +530,7 @@ DEMrelatedInput <- function(
       c(32L, 16L, 8L, 64L, 0L, 4L, 128L, 1L, 2L),
       3L
     ),
-    ns_fpl = xres(rl_dir),
+    ns_fpl = xres(rl_dem),
     is_ths = as.integer(is_ths)
   )
 
@@ -547,9 +548,9 @@ DEMrelatedInput <- function(
     acc     = rl_acc    ,
     acc_wtd = rl_acc_wtd,
     cha     = rl_cha    ,
-    rds     = rl_rds    ,
     dem     = rl_dem    ,
     dir     = rl_dir    ,
+    rds     = rl_rds    ,
     slp     = rl_slp    ,
     wsh     = rl_wsh
   )
@@ -567,9 +568,22 @@ DEMrelatedInput <- function(
   )
 
   # Determine outlet coordinates
+  nm_slp <- D8slope(
+    im_dir = as.matrix(rl_dir),
+    nm_dem = as.matrix(rl_dem),
+    im_fDo = matrix(
+      c(32L, 16L, 8L, 64L, 0L, 4L, 128L, 1L, 2L),
+      3L
+    ),
+    ns_fpl = xres(rl_dem),
+    is_ths = as.integer(is_ths)
+  )
+  rl_slp <- raster(nm_slp, template = rl_dem)
+  rm(nm_slp)
+
   nm_olc <- xyFromCell(
     rl_acc,
-    Which(rl_acc == cellStats(rl_acc, max), cells = TRUE)
+    Which(is.na(rl_slp) & !is.na(rl_dem), cells = TRUE)
   )
 
   # Clean up temporary files
