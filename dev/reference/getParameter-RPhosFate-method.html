@@ -144,9 +144,9 @@ coefficients required for substance <code><a href="transport-RPhosFate-method.ht
 ratios required for substance except SS <code><a href="transport-RPhosFate-method.html">transport</a></code>, for example, <code>c(PP = 2.0)</code> (calibration parameter; no default).</p></li>
 <li><p><code>iv_fDo</code>: An integer vector specifying the outflow direction vector
 required for substance <code><a href="transport-RPhosFate-method.html">transport</a></code> (defaults to <em>ArcGIS</em> codes).</p></li>
-<li><p><code>nm_olc</code>: A numeric <code><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></code> specifying the catchment outlet coordinates
-required for the in-channel retention ratio of <code><a href="calibrationQuality-RPhosFate-method.html">calibrationQuality</a></code> (no
-default).</p></li>
+<li><p><code>nm_olc</code>: A two column numeric <code><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></code> specifying one or more catchment
+outlet coordinates required for the in-channel retention ratio of
+<code><a href="calibrationQuality-RPhosFate-method.html">calibrationQuality</a></code> (no default).</p></li>
 <li><p><code>df_cdt</code>: A <code><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></code> with calibration data, which must have at least
 the following three columns and one or more columns with substance river
 loads in t/yr (no default):</p><ul><li><p><em>ID:</em> ID(s) of the gauge(s)</p></li>
