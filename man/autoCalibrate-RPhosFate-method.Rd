@@ -3,7 +3,7 @@
 \name{autoCalibrate,RPhosFate-method}
 \alias{autoCalibrate,RPhosFate-method}
 \alias{autoCalibrate}
-\title{Automatic model calibration}
+\title{One dimensional automatic model calibration}
 \usage{
 \S4method{autoCalibrate}{RPhosFate}(
   x,
@@ -32,11 +32,11 @@ be searched.}
 \item{tol}{A numeric scalar specifying the desired accuracy of the parameter
 used for optimisation (not the metric).}
 
-\item{parameter}{By default, SS are optimised utilising the overland
-deposition rate and all other substances are optimised utilising their
+\item{parameter}{By default, SS are calibrated utilising the overland
+deposition rate and all other substances are calibrated utilising their
 respective enrichment ratio. This argument can be used to specify a
-dedicated parameter utilised for optimisation via a character string
-(overland (\code{"ns_dep_ovl"}) or channel deposition rate (\code{"ns_dep_cha"})).}
+dedicated parameter utilised for calibration via a character string:
+\code{"ns_dep_ovl"} for overland or \code{"ns_dep_cha"} for channel deposition rate.}
 }
 \value{
 An S4 \code{\linkS4class{RPhosFate}} river catchment object and side effects in

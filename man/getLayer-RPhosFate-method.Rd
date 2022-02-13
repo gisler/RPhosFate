@@ -35,16 +35,18 @@ roads must be considered during generation of the flow accumulation layers
 and also be cut out from them in order to be properly respected):
 \itemize{
 \item \emph{acc:} Flow accumulations required for \code{\link{transportCalcOrder}}.
-\item \emph{acc_wtd:} Weighted flow accumulations (can be equal to \emph{acc}).
-\item \emph{CFa:} (R)USLE C-factors.
-\item \emph{cha:} Channel cells (\code{1}: channel cell, \code{NA}: no channel cell).
+\item \emph{acc_wtd:} Weighted flow accumulations required for everything (can be
+equal to \emph{acc}).
+\item \emph{CFa:} (R)USLE C-factors required for \code{\link{erosion}}.
+\item \emph{cha:} Channel cells required for everything (\code{1}: channel cell, \code{NA}: no
+channel cell).
 \item \emph{clc:} Clay contents of top soils in \% required for substance
 \code{\link{emission}}s.
 \item \emph{dem:} Digital elevation model in m a.s.l. (optional).
 \item \emph{dir:} D8 flow directions required for \code{\link{transportPrerequisites}} and
 substance \code{\link{transport}}.
 \item \emph{fid:} Field IDs (optional).
-\item \emph{KFa:} (R)USLE K-factors.
+\item \emph{KFa:} (R)USLE K-factors required for \code{\link{erosion}}.
 \item \emph{lue:} Land use classes (optional).
 \item \emph{man:} Manning's roughness coefficients required for substance
 \code{\link{transport}}.
@@ -53,8 +55,8 @@ substance \code{\link{transport}}.
 \item \emph{rds:} Road cells required for \code{\link{transportPrerequisites}} (\code{0}: road cell
 without subsurface drainage, \code{1}: road cell with subsurface drainage, \code{NA}:
 no road cell).
-\item \emph{RFa:} (R)USLE R-factors.
-\item \emph{slp:} Slopes in \%.
+\item \emph{RFa:} (R)USLE R-factors required for \code{\link{erosion}}.
+\item \emph{slp:} Slopes in \% required for everything.
 \item \emph{wsh:} Watershed (optional).
 }
 }

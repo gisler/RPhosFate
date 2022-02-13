@@ -31,16 +31,18 @@ RPhosFate <- function(...) {
 #' and also be cut out from them in order to be properly respected):
 #'
 #' * _acc:_ Flow accumulations required for [`transportCalcOrder`].
-#' * \emph{acc_wtd:} Weighted flow accumulations (can be equal to _acc_).
-#' * _CFa:_ (R)USLE C-factors.
-#' * _cha:_ Channel cells (`1`: channel cell, `NA`: no channel cell).
+#' * \emph{acc_wtd:} Weighted flow accumulations required for everything (can be
+#' equal to _acc_).
+#' * _CFa:_ (R)USLE C-factors required for [`erosion`].
+#' * _cha:_ Channel cells required for everything (`1`: channel cell, `NA`: no
+#' channel cell).
 #' * _clc:_ Clay contents of top soils in % required for substance
 #' [`emission`]s.
 #' * _dem:_ Digital elevation model in m a.s.l. (optional).
 #' * _dir:_ D8 flow directions required for [`transportPrerequisites`] and
 #' substance [`transport`].
 #' * _fid:_ Field IDs (optional).
-#' * _KFa:_ (R)USLE K-factors.
+#' * _KFa:_ (R)USLE K-factors required for [`erosion`].
 #' * _lue:_ Land use classes (optional).
 #' * _man:_ Manning's roughness coefficients required for substance
 #' [`transport`].
@@ -49,8 +51,8 @@ RPhosFate <- function(...) {
 #' * _rds:_ Road cells required for [`transportPrerequisites`] (`0`: road cell
 #' without subsurface drainage, `1`: road cell with subsurface drainage, `NA`:
 #' no road cell).
-#' * _RFa:_ (R)USLE R-factors.
-#' * _slp:_ Slopes in %.
+#' * _RFa:_ (R)USLE R-factors required for [`erosion`].
+#' * _slp:_ Slopes in % required for everything.
 #' * _wsh:_ Watershed (optional).
 #'
 #' @section _Intermediate_ subdirectory:
@@ -550,7 +552,7 @@ setGeneric(
   "autoCalibrate",
   function(x, ...) standardGeneric("autoCalibrate")
 )
-#' Automatic model calibration
+#' One dimensional automatic model calibration
 #'
 #' Automatically calibrates the model with the help of a combination of golden
 #' section search and successive parabolic interpolation.
@@ -562,11 +564,11 @@ setGeneric(
 #'   [`calibrationQuality`] for available metrics.
 #' @param tol A numeric scalar specifying the desired accuracy of the parameter
 #'   used for optimisation (not the metric).
-#' @param parameter By default, SS are optimised utilising the overland
-#'   deposition rate and all other substances are optimised utilising their
+#' @param parameter By default, SS are calibrated utilising the overland
+#'   deposition rate and all other substances are calibrated utilising their
 #'   respective enrichment ratio. This argument can be used to specify a
-#'   dedicated parameter utilised for optimisation via a character string
-#'   (overland (`"ns_dep_ovl"`) or channel deposition rate (`"ns_dep_cha"`)).
+#'   dedicated parameter utilised for calibration via a character string:
+#'   `"ns_dep_ovl"` for overland or `"ns_dep_cha"` for channel deposition rate.
 #'
 #' @inherit erosionPrerequisites,RPhosFate-method return
 #'
