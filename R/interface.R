@@ -236,7 +236,7 @@ setMethod(
   "firstRun",
   "RPhosFate",
   function(x, substance = "PP") {
-    assertSubstance(x, substance)
+    assertChoice(substance, slotNames(x@substances))
 
     x <- erosionPrerequisites(x)
     x <- erosion(x)
@@ -312,7 +312,7 @@ setMethod(
     transportPrerequisites = FALSE,
     transportCalcOrder = FALSE
   ) {
-    assertSubstance(x, substance)
+    assertChoice(substance, slotNames(x@substances))
 
     if (erosionPrerequisites) {
       x <- erosionPrerequisites(x)
@@ -445,7 +445,7 @@ setMethod(
   "calibrationQuality",
   "RPhosFate",
   function(x, substance, col) {
-    assertSubstance(x, substance)
+    assertChoice(substance, slotNames(x@substances))
     assertCol(x, col)
     assertMatrix(
       x@parameters@nm_olc,
@@ -609,16 +609,12 @@ setMethod(
     tol = min(interval) * 0.1,
     parameter = NULL
   ) {
-    assertSubstance(x, substance)
+    assertChoice(substance, slotNames(x@substances))
     assertCol(x, col)
     qassert(interval, "N2(0,)")
-    qassert(metric, "S1")
-    assertSubset(metric, x@helpers@cv_met)
+    assertChoice(metric, x@helpers@cv_met)
     qassert(tol, "N1(0,)")
-    if (!is.null(parameter)) {
-      qassert(parameter, "S1")
-      assertSubset(parameter, c("ns_dep_ovl", "ns_dep_cha"))
-    }
+    assertChoice(parameter, c("ns_dep_ovl", "ns_dep_cha"), null.ok = TRUE)
 
     value <- optimize(
       calibrate,

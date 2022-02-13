@@ -55,7 +55,7 @@ setMethod(
     qassert(i, "S1")
 
     if (!is.null(j)) {
-      assertSubstance(x, j)
+      assertChoice(j, slotNames(x@substances))
       assertSubset(i, sub("^rl_", "", slotNames(slot(x@substances, j))))
 
       return(slot(slot(x@substances, j), sprintf("rl_%s", i)))
@@ -128,8 +128,7 @@ setMethod(
   "RPhosFate",
   function(x, parameter = NULL) {
     if (!is.null(parameter)) {
-      qassert(parameter, "S1")
-      assertSubset(parameter, slotNames(x@parameters))
+      assertChoice(parameter, slotNames(x@parameters))
 
       slot(x@parameters, parameter)
     } else {

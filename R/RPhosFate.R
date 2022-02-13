@@ -227,7 +227,7 @@ setMethod(
   "emission",
   "RPhosFate",
   function(x, substance = "PP") {
-    assertSubstance(x, substance)
+    assertChoice(substance, slotNames(x@substances))
     compareRaster(
       x@topo@rl_acc_wtd,
       x@erosion@rl_ero,
@@ -510,7 +510,7 @@ setMethod(
   "transport",
   "RPhosFate",
   function(x, substance = "PP") {
-    assertSubstance(x, substance)
+    assertChoice(substance, slotNames(x@substances))
     compareRaster(
       x@topo@rl_acc_wtd,
       x@topo@rl_cha,

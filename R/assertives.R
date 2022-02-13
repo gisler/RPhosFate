@@ -31,9 +31,8 @@ assertdf_cdt <- function(cmt) {
 }
 
 assertCol <- function(cmt, col) {
-  qassert(col, "S1")
   assertdf_cdt(cmt)
-  assertSubset(col, setdiff(names(cmt@parameters@df_cdt), c("ID", "x", "y")))
+  assertChoice(col, setdiff(names(cmt@parameters@df_cdt), c("ID", "x", "y")))
   assertNumeric(
     cmt@parameters@df_cdt[[col]],
     lower = 0,
@@ -42,9 +41,4 @@ assertCol <- function(cmt, col) {
     min.len = 1L,
     .var.name = "df_cdt[[col]]"
   )
-}
-
-assertSubstance <- function(cmt, substance) {
-  qassert(substance, "S1")
-  assertSubset(substance, slotNames(cmt@substances))
 }
