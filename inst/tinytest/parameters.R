@@ -5,5 +5,5 @@ parameters <- c(
 
 parameters$nv_tfc_inl <- unlist(parameters$nv_tfc_inl)
 parameters$nv_enr_rto <- unlist(parameters$nv_enr_rto)
-parameters$nm_olc <- matrix(parameters$nm_olc, 1L)
+parameters$nm_olc <- matrix(parameters$nm_olc, ncol = 2L)
 parameters$df_cdt <- as.data.frame(parameters$df_cdt, stringsAsFactors = FALSE)

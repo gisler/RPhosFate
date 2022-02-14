@@ -192,7 +192,7 @@ x <- RPhosFate(
   ns_dep_cha = 0.0,
   nv_tfc_inl = c(SS = 0.6, PP = 0.6),
   nv_enr_rto = c(PP = 2.0),
-  nm_olc = matrix(c(4704255, 2795195), 1L),
+  nm_olc = matrix(c(4704255, 2795195), ncol = 2L),
   df_cdt = read.table(
     file.path(cv_dir, "cdt.txt"),
     header = TRUE,
