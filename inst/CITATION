@@ -17,18 +17,20 @@ citEntry(
   year        = "2019",
   number      = "10",
   pages       = "2161",
-  ISSN        = "2073-4441",
-  DOI         = "10.3390/w11102161",
+  issn        = "2073-4441",
+  doi         = "10.3390/w11102161",
   textVersion = "Hepp, G., Zessner, M., 2019. Assessing the impact of storm drains at road embankments on diffuse particulate phosphorus emissions in agricultural catchments. Water 11, 2161. https://doi.org/10.3390/w11102161."
 )
 
 citEntry(
   entry       = "Article",
-  author      = personList(person("Gerold", "Hepp"), person("Eva", "Strenge"), person("Matthias", "Zessner")),
+  author      = personList(person("Gerold", "Hepp"), person("Ottavia", "Zoboli"), person("Eva", "Strenge"), person("Matthias", "Zessner")),
   title       = "Particulate {{PhozzyLogic Index}} for Policy Makers\\textemdash an Index for a More Accurate and Transparent Identification of Critical Source Areas",
-  journal     = "EarthArXiv",
-  year        = "2021",
-  pages       = "2270",
-  DOI         = "10.31223/X5FG89",
-  textVersion = "Hepp, G., Strenge, E., Zessner, M., 2021. Particulate PhozzyLogic Index for policy makers—an index for a more accurate and transparent identification of critical source areas. EarthArXiv, 2270. https://doi.org/10.31223/X5FG89."
+  journal     = "Journal of Environmental Management",
+  volume      = "307",
+  year        = "2022",
+  pages       = "114514",
+  issn        = "0301-4797",
+  doi         = "10.1016/j.jenvman.2022.114514",
+  textVersion = "Hepp, G., Zoboli, O., Strenge, E., Zessner, M., 2022. Particulate PhozzyLogic Index for policy makers—an index for a more accurate and transparent identification of critical source areas. Journal of Environmental Management 307, 114514. https://doi.org/10.1016/j.jenvman.2022.114514."
 )
