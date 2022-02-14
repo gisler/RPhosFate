@@ -583,7 +583,7 @@ DEMrelatedInput <- function(
 
   nm_olc <- xyFromCell(
     rl_acc,
-    Which(is.na(rl_slp) & !is.na(rl_dem), cells = TRUE)
+    Which(is.na(rl_slp) & !is.na(rl_cha), cells = TRUE)
   )
 
   # Clean up temporary files
