@@ -104,7 +104,7 @@ demoProject <- function(cs_dir = tempdir(TRUE)) {
 #' * Tracing of downslope flowpaths from the provided channel sources.
 #'
 #' When roads are provided, they are considered as flow obstacles breaking the
-#' continuity of the calculated flow accumulation.
+#' continuity of the calculated flow accumulations.
 #'
 #' In case no flow accumulation weights are provided, _acc_ and \emph{acc_wtd}
 #' are identical.
@@ -114,11 +114,12 @@ demoProject <- function(cs_dir = tempdir(TRUE)) {
 #' enforced on topographic flow directions in advance. Please note that doing so
 #' renders stream burning and depression breaching without effect.
 #'
-#' _slp_ is calculated from the breached DEM (stream burning is undone
-#' beforehand) and represents D8 slopes.
+#' _dem_ represents the breached DEM with reversed stream burning if applicable.
+#' This processed DEM also serves as the basis for the calculation of the D8
+#' slopes provided by _slp._
 #'
 #' @return A two column numeric [`matrix`] specifying one or more catchment
-#'   outlet coordinates.
+#'   outlet coordinates and side effects in the form of raster files.
 #'
 #' @references
 #' \cite{Lindsay, J.B., 2016. Efficient hybrid breaching-filling sink removal
@@ -308,15 +309,6 @@ DEMrelatedInput <- function(
     overwrite = TRUE
   )
 
-  # Extract DEM by watershed
-  rl_dem <- mask(
-    crop(raster("dem_ovr.tif"), rl_wsh),
-    rl_wsh,
-    filename = "dem.tif",
-    datatype = "FLT8S",
-    overwrite = TRUE
-  )
-
   # Extract flow directions by watershed
   rl_dir <- mask(
     crop(raster("dir_ovr.tif"), rl_wsh),
@@ -482,27 +474,30 @@ DEMrelatedInput <- function(
     rl_acc_wtd <- raster("acc_wtd.tif")
   }
 
-  # Undo stream burning (breached DEM)
+  # Undo stream burning (oversized DEM)
   rl_cha_map <- raster(cs_cha)
   rl_cha_map <- adjustExtent(rl_cha_map, sp_msk)
+
+  rl_cha_map_cha <- rl_cha_map
+  rl_cha_map_cha[rl_cha == 1L] <- 1L
 
   rl_dem_brd <- raster("dem_bnt_brd.tif")
   rl_dem_brd <- overlay(
     x = rl_dem_brd,
-    y = rl_cha_map,
+    y = rl_cha_map_cha,
     fun = function(x, y) {
       ifelse(is.na(y), x, x + ns_brn)
     }
   )
 
   for (i in seq_len(is_adj)) {
-    rl_cha_map[adjacent(
+    rl_cha_map[union(adjacent(
       rl_cha_map,
       Which(!is.na(rl_cha_map), cells = TRUE),
       directions = 8,
       pairs = FALSE,
       include = TRUE
-    )] <- 1L
+    ), Which(rl_cha_map_cha == 1L, cells = TRUE))] <- 1L
 
     rl_dem_brd <- overlay(
       x = rl_dem_brd,
@@ -513,14 +508,14 @@ DEMrelatedInput <- function(
     )
   }
 
-  if (ls_tmp) {
-    writeRaster(
-      rl_dem_brd,
-      filename = "dem_brd.tif",
-      datatype = "FLT8S",
-      overwrite = TRUE
-    )
-  }
+  # Extract DEM by watershed
+  rl_dem <- mask(
+    crop(rl_dem_brd, rl_wsh),
+    rl_wsh,
+    filename = "dem.tif",
+    datatype = "FLT8S",
+    overwrite = TRUE
+  )
 
   # Calculate D8 slopes (oversized DEM)
   nm_slp_ovr <- D8slope(

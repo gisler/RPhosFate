@@ -68,7 +68,7 @@ compatibility).}
 }
 \value{
 A two column numeric \code{\link{matrix}} specifying one or more catchment
-outlet coordinates.
+outlet coordinates and side effects in the form of raster files.
 }
 \description{
 Clips, pre-processes and calculates or determines all input data related to
@@ -91,7 +91,7 @@ approximately into the direction of channel cells (no effect with \code{ns_brn =
 }
 
 When roads are provided, they are considered as flow obstacles breaking the
-continuity of the calculated flow accumulation.
+continuity of the calculated flow accumulations.
 
 In case no flow accumulation weights are provided, \emph{acc} and \emph{acc_wtd}
 are identical.
@@ -101,8 +101,9 @@ example, may be useful in case the effect of tillage directions has been
 enforced on topographic flow directions in advance. Please note that doing so
 renders stream burning and depression breaching without effect.
 
-\emph{slp} is calculated from the breached DEM (stream burning is undone
-beforehand) and represents D8 slopes.
+\emph{dem} represents the breached DEM with reversed stream burning if applicable.
+This processed DEM also serves as the basis for the calculation of the D8
+slopes provided by \emph{slp.}
 }
 \examples{
 \dontrun{
