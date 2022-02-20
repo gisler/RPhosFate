@@ -554,18 +554,15 @@ DEMrelatedInput <- function(
     slp     = rl_slp    ,
     wsh     = rl_wsh
   )
-  mapply(
-    function(rl, filename) {
-      writeRaster(
-        rl,
-        filename = filename,
-        datatype = dataType(rl),
-        options = "COMPRESSED=YES",
-        overwrite = TRUE
-      )
-    },
-    toInput, file.path("..", sprintf("%s.%s", names(toInput), cs_fex))
-  )
+  for (i in seq_along(toInput)) {
+    writeRaster(
+      toInput[[i]],
+      filename = file.path("..", sprintf("%s.%s", names(toInput)[i], cs_fex)),
+      datatype = dataType(toInput[[i]]),
+      options = "COMPRESSED=YES",
+      overwrite = TRUE
+    )
+  }
 
   # Determine outlet coordinates
   nm_slp <- D8slope(
