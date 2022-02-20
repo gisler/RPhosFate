@@ -168,7 +168,7 @@ compatibility).</p></dd>
     <div id="value">
     <h2>Value</h2>
     <p>A two column numeric <code><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></code> specifying one or more catchment
-outlet coordinates.</p>
+outlet coordinates and side effects in the form of raster files.</p>
     </div>
     <div id="details">
     <h2>Details</h2>
@@ -178,15 +178,16 @@ approximately into the direction of channel cells (no effect with <code>ns_brn =
 <li><p>Depression breaching.</p></li>
 <li><p>Tracing of downslope flowpaths from the provided channel sources.</p></li>
 </ul><p>When roads are provided, they are considered as flow obstacles breaking the
-continuity of the calculated flow accumulation.</p>
+continuity of the calculated flow accumulations.</p>
 <p>In case no flow accumulation weights are provided, <em>acc</em> and <em>acc_wtd</em>
 are identical.</p>
 <p>Providing existing flow directions prevents calculating them, which, for
 example, may be useful in case the effect of tillage directions has been
 enforced on topographic flow directions in advance. Please note that doing so
 renders stream burning and depression breaching without effect.</p>
-<p><em>slp</em> is calculated from the breached DEM (stream burning is undone
-beforehand) and represents D8 slopes.</p>
+<p><em>dem</em> represents the breached DEM with reversed stream burning if applicable.
+This processed DEM also serves as the basis for the calculation of the D8
+slopes provided by <em>slp.</em></p>
     </div>
     <div id="references">
     <h2>References</h2>
