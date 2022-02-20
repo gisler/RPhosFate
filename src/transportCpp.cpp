@@ -38,13 +38,13 @@ void moving_data_window(int is_ord_row, int is_ord_col, int is_rws, int is_cls, 
   } else {
     is_row_max = is_ord_row + 1;
   }
-  if (is_ord_col == 0) { // Bottom boundary of moving data window
+  if (is_ord_col == 0) { // Top boundary of moving data window
     is_col_min = 0;
     im_fDx_foc = im_fDx_foc(Range(0, im_fDx_foc.nrow() - 1), Range(1, im_fDx_foc.ncol() - 1));
   } else {
     is_col_min = is_ord_col - 1;
   }
-  if (is_ord_col == is_cls - 1) { // Top boundary of moving data window
+  if (is_ord_col == is_cls - 1) { // Bottom boundary of moving data window
     is_col_max = is_cls - 1;
     im_fDx_foc = im_fDx_foc(Range(0, im_fDx_foc.nrow() - 1), Range(0, im_fDx_foc.ncol() - 2));
   } else {

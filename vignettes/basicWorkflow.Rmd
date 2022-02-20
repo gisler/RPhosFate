@@ -80,7 +80,7 @@ x <- subsequentRun(x, substance = "SS")
 metrics <- calibrationQuality(x, substance = "SS", col = "SS_load")
 ```
 
-The `autoCalibrate()` method may provide a more comfortable alternative to this process.
+The `autoCalibrate()` and `autoCalibrate2()` methods may provide more comfortable alternatives to this process.
 
 ## Check calibration quality for particulate phosphorus (PP)
 
