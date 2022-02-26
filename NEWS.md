@@ -3,7 +3,8 @@
 * Added `autoCalibrate2()` method: allows for calibrating the overland and channel deposition rate in one go
 * `DEMrelatedInput()` can handle multiple catchment outlets now and so does `calibrationQuality()`
 * `DEMrelatedInput()` now returns the breached DEM with reversed stream burning if applicable instead of the original one
-* `DEMrelatedInput()` now calculates “correct” slopes even if the channels used for stream burning contained gaps
+* `DEMrelatedInput()` now calculates “correct” slopes even if the channels used for stream burning contain gaps
+* `RPhosFate` now makes sure that the x- and y-coordinates of gauges used for calibration lie within the extent of the river catchment object
 * Renamed `"inChannelRetention"` output of `calibrationQuality()` to `"inChannelRetentionRatio"`
 * `RPhosFate` requires R ≥ 3.5.0 now
 * Improved documentation

@@ -613,7 +613,7 @@ setMethod(
   ) {
     assertChoice(substance, slotNames(x@substances))
     assertCol(x, col)
-    qassert(interval, "N2(0,)")
+    qassert(interval, "N2[0,)")
     assertChoice(metric, x@helpers@cv_met)
     qassert(tol, "N1(0,)")
     assertChoice(parameter, c("ns_dep_ovl", "ns_dep_cha"), null.ok = TRUE)

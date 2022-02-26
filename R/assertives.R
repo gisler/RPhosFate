@@ -26,8 +26,22 @@ assertdf_cdt <- function(cmt) {
     unique = TRUE,
     .var.name = 'df_cdt[["ID"]]'
   )
-  qassert(cmt@parameters@df_cdt[["x"]], "N+(0,)", .var.name = 'df_cdt[["x"]]')
-  qassert(cmt@parameters@df_cdt[["y"]], "N+(0,)", .var.name = 'df_cdt[["y"]]')
+  assertNumeric(
+    cmt@parameters@df_cdt[["x"]],
+    lower = cmt@helpers@ex_cmt@xmin,
+    upper = cmt@helpers@ex_cmt@xmax,
+    any.missing = FALSE,
+    min.len = 1L,
+    .var.name = 'df_cdt[["x"]]'
+  )
+  assertNumeric(
+    cmt@parameters@df_cdt[["y"]],
+    lower = cmt@helpers@ex_cmt@ymin,
+    upper = cmt@helpers@ex_cmt@ymax,
+    any.missing = FALSE,
+    min.len = 1L,
+    .var.name = 'df_cdt[["y"]]'
+  )
 }
 
 assertCol <- function(cmt, col) {
