@@ -91,7 +91,9 @@
 <li>
 <code><a href="../reference/DEMrelatedInput.html">DEMrelatedInput()</a></code> now returns the breached DEM with reversed stream burning if applicable instead of the original one</li>
 <li>
-<code><a href="../reference/DEMrelatedInput.html">DEMrelatedInput()</a></code> now calculates “correct” slopes even if the channels used for stream burning contained gaps</li>
+<code><a href="../reference/DEMrelatedInput.html">DEMrelatedInput()</a></code> now calculates “correct” slopes even if the channels used for stream burning contain gaps</li>
+<li>
+<code>RPhosFate</code> now makes sure that the x- and y-coordinates of gauges used for calibration lie within the extent of the river catchment object</li>
 <li>Renamed <code>"inChannelRetention"</code> output of <code><a href="../reference/calibrationQuality-RPhosFate-method.html">calibrationQuality()</a></code> to <code>"inChannelRetentionRatio"</code>
 </li>
 <li>
