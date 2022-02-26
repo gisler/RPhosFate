@@ -3,7 +3,7 @@ pkgdown: 2.0.2
 pkgdown_sha: ~
 articles:
   basicWorkflow: basicWorkflow.html
-last_built: 2022-02-26T16:05Z
+last_built: 2022-02-26T19:13Z
 urls:
   reference: https://gisler.github.io/RPhosFate/reference
   article: https://gisler.github.io/RPhosFate/articles
