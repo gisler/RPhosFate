@@ -58,9 +58,9 @@ x <- RPhosFate(
 x <- firstRun(x, substance = "SS")
 ```
 
-## Check calibration quality for SS
+## Calibration quality of SS
 
-Snap gauges to the midpoint of the nearest channel cell if necessary and check calibration quality:
+Snap coordinates of provided calibration gauges to the respective midpoint of the nearest channel cell if necessary and check calibration quality:
 
 ```{r eval=FALSE}
 x <- snapGauges(x)
@@ -82,7 +82,7 @@ metrics <- calibrationQuality(x, substance = "SS", col = "SS_load")
 
 The `autoCalibrate()` and `autoCalibrate2()` methods may provide more comfortable alternatives to this process.
 
-## Check calibration quality for particulate phosphorus (PP)
+## Calibration quality of particulate phosphorus (PP)
 
 First, a further call to `subsequentRun()` for PP is necessary:
 
@@ -108,7 +108,7 @@ In case the only substance of interest is PP, it is possible to set its enrichme
 
 ## Save state
 
-Save parameters and transport calculation order to disk:
+Write parameters and transport calculation order to disk:
 
 ```{r eval=FALSE}
 saveState(x)
@@ -116,9 +116,9 @@ saveState(x)
 
 ---
 
-## Load calibrated project at a later time
+## Return to the calibrated project at a later time
 
-Load the previously saved state of the project via the `ls_ini` argument:
+Simply load the previously saved state of the project via the `ls_ini` argument of `RPhosFate()` or `catchment()`:
 
 ```{r eval=FALSE}
 x <- RPhosFate(
