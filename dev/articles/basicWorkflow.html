@@ -109,7 +109,7 @@
       <h1 data-toc-skip>Basic modelling workflow</h1>
                         <h4 data-toc-skip class="author">Gerold Hepp</h4>
             
-            <h4 data-toc-skip class="date">2022-02-26</h4>
+            <h4 data-toc-skip class="date">2022-03-01</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/gisler/RPhosFate/blob/HEAD/vignettes/basicWorkflow.Rmd" class="external-link"><code>vignettes/basicWorkflow.Rmd</code></a></small>
       <div class="hidden name"><code>basicWorkflow.Rmd</code></div>
@@ -156,9 +156,9 @@
 <code class="sourceCode R"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/firstRun-RPhosFate-method.html">firstRun</a></span><span class="op">(</span><span class="va">x</span>, substance <span class="op">=</span> <span class="st">"SS"</span><span class="op">)</span></code></pre></div>
 </div>
 <div class="section level2">
-<h2 id="check-calibration-quality-for-ss">Check calibration quality for SS<a class="anchor" aria-label="anchor" href="#check-calibration-quality-for-ss"></a>
+<h2 id="calibration-quality-of-ss">Calibration quality of SS<a class="anchor" aria-label="anchor" href="#calibration-quality-of-ss"></a>
 </h2>
-<p>Snap gauges to the midpoint of the nearest channel cell if necessary and check calibration quality:</p>
+<p>Snap coordinates of provided calibration gauges to the respective midpoint of the nearest channel cell if necessary and check calibration quality:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/snapGauges-RPhosFate-method.html">snapGauges</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
 
@@ -177,7 +177,7 @@
 <p>The <code><a href="../reference/autoCalibrate-RPhosFate-method.html">autoCalibrate()</a></code> and <code><a href="../reference/autoCalibrate2-RPhosFate-method.html">autoCalibrate2()</a></code> methods may provide more comfortable alternatives to this process.</p>
 </div>
 <div class="section level2">
-<h2 id="check-calibration-quality-for-particulate-phosphorus-pp">Check calibration quality for particulate phosphorus (PP)<a class="anchor" aria-label="anchor" href="#check-calibration-quality-for-particulate-phosphorus-pp"></a>
+<h2 id="calibration-quality-of-particulate-phosphorus-pp">Calibration quality of particulate phosphorus (PP)<a class="anchor" aria-label="anchor" href="#calibration-quality-of-particulate-phosphorus-pp"></a>
 </h2>
 <p>First, a further call to <code><a href="../reference/subsequentRun-RPhosFate-method.html">subsequentRun()</a></code> for PP is necessary:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
@@ -200,15 +200,15 @@
 <div class="section level2">
 <h2 id="save-state">Save state<a class="anchor" aria-label="anchor" href="#save-state"></a>
 </h2>
-<p>Save parameters and transport calculation order to disk:</p>
+<p>Write parameters and transport calculation order to disk:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/saveState-RPhosFate-method.html">saveState</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></code></pre></div>
 <hr>
 </div>
 <div class="section level2">
-<h2 id="load-calibrated-project-at-a-later-time">Load calibrated project at a later time<a class="anchor" aria-label="anchor" href="#load-calibrated-project-at-a-later-time"></a>
+<h2 id="return-to-the-calibrated-project-at-a-later-time">Return to the calibrated project at a later time<a class="anchor" aria-label="anchor" href="#return-to-the-calibrated-project-at-a-later-time"></a>
 </h2>
-<p>Load the previously saved state of the project via the <code>ls_ini</code> argument:</p>
+<p>Simply load the previously saved state of the project via the <code>ls_ini</code> argument of <code><a href="../reference/catchment.html">RPhosFate()</a></code> or <code><a href="../reference/catchment.html">catchment()</a></code>:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/catchment.html">RPhosFate</a></span><span class="op">(</span>
   cv_dir <span class="op">=</span> <span class="va">cv_dir</span>,
