@@ -351,7 +351,7 @@ setGeneric(
 #'
 #' @inherit catchment return
 #'
-#' @seealso [`calibrationQuality`], [`autoCalibrate`]
+#' @seealso [`calibrationQuality`], [`autoCalibrate`], [`autoCalibrate2`]
 #'
 #' @examples
 #' \dontrun{
@@ -420,9 +420,9 @@ setGeneric(
 #'   in-channel retention ratio (one minus sum of _xxt_ at catchment outlet(s)
 #'   divided by sum of \emph{xxt_inp}).
 #'
-#' @seealso [`snapGauges`], [`autoCalibrate`], [`hydroGOF::NSE`],
-#'   [`hydroGOF::mNSE`], [`hydroGOF::rmse`], [`hydroGOF::nrmse`],
-#'   [`hydroGOF::pbias`], [`hydroGOF::rsr`]
+#' @seealso [`snapGauges`], [`autoCalibrate`], [`autoCalibrate2`],
+#'   [`hydroGOF::NSE`], [`hydroGOF::mNSE`], [`hydroGOF::rmse`],
+#'   [`hydroGOF::nrmse`], [`hydroGOF::pbias`], [`hydroGOF::rsr`]
 #'
 #' @examples
 #' \dontrun{

@@ -32,5 +32,5 @@ x <- snapGauges(x)
 
 }
 \seealso{
-\code{\link{calibrationQuality}}, \code{\link{autoCalibrate}}
+\code{\link{calibrationQuality}}, \code{\link{autoCalibrate}}, \code{\link{autoCalibrate2}}
 }
