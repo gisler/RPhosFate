@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">RPhosFate</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.11.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.12.0</span>
       </span>
     </div>
 
@@ -32,7 +32,7 @@
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Resources
      
     <span class="caret"></span>
@@ -42,7 +42,7 @@
     </li>
   </ul></li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Publications
      
     <span class="caret"></span>
@@ -119,23 +119,29 @@ information.</p></dd>
 
 <p>This directory holds all possible user input raster data (flow obstacles like
 roads must be considered during generation of the flow accumulation layers
-and also be cut out from them in order to be properly respected):</p><ul><li><p><em>acc:</em> Flow accumulations required for transport.</p></li>
-<li><p><em>acc_wtd:</em> Weighted flow accumulations (can be equal to <em>acc</em>).</p></li>
-<li><p><em>CFa:</em> (R)USLE C-factors.</p></li>
-<li><p><em>cha:</em> Channel cells (<code>1</code>: channel cell, <code>NA</code>: no channel cell).</p></li>
-<li><p><em>clc:</em> Clay contents of top soils in % required for substance emissions.</p></li>
+and also be cut out from them in order to be properly respected):</p><ul><li><p><em>acc:</em> Flow accumulations required for <code><a href="transportCalcOrder-RPhosFate-method.html">transportCalcOrder</a></code>.</p></li>
+<li><p><em>acc_wtd:</em> Weighted flow accumulations required for everything (can be
+equal to <em>acc</em>).</p></li>
+<li><p><em>CFa:</em> (R)USLE C-factors required for <code><a href="erosion-RPhosFate-method.html">erosion</a></code>.</p></li>
+<li><p><em>cha:</em> Channel cells required for everything (<code>1</code>: channel cell, <code>NA</code>: no
+channel cell).</p></li>
+<li><p><em>clc:</em> Clay contents of top soils in % required for substance
+<code><a href="emission-RPhosFate-method.html">emission</a></code>s.</p></li>
 <li><p><em>dem:</em> Digital elevation model in m a.s.l. (optional).</p></li>
-<li><p><em>dir:</em> D8 flow directions required for transport.</p></li>
+<li><p><em>dir:</em> D8 flow directions required for <code><a href="transportPrerequisites-RPhosFate-method.html">transportPrerequisites</a></code> and
+substance <code><a href="transport-RPhosFate-method.html">transport</a></code>.</p></li>
 <li><p><em>fid:</em> Field IDs (optional).</p></li>
-<li><p><em>KFa:</em> (R)USLE K-factors.</p></li>
+<li><p><em>KFa:</em> (R)USLE K-factors required for <code><a href="erosion-RPhosFate-method.html">erosion</a></code>.</p></li>
 <li><p><em>lue:</em> Land use classes (optional).</p></li>
-<li><p><em>man:</em> Manning's roughness coefficients required for transport.</p></li>
+<li><p><em>man:</em> Manning's roughness coefficients required for substance
+<code><a href="transport-RPhosFate-method.html">transport</a></code>.</p></li>
 <li><p><em>xxc:</em> Substance contents of top soils in mg/kg required for substance
-emissions, for example, <em>ppc</em> for PP top soil contents.</p></li>
-<li><p><em>rds:</em> Road cells required for transport (<code>0</code>: road cell without subsurface
-drainage, <code>1</code>: road cell with subsurface drainage, <code>NA</code>: no road cell).</p></li>
-<li><p><em>RFa:</em> (R)USLE R-factors.</p></li>
-<li><p><em>slp:</em> Slopes in %.</p></li>
+<code><a href="emission-RPhosFate-method.html">emission</a></code>s, for example, <em>ppc</em> for PP top soil contents.</p></li>
+<li><p><em>rds:</em> Road cells required for <code><a href="transportPrerequisites-RPhosFate-method.html">transportPrerequisites</a></code> (<code>0</code>: road cell
+without subsurface drainage, <code>1</code>: road cell with subsurface drainage, <code>NA</code>:
+no road cell).</p></li>
+<li><p><em>RFa:</em> (R)USLE R-factors required for <code><a href="erosion-RPhosFate-method.html">erosion</a></code>.</p></li>
+<li><p><em>slp:</em> Slopes in % required for everything.</p></li>
 <li><p><em>wsh:</em> Watershed (optional).</p></li>
 </ul></div>
     <div id="intermediate-subdirectory">

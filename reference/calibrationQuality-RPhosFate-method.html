@@ -32,7 +32,7 @@ identity line (solid) and plus/minus 30% deviation lines (dashed)."><!-- mathjax
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">RPhosFate</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.11.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.12.0</span>
       </span>
     </div>
 
@@ -47,7 +47,7 @@ identity line (solid) and plus/minus 30% deviation lines (dashed)."><!-- mathjax
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Resources
      
     <span class="caret"></span>
@@ -57,7 +57,7 @@ identity line (solid) and plus/minus 30% deviation lines (dashed)."><!-- mathjax
     </li>
   </ul></li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Publications
      
     <span class="caret"></span>
@@ -132,13 +132,14 @@ respective substance river loads.</p></dd>
     <div id="value">
     <h2>Value</h2>
     <p>A named numeric vector containing the assessed metrics along with the
-in-channel retention.</p>
+in-channel retention ratio (one minus sum of <em>xxt</em> at catchment outlet(s)
+divided by sum of <em>xxt_inp</em>).</p>
     </div>
     <div id="see-also">
     <h2>See also</h2>
-    <div class="dont-index"><p><code><a href="snapGauges-RPhosFate-method.html">snapGauges</a></code>, <code><a href="autoCalibrate-RPhosFate-method.html">autoCalibrate</a></code>, <code><a href="https://rdrr.io/pkg/hydroGOF/man/NSE.html" class="external-link">hydroGOF::NSE</a></code>,
-<code><a href="https://rdrr.io/pkg/hydroGOF/man/mNSE.html" class="external-link">hydroGOF::mNSE</a></code>, <code><a href="https://rdrr.io/pkg/hydroGOF/man/rmse.html" class="external-link">hydroGOF::rmse</a></code>, <code><a href="https://rdrr.io/pkg/hydroGOF/man/nrmse.html" class="external-link">hydroGOF::nrmse</a></code>,
-<code><a href="https://rdrr.io/pkg/hydroGOF/man/pbias.html" class="external-link">hydroGOF::pbias</a></code>, <code><a href="https://rdrr.io/pkg/hydroGOF/man/rsr.html" class="external-link">hydroGOF::rsr</a></code></p></div>
+    <div class="dont-index"><p><code><a href="snapGauges-RPhosFate-method.html">snapGauges</a></code>, <code><a href="autoCalibrate-RPhosFate-method.html">autoCalibrate</a></code>, <code><a href="autoCalibrate2-RPhosFate-method.html">autoCalibrate2</a></code>,
+<code><a href="https://rdrr.io/pkg/hydroGOF/man/NSE.html" class="external-link">hydroGOF::NSE</a></code>, <code><a href="https://rdrr.io/pkg/hydroGOF/man/mNSE.html" class="external-link">hydroGOF::mNSE</a></code>, <code><a href="https://rdrr.io/pkg/hydroGOF/man/rmse.html" class="external-link">hydroGOF::rmse</a></code>,
+<code><a href="https://rdrr.io/pkg/hydroGOF/man/nrmse.html" class="external-link">hydroGOF::nrmse</a></code>, <code><a href="https://rdrr.io/pkg/hydroGOF/man/pbias.html" class="external-link">hydroGOF::pbias</a></code>, <code><a href="https://rdrr.io/pkg/hydroGOF/man/rsr.html" class="external-link">hydroGOF::rsr</a></code></p></div>
     </div>
 
     <div id="ref-examples">
@@ -151,7 +152,7 @@ in-channel retention.</p>
 <span class="r-in">  cv_dir <span class="op">=</span> <span class="va">cv_dir</span>,</span>
 <span class="r-in">  ls_ini <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span class="r-in"><span class="op">)</span></span>
-<span class="r-in"><span class="co"># presupposed method call</span></span>
+<span class="r-in"><span class="co"># presupposed method calls</span></span>
 <span class="r-in"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="firstRun-RPhosFate-method.html">firstRun</a></span><span class="op">(</span><span class="va">x</span>, <span class="st">"SS"</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="snapGauges-RPhosFate-method.html">snapGauges</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
 <span class="r-in"></span>
