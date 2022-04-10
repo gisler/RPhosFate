@@ -641,10 +641,11 @@ setMethod(
     }
 
     if (any(abs(interval - value[[1L]]) <= tol)) {
-      warning(paste(
-        "Parameter approximately within tolerance of interval end-point.",
-        "Optimum may not have been found."
-      ), call. = FALSE)
+      warning(
+        "Parameter approximately within tolerance of interval end-point. ",
+        "Optimum may not have been found.",
+        call. = FALSE
+      )
     }
 
     x

@@ -171,22 +171,25 @@ DEMrelatedInput <- function(
 ) {
   if (!requireNamespace("whitebox", quietly = TRUE) ||
       packageVersion("whitebox") < package_version("2.0.0")) {
-    stop(paste(
-      'Package "whitebox" (v2.0.0 or higher) must be installed for this',
-      'functionality.',
-      ), call. = FALSE)
+    stop(
+      'Package "whitebox" (v2.0.0 or higher) must be installed for this ',
+      "functionality.",
+      call. = FALSE
+    )
   }
   if (!whitebox::check_whitebox_binary()) {
-    stop(paste(
-      'The "WhiteboxTools" binary must be installed for this functionality.',
-      'Consider calling "whitebox::install_whitebox()" first.'
-      ), call. = FALSE)
+    stop(
+      'The "WhiteboxTools" binary must be installed for this functionality. ',
+      'Consider calling "whitebox::install_whitebox()" first.',
+      call. = FALSE
+    )
   }
   if (Sys.which("mpiexec") == "" || Sys.which("AreaD8") == "") {
-    stop(paste(
-      '"TauDEM" must be installed and added to the "PATH" environment variable',
-      'for this functionality.'
-    ), call. = FALSE)
+    stop(
+      '"TauDEM" must be installed and added to the "PATH" environment ',
+      "variable for this functionality.",
+      call. = FALSE
+    )
   }
   qassert(cv_dir, "S+")
   qassert(cs_dem, "S1")
