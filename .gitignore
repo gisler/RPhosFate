@@ -2,7 +2,6 @@
 .Rhistory
 .Rproj.user
 .Ruserdata
-docs/*
 inst/**/*.xml
 src/*.dll
 src/*.o
