@@ -2,10 +2,10 @@
 #' @import methods
 #' @import raster
 #' @importFrom graphics abline clip par points
-#' @importFrom hydroGOF mNSE NSE pbias rmse nrmse rsr
+#' @importFrom hydroGOF KGE mNSE NSE pbias rmse nrmse rsr
 #' @importFrom Rcpp sourceCpp
 #' @importFrom spatstat.geom as.owin as.ppp nncross
-#' @importFrom stats median optim optimize setNames
+#' @importFrom stats median optim optimize sd setNames
 #' @importFrom yaml read_yaml write_yaml
 #' @importFrom utils modifyList packageVersion
 #' @useDynLib RPhosFate
@@ -308,8 +308,9 @@ setMethod(
     .Object@im_fDi     <- matrix(rev(cmt@parameters@iv_fDo), 3L)
 
     .Object@cv_met <- c(
-      "NSE", "mNSE", "RMSE", "NRMSE",
-      "PBIAS", "RSR", "GMRAE", "MdRAE"
+      "NSE", "mNSE", "KGE", "RMSE",
+      "PBIAS", "RSR", "RCV",
+      "GMRAE", "MdRAE"
     )
     if (cmt@ls_ini && file.exists("order.rds")) {
       .Object@order <- readRDS("order.rds")

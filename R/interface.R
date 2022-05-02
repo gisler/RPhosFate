@@ -399,11 +399,11 @@ setGeneric(
 #'
 #' * _NSE:_ Nash-Sutcliffe Efficiency
 #' * _mNSE:_ Modified Nash-Sutcliffe Efficiency (`j = 1`)
+#' * _KGE:_ Kling-Gupta Efficiency (`s = c(1, 1, 1), method = "2012"`)
 #' * _RMSE:_ Root Mean Square Error
-#' * _NRMSE:_ Normalised Root Mean Square Error (normalised by the standard
-#' deviation of the observations)
 #' * _PBIAS:_ Percent Bias
 #' * _RSR:_ Ratio of the RMSE to the standard deviation of the observations
+#' * _RCV:_ Ratio of the coefficients of variation
 #' * _GMRAE:_ Geometric Mean Relative Absolute Error
 #' * _MdRAE:_ Median Relative Absolute Error
 #'
@@ -421,8 +421,8 @@ setGeneric(
 #'   divided by sum of \emph{xxt_inp}).
 #'
 #' @seealso [`snapGauges`], [`autoCalibrate`], [`autoCalibrate2`],
-#'   [`hydroGOF::NSE`], [`hydroGOF::mNSE`], [`hydroGOF::rmse`],
-#'   [`hydroGOF::nrmse`], [`hydroGOF::pbias`], [`hydroGOF::rsr`]
+#'   [`hydroGOF::NSE`], [`hydroGOF::mNSE`], [`hydroGOF::KGE`],
+#'   [`hydroGOF::rmse`], [`hydroGOF::pbias`], [`hydroGOF::rsr`]
 #'
 #' @examples
 #' \dontrun{
@@ -479,12 +479,14 @@ setMethod(
     nv_rae <- abs(nv_old - nv_mld) / abs(nv_old - mean(nv_old, na.rm = TRUE))
 
     metrics <- c(
-      tryCatch(NSE(  nv_mld, nv_old), error = function(e) NA_real_),
-      tryCatch(mNSE( nv_mld, nv_old), error = function(e) NA_real_),
-      tryCatch(rmse( nv_mld, nv_old), error = function(e) NA_real_),
-      tryCatch(nrmse(nv_mld, nv_old), error = function(e) NA_real_),
-      tryCatch(pbias(nv_mld, nv_old), error = function(e) NA_real_),
-      tryCatch(rsr(  nv_mld, nv_old), error = function(e) NA_real_),
+      tryCatch(NSE(  nv_mld, nv_old                 ), error = function(e) NA_real_),
+      tryCatch(mNSE( nv_mld, nv_old                 ), error = function(e) NA_real_),
+      tryCatch(KGE(  nv_mld, nv_old, method = "2012"), error = function(e) NA_real_),
+      tryCatch(rmse( nv_mld, nv_old                 ), error = function(e) NA_real_),
+      tryCatch(pbias(nv_mld, nv_old                 ), error = function(e) NA_real_),
+      tryCatch(rsr(  nv_mld, nv_old                 ), error = function(e) NA_real_),
+      (sd(nv_mld, na.rm = TRUE) / mean(nv_mld, na.rm = TRUE)) /
+        (sd(nv_old, na.rm = TRUE) / mean(nv_old, na.rm = TRUE))    ,
       exp(mean(log(nv_rae), na.rm = TRUE))                         ,
       median(nv_rae, na.rm = TRUE)                                 ,
       1 - (sum(extract(
@@ -496,10 +498,11 @@ setMethod(
 
     cat("NSE:   ", metrics["NSE"  ], "\n", sep = "")
     cat("mNSE:  ", metrics["mNSE" ], "\n", sep = "")
+    cat("KGE:   ", metrics["KGE"  ], "\n", sep = "")
     cat("RMSE:  ", metrics["RMSE" ], "\n", sep = "")
-    cat("NRMSE: ", metrics["NRMSE"], "\n", sep = "")
     cat("PBIAS: ", metrics["PBIAS"], "\n", sep = "")
     cat("RSR:   ", metrics["RSR"  ], "\n", sep = "")
+    cat("RCV:   ", metrics["RCV"  ], "\n", sep = "")
     cat("GMRAE: ", metrics["GMRAE"], "\n", sep = "")
     cat("MdRAE: ", metrics["MdRAE"], "\n", sep = "")
     cat(
@@ -626,7 +629,7 @@ setMethod(
       col = col,
       metric = metric,
       parameter = parameter,
-      maximum = if (metric %in% c("NSE", "mNSE")) TRUE else FALSE,
+      maximum = if (metric %in% c("NSE", "mNSE", "KGE")) TRUE else FALSE,
       tol = tol
     )
 
@@ -721,7 +724,7 @@ setMethod(
     method = "Nelder-Mead",
     lower = 0,
     upper = 0.1,
-    control = list(fnscale = if (metric %in% c("NSE", "mNSE")) -1 else 1)
+    control = list(fnscale = if (metric %in% c("NSE", "mNSE", "KGE")) -1 else 1)
   ) {
     assertChoice(substance, slotNames(x@substances))
     assertCol(x, col)

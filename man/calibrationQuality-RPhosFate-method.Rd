@@ -25,11 +25,11 @@ Assesses the model's calibration quality via the following metrics:
 \itemize{
 \item \emph{NSE:} Nash-Sutcliffe Efficiency
 \item \emph{mNSE:} Modified Nash-Sutcliffe Efficiency (\code{j = 1})
+\item \emph{KGE:} Kling-Gupta Efficiency (\verb{s = c(1, 1, 1), method = "2012"})
 \item \emph{RMSE:} Root Mean Square Error
-\item \emph{NRMSE:} Normalised Root Mean Square Error (normalised by the standard
-deviation of the observations)
 \item \emph{PBIAS:} Percent Bias
 \item \emph{RSR:} Ratio of the RMSE to the standard deviation of the observations
+\item \emph{RCV:} Ratio of the coefficients of variation
 \item \emph{GMRAE:} Geometric Mean Relative Absolute Error
 \item \emph{MdRAE:} Median Relative Absolute Error
 }
@@ -58,6 +58,6 @@ calibrationQuality(x, "SS", "SS_load")
 }
 \seealso{
 \code{\link{snapGauges}}, \code{\link{autoCalibrate}}, \code{\link{autoCalibrate2}},
-\code{\link[hydroGOF:NSE]{hydroGOF::NSE}}, \code{\link[hydroGOF:mNSE]{hydroGOF::mNSE}}, \code{\link[hydroGOF:rmse]{hydroGOF::rmse}},
-\code{\link[hydroGOF:nrmse]{hydroGOF::nrmse}}, \code{\link[hydroGOF:pbias]{hydroGOF::pbias}}, \code{\link[hydroGOF:rsr]{hydroGOF::rsr}}
+\code{\link[hydroGOF:NSE]{hydroGOF::NSE}}, \code{\link[hydroGOF:mNSE]{hydroGOF::mNSE}}, \code{\link[hydroGOF:KGE]{hydroGOF::KGE}},
+\code{\link[hydroGOF:rmse]{hydroGOF::rmse}}, \code{\link[hydroGOF:pbias]{hydroGOF::pbias}}, \code{\link[hydroGOF:rsr]{hydroGOF::rsr}}
 }

@@ -2,6 +2,16 @@ adjustExtent <- function(rl, ex) {
   extend(crop(rl, ex), ex)
 }
 
+adjustMetric <- function(metric, metrics) {
+  if (metric == "PBIAS") {
+    abs(metrics[metric])
+  } else if (metric == "RCV") {
+    abs(metrics[metric] - 1)
+  } else {
+    metrics[metric]
+  }
+}
+
 calibrate <- function(value, cmt, substance, col, metric, parameter) {
   if (!is.null(parameter)) {
     slot(cmt@parameters, parameter) <- value
@@ -14,11 +24,7 @@ calibrate <- function(value, cmt, substance, col, metric, parameter) {
   subsequentRun(cmt, substance)
   metrics <- calibrationQuality(cmt, substance, col)
 
-  if (metric == "PBIAS") {
-    abs(metrics[metric])
-  } else {
-    metrics[metric]
-  }
+  adjustMetric(metric, metrics)
 }
 
 calibrate2 <- function(values, cmt, substance, col, metric) {
@@ -28,11 +34,7 @@ calibrate2 <- function(values, cmt, substance, col, metric) {
   subsequentRun(cmt, substance)
   metrics <- calibrationQuality(cmt, substance, col)
 
-  if (metric == "PBIAS") {
-    abs(metrics[metric])
-  } else {
-    metrics[metric]
-  }
+  adjustMetric(metric, metrics)
 }
 
 determineMCfilename <- function(cmt, layer) {

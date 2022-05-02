@@ -1,3 +1,7 @@
+# RPhosFate v0.12.0.9000
+
+* Removed _NRMSE_ from calibration quality metrics and added _KGE_ as well as _RCV_
+
 # RPhosFate v0.12.0
 
 * Added `autoCalibrate2()` method: allows for calibrating the overland and channel deposition rate in one go

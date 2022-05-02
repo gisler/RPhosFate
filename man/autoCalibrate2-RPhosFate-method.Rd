@@ -13,7 +13,7 @@
   method = "Nelder-Mead",
   lower = 0,
   upper = 0.1,
-  control = list(fnscale = if (metric \%in\% c("NSE", "mNSE")) -1 else 1)
+  control = list(fnscale = if (metric \%in\% c("NSE", "mNSE", "KGE")) -1 else 1)
 )
 }
 \arguments{
