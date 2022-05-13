@@ -2,14 +2,14 @@
 # Generator token: 10BE3573-1514-4C36-9D1C-5A225CD40393
 
 D8slope <- function(im_dir, nm_dem, im_fDo, ns_fpl, is_ths = 1L) {
-    .Call('_RPhosFate_D8slope', PACKAGE = 'RPhosFate', im_dir, nm_dem, im_fDo, ns_fpl, is_ths)
+    .Call(`_RPhosFate_D8slope`, im_dir, nm_dem, im_fDo, ns_fpl, is_ths)
 }
 
 dir_sth <- function(im_dir, im_sth, im_fDo, is_ths = 1L) {
-    .Call('_RPhosFate_dir_sth', PACKAGE = 'RPhosFate', im_dir, im_sth, im_fDo, is_ths)
+    .Call(`_RPhosFate_dir_sth`, im_dir, im_sth, im_fDo, is_ths)
 }
 
 transportCpp <- function(parameters, ns_dep_ovl, ns_tfc_inl, helpers, order, im_cha, im_dir, im_inl, im_rip, nm_man, nm_xxe, nm_rhy, nm_slp) {
-    .Call('_RPhosFate_transportCpp', PACKAGE = 'RPhosFate', parameters, ns_dep_ovl, ns_tfc_inl, helpers, order, im_cha, im_dir, im_inl, im_rip, nm_man, nm_xxe, nm_rhy, nm_slp)
+    .Call(`_RPhosFate_transportCpp`, parameters, ns_dep_ovl, ns_tfc_inl, helpers, order, im_cha, im_dir, im_inl, im_rip, nm_man, nm_xxe, nm_rhy, nm_slp)
 }
 

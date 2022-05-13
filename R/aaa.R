@@ -8,7 +8,7 @@
 #' @importFrom stats median optim optimize sd setNames
 #' @importFrom yaml read_yaml write_yaml
 #' @importFrom utils modifyList packageVersion
-#' @useDynLib RPhosFate
+#' @useDynLib RPhosFate, .registration = TRUE
 NULL
 
 #### Class RPhosFateParameters2 ####
