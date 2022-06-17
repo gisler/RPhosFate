@@ -106,30 +106,45 @@ section search and successive parabolic interpolation.</p>
     <h2>Arguments</h2>
     <dl><dt>x</dt>
 <dd><p>An S4 <code><a href="RPhosFate-class.html">RPhosFate</a></code> river catchment object.</p></dd>
+
+
 <dt>substance</dt>
 <dd><p>A character string specifying the substance to calculate.</p></dd>
+
+
 <dt>col</dt>
 <dd><p>A character string specifying the calibration data column with the
 respective substance river loads.</p></dd>
+
+
 <dt>interval</dt>
 <dd><p>A numeric vector specifying the end-points of the interval to
 be searched.</p></dd>
+
+
 <dt>metric</dt>
 <dd><p>A character string specifying the metric to optimise. See
 <code><a href="calibrationQuality-RPhosFate-method.html">calibrationQuality</a></code> for available metrics.</p></dd>
+
+
 <dt>tol</dt>
 <dd><p>A numeric scalar specifying the desired accuracy of the parameter
 used for optimisation (not the metric).</p></dd>
+
+
 <dt>parameter</dt>
 <dd><p>By default, SS are calibrated utilising the overland
 deposition rate and all other substances are calibrated utilising their
 respective enrichment ratio. This argument can be used to specify a
 dedicated parameter utilised for calibration via a character string:
 <code>"ns_dep_ovl"</code> for overland or <code>"ns_dep_cha"</code> for channel deposition rate.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>An S4 <code><a href="RPhosFate-class.html">RPhosFate</a></code> river catchment object and side effects in
+    
+
+<p>An S4 <code><a href="RPhosFate-class.html">RPhosFate</a></code> river catchment object and side effects in
 the form of raster files.</p>
     </div>
     <div id="see-also">
@@ -174,7 +189,7 @@ the form of raster files.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
 </div>
 
       </footer></div>
