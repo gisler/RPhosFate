@@ -1,9 +1,9 @@
 pandoc: 2.14.2
-pkgdown: 2.0.4
+pkgdown: 2.0.6
 pkgdown_sha: ~
 articles:
   basicWorkflow: basicWorkflow.html
-last_built: 2022-06-17T07:07Z
+last_built: 2022-09-04T12:30Z
 urls:
   reference: https://gisler.github.io/RPhosFate/reference
   article: https://gisler.github.io/RPhosFate/articles
