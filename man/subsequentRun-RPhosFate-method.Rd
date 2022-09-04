@@ -55,8 +55,7 @@ x <- RPhosFate(
 # presupposed method call
 x <- firstRun(x, "SS")
 
-x <- subsequentRun(x, "PP")
-}
+x <- subsequentRun(x, "PP")}
 
 }
 \seealso{

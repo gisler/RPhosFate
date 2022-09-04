@@ -5,7 +5,7 @@ dataLicense <- readLines("inst/tinytest/LICENSE.md")[-1]
 #' Copies a demonstration project to an existing or a temporary directory.
 #'
 #' The demonstration project data are a derivative of the
-#' `r dataLicense`
+#' `r paste(dataLicense, collapse = "\n")`
 #'
 #' @param cs_dir An optional character string specifying an existing directory.
 #'
@@ -16,8 +16,7 @@ dataLicense <- readLines("inst/tinytest/LICENSE.md")[-1]
 #'
 #' @examples
 #' \dontrun{
-#' demoProject()
-#' }
+#' demoProject()}
 #'
 #' @export
 demoProject <- function(cs_dir = tempdir(TRUE)) {
@@ -149,8 +148,7 @@ demoProject <- function(cs_dir = tempdir(TRUE)) {
 #'   cs_rds = file.path(cs_dir_lrg, "rds_lrg.tif"),
 #'   cs_wgs = file.path(cs_dir_lrg, "wgs_lrg.tif"),
 #'   ls_tmp = TRUE
-#' )
-#' }
+#' )}
 #'
 #' @export
 DEMrelatedInput <- function(

@@ -74,8 +74,7 @@ x <- autoCalibrate2(
   lower = c(10e-4, 0),
   upper = c(20e-4, 20e-4),
   control = list(fnscale = -1, parscale = c(1e-3, 1e-3), factr = 1e12)
-)
-}
+)}
 
 }
 \seealso{

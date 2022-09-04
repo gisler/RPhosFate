@@ -32,8 +32,7 @@ x <- RPhosFate(
 x <- erosionPrerequisites(x)
 x <- erosion(x)
 
-x <- emission(x, "PP")
-}
+x <- emission(x, "PP")}
 
 }
 \seealso{

@@ -30,8 +30,7 @@ While the data represent a real catchment \emph{\href{https://hoal.hydrology.at/
 }
 \examples{
 \dontrun{
-demoProject()
-}
+demoProject()}
 
 }
 \seealso{

@@ -190,8 +190,7 @@ RPhosFate <- function(...) {
 #'   ls_ini = TRUE,
 #'   is_MCi = 1L,
 #'   cv_MCl = c("xxt", "xxt_cld")
-#' )
-#' }
+#' )}
 #'
 #' @export
 catchment <- function(...) {
@@ -228,8 +227,7 @@ setGeneric(
 #'   ls_ini = TRUE
 #' )
 #'
-#' x <- firstRun(x, "SS")
-#' }
+#' x <- firstRun(x, "SS")}
 #'
 #' @aliases firstRun
 #'
@@ -296,8 +294,7 @@ setGeneric(
 #' # presupposed method call
 #' x <- firstRun(x, "SS")
 #'
-#' x <- subsequentRun(x, "PP")
-#' }
+#' x <- subsequentRun(x, "PP")}
 #'
 #' @aliases subsequentRun
 #'
@@ -363,8 +360,7 @@ setGeneric(
 #'   ls_ini = TRUE
 #' )
 #'
-#' x <- snapGauges(x)
-#' }
+#' x <- snapGauges(x)}
 #'
 #' @aliases snapGauges
 #'
@@ -437,8 +433,7 @@ setGeneric(
 #' x <- firstRun(x, "SS")
 #' x <- snapGauges(x)
 #'
-#' calibrationQuality(x, "SS", "SS_load")
-#' }
+#' calibrationQuality(x, "SS", "SS_load")}
 #'
 #' @aliases calibrationQuality
 #'
@@ -598,8 +593,7 @@ setGeneric(
 #'   col = "SS_load",
 #'   interval = c(10e-4, 20e-4),
 #'   metric = "NSE"
-#' )
-#' }
+#' )}
 #'
 #' @aliases autoCalibrate
 #'
@@ -709,8 +703,7 @@ setGeneric(
 #'   lower = c(10e-4, 0),
 #'   upper = c(20e-4, 20e-4),
 #'   control = list(fnscale = -1, parscale = c(1e-3, 1e-3), factr = 1e12)
-#' )
-#' }
+#' )}
 #'
 #' @aliases autoCalibrate2
 #'
@@ -786,8 +779,7 @@ setGeneric(
 #'   ls_ini = TRUE
 #' )
 #'
-#' saveState(x)
-#' }
+#' saveState(x)}
 #'
 #' @aliases saveState
 #'

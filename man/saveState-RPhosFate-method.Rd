@@ -27,8 +27,7 @@ x <- RPhosFate(
   ls_ini = TRUE
 )
 
-saveState(x)
-}
+saveState(x)}
 
 }
 \seealso{

@@ -28,8 +28,7 @@ x <- RPhosFate(
   ls_ini = TRUE
 )
 
-x <- transportPrerequisites(x)
-}
+x <- transportPrerequisites(x)}
 
 }
 \references{

@@ -126,8 +126,7 @@ nm_olc <- DEMrelatedInput(
   cs_rds = file.path(cs_dir_lrg, "rds_lrg.tif"),
   cs_wgs = file.path(cs_dir_lrg, "wgs_lrg.tif"),
   ls_tmp = TRUE
-)
-}
+)}
 
 }
 \references{

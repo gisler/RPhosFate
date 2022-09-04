@@ -110,7 +110,6 @@ x <- firstRun(x, "SS")
 
 getLayer(x, "dir")
 getLayer(x, "xxt", "SS")
-getLayer(x, "xxe", "PP")
-}
+getLayer(x, "xxe", "PP")}
 
 }
