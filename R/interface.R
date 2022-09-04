@@ -516,6 +516,8 @@ setMethod(
       0,
       max(nv_mld, na.rm = TRUE)
     )
+
+    par(ask = FALSE)
     plot(
       NULL,
       NULL,
