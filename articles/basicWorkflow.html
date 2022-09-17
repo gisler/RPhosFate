@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">RPhosFate</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.12.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
       </span>
     </div>
 
@@ -108,7 +108,7 @@
       <h1 data-toc-skip>Basic modelling workflow</h1>
                         <h4 data-toc-skip class="author">Gerold Hepp</h4>
             
-            <h4 data-toc-skip class="date">2022-05-02</h4>
+            <h4 data-toc-skip class="date">2022-09-17</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/gisler/RPhosFate/blob/HEAD/vignettes/basicWorkflow.Rmd" class="external-link"><code>vignettes/basicWorkflow.Rmd</code></a></small>
       <div class="hidden name"><code>basicWorkflow.Rmd</code></div>
@@ -124,55 +124,55 @@
 </h2>
 <p>Load the package and obtain a copy of the demonstration project:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://gisler.github.io/RPhosFate/">RPhosFate</a></span><span class="op">)</span>
-
-<span class="va">cv_dir</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/demoProject.html">demoProject</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://gisler.github.io/RPhosFate/">RPhosFate</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">cv_dir</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/demoProject.html">demoProject</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="project-initialisation">Project initialisation<a class="anchor" aria-label="anchor" href="#project-initialisation"></a>
 </h2>
 <p>Use <code><a href="../reference/catchment.html">RPhosFate()</a></code> or <code><a href="../reference/catchment.html">catchment()</a></code> to initialise the project:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/catchment.html">RPhosFate</a></span><span class="op">(</span>
-  cv_dir <span class="op">=</span> <span class="va">cv_dir</span>,
-  ns_dep_ovl <span class="op">=</span> <span class="fl">25e-4</span>,
-  ns_dep_cha <span class="op">=</span> <span class="fl">0.0</span>,
-  nv_tfc_inl <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>SS <span class="op">=</span> <span class="fl">0.6</span>, PP <span class="op">=</span> <span class="fl">0.6</span><span class="op">)</span>,
-  nv_enr_rto <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>PP <span class="op">=</span> <span class="fl">2.0</span><span class="op">)</span>,
-  nm_olc <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">4704255</span>, <span class="fl">2795195</span><span class="op">)</span>, ncol <span class="op">=</span> <span class="fl">2L</span><span class="op">)</span>,
-  df_cdt <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.table</a></span><span class="op">(</span>
-    <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">cv_dir</span>, <span class="st">"cdt.txt"</span><span class="op">)</span>,
-    header <span class="op">=</span> <span class="cn">TRUE</span>,
-    stringsAsFactors <span class="op">=</span> <span class="cn">FALSE</span>
-  <span class="op">)</span>
-<span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/catchment.html">RPhosFate</a></span><span class="op">(</span></span>
+<span>  cv_dir <span class="op">=</span> <span class="va">cv_dir</span>,</span>
+<span>  ns_dep_ovl <span class="op">=</span> <span class="fl">25e-4</span>,</span>
+<span>  ns_dep_cha <span class="op">=</span> <span class="fl">0.0</span>,</span>
+<span>  nv_tfc_inl <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>SS <span class="op">=</span> <span class="fl">0.6</span>, PP <span class="op">=</span> <span class="fl">0.6</span><span class="op">)</span>,</span>
+<span>  nv_enr_rto <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>PP <span class="op">=</span> <span class="fl">2.0</span><span class="op">)</span>,</span>
+<span>  nm_olc <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">4704255</span>, <span class="fl">2795195</span><span class="op">)</span>, ncol <span class="op">=</span> <span class="fl">2L</span><span class="op">)</span>,</span>
+<span>  df_cdt <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.table</a></span><span class="op">(</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">cv_dir</span>, <span class="st">"cdt.txt"</span><span class="op">)</span>,</span>
+<span>    header <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>    stringsAsFactors <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="first-model-run-for-suspended-solids-ss">First model run for suspended solids (SS)<a class="anchor" aria-label="anchor" href="#first-model-run-for-suspended-solids-ss"></a>
 </h2>
 <p><code><a href="../reference/firstRun-RPhosFate-method.html">firstRun()</a></code> calls all low-level interface methods for the specified substance in the required order:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/firstRun-RPhosFate-method.html">firstRun</a></span><span class="op">(</span><span class="va">x</span>, substance <span class="op">=</span> <span class="st">"SS"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/firstRun-RPhosFate-method.html">firstRun</a></span><span class="op">(</span><span class="va">x</span>, substance <span class="op">=</span> <span class="st">"SS"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="calibration-quality-of-ss">Calibration quality of SS<a class="anchor" aria-label="anchor" href="#calibration-quality-of-ss"></a>
 </h2>
 <p>Snap coordinates of provided calibration gauges to the respective midpoint of the nearest channel cell if necessary and check calibration quality:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/snapGauges-RPhosFate-method.html">snapGauges</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
-
-<span class="va">metrics</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/calibrationQuality-RPhosFate-method.html">calibrationQuality</a></span><span class="op">(</span><span class="va">x</span>, substance <span class="op">=</span> <span class="st">"SS"</span>, col <span class="op">=</span> <span class="st">"SS_load"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/snapGauges-RPhosFate-method.html">snapGauges</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">metrics</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/calibrationQuality-RPhosFate-method.html">calibrationQuality</a></span><span class="op">(</span><span class="va">x</span>, substance <span class="op">=</span> <span class="st">"SS"</span>, col <span class="op">=</span> <span class="st">"SS_load"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="calibrate-ss">Calibrate SS<a class="anchor" aria-label="anchor" href="#calibrate-ss"></a>
 </h2>
 <p>SS is calibrated by iteratively specifying better parameter values for <code>ns_dep_ovl</code> (overland deposition rate) and/or <code>ns_dep_cha</code> (channel deposition rate) as well as calling <code><a href="../reference/subsequentRun-RPhosFate-method.html">subsequentRun()</a></code> for SS afterwards until pleased with the metrics. By default, <code><a href="../reference/subsequentRun-RPhosFate-method.html">subsequentRun()</a></code> only calls the <code><a href="../reference/transport-RPhosFate-method.html">transport()</a></code> low-level interface method for the specified substance:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/setParameter-RPhosFate-method.html">setParameter</a></span><span class="op">(</span><span class="va">x</span>, ns_dep_ovl <span class="op">=</span> <span class="fl">15e-4</span><span class="op">)</span>
-
-<span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/subsequentRun-RPhosFate-method.html">subsequentRun</a></span><span class="op">(</span><span class="va">x</span>, substance <span class="op">=</span> <span class="st">"SS"</span><span class="op">)</span>
-
-<span class="va">metrics</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/calibrationQuality-RPhosFate-method.html">calibrationQuality</a></span><span class="op">(</span><span class="va">x</span>, substance <span class="op">=</span> <span class="st">"SS"</span>, col <span class="op">=</span> <span class="st">"SS_load"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/setParameter-RPhosFate-method.html">setParameter</a></span><span class="op">(</span><span class="va">x</span>, ns_dep_ovl <span class="op">=</span> <span class="fl">15e-4</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/subsequentRun-RPhosFate-method.html">subsequentRun</a></span><span class="op">(</span><span class="va">x</span>, substance <span class="op">=</span> <span class="st">"SS"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">metrics</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/calibrationQuality-RPhosFate-method.html">calibrationQuality</a></span><span class="op">(</span><span class="va">x</span>, substance <span class="op">=</span> <span class="st">"SS"</span>, col <span class="op">=</span> <span class="st">"SS_load"</span><span class="op">)</span></span></code></pre></div>
 <p>The <code><a href="../reference/autoCalibrate-RPhosFate-method.html">autoCalibrate()</a></code> and <code><a href="../reference/autoCalibrate2-RPhosFate-method.html">autoCalibrate2()</a></code> methods may provide more comfortable alternatives to this process.</p>
 </div>
 <div class="section level2">
@@ -180,20 +180,20 @@
 </h2>
 <p>First, a further call to <code><a href="../reference/subsequentRun-RPhosFate-method.html">subsequentRun()</a></code> for PP is necessary:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/subsequentRun-RPhosFate-method.html">subsequentRun</a></span><span class="op">(</span><span class="va">x</span>, substance <span class="op">=</span> <span class="st">"PP"</span><span class="op">)</span>
-
-<span class="va">metrics</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/calibrationQuality-RPhosFate-method.html">calibrationQuality</a></span><span class="op">(</span><span class="va">x</span>, substance <span class="op">=</span> <span class="st">"PP"</span>, col <span class="op">=</span> <span class="st">"PP_load"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/subsequentRun-RPhosFate-method.html">subsequentRun</a></span><span class="op">(</span><span class="va">x</span>, substance <span class="op">=</span> <span class="st">"PP"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">metrics</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/calibrationQuality-RPhosFate-method.html">calibrationQuality</a></span><span class="op">(</span><span class="va">x</span>, substance <span class="op">=</span> <span class="st">"PP"</span>, col <span class="op">=</span> <span class="st">"PP_load"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="calibrate-pp">Calibrate PP<a class="anchor" aria-label="anchor" href="#calibrate-pp"></a>
 </h2>
 <p>Same procedure as with SS apart from iteratively specifying better parameter values for the enrichment ratio:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/setParameter-RPhosFate-method.html">setParameter</a></span><span class="op">(</span><span class="va">x</span>, nv_enr_rto <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>PP <span class="op">=</span> <span class="fl">1.4</span><span class="op">)</span><span class="op">)</span>
-
-<span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/subsequentRun-RPhosFate-method.html">subsequentRun</a></span><span class="op">(</span><span class="va">x</span>, substance <span class="op">=</span> <span class="st">"PP"</span><span class="op">)</span>
-
-<span class="va">metrics</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/calibrationQuality-RPhosFate-method.html">calibrationQuality</a></span><span class="op">(</span><span class="va">x</span>, substance <span class="op">=</span> <span class="st">"PP"</span>, col <span class="op">=</span> <span class="st">"PP_load"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/setParameter-RPhosFate-method.html">setParameter</a></span><span class="op">(</span><span class="va">x</span>, nv_enr_rto <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>PP <span class="op">=</span> <span class="fl">1.4</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/subsequentRun-RPhosFate-method.html">subsequentRun</a></span><span class="op">(</span><span class="va">x</span>, substance <span class="op">=</span> <span class="st">"PP"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">metrics</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/calibrationQuality-RPhosFate-method.html">calibrationQuality</a></span><span class="op">(</span><span class="va">x</span>, substance <span class="op">=</span> <span class="st">"PP"</span>, col <span class="op">=</span> <span class="st">"PP_load"</span><span class="op">)</span></span></code></pre></div>
 <p>In case the only substance of interest is PP, it is possible to set its enrichment ratio to one and directly calibrate it via <code>ns_dep_ovl</code> and/or <code>ns_dep_cha</code>.</p>
 </div>
 <div class="section level2">
@@ -201,7 +201,7 @@
 </h2>
 <p>Write parameters and transport calculation order to disk:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/saveState-RPhosFate-method.html">saveState</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/saveState-RPhosFate-method.html">saveState</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></code></pre></div>
 <hr>
 </div>
 <div class="section level2">
@@ -209,10 +209,10 @@
 </h2>
 <p>Simply load the previously saved state of the project via the <code>ls_ini</code> argument of <code><a href="../reference/catchment.html">RPhosFate()</a></code> or <code><a href="../reference/catchment.html">catchment()</a></code>:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/catchment.html">RPhosFate</a></span><span class="op">(</span>
-  cv_dir <span class="op">=</span> <span class="va">cv_dir</span>,
-  ls_ini <span class="op">=</span> <span class="cn">TRUE</span>
-<span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/catchment.html">RPhosFate</a></span><span class="op">(</span></span>
+<span>  cv_dir <span class="op">=</span> <span class="va">cv_dir</span>,</span>
+<span>  ls_ini <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 </div>
   </div>
 
@@ -233,7 +233,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer>

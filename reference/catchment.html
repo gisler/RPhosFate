@@ -26,7 +26,7 @@ catchment is an alias for RPhosFate."><!-- mathjax --><script src="https://cdnjs
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">RPhosFate</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.12.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
       </span>
     </div>
 
@@ -103,9 +103,9 @@ three project root subdirectories:</p><ul><li><p><em>Input</em></p></li>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">RPhosFate</span><span class="op">(</span><span class="va">...</span><span class="op">)</span>
-
-<span class="fu">catchment</span><span class="op">(</span><span class="va">...</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">RPhosFate</span><span class="op">(</span><span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">catchment</span><span class="op">(</span><span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -113,10 +113,13 @@ three project root subdirectories:</p><ul><li><p><em>Input</em></p></li>
     <dl><dt>...</dt>
 <dd><p>Arguments used to initialise the project. See argument sections
 for further information.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>An S4 <code><a href="RPhosFate-class.html">RPhosFate</a></code> river catchment object.</p>
+    
+
+<p>An S4 <code><a href="RPhosFate-class.html">RPhosFate</a></code> river catchment object.</p>
     </div>
     <div id="input-subdirectory">
     <h2><em>Input</em> subdirectory</h2>
@@ -266,37 +269,36 @@ is utilised.</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in"><span class="co"># temporary demonstration project copy</span></span>
-<span class="r-in"><span class="va">cv_dir</span> <span class="op">&lt;-</span> <span class="fu"><a href="demoProject.html">demoProject</a></span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># initialise project from scratch</span></span>
-<span class="r-in"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu">RPhosFate</span><span class="op">(</span></span>
-<span class="r-in">  cv_dir <span class="op">=</span> <span class="va">cv_dir</span>,</span>
-<span class="r-in">  ns_dep_ovl <span class="op">=</span> <span class="fl">25e-4</span>,</span>
-<span class="r-in">  ns_dep_cha <span class="op">=</span> <span class="fl">0.0</span>,</span>
-<span class="r-in">  nv_tfc_inl <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>SS <span class="op">=</span> <span class="fl">0.6</span>, PP <span class="op">=</span> <span class="fl">0.6</span><span class="op">)</span>,</span>
-<span class="r-in">  nv_enr_rto <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>PP <span class="op">=</span> <span class="fl">2.0</span><span class="op">)</span>,</span>
-<span class="r-in">  nm_olc <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">4704255</span>, <span class="fl">2795195</span><span class="op">)</span>, ncol <span class="op">=</span> <span class="fl">2L</span><span class="op">)</span>,</span>
-<span class="r-in">  df_cdt <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.table</a></span><span class="op">(</span></span>
-<span class="r-in">    <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">cv_dir</span>, <span class="st">"cdt.txt"</span><span class="op">)</span>,</span>
-<span class="r-in">    header <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span class="r-in">    stringsAsFactors <span class="op">=</span> <span class="cn">FALSE</span></span>
-<span class="r-in">  <span class="op">)</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># load state of existing project in Monte Carlo simulation mode</span></span>
-<span class="r-in"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu">RPhosFate</span><span class="op">(</span></span>
-<span class="r-in">  cv_dir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
-<span class="r-in">    <span class="va">cv_dir</span>,</span>
-<span class="r-in">    <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"tinytest"</span>, <span class="st">"testProject"</span>, package <span class="op">=</span> <span class="st">"RPhosFate"</span><span class="op">)</span></span>
-<span class="r-in">  <span class="op">)</span>,</span>
-<span class="r-in">  ls_ini <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span class="r-in">  is_MCi <span class="op">=</span> <span class="fl">1L</span>,</span>
-<span class="r-in">  cv_MCl <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"xxt"</span>, <span class="st">"xxt_cld"</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span></span>
-<span class="r-in"></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span><span class="co"># temporary demonstration project copy</span></span></span>
+<span class="r-in"><span><span class="va">cv_dir</span> <span class="op">&lt;-</span> <span class="fu"><a href="demoProject.html">demoProject</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># initialise project from scratch</span></span></span>
+<span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu">RPhosFate</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  cv_dir <span class="op">=</span> <span class="va">cv_dir</span>,</span></span>
+<span class="r-in"><span>  ns_dep_ovl <span class="op">=</span> <span class="fl">25e-4</span>,</span></span>
+<span class="r-in"><span>  ns_dep_cha <span class="op">=</span> <span class="fl">0.0</span>,</span></span>
+<span class="r-in"><span>  nv_tfc_inl <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>SS <span class="op">=</span> <span class="fl">0.6</span>, PP <span class="op">=</span> <span class="fl">0.6</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  nv_enr_rto <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>PP <span class="op">=</span> <span class="fl">2.0</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  nm_olc <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">4704255</span>, <span class="fl">2795195</span><span class="op">)</span>, ncol <span class="op">=</span> <span class="fl">2L</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  df_cdt <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.table</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">cv_dir</span>, <span class="st">"cdt.txt"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    header <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
+<span class="r-in"><span>    stringsAsFactors <span class="op">=</span> <span class="cn">FALSE</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># load state of existing project in Monte Carlo simulation mode</span></span></span>
+<span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu">RPhosFate</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  cv_dir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    <span class="va">cv_dir</span>,</span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"tinytest"</span>, <span class="st">"testProject"</span>, package <span class="op">=</span> <span class="st">"RPhosFate"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span>,</span></span>
+<span class="r-in"><span>  ls_ini <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
+<span class="r-in"><span>  is_MCi <span class="op">=</span> <span class="fl">1L</span>,</span></span>
+<span class="r-in"><span>  cv_MCl <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"xxt"</span>, <span class="st">"xxt_cld"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span><span class="op">}</span></span></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -311,7 +313,7 @@ is utilised.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

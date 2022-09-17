@@ -23,7 +23,7 @@ WhiteboxTools binary
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">RPhosFate</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.12.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
       </span>
     </div>
 
@@ -100,22 +100,22 @@ cha, dem, dir, rds, slp,</em> and <em>wsh.</em></p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">DEMrelatedInput</span><span class="op">(</span>
-  <span class="va">cv_dir</span>,
-  <span class="va">cs_dem</span>,
-  <span class="va">cs_cha</span>,
-  <span class="va">sp_msk</span>,
-  <span class="va">sp_olp</span>,
-  <span class="va">sp_sds</span>,
-  cs_rds <span class="op">=</span> <span class="cn">NULL</span>,
-  cs_wgs <span class="op">=</span> <span class="cn">NULL</span>,
-  cs_dir <span class="op">=</span> <span class="cn">NULL</span>,
-  ns_brn <span class="op">=</span> <span class="fl">50</span>,
-  is_adj <span class="op">=</span> <span class="fl">1L</span>,
-  is_ths <span class="op">=</span> <span class="fl">1L</span>,
-  ls_tmp <span class="op">=</span> <span class="cn">FALSE</span>,
-  cs_fex <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"tif"</span>, <span class="st">"img"</span><span class="op">)</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">DEMrelatedInput</span><span class="op">(</span></span>
+<span>  <span class="va">cv_dir</span>,</span>
+<span>  <span class="va">cs_dem</span>,</span>
+<span>  <span class="va">cs_cha</span>,</span>
+<span>  <span class="va">sp_msk</span>,</span>
+<span>  <span class="va">sp_olp</span>,</span>
+<span>  <span class="va">sp_sds</span>,</span>
+<span>  cs_rds <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  cs_wgs <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  cs_dir <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  ns_brn <span class="op">=</span> <span class="fl">50</span>,</span>
+<span>  is_adj <span class="op">=</span> <span class="fl">1L</span>,</span>
+<span>  is_ths <span class="op">=</span> <span class="fl">1L</span>,</span>
+<span>  ls_tmp <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  cs_fex <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"tif"</span>, <span class="st">"img"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -123,51 +123,80 @@ cha, dem, dir, rds, slp,</em> and <em>wsh.</em></p>
     <dl><dt>cv_dir</dt>
 <dd><p>A character vector specifying the desired project root
 directory (first position).</p></dd>
+
+
 <dt>cs_dem</dt>
 <dd><p>A character string specifying a path to a potentially large
 raster digital elevation model.</p></dd>
+
+
 <dt>cs_cha</dt>
 <dd><p>A character string specifying a path to a potentially large
 raster providing channels.</p></dd>
+
+
 <dt>sp_msk</dt>
 <dd><p>An <code><a href="https://rdrr.io/pkg/sp/man/SpatialPolygonsDataFrame-class.html" class="external-link">sp::SpatialPolygonsDataFrame</a></code> providing a somewhat
 oversized catchment mask used to clip the potentially large input rasters
 for further processing.</p></dd>
+
+
 <dt>sp_olp</dt>
 <dd><p>An <code><a href="https://rdrr.io/pkg/sp/man/SpatialPointsDataFrame-class.html" class="external-link">sp::SpatialPointsDataFrame</a></code> providing the desired
 catchment outlet(s).</p></dd>
+
+
 <dt>sp_sds</dt>
 <dd><p>An <code><a href="https://rdrr.io/pkg/sp/man/SpatialPointsDataFrame-class.html" class="external-link">sp::SpatialPointsDataFrame</a></code> providing channel
 sources.</p></dd>
+
+
 <dt>cs_rds</dt>
 <dd><p>An optional character string specifying a path to a potentially
 large raster providing roads.</p></dd>
+
+
 <dt>cs_wgs</dt>
 <dd><p>An optional character string specifying a path to a potentially
 large raster providing flow accumulation weights.</p></dd>
+
+
 <dt>cs_dir</dt>
 <dd><p>An optional character string specifying a path to a potentially
 large raster providing D8 flow directions using <em>ArcGIS</em> codes.</p></dd>
+
+
 <dt>ns_brn</dt>
 <dd><p>A numeric scalar specifying the stream burning step size in m.</p></dd>
+
+
 <dt>is_adj</dt>
 <dd><p>A numeric scalar specifying how many cells adjacent to channels
 shall be burnt.</p></dd>
+
+
 <dt>is_ths</dt>
 <dd><p>An integer scalar specifying the number of threads to use
 during computation (no effect in case <em>OpenMP</em> is not supported by the
 toolchain and/or platform).</p></dd>
+
+
 <dt>ls_tmp</dt>
 <dd><p>A logical scalar specifying if the temporary files created
 during computation shall be kept.</p></dd>
+
+
 <dt>cs_fex</dt>
 <dd><p>A character string specifying the file extension of the created
 raster files (either the default <code>"tif"</code> or <code>"img"</code> for backward
 compatibility).</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A two column numeric <code><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></code> specifying one or more catchment
+    
+
+<p>A two column numeric <code><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></code> specifying one or more catchment
 outlet coordinates and side effects in the form of raster files.</p>
     </div>
     <div id="details">
@@ -202,29 +231,28 @@ Processes 30, 846–857.</cite></p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in"><span class="co"># obtain temporary project root directory</span></span>
-<span class="r-in"><span class="va">cv_dir</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/normalizePath.html" class="external-link">normalizePath</a></span><span class="op">(</span></span>
-<span class="r-in">  <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempfile</a></span><span class="op">(</span><span class="st">"cmt"</span><span class="op">)</span>,</span>
-<span class="r-in">  winslash <span class="op">=</span> <span class="va">.Platform</span><span class="op">$</span><span class="va">file.sep</span>,</span>
-<span class="r-in">  mustWork <span class="op">=</span> <span class="cn">FALSE</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-in"><span class="co"># obtain directory holding "large" rasters and other required data sets</span></span>
-<span class="r-in"><span class="va">cs_dir_lrg</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"tinytest"</span>, <span class="st">"largeData"</span>, package <span class="op">=</span> <span class="st">"RPhosFate"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">nm_olc</span> <span class="op">&lt;-</span> <span class="fu">DEMrelatedInput</span><span class="op">(</span></span>
-<span class="r-in">  cv_dir <span class="op">=</span> <span class="va">cv_dir</span>,</span>
-<span class="r-in">  cs_dem <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">cs_dir_lrg</span>, <span class="st">"dem_lrg.tif"</span><span class="op">)</span>,</span>
-<span class="r-in">  cs_cha <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">cs_dir_lrg</span>, <span class="st">"cha_lrg.tif"</span><span class="op">)</span>,</span>
-<span class="r-in">  sp_msk <span class="op">=</span> <span class="fu">raster</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/raster/man/shapefile.html" class="external-link">shapefile</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">cs_dir_lrg</span>, <span class="st">"msk.shp"</span><span class="op">)</span><span class="op">)</span>,</span>
-<span class="r-in">  sp_olp <span class="op">=</span> <span class="fu">raster</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/raster/man/shapefile.html" class="external-link">shapefile</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">cs_dir_lrg</span>, <span class="st">"olp.shp"</span><span class="op">)</span><span class="op">)</span>,</span>
-<span class="r-in">  sp_sds <span class="op">=</span> <span class="fu">raster</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/raster/man/shapefile.html" class="external-link">shapefile</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">cs_dir_lrg</span>, <span class="st">"sds.shp"</span><span class="op">)</span><span class="op">)</span>,</span>
-<span class="r-in">  cs_rds <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">cs_dir_lrg</span>, <span class="st">"rds_lrg.tif"</span><span class="op">)</span>,</span>
-<span class="r-in">  cs_wgs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">cs_dir_lrg</span>, <span class="st">"wgs_lrg.tif"</span><span class="op">)</span>,</span>
-<span class="r-in">  ls_tmp <span class="op">=</span> <span class="cn">TRUE</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span></span>
-<span class="r-in"></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span><span class="co"># obtain temporary project root directory</span></span></span>
+<span class="r-in"><span><span class="va">cv_dir</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/normalizePath.html" class="external-link">normalizePath</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempfile</a></span><span class="op">(</span><span class="st">"cmt"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  winslash <span class="op">=</span> <span class="va">.Platform</span><span class="op">$</span><span class="va">file.sep</span>,</span></span>
+<span class="r-in"><span>  mustWork <span class="op">=</span> <span class="cn">FALSE</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co"># obtain directory holding "large" rasters and other required data sets</span></span></span>
+<span class="r-in"><span><span class="va">cs_dir_lrg</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"tinytest"</span>, <span class="st">"largeData"</span>, package <span class="op">=</span> <span class="st">"RPhosFate"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">nm_olc</span> <span class="op">&lt;-</span> <span class="fu">DEMrelatedInput</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  cv_dir <span class="op">=</span> <span class="va">cv_dir</span>,</span></span>
+<span class="r-in"><span>  cs_dem <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">cs_dir_lrg</span>, <span class="st">"dem_lrg.tif"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  cs_cha <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">cs_dir_lrg</span>, <span class="st">"cha_lrg.tif"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  sp_msk <span class="op">=</span> <span class="fu">raster</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/raster/man/shapefile.html" class="external-link">shapefile</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">cs_dir_lrg</span>, <span class="st">"msk.shp"</span><span class="op">)</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  sp_olp <span class="op">=</span> <span class="fu">raster</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/raster/man/shapefile.html" class="external-link">shapefile</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">cs_dir_lrg</span>, <span class="st">"olp.shp"</span><span class="op">)</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  sp_sds <span class="op">=</span> <span class="fu">raster</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/raster/man/shapefile.html" class="external-link">shapefile</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">cs_dir_lrg</span>, <span class="st">"sds.shp"</span><span class="op">)</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  cs_rds <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">cs_dir_lrg</span>, <span class="st">"rds_lrg.tif"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  cs_wgs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">cs_dir_lrg</span>, <span class="st">"wgs_lrg.tif"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  ls_tmp <span class="op">=</span> <span class="cn">TRUE</span></span></span>
+<span class="r-in"><span><span class="op">)</span><span class="op">}</span></span></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -239,7 +267,7 @@ Processes 30, 846–857.</cite></p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

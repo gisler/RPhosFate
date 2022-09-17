@@ -22,7 +22,7 @@ end-points."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">RPhosFate</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.12.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
       </span>
     </div>
 
@@ -98,48 +98,65 @@ end-points.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="co"># S4 method for RPhosFate</span>
-<span class="fu">autoCalibrate2</span><span class="op">(</span>
-  <span class="va">x</span>,
-  <span class="va">substance</span>,
-  <span class="va">col</span>,
-  <span class="va">metric</span>,
-  method <span class="op">=</span> <span class="st">"Nelder-Mead"</span>,
-  lower <span class="op">=</span> <span class="fl">0</span>,
-  upper <span class="op">=</span> <span class="fl">0.1</span>,
-  control <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>fnscale <span class="op">=</span> <span class="kw">if</span> <span class="op">(</span><span class="va">metric</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"NSE"</span>, <span class="st">"mNSE"</span><span class="op">)</span><span class="op">)</span> <span class="op">-</span><span class="fl">1</span> <span class="kw">else</span> <span class="fl">1</span><span class="op">)</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S4 method for RPhosFate</span></span>
+<span><span class="fu">autoCalibrate2</span><span class="op">(</span></span>
+<span>  <span class="va">x</span>,</span>
+<span>  <span class="va">substance</span>,</span>
+<span>  <span class="va">col</span>,</span>
+<span>  <span class="va">metric</span>,</span>
+<span>  method <span class="op">=</span> <span class="st">"Nelder-Mead"</span>,</span>
+<span>  lower <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  upper <span class="op">=</span> <span class="fl">0.1</span>,</span>
+<span>  control <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>fnscale <span class="op">=</span> <span class="kw">if</span> <span class="op">(</span><span class="va">metric</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"NSE"</span>, <span class="st">"mNSE"</span>, <span class="st">"KGE"</span><span class="op">)</span><span class="op">)</span> <span class="op">-</span><span class="fl">1</span> <span class="kw">else</span> <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>x</dt>
 <dd><p>An S4 <code><a href="RPhosFate-class.html">RPhosFate</a></code> river catchment object.</p></dd>
+
+
 <dt>substance</dt>
 <dd><p>A character string specifying the substance to calculate.</p></dd>
+
+
 <dt>col</dt>
 <dd><p>A character string specifying the calibration data column with the
 respective substance river loads.</p></dd>
+
+
 <dt>metric</dt>
 <dd><p>A character string specifying the metric to optimise. See
 <code><a href="calibrationQuality-RPhosFate-method.html">calibrationQuality</a></code> for available metrics.</p></dd>
+
+
 <dt>method</dt>
 <dd><p>A character string specifying the utilised optimisation method.
 See <code><a href="https://rdrr.io/r/stats/optim.html" class="external-link">optim</a></code> for further information (use <code><a href="autoCalibrate-RPhosFate-method.html">autoCalibrate</a></code> instead of
 method <code>"Brent"</code>).</p></dd>
+
+
 <dt>lower</dt>
 <dd><p>A numeric scalar or vector specifying the lower end-point(s) of
 the interval(s) to be searched.</p></dd>
+
+
 <dt>upper</dt>
 <dd><p>A numeric scalar or vector specifying the upper end-point(s) of
 the interval(s) to be searched.</p></dd>
+
+
 <dt>control</dt>
 <dd><p>A <code><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></code> of control parameters passed on to <code><a href="https://rdrr.io/r/stats/optim.html" class="external-link">optim</a></code>. See
 <code><a href="https://rdrr.io/r/stats/optim.html" class="external-link">optim</a></code> for further information.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>An S4 <code><a href="RPhosFate-class.html">RPhosFate</a></code> river catchment object and side effects in
+    
+
+<p>An S4 <code><a href="RPhosFate-class.html">RPhosFate</a></code> river catchment object and side effects in
 the form of raster files.</p>
     </div>
     <div id="see-also">
@@ -149,30 +166,29 @@ the form of raster files.</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in"><span class="co"># temporary demonstration project copy</span></span>
-<span class="r-in"><span class="va">cv_dir</span> <span class="op">&lt;-</span> <span class="fu"><a href="demoProject.html">demoProject</a></span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-in"><span class="co"># load temporary demonstration project</span></span>
-<span class="r-in"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="catchment.html">RPhosFate</a></span><span class="op">(</span></span>
-<span class="r-in">  cv_dir <span class="op">=</span> <span class="va">cv_dir</span>,</span>
-<span class="r-in">  ls_ini <span class="op">=</span> <span class="cn">TRUE</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-in"><span class="co"># presupposed method calls</span></span>
-<span class="r-in"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="firstRun-RPhosFate-method.html">firstRun</a></span><span class="op">(</span><span class="va">x</span>, <span class="st">"SS"</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="snapGauges-RPhosFate-method.html">snapGauges</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu">autoCalibrate2</span><span class="op">(</span></span>
-<span class="r-in">  <span class="va">x</span>,</span>
-<span class="r-in">  <span class="st">"SS"</span>,</span>
-<span class="r-in">  col <span class="op">=</span> <span class="st">"SS_load"</span>,</span>
-<span class="r-in">  metric <span class="op">=</span> <span class="st">"NSE"</span>,</span>
-<span class="r-in">  method <span class="op">=</span> <span class="st">"L-BFGS-B"</span>,</span>
-<span class="r-in">  lower <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">10e-4</span>, <span class="fl">0</span><span class="op">)</span>,</span>
-<span class="r-in">  upper <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">20e-4</span>, <span class="fl">20e-4</span><span class="op">)</span>,</span>
-<span class="r-in">  control <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>fnscale <span class="op">=</span> <span class="op">-</span><span class="fl">1</span>, parscale <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1e-3</span>, <span class="fl">1e-3</span><span class="op">)</span>, factr <span class="op">=</span> <span class="fl">1e12</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span></span>
-<span class="r-in"></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span><span class="co"># temporary demonstration project copy</span></span></span>
+<span class="r-in"><span><span class="va">cv_dir</span> <span class="op">&lt;-</span> <span class="fu"><a href="demoProject.html">demoProject</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co"># load temporary demonstration project</span></span></span>
+<span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="catchment.html">RPhosFate</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  cv_dir <span class="op">=</span> <span class="va">cv_dir</span>,</span></span>
+<span class="r-in"><span>  ls_ini <span class="op">=</span> <span class="cn">TRUE</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co"># presupposed method calls</span></span></span>
+<span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="firstRun-RPhosFate-method.html">firstRun</a></span><span class="op">(</span><span class="va">x</span>, <span class="st">"SS"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="snapGauges-RPhosFate-method.html">snapGauges</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu">autoCalibrate2</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="va">x</span>,</span></span>
+<span class="r-in"><span>  <span class="st">"SS"</span>,</span></span>
+<span class="r-in"><span>  col <span class="op">=</span> <span class="st">"SS_load"</span>,</span></span>
+<span class="r-in"><span>  metric <span class="op">=</span> <span class="st">"NSE"</span>,</span></span>
+<span class="r-in"><span>  method <span class="op">=</span> <span class="st">"L-BFGS-B"</span>,</span></span>
+<span class="r-in"><span>  lower <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">10e-4</span>, <span class="fl">0</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  upper <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">20e-4</span>, <span class="fl">20e-4</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  control <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>fnscale <span class="op">=</span> <span class="op">-</span><span class="fl">1</span>, parscale <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1e-3</span>, <span class="fl">1e-3</span><span class="op">)</span>, factr <span class="op">=</span> <span class="fl">1e12</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span><span class="op">}</span></span></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -187,7 +203,7 @@ the form of raster files.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>
