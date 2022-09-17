@@ -1,7 +1,7 @@
 Package: RPhosFate
 Type: Package
 Title: Soil and Chemical Substance Emission and Transport Model
-Version: 0.12.0.9000
+Version: 1.0.0
 Authors@R: person("Gerold", "Hepp", email = "ghepp@iwag.tuwien.ac.at", role = c("aut", "cre"))
 Description: An enhanced version of the semi-empirical, spatially distributed
     emission and transport model PhosFate implemented in R and C++. It currently
@@ -10,7 +10,7 @@ Description: An enhanced version of the semi-empirical, spatially distributed
     their sources of origin, which is a basic requirement for the identification
     of critical source areas and in consequence a cost-effective implementation
     of mitigation measures.
-License: file LICENSE
+License: AGPL (>= 3)
 URL: https://gisler.github.io/RPhosFate/
 BugReports: https://github.com/gisler/RPhosFate/issues
 Language: en-GB

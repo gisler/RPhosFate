@@ -8,20 +8,19 @@ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
 
 You should have received a copy of the GNU Affero General Public License along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-[![R build status](https://github.com/gisler/RPhosFate/workflows/R-CMD-check/badge.svg)](https://github.com/gisler/RPhosFate/actions?query=workflow%3AR-CMD-check) [![GitHub Super-Linter](https://github.com/gisler/RPhosFate/workflows/Lint%20Code%20Base/badge.svg)](https://github.com/gisler/RPhosFate/actions?query=workflow%3A%22Lint+Code+Base%22)
-
 ## Installation
 
-A [CRAN](https://cran.r-project.org/) release is planned in the near future. Until then, a Windows binary package built for R 4.1.2 is nonetheless available from a [`drat`](https://github.com/eddelbuettel/drat) repository. It can be installed along with its most important dependencies via the following command:
+Install the latest release from CRAN:
 
-``` r
-install.packages(
-  c("RPhosFate", "raster", "whitebox"),
-  repos = c("https://gisler.github.io/drat/", options("repos")),
-  type = "win.binary",
-  dependencies = TRUE
-)
-```
+`install.packages("RPhosFate")`
+
+[![CRAN Version](https://www.r-pkg.org/badges/version/RPhosFate)](https://cran.r-project.org/package=RPhosFate) [![CRAN Checks](https://cranchecks.info/badges/summary/RPhosFate)](https://cran.r-project.org/web/checks/check_results_RPhosFate.html)
+
+Install the development version from GitHub (requires the `remotes` package and [Rtools](https://cran.r-project.org/bin/windows/Rtools/)):
+
+`remotes::install_github("gisler/RPhosFate")`
+
+[![R build status](https://github.com/gisler/RPhosFate/workflows/R-CMD-check/badge.svg)](https://github.com/gisler/RPhosFate/actions?query=workflow%3AR-CMD-check) [![GitHub Super-Linter](https://github.com/gisler/RPhosFate/workflows/Lint%20Code%20Base/badge.svg)](https://github.com/gisler/RPhosFate/actions?query=workflow%3A%22Lint+Code+Base%22)
 
 ## Semantic versioning
 

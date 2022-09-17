@@ -1,4 +1,4 @@
-# RPhosFate v0.12.0.9000
+# RPhosFate v1.0.0
 
 * Removed _NRMSE_ from calibration quality metrics and added _KGE_ as well as _RCV_
 
