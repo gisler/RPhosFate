@@ -56,7 +56,7 @@ demoProject <- function(cs_dir = tempdir(TRUE)) {
 #' the digital elevation model (DEM) in the broader sense: \emph{acc, acc_wtd,
 #' cha, dem, dir, rds, slp,} and _wsh._
 #'
-#' Requires _[TauDEM](http://hydrology.usu.edu/taudem/taudem5/downloads.html)_
+#' Requires _[TauDEM](https://hydrology.usu.edu/taudem/taudem5/downloads.html)_
 #' 5.3.7 and the
 #' _[WhiteboxTools](https://www.whiteboxgeo.com/download-whiteboxtools/)_ binary
 #' ([`whitebox::install_whitebox`]) to be installed on your computer.

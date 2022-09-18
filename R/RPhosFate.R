@@ -10,8 +10,9 @@ setGeneric(
 #' Erosion prerequisites
 #'
 #' Calculates and writes capped slopes, L- and RUSLE S-factors (equations for
-#' summer conditions and slopes ≥ 15 ft) to disk. Weighted flow accumulations
-#' less than one are set to one for the calculation of the L-factors.
+#' summer conditions and slopes \eqn{\geq}{≥} 15 ft) to disk. Weighted flow
+#' accumulations less than one are set to one for the calculation of the
+#' L-factors.
 #'
 #' @param x An S4 [`RPhosFate-class`] river catchment object.
 #'
