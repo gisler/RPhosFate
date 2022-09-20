@@ -82,6 +82,7 @@ jobs:
       - name: Check
         env:
           _R_CHECK_CRAN_INCOMING_REMOTE_: false
+          _R_CHECK_DONTTEST_EXAMPLES_: false
         run: |
           Rcpp::compileAttributes()
           rcmdcheck::rcmdcheck(
