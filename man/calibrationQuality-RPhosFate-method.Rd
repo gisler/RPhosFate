@@ -40,7 +40,7 @@ impression of the model performance. Other elements of this plot are an
 identity line (solid) and plus/minus 30\% deviation lines (dashed).
 }
 \examples{
-\dontrun{
+\donttest{
 # temporary demonstration project copy
 cv_dir <- demoProject()
 # load temporary demonstration project

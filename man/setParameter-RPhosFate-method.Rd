@@ -71,7 +71,7 @@ loads in t/yr (no default):
 }
 
 \examples{
-\dontrun{
+
 # temporary demonstration project copy
 cv_dir <- demoProject()
 # load temporary demonstration project
@@ -85,7 +85,7 @@ x <- setParameter(
   x,
   nv_tfc_inl = c(SS = 0.6, PP = 0.6),
   nv_enr_rto = c(PP = 1.4)
-)}
+)
 
 }
 \seealso{

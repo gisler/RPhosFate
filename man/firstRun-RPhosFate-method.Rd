@@ -24,7 +24,7 @@ only, \code{\link{emission}} is called for all substances whose top soil concent
 have been provided.
 }
 \examples{
-\dontrun{
+\donttest{
 # temporary demonstration project copy
 cv_dir <- demoProject()
 # load temporary demonstration project

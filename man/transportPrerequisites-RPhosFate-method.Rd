@@ -19,7 +19,7 @@ Calculates hydraulic radii and determines cells representing inlets as well
 as riparian zones before writing them to disk.
 }
 \examples{
-\dontrun{
+\donttest{
 # temporary demonstration project copy
 cv_dir <- demoProject()
 # load temporary demonstration project

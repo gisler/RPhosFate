@@ -29,8 +29,8 @@ data sets, used and licensed under \emph{\href{https://creativecommons.org/licen
 While the data represent a real catchment \emph{\href{https://hoal.hydrology.at/}{(HOAL)},} some of them are fictitious, but plausible. These are, among others, R- and C-factors, soil and related data, existence of subsurface drainage at road embankments as well as substance river loads.
 }
 \examples{
-\dontrun{
-demoProject()}
+
+demoProject()
 
 }
 \seealso{

@@ -97,7 +97,7 @@ example, \emph{ppt_out} for PP outlet loads.
 }
 
 \examples{
-\dontrun{
+\donttest{
 # temporary demonstration project copy
 cv_dir <- demoProject()
 # load temporary demonstration project

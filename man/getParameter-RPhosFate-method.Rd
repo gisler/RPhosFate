@@ -73,7 +73,7 @@ loads in t/yr (no default):
 }
 
 \examples{
-\dontrun{
+
 # temporary demonstration project copy
 cv_dir <- demoProject()
 # load temporary demonstration project
@@ -83,7 +83,7 @@ x <- RPhosFate(
 )
 
 getParameter(x)
-getParameter(x, "ns_dep_ovl")}
+getParameter(x, "ns_dep_ovl")
 
 }
 \seealso{

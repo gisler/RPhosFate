@@ -21,7 +21,7 @@ accumulations less than one are set to one for the calculation of the
 L-factors.
 }
 \examples{
-\dontrun{
+\donttest{
 # temporary demonstration project copy
 cv_dir <- demoProject()
 # load temporary demonstration project

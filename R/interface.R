@@ -162,7 +162,7 @@ RPhosFate <- function(...) {
 #' @seealso [`saveState`], [`demoProject`]
 #'
 #' @examples
-#' \dontrun{
+#'
 #' # temporary demonstration project copy
 #' cv_dir <- demoProject()
 #'
@@ -190,7 +190,7 @@ RPhosFate <- function(...) {
 #'   ls_ini = TRUE,
 #'   is_MCi = 1L,
 #'   cv_MCl = c("xxt", "xxt_cld")
-#' )}
+#' )
 #'
 #' @export
 catchment <- function(...) {
@@ -218,7 +218,7 @@ setGeneric(
 #' @seealso [`subsequentRun`]
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' # temporary demonstration project copy
 #' cv_dir <- demoProject()
 #' # load temporary demonstration project
@@ -283,7 +283,7 @@ setGeneric(
 #' @seealso [`firstRun`]
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' # temporary demonstration project copy
 #' cv_dir <- demoProject()
 #' # load temporary demonstration project
@@ -351,7 +351,7 @@ setGeneric(
 #' @seealso [`calibrationQuality`], [`autoCalibrate`], [`autoCalibrate2`]
 #'
 #' @examples
-#' \dontrun{
+#'
 #' # temporary demonstration project copy
 #' cv_dir <- demoProject()
 #' # load temporary demonstration project
@@ -360,7 +360,7 @@ setGeneric(
 #'   ls_ini = TRUE
 #' )
 #'
-#' x <- snapGauges(x)}
+#' x <- snapGauges(x)
 #'
 #' @aliases snapGauges
 #'
@@ -421,7 +421,7 @@ setGeneric(
 #'   [`hydroGOF::rmse`], [`hydroGOF::pbias`], [`hydroGOF::rsr`]
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' # temporary demonstration project copy
 #' cv_dir <- demoProject()
 #' # load temporary demonstration project
@@ -577,7 +577,7 @@ setGeneric(
 #' @seealso [`snapGauges`], [`optimize`]
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' # temporary demonstration project copy
 #' cv_dir <- demoProject()
 #' # load temporary demonstration project
@@ -684,7 +684,7 @@ setGeneric(
 #' @seealso [`snapGauges`]
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' # temporary demonstration project copy
 #' cv_dir <- demoProject()
 #' # load temporary demonstration project
@@ -772,7 +772,7 @@ setGeneric(
 #' @seealso [`RPhosFate`], [`catchment`]
 #'
 #' @examples
-#' \dontrun{
+#'
 #' # temporary demonstration project copy
 #' cv_dir <- demoProject()
 #' # load temporary demonstration project
@@ -781,7 +781,7 @@ setGeneric(
 #'   ls_ini = TRUE
 #' )
 #'
-#' saveState(x)}
+#' saveState(x)
 #'
 #' @aliases saveState
 #'

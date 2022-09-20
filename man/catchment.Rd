@@ -181,7 +181,7 @@ is utilised.
 }
 
 \examples{
-\dontrun{
+
 # temporary demonstration project copy
 cv_dir <- demoProject()
 
@@ -209,7 +209,7 @@ x <- RPhosFate(
   ls_ini = TRUE,
   is_MCi = 1L,
   cv_MCl = c("xxt", "xxt_cld")
-)}
+)
 
 }
 \seealso{

@@ -47,7 +47,7 @@ Automatically calibrates the model with the help of a combination of golden
 section search and successive parabolic interpolation.
 }
 \examples{
-\dontrun{
+\donttest{
 # temporary demonstration project copy
 cv_dir <- demoProject()
 # load temporary demonstration project

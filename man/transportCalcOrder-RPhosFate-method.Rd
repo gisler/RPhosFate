@@ -17,7 +17,7 @@ An S4 \code{\linkS4class{RPhosFate}} river catchment object.
 Determines the cell transport calculation order.
 }
 \examples{
-\dontrun{
+\donttest{
 # temporary demonstration project copy
 cv_dir <- demoProject()
 # load temporary demonstration project

@@ -53,7 +53,7 @@ parameters approximately within the convergence tolerance of interval
 end-points.
 }
 \examples{
-\dontrun{
+\donttest{
 # temporary demonstration project copy
 cv_dir <- demoProject()
 # load temporary demonstration project

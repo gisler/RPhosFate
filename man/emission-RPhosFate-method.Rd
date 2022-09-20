@@ -20,7 +20,7 @@ the form of raster files.
 Calculates and writes substance emissions to disk.
 }
 \examples{
-\dontrun{
+\donttest{
 # temporary demonstration project copy
 cv_dir <- demoProject()
 # load temporary demonstration project

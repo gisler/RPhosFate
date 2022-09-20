@@ -28,7 +28,7 @@ setGeneric(
 #' @seealso [`firstRun`], [`subsequentRun`]
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' # temporary demonstration project copy
 #' cv_dir <- demoProject()
 #' # load temporary demonstration project
@@ -139,7 +139,7 @@ setGeneric(
 #' @seealso [`firstRun`], [`subsequentRun`]
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' # temporary demonstration project copy
 #' cv_dir <- demoProject()
 #' # load temporary demonstration project
@@ -204,7 +204,7 @@ setGeneric(
 #' @seealso [`firstRun`], [`subsequentRun`]
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' # temporary demonstration project copy
 #' cv_dir <- demoProject()
 #' # load temporary demonstration project
@@ -281,7 +281,7 @@ setGeneric(
 #' @seealso [`firstRun`], [`subsequentRun`]
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' # temporary demonstration project copy
 #' cv_dir <- demoProject()
 #' # load temporary demonstration project
@@ -392,7 +392,7 @@ setGeneric(
 #' @seealso [`firstRun`], [`subsequentRun`]
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' # temporary demonstration project copy
 #' cv_dir <- demoProject()
 #' # load temporary demonstration project
@@ -481,7 +481,7 @@ setGeneric(
 #' @seealso [`firstRun`], [`subsequentRun`]
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' # temporary demonstration project copy
 #' cv_dir <- demoProject()
 #' # load temporary demonstration project

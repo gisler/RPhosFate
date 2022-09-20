@@ -15,8 +15,8 @@ dataLicense <- readLines("inst/tinytest/LICENSE.md")[-1]
 #' @seealso [`RPhosFate`], [`catchment`]
 #'
 #' @examples
-#' \dontrun{
-#' demoProject()}
+#'
+#' demoProject()
 #'
 #' @export
 demoProject <- function(cs_dir = tempdir(TRUE)) {
@@ -128,7 +128,7 @@ demoProject <- function(cs_dir = tempdir(TRUE)) {
 #' @seealso [`RPhosFate`], [`catchment`]
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' # obtain temporary project root directory
 #' cv_dir <- normalizePath(
 #'   tempfile("cmt"),

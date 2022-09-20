@@ -29,7 +29,7 @@ setGeneric(
 #' @return A [`raster::RasterLayer-class`] object.
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' # temporary demonstration project copy
 #' cv_dir <- demoProject()
 #' # load temporary demonstration project
@@ -106,7 +106,7 @@ setGeneric(
 #' @seealso [`setParameter`]
 #'
 #' @examples
-#' \dontrun{
+#'
 #' # temporary demonstration project copy
 #' cv_dir <- demoProject()
 #' # load temporary demonstration project
@@ -116,7 +116,7 @@ setGeneric(
 #' )
 #'
 #' getParameter(x)
-#' getParameter(x, "ns_dep_ovl")}
+#' getParameter(x, "ns_dep_ovl")
 #'
 #' @aliases getParameter
 #'
@@ -156,7 +156,7 @@ setGeneric(
 #' @seealso [`getParameter`]
 #'
 #' @examples
-#' \dontrun{
+#'
 #' # temporary demonstration project copy
 #' cv_dir <- demoProject()
 #' # load temporary demonstration project
@@ -170,7 +170,7 @@ setGeneric(
 #'   x,
 #'   nv_tfc_inl = c(SS = 0.6, PP = 0.6),
 #'   nv_enr_rto = c(PP = 1.4)
-#' )}
+#' )
 #'
 #' @aliases setParameter
 #'

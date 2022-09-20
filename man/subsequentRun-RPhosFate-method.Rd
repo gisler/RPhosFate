@@ -44,7 +44,7 @@ Calls \code{\link{transport}} for the specified substance and optionally
 \code{\link{transportPrerequisites}} and/or \code{\link{transportCalcOrder}} beforehand.
 }
 \examples{
-\dontrun{
+\donttest{
 # temporary demonstration project copy
 cv_dir <- demoProject()
 # load temporary demonstration project

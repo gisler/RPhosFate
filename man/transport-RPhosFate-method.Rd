@@ -21,7 +21,7 @@ Calculates and writes substance retentions, transports and cell loads as well
 as transfers to disk.
 }
 \examples{
-\dontrun{
+\donttest{
 # temporary demonstration project copy
 cv_dir <- demoProject()
 # load temporary demonstration project

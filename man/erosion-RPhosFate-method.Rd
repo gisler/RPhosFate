@@ -18,7 +18,7 @@ the form of raster files.
 Calculates and writes (R)USLE erosion to disk.
 }
 \examples{
-\dontrun{
+\donttest{
 # temporary demonstration project copy
 cv_dir <- demoProject()
 # load temporary demonstration project

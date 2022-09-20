@@ -18,7 +18,7 @@ Snaps the coordinates of the provided calibration gauges to the respective
 midpoint of the nearest channel cell.
 }
 \examples{
-\dontrun{
+
 # temporary demonstration project copy
 cv_dir <- demoProject()
 # load temporary demonstration project
@@ -27,7 +27,7 @@ x <- RPhosFate(
   ls_ini = TRUE
 )
 
-x <- snapGauges(x)}
+x <- snapGauges(x)
 
 }
 \seealso{
