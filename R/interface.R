@@ -512,6 +512,9 @@ setMethod(
       max(nv_mld, na.rm = TRUE)
     )
 
+    li_par_old <- par(no.readonly = TRUE)
+    on.exit(par(li_par_old))
+
     par(ask = FALSE)
     plot(
       NULL,
@@ -540,7 +543,6 @@ setMethod(
       bg = "#e69800",
       cex = 1.2
     )
-    par(xpd = FALSE)
 
     metrics
   }
