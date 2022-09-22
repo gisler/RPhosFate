@@ -1,11 +1,14 @@
 citEntry(
-  entry       = "PhdThesis",
-  author      = person("{\\\'A}d{\\\'a}m", "Kov{\\\'a}cs"),
-  title       = "Quantification of Diffuse Phosphorous Inputs into Surface Water Systems",
-  year        = "2013",
-  address     = "Vienna",
-  school      = "Technische Universit\\\"at Wien",
-  textVersion = "Kovács, Á., 2013. Quantification of diffuse phosphorous inputs into surface water systems. Ph.D. thesis. Technische Universität Wien, Vienna."
+  entry       = "Article",
+  author      = personList(person("Gerold", "Hepp"), person("Ottavia", "Zoboli"), person("Eva", "Strenge"), person("Matthias", "Zessner")),
+  title       = "Particulate {{PhozzyLogic Index}} for Policy Makers\\textemdash an Index for a More Accurate and Transparent Identification of Critical Source Areas",
+  journal     = "Journal of Environmental Management",
+  volume      = "307",
+  year        = "2022",
+  pages       = "114514",
+  issn        = "0301-4797",
+  doi         = "10.1016/j.jenvman.2022.114514",
+  textVersion = "Hepp, G., Zoboli, O., Strenge, E., Zessner, M., 2022. Particulate PhozzyLogic Index for policy makers—an index for a more accurate and transparent identification of critical source areas. Journal of Environmental Management 307, 114514. https://doi.org/10.1016/j.jenvman.2022.114514."
 )
 
 citEntry(
@@ -23,14 +26,12 @@ citEntry(
 )
 
 citEntry(
-  entry       = "Article",
-  author      = personList(person("Gerold", "Hepp"), person("Ottavia", "Zoboli"), person("Eva", "Strenge"), person("Matthias", "Zessner")),
-  title       = "Particulate {{PhozzyLogic Index}} for Policy Makers\\textemdash an Index for a More Accurate and Transparent Identification of Critical Source Areas",
-  journal     = "Journal of Environmental Management",
-  volume      = "307",
-  year        = "2022",
-  pages       = "114514",
-  issn        = "0301-4797",
-  doi         = "10.1016/j.jenvman.2022.114514",
-  textVersion = "Hepp, G., Zoboli, O., Strenge, E., Zessner, M., 2022. Particulate PhozzyLogic Index for policy makers—an index for a more accurate and transparent identification of critical source areas. Journal of Environmental Management 307, 114514. https://doi.org/10.1016/j.jenvman.2022.114514."
+  entry       = "PhdThesis",
+  author      = person("{\\\'A}d{\\\'a}m", "Kov{\\\'a}cs"),
+  title       = "Quantification of Diffuse Phosphorous Inputs into Surface Water Systems",
+  year        = "2013",
+  address     = "Vienna",
+  school      = "Technische Universit\\\"at Wien",
+  url         = "http://hdl.handle.net/20.500.12708/9468",
+  textVersion = "Kovács, Á., 2013. Quantification of diffuse phosphorous inputs into surface water systems. Ph.D. thesis. Technische Universität Wien, Vienna. http://hdl.handle.net/20.500.12708/9468."
 )
