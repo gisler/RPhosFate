@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">RPhosFate</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.12.0.9000</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.0.2.9000</span>
       </span>
     </div>
 
@@ -166,9 +166,10 @@ loads in t/yr (no default):</p><ul><li><p><em>ID:</em> ID(s) of the gauge(s)</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># temporary demonstration project copy</span></span></span>
 <span class="r-in"><span><span class="va">cv_dir</span> <span class="op">&lt;-</span> <span class="fu"><a href="demoProject.html">demoProject</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>A folder called "demoProject" already exists and is left as is.</span>
 <span class="r-in"><span><span class="co"># load temporary demonstration project</span></span></span>
 <span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="catchment.html">RPhosFate</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>  cv_dir <span class="op">=</span> <span class="va">cv_dir</span>,</span></span>
@@ -176,7 +177,56 @@ loads in t/yr (no default):</p><ul><li><p><em>ID:</em> ID(s) of the gauge(s)</p>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">getParameter</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu">getParameter</span><span class="op">(</span><span class="va">x</span>, <span class="st">"ns_dep_ovl"</span><span class="op">)</span><span class="op">}</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ns_slp_min</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ns_slp_max</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 999</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ns_rhy_a</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.09</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ns_rhy_b</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ns_cha_rto</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ns_man_rip</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.32</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ns_man_cha</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.04</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ns_dep_ovl</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.002</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ns_dep_cha</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $nv_tfc_inl</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  SS  PP </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0.6 0.6 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $nv_enr_rto</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> PP </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $iv_fDo</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1]  32  16   8  64   0   4 128   1   2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $nm_olc</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         [,1]    [,2]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1,] 4704255 2795195</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $df_cdt</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ID       x       y SS_load  PP_load</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 G3 4704246 2795192  28.082 0.027168</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 G2 4704193 2795374  19.425 0.020549</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 G1 4704054 2795604   2.387 0.002127</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span><span class="fu">getParameter</span><span class="op">(</span><span class="va">x</span>, <span class="st">"ns_dep_ovl"</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.002</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
