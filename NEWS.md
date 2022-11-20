@@ -1,6 +1,7 @@
 # RPhosFate v1.0.2.9000
 
 * Slightly improved documentation
+* Minor internal code improvements
 
 # RPhosFate v1.0.2
 

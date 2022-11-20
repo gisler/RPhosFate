@@ -206,7 +206,7 @@ DEMrelatedInput <- function(
   }
   qassert(ns_brn, "N1[0,)")
   qassert(is_adj, "X1[0,)")
-  qassert(is_ths, "X1[1,)")
+  is_ths <- assertCount(is_ths, positive = TRUE, coerce = TRUE)
   qassert(ls_tmp, "B1")
   cs_fex <- match.arg(cs_fex)
 
@@ -527,7 +527,7 @@ DEMrelatedInput <- function(
       3L
     ),
     ns_fpl = xres(rl_dem),
-    is_ths = as.integer(is_ths)
+    is_ths = is_ths
   )
 
   rl_slp <- mask(
@@ -569,7 +569,7 @@ DEMrelatedInput <- function(
       3L
     ),
     ns_fpl = xres(rl_dem),
-    is_ths = as.integer(is_ths)
+    is_ths = is_ths
   )
   rl_slp <- raster(nm_slp, template = rl_dem)
   rm(nm_slp)
