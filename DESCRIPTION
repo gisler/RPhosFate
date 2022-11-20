@@ -37,6 +37,7 @@ Suggests:
     knitr,
     rmarkdown,
     rgdal,
+    sp,
     tinytest,
     whitebox (>= 2.0.0)
 LinkingTo:
