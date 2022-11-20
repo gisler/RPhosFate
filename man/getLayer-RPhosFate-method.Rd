@@ -91,8 +91,8 @@ example, \emph{ppt_cld} for PP cell loads.
 for example, \emph{ppt_ctf} for PP transfers.
 \item \emph{xxt_inp:} Substance inputs into surface waters in t/cell/yr (SS) or
 kg/cell/yr, for example, \emph{ppt_inp} for PP inputs into surface waters.
-\item \emph{xxt_out:} Substance outlet loads in t/cell/yr (SS) or kg/cell/yr, for
-example, \emph{ppt_out} for PP outlet loads.
+\item \emph{xxt_out:} Substance outlet loads of subsurface drainages in t/cell/yr
+(SS) or kg/cell/yr, for example, \emph{ppt_out} for PP outlet loads.
 }
 }
 
