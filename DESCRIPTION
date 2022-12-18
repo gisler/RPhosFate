@@ -27,7 +27,7 @@ Imports:
     graphics,
     hydroGOF,
     methods,
-    raster,
+    raster (>= 3.6.3),
     Rcpp,
     spatstat.geom,
     stats,
@@ -36,14 +36,13 @@ Imports:
 Suggests:
     knitr,
     rmarkdown,
-    rgdal,
     sp,
     tinytest,
     whitebox (>= 2.0.0)
 LinkingTo:
     Rcpp,
     RcppArmadillo
-RoxygenNote: 7.2.1
+RoxygenNote: 7.2.3
 Roxygen: list(markdown = TRUE)
 VignetteBuilder: knitr
 Collate:
