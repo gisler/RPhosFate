@@ -128,7 +128,7 @@ demoProject <- function(cs_dir = tempdir(TRUE)) {
 #' @seealso [`RPhosFate`], [`catchment`]
 #'
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' # obtain temporary project root directory
 #' cv_dir <- normalizePath(
 #'   tempfile("cmt"),

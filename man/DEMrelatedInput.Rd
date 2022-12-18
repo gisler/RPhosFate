@@ -106,7 +106,7 @@ This processed DEM also serves as the basis for the calculation of the D8
 slopes provided by \emph{slp.}
 }
 \examples{
-\donttest{
+\dontrun{
 # obtain temporary project root directory
 cv_dir <- normalizePath(
   tempfile("cmt"),
