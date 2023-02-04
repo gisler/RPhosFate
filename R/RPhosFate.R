@@ -85,7 +85,7 @@ setMethod(
     )
 
     # L factor
-    is_res = x@helpers@is_res
+    is_res <- x@helpers@is_res
     x@erosion@rl_LFa <- overlay(
       x = rl_acc_wtd_ovl,
       y = rl_LFa_m,

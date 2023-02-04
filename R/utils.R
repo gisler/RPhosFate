@@ -162,7 +162,7 @@ slots2list <- function(parameters) {
 
   setNames(lapply(
     parameterNames,
-    function(name, parameters) {slot(parameters, name)},
+    function(name, parameters) slot(parameters, name),
     parameters = parameters
   ), parameterNames)
 }
