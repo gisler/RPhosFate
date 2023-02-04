@@ -162,7 +162,7 @@ RPhosFate <- function(...) {
 #' @seealso [`saveState`], [`demoProject`]
 #'
 #' @examples
-#'
+#' \donttest{
 #' # temporary demonstration project copy
 #' cv_dir <- demoProject()
 #'
@@ -190,7 +190,7 @@ RPhosFate <- function(...) {
 #'   ls_ini = TRUE,
 #'   is_MCi = 1L,
 #'   cv_MCl = c("xxt", "xxt_cld")
-#' )
+#' )}
 #'
 #' @export
 catchment <- function(...) {
