@@ -1,6 +1,6 @@
-citEntry(
-  entry       = "Article",
-  author      = personList(person("Gerold", "Hepp"), person("Ottavia", "Zoboli"), person("Eva", "Strenge"), person("Matthias", "Zessner")),
+bibentry(
+  bibtype     = "Article",
+  author      = c(person("Gerold", "Hepp"), person("Ottavia", "Zoboli"), person("Eva", "Strenge"), person("Matthias", "Zessner")),
   title       = "Particulate {{PhozzyLogic Index}} for Policy Makers\\textemdash an Index for a More Accurate and Transparent Identification of Critical Source Areas",
   journal     = "Journal of Environmental Management",
   volume      = "307",
@@ -11,9 +11,9 @@ citEntry(
   textVersion = "Hepp, G., Zoboli, O., Strenge, E., Zessner, M., 2022. Particulate PhozzyLogic Index for policy makers—an index for a more accurate and transparent identification of critical source areas. Journal of Environmental Management 307, 114514. https://doi.org/10.1016/j.jenvman.2022.114514."
 )
 
-citEntry(
-  entry       = "Article",
-  author      = personList(person("Gerold", "Hepp"), person("Matthias", "Zessner")),
+bibentry(
+  bibtype     = "Article",
+  author      = c(person("Gerold", "Hepp"), person("Matthias", "Zessner")),
   title       = "Assessing the Impact of Storm Drains at Road Embankments on Diffuse Particulate Phosphorus Emissions in Agricultural Catchments",
   journal     = "Water",
   volume      = "11",
@@ -25,8 +25,8 @@ citEntry(
   textVersion = "Hepp, G., Zessner, M., 2019. Assessing the impact of storm drains at road embankments on diffuse particulate phosphorus emissions in agricultural catchments. Water 11, 2161. https://doi.org/10.3390/w11102161."
 )
 
-citEntry(
-  entry       = "PhdThesis",
+bibentry(
+  bibtype     = "PhdThesis",
   author      = person("{\\\'A}d{\\\'a}m", "Kov{\\\'a}cs"),
   title       = "Quantification of Diffuse Phosphorous Inputs into Surface Water Systems",
   year        = "2013",
