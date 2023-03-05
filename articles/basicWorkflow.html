@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">RPhosFate</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.3</span>
       </span>
     </div>
 
@@ -50,7 +50,7 @@
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    Resources
+    Vignettes
      
     <span class="caret"></span>
   </a>
@@ -68,16 +68,16 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="https://doi.org/10.2166/wst.2008.264" class="external-link">2008: Best management practice applications</a>
-    </li>
-    <li>
-      <a href="https://doi.org/10.1016/j.scitotenv.2012.06.024" class="external-link">2012: Phosphorus emission hotspots</a>
+      <a href="https://doi.org/10.1016/j.jenvman.2022.114514" class="external-link">2022: Particulate PhozzyLogic Index (PPLI)</a>
     </li>
     <li>
       <a href="https://doi.org/10.3390/w11102161" class="external-link">2019: Storm drains at road embankments</a>
     </li>
     <li>
-      <a href="https://doi.org/10.1016/j.jenvman.2022.114514" class="external-link">2021: Particulate PhozzyLogic Index (PPLI)</a>
+      <a href="https://doi.org/10.1016/j.scitotenv.2012.06.024" class="external-link">2012: Phosphorus emission hotspots</a>
+    </li>
+    <li>
+      <a href="https://doi.org/10.2166/wst.2008.264" class="external-link">2008: Best management practice applications</a>
     </li>
   </ul>
 </li>
@@ -106,9 +106,10 @@
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Basic modelling workflow</h1>
-                        <h4 data-toc-skip class="author">Gerold Hepp</h4>
+                        <h4 data-toc-skip class="author">Gerold
+Hepp</h4>
             
-            <h4 data-toc-skip class="date">2022-09-21</h4>
+            <h4 data-toc-skip class="date">2023-03-05</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/gisler/RPhosFate/blob/HEAD/vignettes/basicWorkflow.Rmd" class="external-link"><code>vignettes/basicWorkflow.Rmd</code></a></small>
       <div class="hidden name"><code>basicWorkflow.Rmd</code></div>
@@ -117,7 +118,8 @@
 
     
     
-<p>This vignette provides an overview of the basic modelling workflow with the <code>RPhosFate</code> package.</p>
+<p>This vignette provides an overview of the basic modelling workflow
+with the <code>RPhosFate</code> package.</p>
 <hr>
 <div class="section level2">
 <h2 id="preparations">Preparations<a class="anchor" aria-label="anchor" href="#preparations"></a>
@@ -131,7 +133,8 @@
 <div class="section level2">
 <h2 id="project-initialisation">Project initialisation<a class="anchor" aria-label="anchor" href="#project-initialisation"></a>
 </h2>
-<p>Use <code><a href="../reference/catchment.html">RPhosFate()</a></code> or <code><a href="../reference/catchment.html">catchment()</a></code> to initialise the project:</p>
+<p>Use <code><a href="../reference/catchment.html">RPhosFate()</a></code> or <code><a href="../reference/catchment.html">catchment()</a></code> to
+initialise the project:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/catchment.html">RPhosFate</a></span><span class="op">(</span></span>
 <span>  cv_dir <span class="op">=</span> <span class="va">cv_dir</span>,</span>
@@ -150,14 +153,17 @@
 <div class="section level2">
 <h2 id="first-model-run-for-suspended-solids-ss">First model run for suspended solids (SS)<a class="anchor" aria-label="anchor" href="#first-model-run-for-suspended-solids-ss"></a>
 </h2>
-<p><code><a href="../reference/firstRun-RPhosFate-method.html">firstRun()</a></code> calls all low-level interface methods for the specified substance in the required order:</p>
+<p><code><a href="../reference/firstRun-RPhosFate-method.html">firstRun()</a></code> calls all low-level interface methods for the
+specified substance in the required order:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/firstRun-RPhosFate-method.html">firstRun</a></span><span class="op">(</span><span class="va">x</span>, substance <span class="op">=</span> <span class="st">"SS"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="calibration-quality-of-ss">Calibration quality of SS<a class="anchor" aria-label="anchor" href="#calibration-quality-of-ss"></a>
 </h2>
-<p>Snap coordinates of provided calibration gauges to the respective midpoint of the nearest channel cell if necessary and check calibration quality:</p>
+<p>Snap coordinates of provided calibration gauges to the respective
+midpoint of the nearest channel cell if necessary and check calibration
+quality:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/snapGauges-RPhosFate-method.html">snapGauges</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
 <span></span>
@@ -166,19 +172,27 @@
 <div class="section level2">
 <h2 id="calibrate-ss">Calibrate SS<a class="anchor" aria-label="anchor" href="#calibrate-ss"></a>
 </h2>
-<p>SS is calibrated by iteratively specifying better parameter values for <code>ns_dep_ovl</code> (overland deposition rate) and/or <code>ns_dep_cha</code> (channel deposition rate) as well as calling <code><a href="../reference/subsequentRun-RPhosFate-method.html">subsequentRun()</a></code> for SS afterwards until pleased with the metrics. By default, <code><a href="../reference/subsequentRun-RPhosFate-method.html">subsequentRun()</a></code> only calls the <code><a href="../reference/transport-RPhosFate-method.html">transport()</a></code> low-level interface method for the specified substance:</p>
+<p>SS is calibrated by iteratively specifying better parameter values
+for <code>ns_dep_ovl</code> (overland deposition rate) and/or
+<code>ns_dep_cha</code> (channel deposition rate) as well as calling
+<code><a href="../reference/subsequentRun-RPhosFate-method.html">subsequentRun()</a></code> for SS afterwards until pleased with the
+metrics. By default, <code><a href="../reference/subsequentRun-RPhosFate-method.html">subsequentRun()</a></code> only calls the
+<code><a href="../reference/transport-RPhosFate-method.html">transport()</a></code> low-level interface method for the specified
+substance:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/setParameter-RPhosFate-method.html">setParameter</a></span><span class="op">(</span><span class="va">x</span>, ns_dep_ovl <span class="op">=</span> <span class="fl">15e-4</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/subsequentRun-RPhosFate-method.html">subsequentRun</a></span><span class="op">(</span><span class="va">x</span>, substance <span class="op">=</span> <span class="st">"SS"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">metrics</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/calibrationQuality-RPhosFate-method.html">calibrationQuality</a></span><span class="op">(</span><span class="va">x</span>, substance <span class="op">=</span> <span class="st">"SS"</span>, col <span class="op">=</span> <span class="st">"SS_load"</span><span class="op">)</span></span></code></pre></div>
-<p>The <code><a href="../reference/autoCalibrate-RPhosFate-method.html">autoCalibrate()</a></code> and <code><a href="../reference/autoCalibrate2-RPhosFate-method.html">autoCalibrate2()</a></code> methods may provide more comfortable alternatives to this process.</p>
+<p>The <code><a href="../reference/autoCalibrate-RPhosFate-method.html">autoCalibrate()</a></code> and <code><a href="../reference/autoCalibrate2-RPhosFate-method.html">autoCalibrate2()</a></code>
+methods may provide more comfortable alternatives to this process.</p>
 </div>
 <div class="section level2">
 <h2 id="calibration-quality-of-particulate-phosphorus-pp">Calibration quality of particulate phosphorus (PP)<a class="anchor" aria-label="anchor" href="#calibration-quality-of-particulate-phosphorus-pp"></a>
 </h2>
-<p>First, a further call to <code><a href="../reference/subsequentRun-RPhosFate-method.html">subsequentRun()</a></code> for PP is necessary:</p>
+<p>First, a further call to <code><a href="../reference/subsequentRun-RPhosFate-method.html">subsequentRun()</a></code> for PP is
+necessary:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/subsequentRun-RPhosFate-method.html">subsequentRun</a></span><span class="op">(</span><span class="va">x</span>, substance <span class="op">=</span> <span class="st">"PP"</span><span class="op">)</span></span>
 <span></span>
@@ -187,14 +201,17 @@
 <div class="section level2">
 <h2 id="calibrate-pp">Calibrate PP<a class="anchor" aria-label="anchor" href="#calibrate-pp"></a>
 </h2>
-<p>Same procedure as with SS apart from iteratively specifying better parameter values for the enrichment ratio:</p>
+<p>Same procedure as with SS apart from iteratively specifying better
+parameter values for the enrichment ratio:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/setParameter-RPhosFate-method.html">setParameter</a></span><span class="op">(</span><span class="va">x</span>, nv_enr_rto <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>PP <span class="op">=</span> <span class="fl">1.4</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/subsequentRun-RPhosFate-method.html">subsequentRun</a></span><span class="op">(</span><span class="va">x</span>, substance <span class="op">=</span> <span class="st">"PP"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">metrics</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/calibrationQuality-RPhosFate-method.html">calibrationQuality</a></span><span class="op">(</span><span class="va">x</span>, substance <span class="op">=</span> <span class="st">"PP"</span>, col <span class="op">=</span> <span class="st">"PP_load"</span><span class="op">)</span></span></code></pre></div>
-<p>In case the only substance of interest is PP, it is possible to set its enrichment ratio to one and directly calibrate it via <code>ns_dep_ovl</code> and/or <code>ns_dep_cha</code>.</p>
+<p>In case the only substance of interest is PP, it is possible to set
+its enrichment ratio to one and directly calibrate it via
+<code>ns_dep_ovl</code> and/or <code>ns_dep_cha</code>.</p>
 </div>
 <div class="section level2">
 <h2 id="save-state">Save state<a class="anchor" aria-label="anchor" href="#save-state"></a>
@@ -207,7 +224,9 @@
 <div class="section level2">
 <h2 id="return-to-the-calibrated-project-at-a-later-time">Return to the calibrated project at a later time<a class="anchor" aria-label="anchor" href="#return-to-the-calibrated-project-at-a-later-time"></a>
 </h2>
-<p>Simply load the previously saved state of the project via the <code>ls_ini</code> argument of <code><a href="../reference/catchment.html">RPhosFate()</a></code> or <code><a href="../reference/catchment.html">catchment()</a></code>:</p>
+<p>Simply load the previously saved state of the project via the
+<code>ls_ini</code> argument of <code><a href="../reference/catchment.html">RPhosFate()</a></code> or
+<code><a href="../reference/catchment.html">catchment()</a></code>:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/catchment.html">RPhosFate</a></span><span class="op">(</span></span>
 <span>  cv_dir <span class="op">=</span> <span class="va">cv_dir</span>,</span>
@@ -233,7 +252,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>

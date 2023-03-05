@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">RPhosFate</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.3</span>
       </span>
     </div>
 
@@ -33,7 +33,7 @@
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    Resources
+    Vignettes
      
     <span class="caret"></span>
   </a>
@@ -48,16 +48,16 @@
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu"><li>
-      <a href="https://doi.org/10.2166/wst.2008.264" class="external-link">2008: Best management practice applications</a>
-    </li>
-    <li>
-      <a href="https://doi.org/10.1016/j.scitotenv.2012.06.024" class="external-link">2012: Phosphorus emission hotspots</a>
+      <a href="https://doi.org/10.1016/j.jenvman.2022.114514" class="external-link">2022: Particulate PhozzyLogic Index (PPLI)</a>
     </li>
     <li>
       <a href="https://doi.org/10.3390/w11102161" class="external-link">2019: Storm drains at road embankments</a>
     </li>
     <li>
-      <a href="https://doi.org/10.1016/j.jenvman.2022.114514" class="external-link">2021: Particulate PhozzyLogic Index (PPLI)</a>
+      <a href="https://doi.org/10.1016/j.scitotenv.2012.06.024" class="external-link">2012: Phosphorus emission hotspots</a>
+    </li>
+    <li>
+      <a href="https://doi.org/10.2166/wst.2008.264" class="external-link">2008: Best management practice applications</a>
     </li>
   </ul></li>
 <li>
@@ -179,8 +179,8 @@ example, <em>ppt_cld</em> for PP cell loads.</p></li>
 for example, <em>ppt_ctf</em> for PP transfers.</p></li>
 <li><p><em>xxt_inp:</em> Substance inputs into surface waters in t/cell/yr (SS) or
 kg/cell/yr, for example, <em>ppt_inp</em> for PP inputs into surface waters.</p></li>
-<li><p><em>xxt_out:</em> Substance outlet loads in t/cell/yr (SS) or kg/cell/yr, for
-example, <em>ppt_out</em> for PP outlet loads.</p></li>
+<li><p><em>xxt_out:</em> Substance outlet loads of subsurface drainages in t/cell/yr
+(SS) or kg/cell/yr, for example, <em>ppt_out</em> for PP outlet loads.</p></li>
 </ul></div>
 
     <div id="ref-examples">
@@ -196,6 +196,20 @@ example, <em>ppt_out</em> for PP outlet loads.</p></li>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="co"># presupposed method call</span></span></span>
 <span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="firstRun-RPhosFate-method.html">firstRun</a></span><span class="op">(</span><span class="va">x</span>, <span class="st">"SS"</span><span class="op">)</span></span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>GDAL Message 6: driver GTiff does not support creation option COMPRESSED</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>GDAL Message 6: driver GTiff does not support creation option COMPRESSED</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>GDAL Message 6: driver GTiff does not support creation option COMPRESSED</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>GDAL Message 6: driver GTiff does not support creation option COMPRESSED</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>GDAL Message 6: driver GTiff does not support creation option COMPRESSED</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>GDAL Message 6: driver GTiff does not support creation option COMPRESSED</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>GDAL Message 6: driver GTiff does not support creation option COMPRESSED</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>GDAL Message 6: driver GTiff does not support creation option COMPRESSED</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>GDAL Message 6: driver GTiff does not support creation option COMPRESSED</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>GDAL Message 6: driver GTiff does not support creation option COMPRESSED</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>GDAL Message 6: driver GTiff does not support creation option COMPRESSED</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>GDAL Message 6: driver GTiff does not support creation option COMPRESSED</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>GDAL Message 6: driver GTiff does not support creation option COMPRESSED</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>GDAL Message 6: driver GTiff does not support creation option COMPRESSED</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">getLayer</span><span class="op">(</span><span class="va">x</span>, <span class="st">"dir"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> class      : RasterLayer </span>
@@ -222,7 +236,7 @@ example, <em>ppt_out</em> for PP outlet loads.</p></li>
 <span class="r-out co"><span class="r-pr">#&gt;</span> dimensions : 92, 155, 14260  (nrow, ncol, ncell)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> resolution : 10, 10  (x, y)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> extent     : 4702990, 4704540, 2795190, 2796110  (xmin, xmax, ymin, ymax)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> crs        : +proj=laea +lat_0=52 +lon_0=10 +x_0=4321000 +y_0=3210000 +ellps=GRS80 +units=m +no_defs </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> crs        : +proj=laea +lat_0=52 +lon_0=10 +x_0=4321000 +y_0=3210000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> source     : ppe.tif </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> names      : layer </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> values     : 1.387505e-05, 1.202173  (min, max)</span>
@@ -242,7 +256,7 @@ example, <em>ppt_out</em> for PP outlet loads.</p></li>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>
