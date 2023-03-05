@@ -1,6 +1,6 @@
-# RPhosFate v1.0.2.9000
+# RPhosFate v1.0.3
 
-* Removed `rgdal` from suggested packages list and set minimum required version of the `raster` package to ≥ 3.6.3 (`rgdal` is retiring and `raster` ≥ 3.6.3 does not depend on it anymore). Thanks to Roger Bivand for raising this issue (#17).
+* Removed `rgdal` from suggested packages list and set minimum required version of the `raster` package to ≥ 3.6.3 (`rgdal` is retiring and `raster` ≥ 3.6.3 does not depend on it any longer). Thanks to Roger Bivand for raising this issue (#17).
 * Bumped minimum tested R version from 4.1.2 to 4.2.2 using the corresponding MRAN repository snapshot.
 * Slightly improved documentation.
 * Minor internal code improvements.
