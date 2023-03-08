@@ -555,7 +555,7 @@ DEMrelatedInput <- function(
       toInput[[i]],
       filename = file.path("..", sprintf("%s.%s", names(toInput)[i], cs_fex)),
       datatype = dataType(toInput[[i]]),
-      options = "COMPRESSED=YES",
+      options = if (cs_fex == "img") "COMPRESSED=YES" else "COMPRESS=LZW",
       overwrite = TRUE
     )
   }

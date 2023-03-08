@@ -179,7 +179,7 @@ writeLayer <- function(cmt, layer, rl, datatype, substance = NULL) {
       rl,
       filename = filename,
       datatype = datatype,
-      options = "COMPRESSED=YES",
+      options = if (cmt@cs_fex == ".img") "COMPRESSED=YES" else "COMPRESS=LZW",
       overwrite = TRUE
     )
 
