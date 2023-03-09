@@ -162,11 +162,30 @@ divided by sum of <em>xxt_inp</em>).</p>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="co"># presupposed method calls</span></span></span>
 <span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="firstRun-RPhosFate-method.html">firstRun</a></span><span class="op">(</span><span class="va">x</span>, <span class="st">"SS"</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> [writeStart] invalid driver</span>
 <span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="snapGauges-RPhosFate-method.html">snapGauges</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">calibrationQuality</span><span class="op">(</span><span class="va">x</span>, <span class="st">"SS"</span>, <span class="st">"SS_load"</span><span class="op">)</span><span class="co"># }</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in .local(x, ...):</span> Assertion on 'Modelled load(s)' failed: Contains only missing values.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> NSE:   0.7191828</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mNSE:  0.5345233</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> KGE:   0.7323813</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> RMSE:  5.656556</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> PBIAS: -26.6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> RSR:   0.4326794</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> RCV:   0.9761362</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> GMRAE: 0.3842057</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> MdRAE: 0.8072484</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> In-channel retention ratio: -2.220446e-16</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-plt img"><img src="calibrationQuality-RPhosFate-method-1.png" alt="" width="700" height="433"></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                     NSE                    mNSE                     KGE </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>            7.191828e-01            5.345233e-01            7.323813e-01 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                    RMSE                   PBIAS                     RSR </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>            5.656556e+00           -2.660000e+01            4.326794e-01 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                     RCV                   GMRAE                   MdRAE </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>            9.761362e-01            3.842057e-01            8.072484e-01 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> inChannelRetentionRatio </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           -2.220446e-16 </span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
