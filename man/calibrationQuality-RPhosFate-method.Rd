@@ -25,7 +25,7 @@ Assesses the model's calibration quality via the following metrics:
 \itemize{
 \item \emph{NSE:} Nash-Sutcliffe Efficiency
 \item \emph{mNSE:} Modified Nash-Sutcliffe Efficiency (\code{j = 1})
-\item \emph{KGE:} Kling-Gupta Efficiency (\verb{s = c(1, 1, 1), method = "2012"})
+\item \emph{KGE:} Modified Kling-Gupta Efficiency
 \item \emph{RMSE:} Root Mean Square Error
 \item \emph{PBIAS:} Percent Bias
 \item \emph{RSR:} Ratio of the RMSE to the standard deviation of the observations
@@ -54,6 +54,24 @@ x <- snapGauges(x)
 
 calibrationQuality(x, "SS", "SS_load")}
 
+}
+\references{
+\cite{Nash, J.E., Sutcliffe, J.V., 1970. River flow forecasting through
+conceptual models part I – a discussion of principles. Journal of Hydrology
+10, 282–290. https://doi.org/10.1016/0022-1694(70)90255-6}
+
+\cite{Legates, D.R., McCabe Jr., G.J., 1999. Evaluating the use of
+“goodness-of-fit” measures in hydrologic and hydroclimatic model validation.
+Water Resources Research 35, 233–241. https://doi.org/10.1029/1998WR900018}
+
+\cite{Kling, H., Fuchs, M., Paulin, M., 2012. Runoff conditions in the upper
+Danube basin under an ensemble of climate change scenarios. Journal of
+Hydrology 424–425, 264–277. https://doi.org/10.1016/j.jhydrol.2012.01.011}
+
+\cite{Moriasi, D.N., Arnold, J.G., Van Liew, M.W., Bingner, R.L., Harmel,
+R.D., Veith, T.L., 2007. Model evaluation guidelines for systematic
+quantification of accuracy in watershed simulations. Transactions of the
+ASABE 50, 885–900.}
 }
 \seealso{
 \code{\link{snapGauges}}, \code{\link{autoCalibrate}}, \code{\link{autoCalibrate2}}
