@@ -56,7 +56,5 @@ calibrationQuality(x, "SS", "SS_load")}
 
 }
 \seealso{
-\code{\link{snapGauges}}, \code{\link{autoCalibrate}}, \code{\link{autoCalibrate2}},
-\code{\link[hydroGOF:NSE]{hydroGOF::NSE}}, \code{\link[hydroGOF:mNSE]{hydroGOF::mNSE}}, \code{\link[hydroGOF:KGE]{hydroGOF::KGE}},
-\code{\link[hydroGOF:rmse]{hydroGOF::rmse}}, \code{\link[hydroGOF:pbias]{hydroGOF::pbias}}, \code{\link[hydroGOF:rsr]{hydroGOF::rsr}}
+\code{\link{snapGauges}}, \code{\link{autoCalibrate}}, \code{\link{autoCalibrate2}}
 }

@@ -53,7 +53,7 @@ jobs:
         if: matrix.config.r == '4.2.2'
         run: |
           remotes::install_cran(
-            c("checkmate", "hydroGOF", "raster", "Rcpp", "RcppArmadillo", "spatstat.geom", "yaml", "whitebox", "rcmdcheck"),
+            c("checkmate", "raster", "Rcpp", "RcppArmadillo", "spatstat.geom", "yaml", "whitebox", "rcmdcheck"),
             repos = "https://mran.microsoft.com/snapshot/2022-10-31",
             type = "win.binary",
             dependencies = TRUE,

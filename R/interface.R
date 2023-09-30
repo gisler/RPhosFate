@@ -416,9 +416,7 @@ setGeneric(
 #'   in-channel retention ratio (one minus sum of _xxt_ at catchment outlet(s)
 #'   divided by sum of \emph{xxt_inp}).
 #'
-#' @seealso [`snapGauges`], [`autoCalibrate`], [`autoCalibrate2`],
-#'   [`hydroGOF::NSE`], [`hydroGOF::mNSE`], [`hydroGOF::KGE`],
-#'   [`hydroGOF::rmse`], [`hydroGOF::pbias`], [`hydroGOF::rsr`]
+#' @seealso [`snapGauges`], [`autoCalibrate`], [`autoCalibrate2`]
 #'
 #' @examples
 #' \donttest{
@@ -468,22 +466,26 @@ setMethod(
       .var.name = "Modelled load(s)"
     )
 
+    li_lds <- pnotNA(nv_mld, nv_old)
+    nv_mld <- li_lds$mld
+    nv_old <- li_lds$old
+
     if (substance != "SS") {
       nv_mld <- nv_mld * 1e-3
     }
-    nv_rae <- abs(nv_old - nv_mld) / abs(nv_old - mean(nv_old, na.rm = TRUE))
+
+    nv_rae <- abs(nv_old - nv_mld) / abs(nv_old - mean(nv_old))
 
     metrics <- c(
-      tryCatch(NSE(  nv_mld, nv_old                 ), error = function(e) NA_real_),
-      tryCatch(mNSE( nv_mld, nv_old                 ), error = function(e) NA_real_),
-      tryCatch(KGE(  nv_mld, nv_old, method = "2012"), error = function(e) NA_real_),
-      tryCatch(rmse( nv_mld, nv_old                 ), error = function(e) NA_real_),
-      tryCatch(pbias(nv_mld, nv_old                 ), error = function(e) NA_real_),
-      tryCatch(rsr(  nv_mld, nv_old                 ), error = function(e) NA_real_),
-      (sd(nv_mld, na.rm = TRUE) / mean(nv_mld, na.rm = TRUE)) /
-        (sd(nv_old, na.rm = TRUE) / mean(nv_old, na.rm = TRUE))    ,
-      exp(mean(log(nv_rae), na.rm = TRUE))                         ,
-      median(nv_rae, na.rm = TRUE)                                 ,
+      nse(  nv_mld, nv_old       ),
+      nse(  nv_mld, nv_old, j = 1),
+      kge(  nv_mld, nv_old       ),
+      rmse( nv_mld, nv_old       ),
+      pbias(nv_mld, nv_old       ),
+      rsr(  nv_mld, nv_old       ),
+      rcv(  nv_mld, nv_old       ),
+      gmrae(nv_rae),
+      mdrae(nv_rae),
       1 - (sum(extract(
         slot(x@substances, substance)@rl_xxt,
         x@parameters@nm_olc
@@ -505,12 +507,7 @@ setMethod(
       "\n\n", sep = ""
     )
 
-    clippingRectangle <- c(
-      0,
-      max(nv_old, na.rm = TRUE),
-      0,
-      max(nv_mld, na.rm = TRUE)
-    )
+    clippingRectangle <- c(0, max(nv_old), 0, max(nv_mld))
 
     li_par_old <- par(no.readonly = TRUE)
     on.exit(par(li_par_old))
