@@ -9,8 +9,8 @@ gmrae <- function(rae) {
 }
 
 kge <- function(mld, old) {
-  KGE <- 1 - sqrt((cor(mld, old) - 1)^2 + (rcv(mld, old) - 1)^2 +
-                    (mean(mld) / mean(old) - 1)^2)
+  KGE <- 1 - sqrt((cor(mld, old) - 1)^2 + (mean(mld) / mean(old) - 1)^2 +
+                    (rcv(mld, old) - 1)^2)
 
   if (qtest(KGE, "N1(,)")) {
     KGE
