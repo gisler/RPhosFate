@@ -40,10 +40,10 @@ nse <- function(mld, old, j = 2) {
 }
 
 pbias <- function(mld, old) {
-  PBIAS <- sum(mld - old) / sum(old)
+  PBIAS <- sum(mld - old) / sum(old) * 100
 
   if (qtest(PBIAS, "N1(,)")) {
-    PBIAS
+    round(PBIAS, 1)
   } else {
     NA_real_
   }
