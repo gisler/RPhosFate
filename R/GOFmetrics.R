@@ -49,15 +49,6 @@ pbias <- function(mld, old) {
   }
 }
 
-pnotNA <- function(mld, old) {
-  bothNotNA <- !is.na(mld) & !is.na(old)
-
-  list(
-    mld = mld[bothNotNA],
-    old = old[bothNotNA]
-  )
-}
-
 rcv <- function(mld, old) {
   RCV <- (sd(mld) / mean(mld)) / (sd(old) / mean(old))
 

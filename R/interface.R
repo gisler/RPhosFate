@@ -484,9 +484,9 @@ setMethod(
       .var.name = "Modelled load(s)"
     )
 
-    li_lds <- pnotNA(nv_mld, nv_old)
-    nv_mld <- li_lds$mld
-    nv_old <- li_lds$old
+    ls_pco <- !is.na(nv_mld) & !is.na(nv_old)
+    nv_mld <- nv_mld[ls_pco]
+    nv_old <- nv_old[ls_pco]
 
     if (substance != "SS") {
       nv_mld <- nv_mld * 1e-3
