@@ -391,7 +391,8 @@ setGeneric(
 #' Calibration quality
 #'
 #' @description
-#' Assesses the model's calibration quality via the following metrics:
+#' Assesses the model's calibration quality with the help of the pairwise
+#' complete modelled as well as observed loads and the following metrics:
 #'
 #' * _NSE:_ Nash-Sutcliffe Efficiency
 #' * _mNSE:_ Modified Nash-Sutcliffe Efficiency (`j = 1`)

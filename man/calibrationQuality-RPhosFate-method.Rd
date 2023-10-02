@@ -21,7 +21,8 @@ in-channel retention ratio (one minus sum of \emph{xxt} at catchment outlet(s)
 divided by sum of \emph{xxt_inp}).
 }
 \description{
-Assesses the model's calibration quality via the following metrics:
+Assesses the model's calibration quality with the help of the pairwise
+complete modelled as well as observed loads and the following metrics:
 \itemize{
 \item \emph{NSE:} Nash-Sutcliffe Efficiency
 \item \emph{mNSE:} Modified Nash-Sutcliffe Efficiency (\code{j = 1})
