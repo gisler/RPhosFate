@@ -2,7 +2,6 @@
 #' @import methods
 #' @import raster
 #' @importFrom graphics abline clip par points
-#' @importFrom hydroGOF KGE mNSE NSE pbias rmse nrmse rsr
 #' @importFrom Rcpp sourceCpp
 #' @importFrom spatstat.geom as.owin as.ppp nncross
 #' @importFrom stats median optim optimize sd setNames
