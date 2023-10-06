@@ -25,7 +25,6 @@ Depends:
 Imports:
     checkmate,
     graphics,
-    hydroGOF,
     methods,
     raster (>= 3.6.3),
     Rcpp,
@@ -46,6 +45,7 @@ RoxygenNote: 7.2.3
 Roxygen: list(markdown = TRUE)
 VignetteBuilder: knitr
 Collate:
+    'GOFmetrics.R'
     'aaa.R'
     'RPhosFate.R'
     'RcppExports.R'

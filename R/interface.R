@@ -391,11 +391,12 @@ setGeneric(
 #' Calibration quality
 #'
 #' @description
-#' Assesses the model's calibration quality via the following metrics:
+#' Assesses the model's calibration quality with the help of the pairwise
+#' complete modelled as well as observed loads and the following metrics:
 #'
 #' * _NSE:_ Nash-Sutcliffe Efficiency
 #' * _mNSE:_ Modified Nash-Sutcliffe Efficiency (`j = 1`)
-#' * _KGE:_ Kling-Gupta Efficiency (`s = c(1, 1, 1), method = "2012"`)
+#' * _KGE:_ Modified Kling-Gupta Efficiency
 #' * _RMSE:_ Root Mean Square Error
 #' * _PBIAS:_ Percent Bias
 #' * _RSR:_ Ratio of the RMSE to the standard deviation of the observations
@@ -416,9 +417,25 @@ setGeneric(
 #'   in-channel retention ratio (one minus sum of _xxt_ at catchment outlet(s)
 #'   divided by sum of \emph{xxt_inp}).
 #'
-#' @seealso [`snapGauges`], [`autoCalibrate`], [`autoCalibrate2`],
-#'   [`hydroGOF::NSE`], [`hydroGOF::mNSE`], [`hydroGOF::KGE`],
-#'   [`hydroGOF::rmse`], [`hydroGOF::pbias`], [`hydroGOF::rsr`]
+#' @references
+#' \cite{Nash, J.E., Sutcliffe, J.V., 1970. River flow forecasting through
+#' conceptual models part I – a discussion of principles. Journal of Hydrology
+#' 10, 282–290. https://doi.org/10.1016/0022-1694(70)90255-6}
+#'
+#' \cite{Legates, D.R., McCabe Jr., G.J., 1999. Evaluating the use of
+#' “goodness-of-fit” measures in hydrologic and hydroclimatic model validation.
+#' Water Resources Research 35, 233–241. https://doi.org/10.1029/1998WR900018}
+#'
+#' \cite{Kling, H., Fuchs, M., Paulin, M., 2012. Runoff conditions in the upper
+#' Danube basin under an ensemble of climate change scenarios. Journal of
+#' Hydrology 424–425, 264–277. https://doi.org/10.1016/j.jhydrol.2012.01.011}
+#'
+#' \cite{Moriasi, D.N., Arnold, J.G., Van Liew, M.W., Bingner, R.L., Harmel,
+#' R.D., Veith, T.L., 2007. Model evaluation guidelines for systematic
+#' quantification of accuracy in watershed simulations. Transactions of the
+#' ASABE 50, 885–900.}
+#'
+#' @seealso [`snapGauges`], [`autoCalibrate`], [`autoCalibrate2`]
 #'
 #' @examples
 #' \donttest{
@@ -468,22 +485,26 @@ setMethod(
       .var.name = "Modelled load(s)"
     )
 
+    ls_pco <- !is.na(nv_mld) & !is.na(nv_old)
+    nv_mld <- nv_mld[ls_pco]
+    nv_old <- nv_old[ls_pco]
+
     if (substance != "SS") {
       nv_mld <- nv_mld * 1e-3
     }
-    nv_rae <- abs(nv_old - nv_mld) / abs(nv_old - mean(nv_old, na.rm = TRUE))
+
+    nv_rae <- abs(nv_old - nv_mld) / abs(nv_old - mean(nv_old))
 
     metrics <- c(
-      tryCatch(NSE(  nv_mld, nv_old                 ), error = function(e) NA_real_),
-      tryCatch(mNSE( nv_mld, nv_old                 ), error = function(e) NA_real_),
-      tryCatch(KGE(  nv_mld, nv_old, method = "2012"), error = function(e) NA_real_),
-      tryCatch(rmse( nv_mld, nv_old                 ), error = function(e) NA_real_),
-      tryCatch(pbias(nv_mld, nv_old                 ), error = function(e) NA_real_),
-      tryCatch(rsr(  nv_mld, nv_old                 ), error = function(e) NA_real_),
-      (sd(nv_mld, na.rm = TRUE) / mean(nv_mld, na.rm = TRUE)) /
-        (sd(nv_old, na.rm = TRUE) / mean(nv_old, na.rm = TRUE))    ,
-      exp(mean(log(nv_rae), na.rm = TRUE))                         ,
-      median(nv_rae, na.rm = TRUE)                                 ,
+      nse(  nv_mld, nv_old       ),
+      nse(  nv_mld, nv_old, j = 1),
+      kge(  nv_mld, nv_old       ),
+      rmse( nv_mld, nv_old       ),
+      pbias(nv_mld, nv_old       ),
+      rsr(  nv_mld, nv_old       ),
+      rcv(  nv_mld, nv_old       ),
+      gmrae(nv_rae),
+      mdrae(nv_rae),
       1 - (sum(extract(
         slot(x@substances, substance)@rl_xxt,
         x@parameters@nm_olc
@@ -505,12 +526,7 @@ setMethod(
       "\n\n", sep = ""
     )
 
-    clippingRectangle <- c(
-      0,
-      max(nv_old, na.rm = TRUE),
-      0,
-      max(nv_mld, na.rm = TRUE)
-    )
+    clippingRectangle <- c(0, max(nv_old), 0, max(nv_mld))
 
     li_par_old <- par(no.readonly = TRUE)
     on.exit(par(li_par_old))
