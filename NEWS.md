@@ -1,3 +1,5 @@
+# RPhosFate v1.0.4.9000
+
 # RPhosFate v1.0.4
 
 * The current `raster` package does not compress _GeoTIFF_ raster files any longer by default. This is probably due to the switch from `rgdal` to `terra` and has been fixed by generally using the _LZW_ algorithm.
