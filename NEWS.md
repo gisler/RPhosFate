@@ -1,4 +1,4 @@
-# RPhosFate v1.0.3.9000
+# RPhosFate v1.0.4
 
 * The current `raster` package does not compress _GeoTIFF_ raster files any longer by default. This is probably due to the switch from `rgdal` to `terra` and has been fixed by generally using the _LZW_ algorithm.
 * Fixed warning "GDAL Message 6: driver GTiff does not support creation option COMPRESSED" curiously only occurring in the reference on GitHub Pages.
