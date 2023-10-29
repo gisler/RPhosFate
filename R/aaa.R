@@ -1,10 +1,11 @@
 #' @import checkmate
 #' @import methods
 #' @import raster
-#' @importFrom graphics abline clip par points
+#' @import terra
+#' @importFrom graphics abline clip par
 #' @importFrom Rcpp sourceCpp
 #' @importFrom spatstat.geom as.owin as.ppp nncross
-#' @importFrom stats cor median optim optimize sd setNames
+#' @importFrom stats cor optim optimize sd setNames
 #' @importFrom yaml read_yaml write_yaml
 #' @importFrom utils modifyList packageVersion
 #' @useDynLib RPhosFate, .registration = TRUE
@@ -78,20 +79,20 @@ setValidity(
 setClass(
   "RPhosFateTopo",
   slots = c(
-    rl_acc     = "RasterLayer",
-    rl_acc_wtd = "RasterLayer",
-    rl_cha     = "RasterLayer",
-    rl_clc     = "RasterLayer",
-    rl_dem     = "RasterLayer",
-    rl_dir     = "RasterLayer",
-    rl_fid     = "RasterLayer",
-    rl_inl     = "RasterLayer",
-    rl_lue     = "RasterLayer",
-    rl_rds     = "RasterLayer",
-    rl_rip     = "RasterLayer",
-    rl_slp     = "RasterLayer",
-    rl_slp_cap = "RasterLayer",
-    rl_wsh     = "RasterLayer"
+    rl_acc     = "SpatRaster",
+    rl_acc_wtd = "SpatRaster",
+    rl_cha     = "SpatRaster",
+    rl_clc     = "SpatRaster",
+    rl_dem     = "SpatRaster",
+    rl_dir     = "SpatRaster",
+    rl_fid     = "SpatRaster",
+    rl_inl     = "SpatRaster",
+    rl_lue     = "SpatRaster",
+    rl_rds     = "SpatRaster",
+    rl_rip     = "SpatRaster",
+    rl_slp     = "SpatRaster",
+    rl_slp_cap = "SpatRaster",
+    rl_wsh     = "SpatRaster"
   )
 )
 setMethod(
@@ -127,12 +128,12 @@ setMethod(
 setClass(
   "RPhosFateErosion",
   slots = c(
-    rl_RFa = "RasterLayer",
-    rl_KFa = "RasterLayer",
-    rl_LFa = "RasterLayer",
-    rl_SFa = "RasterLayer",
-    rl_CFa = "RasterLayer",
-    rl_ero = "RasterLayer"
+    rl_RFa = "SpatRaster",
+    rl_KFa = "SpatRaster",
+    rl_LFa = "SpatRaster",
+    rl_SFa = "SpatRaster",
+    rl_CFa = "SpatRaster",
+    rl_ero = "SpatRaster"
   )
 )
 setMethod(
@@ -162,8 +163,8 @@ setMethod(
 setClass(
   "RPhosFateTransport",
   slots = c(
-    rl_man = "RasterLayer",
-    rl_rhy = "RasterLayer"
+    rl_man = "SpatRaster",
+    rl_rhy = "SpatRaster"
   )
 )
 setMethod(
@@ -187,12 +188,12 @@ setMethod(
 setClass(
   "RPhosFateBare",
   slots = c(
-    rl_xxr     = "RasterLayer",
-    rl_xxt     = "RasterLayer",
-    rl_xxt_inp = "RasterLayer",
-    rl_xxt_out = "RasterLayer",
-    rl_xxt_cld = "RasterLayer",
-    rl_xxt_ctf = "RasterLayer"
+    rl_xxr     = "SpatRaster",
+    rl_xxt     = "SpatRaster",
+    rl_xxt_inp = "SpatRaster",
+    rl_xxt_out = "SpatRaster",
+    rl_xxt_cld = "SpatRaster",
+    rl_xxt_ctf = "SpatRaster"
   ),
   contains = "VIRTUAL"
 )
@@ -200,8 +201,8 @@ setClass(
 setClass(
   "RPhosFateConc",
   slots = c(
-    rl_xxc = "RasterLayer",
-    rl_xxe = "RasterLayer"
+    rl_xxc = "SpatRaster",
+    rl_xxe = "SpatRaster"
   ),
   contains = c("VIRTUAL", "RPhosFateBare")
 )
@@ -278,7 +279,7 @@ setClass(
 setClass(
   "RPhosFateHelpers",
   slots = c(
-    ex_cmt     = "Extent",        # Extent of river catchment
+    ex_cmt     = "SpatExtent",    # Extent of river catchment
     is_res     = "integer",       # Cell resolution in m
     is_siz     = "integer",       # Cell area in m^2
     is_rws     = "integer",       # Number of rows
@@ -297,11 +298,11 @@ setMethod(
     cs_dir_old <- setwd(cmt@cv_dir[1L])
     on.exit(setwd(cs_dir_old))
 
-    .Object@ex_cmt     <- extent(cmt@topo@rl_acc_wtd)
+    .Object@ex_cmt     <- ext(cmt@topo@rl_acc_wtd)
     .Object@is_res     <- as.integer(xres(cmt@topo@rl_acc_wtd))
     .Object@is_siz     <- as.integer(.Object@is_res^2)
-    .Object@is_rws     <- nrow(cmt@topo@rl_acc_wtd)
-    .Object@is_cls     <- ncol(cmt@topo@rl_acc_wtd)
+    .Object@is_rws     <- as.integer(nrow(cmt@topo@rl_acc_wtd))
+    .Object@is_cls     <- as.integer(ncol(cmt@topo@rl_acc_wtd))
     .Object@iv_fDo_dgl <- cmt@parameters@iv_fDo[c(1L, 3L, 7L, 9L)]
     .Object@im_fDo     <- matrix(cmt@parameters@iv_fDo, 3L)
     .Object@im_fDi     <- matrix(rev(cmt@parameters@iv_fDo), 3L)

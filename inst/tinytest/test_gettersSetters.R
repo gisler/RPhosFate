@@ -24,8 +24,8 @@ layers <- list.files(
 )
 for (layer in layers) {
   expect_true(
-    raster::all.equal(
-      raster::raster(layer),
+    terra::all.equal(
+      terra::rast(layer),
       {
         layer <- sub("\\.tif$", "", basename(layer))
         substance <- regmatches(layer, regexpr(sprintf(
@@ -46,11 +46,11 @@ for (layer in layers) {
 
   expect_identical(
     if (length(substance) == 0L) {
-      control[layer]@file@name
+      terra::sources(control[layer])
     } else {
-      control[sub(substance, "xx", layer), toupper(substance)]@file@name
+      terra::sources(control[sub(substance, "xx", layer), toupper(substance)])
     },
-    rl@file@name,
+    terra::sources(rl),
     info = '"[" and "getLayer" refer to the same raster layer'
   )
 

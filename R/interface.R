@@ -241,10 +241,10 @@ setMethod(
     x <- erosionPrerequisites(x)
     x <- erosion(x)
     for (emissiveSubstance in setdiff(slotNames(x@substances), "SS")) {
-      if (compareRaster(
+      if (compareGeom(
         x@topo@rl_acc_wtd,
         slot(x@substances, emissiveSubstance)@rl_xxc,
-        stopiffalse = FALSE
+        stopOnError = FALSE
       )) {
         x <- emission(x, emissiveSubstance)
       }
@@ -373,7 +373,7 @@ setMethod(
 
     df_ggs <- findNearestNeighbour(
       x@parameters@df_cdt[, c("x", "y", "ID")],
-      rasterToPoints(x@topo@rl_cha),
+      rasterToPoints(raster(x@topo@rl_cha)),
       x@helpers@ex_cmt
     )
     x@parameters@df_cdt[, c("x", "y")] <- df_ggs[, c("Y.x", "Y.y")]
@@ -473,7 +473,7 @@ setMethod(
     nv_mld <- extract(
       slot(x@substances, substance)@rl_xxt,
       as.matrix(x@parameters@df_cdt[, c("x", "y")])
-    )
+    )[[1L]]
     nv_old <- x@parameters@df_cdt[[col]]
 
     assertNumeric(
@@ -508,7 +508,7 @@ setMethod(
       1 - (sum(extract(
         slot(x@substances, substance)@rl_xxt,
         x@parameters@nm_olc
-      )) / cellStats(slot(x@substances, substance)@rl_xxt_inp, sum))
+      )[[1L]]) / global(slot(x@substances, substance)@rl_xxt_inp, sum, na.rm = TRUE)[[1L]])
     )
     names(metrics) <- c(x@helpers@cv_met, "inChannelRetentionRatio")
 
@@ -551,7 +551,7 @@ setMethod(
     abline(0, 1.3, col = "grey50", lty = "longdash")
     abline(0, 1.0)
     par(xpd = NA)
-    points(
+    graphics::points(
       nv_old,
       nv_mld,
       pch = 21L,

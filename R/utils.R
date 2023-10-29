@@ -135,11 +135,11 @@ readLayer <- function(cmt, layer, isRequiredInputLayer = FALSE) {
   }
 
   if (isRequiredInputLayer) {
-    raster(filename)
+    rast(filename)
   } else if (file.exists(filename)) {
-    raster(filename)
+    rast(filename)
   } else {
-    new("RasterLayer")
+    rast()
   }
 }
 
@@ -179,11 +179,11 @@ writeLayer <- function(cmt, layer, rl, datatype, substance = NULL) {
       rl,
       filename = filename,
       datatype = datatype,
-      options = if (cmt@cs_fex == ".img") "COMPRESSED=YES" else "COMPRESS=LZW",
+      gdal = if (cmt@cs_fex == ".img") "COMPRESSED=YES" else "COMPRESS=LZW",
       overwrite = TRUE
     )
 
-    raster(filename)
+    rast(filename)
   } else {
     rl
   }

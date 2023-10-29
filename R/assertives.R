@@ -28,16 +28,16 @@ assertdf_cdt <- function(cmt) {
   )
   assertNumeric(
     cmt@parameters@df_cdt[["x"]],
-    lower = cmt@helpers@ex_cmt@xmin,
-    upper = cmt@helpers@ex_cmt@xmax,
+    lower = xmin(cmt@helpers@ex_cmt),
+    upper = xmax(cmt@helpers@ex_cmt),
     any.missing = FALSE,
     min.len = 1L,
     .var.name = 'df_cdt[["x"]]'
   )
   assertNumeric(
     cmt@parameters@df_cdt[["y"]],
-    lower = cmt@helpers@ex_cmt@ymin,
-    upper = cmt@helpers@ex_cmt@ymax,
+    lower = ymin(cmt@helpers@ex_cmt),
+    upper = ymax(cmt@helpers@ex_cmt),
     any.missing = FALSE,
     min.len = 1L,
     .var.name = 'df_cdt[["y"]]'

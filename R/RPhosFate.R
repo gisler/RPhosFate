@@ -46,7 +46,7 @@ setMethod(
   "erosionPrerequisites",
   "RPhosFate",
   function(x) {
-    compareRaster(x@topo@rl_acc_wtd, x@topo@rl_slp, x@topo@rl_cha)
+    compareGeom(x@topo@rl_acc_wtd, x@topo@rl_slp, x@topo@rl_cha)
 
     cs_dir_old <- setwd(file.path(x@cv_dir[1L], "Intermediate"))
     on.exit(setwd(cs_dir_old))
@@ -57,12 +57,7 @@ setMethod(
     x@topo@rl_slp_cap[x@topo@rl_slp_cap > x@parameters@ns_slp_max] <- x@parameters@ns_slp_max
 
     # Capped slope in radian
-    rl_slp_cap_rad <- calc(
-      x@topo@rl_slp_cap,
-      function(x) {
-        atan(x * 1e-2)
-      }
-    )
+    rl_slp_cap_rad <- atan(x@topo@rl_slp_cap * 1e-2)
 
     # Weighted overland flow accumulation
     rl_acc_wtd_ovl <- x@topo@rl_acc_wtd
@@ -70,38 +65,29 @@ setMethod(
     rl_acc_wtd_ovl[rl_acc_wtd_ovl < 1] <- 1
 
     # Ratio of rill to interrill erosion
-    rl_LFa_b <- calc(
-      rl_slp_cap_rad,
-      function(x) {
-        sin(x) / (0.0896 * (3 * sin(x)^0.8 + 0.56))
-      }
-    )
+    rl_LFa_b <- sin(rl_slp_cap_rad) /
+      (0.0896 * (3 * sin(rl_slp_cap_rad)^0.8 + 0.56))
     # Rill erodibility parameter
-    rl_LFa_m <- calc(
-      rl_LFa_b,
-      function(x) {
-        x / (1 + x)
-      }
-    )
+    rl_LFa_m <- rl_LFa_b / (1 + rl_LFa_b)
 
     # L factor
     is_res <- x@helpers@is_res
-    x@erosion@rl_LFa <- overlay(
-      x = rl_acc_wtd_ovl,
-      y = rl_LFa_m,
+    x@erosion@rl_LFa <- lapp(
+      c(x = rl_acc_wtd_ovl, y = rl_LFa_m),
       fun = function(x, y) {
         ((x * is_res)^(1 + y) - ((x - 1) * is_res)^(1 + y)) / # nolint
           (is_res * 22.13^y)
-      }
+      },
+      usenames = TRUE
     )
 
     # S factor
-    x@erosion@rl_SFa <- overlay(
-      x = rl_slp_cap_rad,
-      y = x@topo@rl_slp_cap,
+    x@erosion@rl_SFa <- lapp(
+      c(x = rl_slp_cap_rad, y = x@topo@rl_slp_cap),
       fun = function(x, y) {
         ifelse(y < 9, 10.8 * sin(x) + 0.03, 16.8 * sin(x) - 0.5)
-      }
+      },
+      usenames = TRUE
     )
 
     x@topo@rl_slp_cap <- writeLayer(x, "slp_cap", x@topo@rl_slp_cap, "FLT8S")
@@ -159,7 +145,7 @@ setMethod(
   "erosion",
   "RPhosFate",
   function(x) {
-    compareRaster(
+    compareGeom(
       x@topo@rl_acc_wtd,
       x@erosion@rl_RFa,
       x@erosion@rl_KFa,
@@ -179,6 +165,7 @@ setMethod(
       x@erosion@rl_SFa *
       x@erosion@rl_CFa *
       x@helpers@is_siz * 1e-4
+    names(x@erosion@rl_ero) <- "ero"
 
     x@erosion@rl_ero <- writeLayer(x, "ero", x@erosion@rl_ero, "FLT8S")
 
@@ -226,7 +213,7 @@ setMethod(
   "RPhosFate",
   function(x, substance = "PP") {
     assertChoice(substance, slotNames(x@substances))
-    compareRaster(
+    compareGeom(
       x@topo@rl_acc_wtd,
       x@erosion@rl_ero,
       slot(x@substances, substance)@rl_xxc,
@@ -237,13 +224,16 @@ setMethod(
     on.exit(setwd(cs_dir_old))
 
     # Emission in kg/cell/yr
-    slot(x@substances, substance)@rl_xxe <- overlay(
-      x = x@erosion@rl_ero,
-      y = slot(x@substances, substance)@rl_xxc,
-      z = x@topo@rl_clc,
+    slot(x@substances, substance)@rl_xxe <- lapp(
+      c(
+        x = x@erosion@rl_ero,
+        y = slot(x@substances, substance)@rl_xxc,
+        z = x@topo@rl_clc
+      ),
       fun = function(x, y, z) {
         x * y * (1 + z * 1e-2) * 1e-3
-      }
+      },
+      usenames = TRUE
     )
 
     slot(x@substances, substance)@rl_xxe <- writeLayer(
@@ -299,7 +289,7 @@ setMethod(
   "transportPrerequisites",
   "RPhosFate",
   function(x) {
-    compareRaster(
+    compareGeom(
       x@topo@rl_acc_wtd,
       x@topo@rl_dir,
       x@topo@rl_cha,
@@ -313,32 +303,29 @@ setMethod(
     ns_rhy_a <- x@parameters@ns_rhy_a
     ns_rhy_b <- x@parameters@ns_rhy_b
     is_siz <- x@helpers@is_siz
-    x@transport@rl_rhy <- calc(
-      x@topo@rl_acc_wtd,
-      function(x) {
-        ns_rhy_a * (x * is_siz * 1e-6)^ns_rhy_b
-      }
-    )
+    x@transport@rl_rhy <- ns_rhy_a *
+      (x@topo@rl_acc_wtd * is_siz * 1e-6)^ns_rhy_b
 
     # Riparian zone cells
-    x@topo@rl_rip <- raster(
+    x@topo@rl_rip <- rast(raster(
       dir_sth(
-        im_dir = as.matrix(x@topo@rl_dir),
-        im_sth = as.matrix(x@topo@rl_cha),
+        im_dir = as.matrix(raster(x@topo@rl_dir)),
+        im_sth = as.matrix(raster(x@topo@rl_cha)),
         im_fDo = x@helpers@im_fDo
       ),
       template = x@topo@rl_acc_wtd
-    )
+    ))
 
     # Inlet cells
-    x@topo@rl_inl <- raster(
+    x@topo@rl_inl <- rast(raster(
       dir_sth(
-        im_dir = as.matrix(x@topo@rl_dir),
-        im_sth = as.matrix(x@topo@rl_rds),
+        im_dir = as.matrix(raster(x@topo@rl_dir)),
+        im_sth = as.matrix(raster(x@topo@rl_rds)),
         im_fDo = x@helpers@im_fDo
       ),
       template = x@topo@rl_acc_wtd
-    )
+    ))
+    names(x@topo@rl_inl) <- "rl_inl"
 
     # No inlet cells at channel cells
     x@topo@rl_inl[!is.na(x@topo@rl_cha)] <- NA_integer_
@@ -349,8 +336,8 @@ setMethod(
 
     # Nearest channel cells for inlet cells
     df_out <- findNearestNeighbour(
-      rasterToPoints(x@topo@rl_inl),
-      rasterToPoints(x@topo@rl_cha),
+      rasterToPoints(raster(x@topo@rl_inl)),
+      rasterToPoints(raster(x@topo@rl_cha)),
       x@helpers@ex_cmt
     )
 
@@ -364,8 +351,7 @@ setMethod(
     # Substituting inlet values with integer codes identifying nearest channel
     # cells
     df_out$code <- as.integer(df_out$Y.y * x@helpers@is_cls + df_out$Y.x)
-    # Bug in subs() {raster}: use default by and which
-    x@topo@rl_inl <- subs(x@topo@rl_inl, y = df_out[c(3L, 8L)])
+    x@topo@rl_inl <- subst(x@topo@rl_inl, df_out[["rl_inl"]], df_out[["code"]])
 
     x@transport@rl_rhy <- writeLayer(x, "rhy", x@transport@rl_rhy, "FLT8S")
     x@topo@rl_rip      <- writeLayer(x, "rip", x@topo@rl_rip     , "INT4S")
@@ -410,7 +396,7 @@ setMethod(
   "transportCalcOrder",
   "RPhosFate",
   function(x) {
-    compareRaster(
+    compareGeom(
       x@topo@rl_acc_wtd,
       x@topo@rl_acc,
       x@topo@rl_cha
@@ -425,8 +411,8 @@ setMethod(
     rl_acc_cha[ is.na(x@topo@rl_cha)] <- NA_integer_
 
     # Transport calculation order as column-major index
-    im_acc_ovl <- as.matrix(rl_acc_ovl)
-    im_acc_cha <- as.matrix(rl_acc_cha)
+    im_acc_ovl <- as.matrix(raster(rl_acc_ovl))
+    im_acc_cha <- as.matrix(raster(rl_acc_cha))
     ar_ord_ovl <- tapply(seq_along(im_acc_ovl), im_acc_ovl, identity)
     ar_ord_cha <- tapply(seq_along(im_acc_cha), im_acc_cha, identity)
 
@@ -506,7 +492,7 @@ setMethod(
   "RPhosFate",
   function(x, substance = "PP") {
     assertChoice(substance, slotNames(x@substances))
-    compareRaster(
+    compareGeom(
       x@topo@rl_acc_wtd,
       x@topo@rl_cha,
       x@topo@rl_dir,
@@ -549,26 +535,26 @@ setMethod(
       ns_tfc_inl = x@parameters@nv_tfc_inl[substance],
       helpers    = x@helpers,
       order      = x@helpers@order,
-      im_cha     = as.matrix(x@topo@rl_cha),
-      im_dir     = as.matrix(x@topo@rl_dir),
-      im_inl     = as.matrix(x@topo@rl_inl),
-      im_rip     = as.matrix(x@topo@rl_rip),
-      nm_man     = as.matrix(x@transport@rl_man),
+      im_cha     = as.matrix(raster(x@topo@rl_cha)),
+      im_dir     = as.matrix(raster(x@topo@rl_dir)),
+      im_inl     = as.matrix(raster(x@topo@rl_inl)),
+      im_rip     = as.matrix(raster(x@topo@rl_rip)),
+      nm_man     = as.matrix(raster(x@transport@rl_man)),
       nm_xxe     = if (substance == "SS") {
-        as.matrix(x@erosion@rl_ero)
+        as.matrix(raster(x@erosion@rl_ero))
       } else {
-        as.matrix(slot(x@substances, substance)@rl_xxe)
+        as.matrix(raster(slot(x@substances, substance)@rl_xxe))
       },
-      nm_rhy     = as.matrix(x@transport@rl_rhy),
-      nm_slp     = as.matrix(x@topo@rl_slp_cap)
+      nm_rhy     = as.matrix(raster(x@transport@rl_rhy)),
+      nm_slp     = as.matrix(raster(x@topo@rl_slp_cap))
     )
 
-    slot(x@substances, substance)@rl_xxr     <- writeLayer(x, "xxr"    , raster(li_tpt$nm_xxr    , template = x@topo@rl_acc_wtd), "FLT8S", substance)
-    slot(x@substances, substance)@rl_xxt_inp <- writeLayer(x, "xxt_inp", raster(li_tpt$nm_xxt_inp, template = x@topo@rl_acc_wtd), "FLT8S", substance)
-    slot(x@substances, substance)@rl_xxt_out <- writeLayer(x, "xxt_out", raster(li_tpt$nm_xxt_out, template = x@topo@rl_acc_wtd), "FLT8S", substance)
-    slot(x@substances, substance)@rl_xxt     <- writeLayer(x, "xxt"    , raster(li_tpt$nm_xxt    , template = x@topo@rl_acc_wtd), "FLT8S", substance)
-    slot(x@substances, substance)@rl_xxt_ctf <- writeLayer(x, "xxt_ctf", raster(li_tpt$nm_xxt_ctf, template = x@topo@rl_acc_wtd), "FLT8S", substance)
-    slot(x@substances, substance)@rl_xxt_cld <- writeLayer(x, "xxt_cld", raster(li_tpt$nm_xxt_cld, template = x@topo@rl_acc_wtd), "FLT8S", substance)
+    slot(x@substances, substance)@rl_xxr     <- writeLayer(x, "xxr"    , rast(raster(li_tpt$nm_xxr    , template = x@topo@rl_acc_wtd)), "FLT8S", substance)
+    slot(x@substances, substance)@rl_xxt_inp <- writeLayer(x, "xxt_inp", rast(raster(li_tpt$nm_xxt_inp, template = x@topo@rl_acc_wtd)), "FLT8S", substance)
+    slot(x@substances, substance)@rl_xxt_out <- writeLayer(x, "xxt_out", rast(raster(li_tpt$nm_xxt_out, template = x@topo@rl_acc_wtd)), "FLT8S", substance)
+    slot(x@substances, substance)@rl_xxt     <- writeLayer(x, "xxt"    , rast(raster(li_tpt$nm_xxt    , template = x@topo@rl_acc_wtd)), "FLT8S", substance)
+    slot(x@substances, substance)@rl_xxt_ctf <- writeLayer(x, "xxt_ctf", rast(raster(li_tpt$nm_xxt_ctf, template = x@topo@rl_acc_wtd)), "FLT8S", substance)
+    slot(x@substances, substance)@rl_xxt_cld <- writeLayer(x, "xxt_cld", rast(raster(li_tpt$nm_xxt_cld, template = x@topo@rl_acc_wtd)), "FLT8S", substance)
 
     x
   }

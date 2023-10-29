@@ -30,6 +30,7 @@ Imports:
     Rcpp,
     spatstat.geom,
     stats,
+    terra,
     utils,
     yaml
 Suggests:
