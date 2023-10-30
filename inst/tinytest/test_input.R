@@ -43,8 +43,8 @@ if (.Platform$OS.type == "windows" && tinytest::at_home()) {
   )
   for (layer in layers) {
     expect_true(
-      raster::all.equal(
-        raster::raster(layer),
+      terra::all.equal(
+        terra::rast(layer),
         getLayer(control, sub("\\.tif$", "", basename(layer)))
       ),
       info = '"DEMrelatedInput" outputs are correct (standard use case)'

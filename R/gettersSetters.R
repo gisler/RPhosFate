@@ -26,7 +26,7 @@ setGeneric(
 #'
 #' @inheritSection catchment _Result_ subdirectory
 #'
-#' @return A [`raster::RasterLayer-class`] object.
+#' @return A [`terra::SpatRaster-class`] object.
 #'
 #' @examples
 #' \donttest{

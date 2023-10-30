@@ -23,7 +23,7 @@ information.}
 \item{j}{A character string specifying a substance if applicable.}
 }
 \value{
-A \code{\link[raster:Raster-classes]{raster::RasterLayer}} object.
+A \code{\link[terra:SpatRaster-class]{terra::SpatRaster}} object.
 }
 \description{
 Obtains a project raster layer for further analysis.
