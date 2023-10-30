@@ -51,7 +51,6 @@ Collate:
     'RPhosFate.R'
     'RcppExports.R'
     'assertives.R'
-    'deprecated.R'
     'gettersSetters.R'
     'input.R'
     'interface.R'

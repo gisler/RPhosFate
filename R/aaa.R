@@ -407,9 +407,8 @@ setMethod(
     if (.Object@ls_ini && file.exists("parameters.yaml")) {
       arguments <- readParameters(arguments)
       argumentNames <- names(arguments)
-    } else if (.Object@ls_ini && file.exists("parameters.rds")) {
-      arguments <- parametersRDS2YAML(slotNames(.Object@substances))
-      argumentNames <- names(arguments)
+    } else if (.Object@ls_ini) {
+      stop('"parameters.yaml" file does not exist.', call. = FALSE)
     }
     arguments <- arguments[setdiff(
       argumentNames,
