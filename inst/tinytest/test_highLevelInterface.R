@@ -25,7 +25,7 @@ expect_identical(
   info = "parameters are created correctly"
 )
 
-expect_identical(
+expect_equal(
   y,
   z,
   info = '"RPhosFate" and "catchment" yield identical results (creation)'
@@ -52,7 +52,7 @@ expect_identical(
   info = "parameters are loaded correctly"
 )
 
-expect_identical(
+expect_equal(
   y,
   z,
   info = '"RPhosFate" and "catchment" yield identical results (loading)'

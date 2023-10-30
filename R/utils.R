@@ -173,7 +173,9 @@ writeLayer <- function(cmt, layer, rl, datatype, substance = NULL) {
     if (!is.null(substance)) {
       layer <- sub("^xx", tolower(substance), layer)
     }
-    filename <- paste0(layer, cmt@is_MCi, cmt@cs_fex)
+    filename <- paste0(layer, cmt@is_MCi)
+    set.names(rl, filename)
+    filename <- paste0(filename, cmt@cs_fex)
 
     writeRaster(
       rl,

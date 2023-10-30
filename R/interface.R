@@ -508,7 +508,11 @@ setMethod(
       1 - (sum(extract(
         slot(x@substances, substance)@rl_xxt,
         x@parameters@nm_olc
-      )[[1L]]) / global(slot(x@substances, substance)@rl_xxt_inp, sum, na.rm = TRUE)[[1L]])
+      )[[1L]]) / global(
+        slot(x@substances, substance)@rl_xxt_inp,
+        sum,
+        na.rm = TRUE
+      )[[1L]])
     )
     names(metrics) <- c(x@helpers@cv_met, "inChannelRetentionRatio")
 

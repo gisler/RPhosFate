@@ -77,8 +77,7 @@ setMethod(
       fun = function(x, y) {
         ((x * is_res)^(1 + y) - ((x - 1) * is_res)^(1 + y)) / # nolint
           (is_res * 22.13^y)
-      },
-      usenames = TRUE
+      }
     )
 
     # S factor
@@ -86,8 +85,7 @@ setMethod(
       c(x = rl_slp_cap_rad, y = x@topo@rl_slp_cap),
       fun = function(x, y) {
         ifelse(y < 9, 10.8 * sin(x) + 0.03, 16.8 * sin(x) - 0.5)
-      },
-      usenames = TRUE
+      }
     )
 
     x@topo@rl_slp_cap <- writeLayer(x, "slp_cap", x@topo@rl_slp_cap, "FLT8S")
@@ -165,7 +163,6 @@ setMethod(
       x@erosion@rl_SFa *
       x@erosion@rl_CFa *
       x@helpers@is_siz * 1e-4
-    names(x@erosion@rl_ero) <- "ero"
 
     x@erosion@rl_ero <- writeLayer(x, "ero", x@erosion@rl_ero, "FLT8S")
 
@@ -232,8 +229,7 @@ setMethod(
       ),
       fun = function(x, y, z) {
         x * y * (1 + z * 1e-2) * 1e-3
-      },
-      usenames = TRUE
+      }
     )
 
     slot(x@substances, substance)@rl_xxe <- writeLayer(
@@ -325,7 +321,7 @@ setMethod(
       ),
       template = x@topo@rl_acc_wtd
     ))
-    names(x@topo@rl_inl) <- "rl_inl"
+    set.names(x@topo@rl_inl, "inl")
 
     # No inlet cells at channel cells
     x@topo@rl_inl[!is.na(x@topo@rl_cha)] <- NA_integer_
@@ -351,7 +347,7 @@ setMethod(
     # Substituting inlet values with integer codes identifying nearest channel
     # cells
     df_out$code <- as.integer(df_out$Y.y * x@helpers@is_cls + df_out$Y.x)
-    x@topo@rl_inl <- subst(x@topo@rl_inl, df_out[["rl_inl"]], df_out[["code"]])
+    x@topo@rl_inl <- subst(x@topo@rl_inl, df_out[["inl"]], df_out[["code"]])
 
     x@transport@rl_rhy <- writeLayer(x, "rhy", x@transport@rl_rhy, "FLT8S")
     x@topo@rl_rip      <- writeLayer(x, "rip", x@topo@rl_rip     , "INT4S")
