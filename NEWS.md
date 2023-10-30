@@ -1,6 +1,8 @@
 # RPhosFate v1.0.4.9000
 
 * Switched to utilising the `SpatRaster` class from the `terra` package instead of the `RasterLayer` class from the `raster` package. However, the transition from `raster` to `terra` is not yet complete.
+* Ceased support for _Erdas Imagine_ (\*.img) raster files.
+
 # RPhosFate v1.0.4
 
 * The current `raster` package does not compress _GeoTIFF_ raster files any longer by default. This is probably due to the switch from `rgdal` to `terra` and has been fixed by generally using the _LZW_ algorithm.

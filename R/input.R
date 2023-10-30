@@ -88,9 +88,6 @@ demoProject <- function(cs_dir = tempdir(TRUE)) {
 #'   toolchain and/or platform).
 #' @param ls_tmp A logical scalar specifying if the temporary files created
 #'   during computation shall be kept.
-#' @param cs_fex A character string specifying the file extension of the created
-#'   raster files (either the default `"tif"` or `"img"` for backward
-#'   compatibility).
 #'
 #' @details
 #' This function applies the following (pre-processing) steps to ensure
@@ -164,8 +161,7 @@ DEMrelatedInput <- function(
   ns_brn = 50,
   is_adj = 1L,
   is_ths = 1L,
-  ls_tmp = FALSE,
-  cs_fex = c("tif", "img")
+  ls_tmp = FALSE
 ) {
   if (!requireNamespace("whitebox", quietly = TRUE) ||
       packageVersion("whitebox") < package_version("2.0.0")) {
@@ -208,7 +204,6 @@ DEMrelatedInput <- function(
   qassert(is_adj, "X1[0,)")
   is_ths <- assertCount(is_ths, positive = TRUE, coerce = TRUE)
   qassert(ls_tmp, "B1")
-  cs_fex <- match.arg(cs_fex)
 
   dir.create(
     file.path(cv_dir[1L], "Input", "temp"),
@@ -553,9 +548,9 @@ DEMrelatedInput <- function(
   for (i in seq_along(toInput)) {
     writeRaster(
       toInput[[i]],
-      filename = file.path("..", sprintf("%s.%s", names(toInput)[i], cs_fex)),
+      filename = file.path("..", sprintf("%s.%s", names(toInput)[i], ".tif")),
       datatype = dataType(toInput[[i]]),
-      options = if (cs_fex == "img") "COMPRESSED=YES" else "COMPRESS=LZW",
+      options = "COMPRESS=LZW",
       overwrite = TRUE
     )
   }
