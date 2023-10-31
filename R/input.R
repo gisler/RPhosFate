@@ -548,7 +548,7 @@ DEMrelatedInput <- function(
   for (i in seq_along(toInput)) {
     writeRaster(
       toInput[[i]],
-      filename = file.path("..", sprintf("%s%s", names(toInput)[i], ".tif")),
+      filename = file.path("..", paste0(names(toInput)[i], ".tif")),
       datatype = dataType(toInput[[i]]),
       options = "COMPRESS=LZW",
       overwrite = TRUE

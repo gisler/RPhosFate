@@ -510,7 +510,7 @@ setMethod(
         x@parameters@nm_olc
       )[[1L]]) / global(
         slot(x@substances, substance)@rl_xxt_inp,
-        sum,
+        "sum",
         na.rm = TRUE
       )[[1L]])
     )

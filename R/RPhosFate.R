@@ -65,8 +65,12 @@ setMethod(
     rl_acc_wtd_ovl[rl_acc_wtd_ovl < 1] <- 1
 
     # Ratio of rill to interrill erosion
-    rl_LFa_b <- sin(rl_slp_cap_rad) /
-      (0.0896 * (3 * sin(rl_slp_cap_rad)^0.8 + 0.56))
+    rl_LFa_b <- app(
+      rl_slp_cap_rad,
+      function(x) {
+        sin(x) / (0.0896 * (3 * sin(x)^0.8 + 0.56))
+      }
+    )
     # Rill erodibility parameter
     rl_LFa_m <- rl_LFa_b / (1 + rl_LFa_b)
 
@@ -299,8 +303,12 @@ setMethod(
     ns_rhy_a <- x@parameters@ns_rhy_a
     ns_rhy_b <- x@parameters@ns_rhy_b
     is_siz <- x@helpers@is_siz
-    x@transport@rl_rhy <- ns_rhy_a *
-      (x@topo@rl_acc_wtd * is_siz * 1e-6)^ns_rhy_b
+    x@transport@rl_rhy <- app(
+      x@topo@rl_acc_wtd,
+      function(x) {
+        ns_rhy_a * (x * is_siz * 1e-6)^ns_rhy_b
+      }
+    )
 
     # Riparian zone cells
     x@topo@rl_rip <- rast(raster(

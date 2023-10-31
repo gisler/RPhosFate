@@ -287,12 +287,8 @@ setClass(
     iv_fDo_dgl = "integer",       # Diagonal outflow direction vector
     im_fDo     = "matrix",        # Outflow direction matrix
     im_fDi     = "matrix",        # Inflow direction matrix
-    cs_fex     = "character",     # File extension of utilised raster files
     cv_met     = "character",     # Implemented calibration quality metrics
     order      = "RPhosFateOrder" # Transport calculation order
-  ),
-  prototype = list(
-    cs_fex = ".tif"
   )
 )
 setMethod(

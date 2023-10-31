@@ -41,18 +41,18 @@ determineMCfilename <- function(cmt, layer) {
   if (length(cmt@cv_dir) == 2L) {
     MCfilename <- file.path(
       cmt@cv_dir[2L],
-      paste0(basename(layer), cmt@is_MCi, cmt@helpers@cs_fex)
+      paste0(basename(layer), cmt@is_MCi, ".tif")
     )
     if (file.exists(MCfilename)) {
       return(MCfilename)
     }
   }
 
-  MCfilename <- paste0(layer, cmt@is_MCi, cmt@helpers@cs_fex)
+  MCfilename <- paste0(layer, cmt@is_MCi, ".tif")
   if (file.exists(MCfilename)) {
     MCfilename
   } else {
-    paste0(layer, cmt@helpers@cs_fex)
+    paste0(layer, ".tif")
   }
 }
 
@@ -131,7 +131,7 @@ readLayer <- function(cmt, layer, isRequiredInputLayer = FALSE) {
   if (length(cmt@is_MCi) == 1L) {
     filename <- determineMCfilename(cmt, layer)
   } else {
-    filename <- paste0(layer, cmt@helpers@cs_fex)
+    filename <- paste0(layer, ".tif")
   }
 
   if (isRequiredInputLayer) {
@@ -173,9 +173,9 @@ writeLayer <- function(cmt, layer, rl, datatype, substance = NULL) {
     if (!is.null(substance)) {
       layer <- sub("^xx", tolower(substance), layer)
     }
-    filename <- paste0(layer, cmt@is_MCi)
-    set.names(rl, filename)
-    filename <- paste0(filename, cmt@helpers@cs_fex)
+    name <- paste0(layer, cmt@is_MCi)
+    set.names(rl, name)
+    filename <- paste0(name, ".tif")
 
     writeRaster(
       rl,
