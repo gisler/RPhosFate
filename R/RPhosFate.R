@@ -311,24 +311,26 @@ setMethod(
     )
 
     # Riparian zone cells
-    x@topo@rl_rip <- rast(raster(
+    x@topo@rl_rip <- rast(
       dir_sth(
         im_dir = as.matrix(x@topo@rl_dir, wide = TRUE),
         im_sth = as.matrix(x@topo@rl_cha, wide = TRUE),
         im_fDo = x@helpers@im_fDo
       ),
-      template = x@topo@rl_acc_wtd
-    ))
+      crs = x@helpers@cs_cmt,
+      extent = x@helpers@ex_cmt
+    )
 
     # Inlet cells
-    x@topo@rl_inl <- rast(raster(
+    x@topo@rl_inl <- rast(
       dir_sth(
         im_dir = as.matrix(x@topo@rl_dir, wide = TRUE),
         im_sth = as.matrix(x@topo@rl_rds, wide = TRUE),
         im_fDo = x@helpers@im_fDo
       ),
-      template = x@topo@rl_acc_wtd
-    ))
+      crs = x@helpers@cs_cmt,
+      extent = x@helpers@ex_cmt
+    )
     set.names(x@topo@rl_inl, "inl")
 
     # No inlet cells at channel cells
@@ -541,12 +543,12 @@ setMethod(
       nm_slp     = as.matrix(x@topo@rl_slp_cap, wide = TRUE)
     )
 
-    slot(x@substances, substance)@rl_xxr     <- writeLayer(x, "xxr"    , rast(raster(li_tpt$nm_xxr    , template = x@topo@rl_acc_wtd)), "FLT8S", substance)
-    slot(x@substances, substance)@rl_xxt_inp <- writeLayer(x, "xxt_inp", rast(raster(li_tpt$nm_xxt_inp, template = x@topo@rl_acc_wtd)), "FLT8S", substance)
-    slot(x@substances, substance)@rl_xxt_out <- writeLayer(x, "xxt_out", rast(raster(li_tpt$nm_xxt_out, template = x@topo@rl_acc_wtd)), "FLT8S", substance)
-    slot(x@substances, substance)@rl_xxt     <- writeLayer(x, "xxt"    , rast(raster(li_tpt$nm_xxt    , template = x@topo@rl_acc_wtd)), "FLT8S", substance)
-    slot(x@substances, substance)@rl_xxt_ctf <- writeLayer(x, "xxt_ctf", rast(raster(li_tpt$nm_xxt_ctf, template = x@topo@rl_acc_wtd)), "FLT8S", substance)
-    slot(x@substances, substance)@rl_xxt_cld <- writeLayer(x, "xxt_cld", rast(raster(li_tpt$nm_xxt_cld, template = x@topo@rl_acc_wtd)), "FLT8S", substance)
+    slot(x@substances, substance)@rl_xxr     <- writeLayer(x, "xxr"    , rast(li_tpt$nm_xxr    , crs = x@helpers@cs_cmt, extent = x@helpers@ex_cmt), "FLT8S", substance)
+    slot(x@substances, substance)@rl_xxt_inp <- writeLayer(x, "xxt_inp", rast(li_tpt$nm_xxt_inp, crs = x@helpers@cs_cmt, extent = x@helpers@ex_cmt), "FLT8S", substance)
+    slot(x@substances, substance)@rl_xxt_out <- writeLayer(x, "xxt_out", rast(li_tpt$nm_xxt_out, crs = x@helpers@cs_cmt, extent = x@helpers@ex_cmt), "FLT8S", substance)
+    slot(x@substances, substance)@rl_xxt     <- writeLayer(x, "xxt"    , rast(li_tpt$nm_xxt    , crs = x@helpers@cs_cmt, extent = x@helpers@ex_cmt), "FLT8S", substance)
+    slot(x@substances, substance)@rl_xxt_ctf <- writeLayer(x, "xxt_ctf", rast(li_tpt$nm_xxt_ctf, crs = x@helpers@cs_cmt, extent = x@helpers@ex_cmt), "FLT8S", substance)
+    slot(x@substances, substance)@rl_xxt_cld <- writeLayer(x, "xxt_cld", rast(li_tpt$nm_xxt_cld, crs = x@helpers@cs_cmt, extent = x@helpers@ex_cmt), "FLT8S", substance)
 
     x
   }

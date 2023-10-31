@@ -279,6 +279,7 @@ setClass(
 setClass(
   "RPhosFateHelpers",
   slots = c(
+    cs_cmt     = "character",     # Coordinate reference system of river catchment
     ex_cmt     = "SpatExtent",    # Extent of river catchment
     is_res     = "integer",       # Cell resolution in m
     is_siz     = "integer",       # Cell area in m^2
@@ -298,6 +299,7 @@ setMethod(
     cs_dir_old <- setwd(cmt@cv_dir[1L])
     on.exit(setwd(cs_dir_old))
 
+    .Object@cs_cmt     <- crs(cmt@topo@rl_acc_wtd)
     .Object@ex_cmt     <- ext(cmt@topo@rl_acc_wtd)
     .Object@is_res     <- as.integer(xres(cmt@topo@rl_acc_wtd))
     .Object@is_siz     <- as.integer(.Object@is_res^2)
