@@ -181,7 +181,6 @@ writeLayer <- function(cmt, layer, rl, datatype, substance = NULL) {
       rl,
       filename = filename,
       datatype = datatype,
-      gdal = "COMPRESS=LZW",
       overwrite = TRUE
     )
 
