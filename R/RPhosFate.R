@@ -346,11 +346,9 @@ setMethod(
     )
 
     # X-coordinates of nearest channel cells to column numbers
-    df_out$Y.x <- (df_out$Y.x + x@helpers@is_res / 2 -
-      x@helpers@ex_cmt[1L]) / x@helpers@is_res
+    df_out$Y.x <- colFromX(x@topo@rl_inl, df_out$Y.x)
     # Y-coordinates of nearest channel cells to row numbers
-    df_out$Y.y <- x@helpers@is_rws - ((df_out$Y.y - x@helpers@is_res / 2 -
-      x@helpers@ex_cmt[3L]) / x@helpers@is_res)
+    df_out$Y.y <- rowFromY(x@topo@rl_inl, df_out$Y.y)
 
     # Substituting inlet values with integer codes identifying nearest channel
     # cells
@@ -414,36 +412,26 @@ setMethod(
     rl_acc_cha <- x@topo@rl_acc
     rl_acc_cha[ is.na(x@topo@rl_cha)] <- NA_integer_
 
-    # Transport calculation order as column-major index
-    im_acc_ovl <- as.matrix(rl_acc_ovl, wide = TRUE)
-    im_acc_cha <- as.matrix(rl_acc_cha, wide = TRUE)
-    ar_ord_ovl <- tapply(seq_along(im_acc_ovl), im_acc_ovl, identity)
-    ar_ord_cha <- tapply(seq_along(im_acc_cha), im_acc_cha, identity)
+    # Transport calculation order as row-major index
+    im_acc_ovl <- as.matrix(rl_acc_ovl)
+    im_acc_cha <- as.matrix(rl_acc_cha)
+    ar_ord_ovl <- tapply(seq_along(im_acc_ovl), im_acc_ovl, identity, simplify = FALSE)
+    ar_ord_cha <- tapply(seq_along(im_acc_cha), im_acc_cha, identity, simplify = FALSE)
 
-    # Row order from index
-    is_rws <- x@helpers@is_rws
-    fun <- function(x) {
-      (x + is_rws) - ceiling(x / is_rws) * is_rws
-    }
-    iv_ord_ovl_row <- as.integer(unlist(lapply(ar_ord_ovl, fun)))
-    iv_ord_cha_row <- as.integer(unlist(lapply(ar_ord_cha, fun)))
-
-    # Column order from index
-    fun <- function(x) {
-      ceiling(x / is_rws)
-    }
-    iv_ord_ovl_col <- as.integer(unlist(lapply(ar_ord_ovl, fun)))
-    iv_ord_cha_col <- as.integer(unlist(lapply(ar_ord_cha, fun)))
+    # Row and column numbers from index (C++ has zero-based indexing)
+    iv_ord_ovl <- rowColFromCell(rl_acc_ovl, unlist(ar_ord_ovl)) - 1
+    iv_ord_cha <- rowColFromCell(rl_acc_cha, unlist(ar_ord_cha)) - 1
+    storage.mode(iv_ord_ovl) <- "integer"
+    storage.mode(iv_ord_cha) <- "integer"
 
     # Overland as well as channel row and column numbers for top-down
-    # computation (C++ has zero-based numbering)
-    x@helpers@order@iv_ord_row <- c(iv_ord_ovl_row, iv_ord_cha_row) - 1L
-    x@helpers@order@iv_ord_col <- c(iv_ord_ovl_col, iv_ord_cha_col) - 1L
+    # computation
+    x@helpers@order@iv_ord_row <- c(iv_ord_ovl[, 1L], iv_ord_cha[, 1L])
+    x@helpers@order@iv_ord_col <- c(iv_ord_ovl[, 2L], iv_ord_cha[, 2L])
 
     # Reverse overland row and column numbers for bottom-up computation
-    # (C++ has zero-based numbering)
-    x@helpers@order@iv_ord_ovl_row_rev <- rev(iv_ord_ovl_row) - 1L
-    x@helpers@order@iv_ord_ovl_col_rev <- rev(iv_ord_ovl_col) - 1L
+    x@helpers@order@iv_ord_ovl_row_rev <- rev(iv_ord_ovl[, 1L])
+    x@helpers@order@iv_ord_ovl_col_rev <- rev(iv_ord_ovl[, 2L])
 
     x
   }
