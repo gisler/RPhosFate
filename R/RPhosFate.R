@@ -313,8 +313,8 @@ setMethod(
     # Riparian zone cells
     x@topo@rl_rip <- rast(raster(
       dir_sth(
-        im_dir = as.matrix(raster(x@topo@rl_dir)),
-        im_sth = as.matrix(raster(x@topo@rl_cha)),
+        im_dir = as.matrix(x@topo@rl_dir, wide = TRUE),
+        im_sth = as.matrix(x@topo@rl_cha, wide = TRUE),
         im_fDo = x@helpers@im_fDo
       ),
       template = x@topo@rl_acc_wtd
@@ -323,8 +323,8 @@ setMethod(
     # Inlet cells
     x@topo@rl_inl <- rast(raster(
       dir_sth(
-        im_dir = as.matrix(raster(x@topo@rl_dir)),
-        im_sth = as.matrix(raster(x@topo@rl_rds)),
+        im_dir = as.matrix(x@topo@rl_dir, wide = TRUE),
+        im_sth = as.matrix(x@topo@rl_rds, wide = TRUE),
         im_fDo = x@helpers@im_fDo
       ),
       template = x@topo@rl_acc_wtd
@@ -340,8 +340,8 @@ setMethod(
 
     # Nearest channel cells for inlet cells
     df_out <- findNearestNeighbour(
-      rasterToPoints(raster(x@topo@rl_inl)),
-      rasterToPoints(raster(x@topo@rl_cha)),
+      cbind(crds(x@topo@rl_inl), values(x@topo@rl_inl, na.rm = TRUE)),
+      cbind(crds(x@topo@rl_cha), values(x@topo@rl_cha, na.rm = TRUE)),
       x@helpers@ex_cmt
     )
 
@@ -415,8 +415,8 @@ setMethod(
     rl_acc_cha[ is.na(x@topo@rl_cha)] <- NA_integer_
 
     # Transport calculation order as column-major index
-    im_acc_ovl <- as.matrix(raster(rl_acc_ovl))
-    im_acc_cha <- as.matrix(raster(rl_acc_cha))
+    im_acc_ovl <- as.matrix(rl_acc_ovl, wide = TRUE)
+    im_acc_cha <- as.matrix(rl_acc_cha, wide = TRUE)
     ar_ord_ovl <- tapply(seq_along(im_acc_ovl), im_acc_ovl, identity)
     ar_ord_cha <- tapply(seq_along(im_acc_cha), im_acc_cha, identity)
 
@@ -539,18 +539,18 @@ setMethod(
       ns_tfc_inl = x@parameters@nv_tfc_inl[substance],
       helpers    = x@helpers,
       order      = x@helpers@order,
-      im_cha     = as.matrix(raster(x@topo@rl_cha)),
-      im_dir     = as.matrix(raster(x@topo@rl_dir)),
-      im_inl     = as.matrix(raster(x@topo@rl_inl)),
-      im_rip     = as.matrix(raster(x@topo@rl_rip)),
-      nm_man     = as.matrix(raster(x@transport@rl_man)),
+      im_cha     = as.matrix(x@topo@rl_cha, wide = TRUE),
+      im_dir     = as.matrix(x@topo@rl_dir, wide = TRUE),
+      im_inl     = as.matrix(x@topo@rl_inl, wide = TRUE),
+      im_rip     = as.matrix(x@topo@rl_rip, wide = TRUE),
+      nm_man     = as.matrix(x@transport@rl_man, wide = TRUE),
       nm_xxe     = if (substance == "SS") {
-        as.matrix(raster(x@erosion@rl_ero))
+        as.matrix(x@erosion@rl_ero, wide = TRUE)
       } else {
-        as.matrix(raster(slot(x@substances, substance)@rl_xxe))
+        as.matrix(slot(x@substances, substance)@rl_xxe, wide = TRUE)
       },
-      nm_rhy     = as.matrix(raster(x@transport@rl_rhy)),
-      nm_slp     = as.matrix(raster(x@topo@rl_slp_cap))
+      nm_rhy     = as.matrix(x@transport@rl_rhy, wide = TRUE),
+      nm_slp     = as.matrix(x@topo@rl_slp_cap, wide = TRUE)
     )
 
     slot(x@substances, substance)@rl_xxr     <- writeLayer(x, "xxr"    , rast(raster(li_tpt$nm_xxr    , template = x@topo@rl_acc_wtd)), "FLT8S", substance)

@@ -373,7 +373,7 @@ setMethod(
 
     df_ggs <- findNearestNeighbour(
       x@parameters@df_cdt[, c("x", "y", "ID")],
-      rasterToPoints(raster(x@topo@rl_cha)),
+      cbind(crds(x@topo@rl_cha), values(x@topo@rl_cha, na.rm = TRUE)),
       x@helpers@ex_cmt
     )
     x@parameters@df_cdt[, c("x", "y")] <- df_ggs[, c("Y.x", "Y.y")]
