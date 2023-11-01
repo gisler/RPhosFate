@@ -57,7 +57,13 @@ setMethod(
     x@topo@rl_slp_cap[x@topo@rl_slp_cap > x@parameters@ns_slp_max] <- x@parameters@ns_slp_max
 
     # Capped slope in radian
-    rl_slp_cap_rad <- atan(x@topo@rl_slp_cap * 1e-2)
+    rl_slp_cap_rad <- app(
+      x@topo@rl_slp_cap,
+      function(x) {
+        atan(x * 1e-2)
+      },
+      cores = x@is_ths
+    )
 
     # Weighted overland flow accumulation
     rl_acc_wtd_ovl <- x@topo@rl_acc_wtd
@@ -69,10 +75,17 @@ setMethod(
       rl_slp_cap_rad,
       function(x) {
         sin(x) / (0.0896 * (3 * sin(x)^0.8 + 0.56))
-      }
+      },
+      cores = x@is_ths
     )
     # Rill erodibility parameter
-    rl_LFa_m <- rl_LFa_b / (1 + rl_LFa_b)
+    rl_LFa_m <- app(
+      rl_LFa_b,
+      function(x) {
+        x / (1 + x)
+      },
+      cores = x@is_ths
+    )
 
     # L factor
     is_res <- x@helpers@is_res
@@ -81,7 +94,8 @@ setMethod(
       fun = function(x, y) {
         ((x * is_res)^(1 + y) - ((x - 1) * is_res)^(1 + y)) / # nolint
           (is_res * 22.13^y)
-      }
+      },
+      cores = x@is_ths
     )
 
     # S factor
@@ -89,7 +103,8 @@ setMethod(
       c(x = rl_slp_cap_rad, y = x@topo@rl_slp_cap),
       fun = function(x, y) {
         ifelse(y < 9, 10.8 * sin(x) + 0.03, 16.8 * sin(x) - 0.5)
-      }
+      },
+      cores = x@is_ths
     )
 
     x@topo@rl_slp_cap <- writeLayer(x, "slp_cap", x@topo@rl_slp_cap, "FLT8S")
@@ -233,7 +248,8 @@ setMethod(
       ),
       fun = function(x, y, z) {
         x * y * (1 + z * 1e-2) * 1e-3
-      }
+      },
+      cores = x@is_ths
     )
 
     slot(x@substances, substance)@rl_xxe <- writeLayer(
@@ -307,7 +323,8 @@ setMethod(
       x@topo@rl_acc_wtd,
       function(x) {
         ns_rhy_a * (x * is_siz * 1e-6)^ns_rhy_b
-      }
+      },
+      cores = x@is_ths
     )
 
     # Riparian zone cells
@@ -315,7 +332,8 @@ setMethod(
       dir_sth(
         im_dir = as.matrix(x@topo@rl_dir, wide = TRUE),
         im_sth = as.matrix(x@topo@rl_cha, wide = TRUE),
-        im_fDo = x@helpers@im_fDo
+        im_fDo = x@helpers@im_fDo,
+        is_ths = x@is_ths
       ),
       crs = x@helpers@cs_cmt,
       extent = x@helpers@ex_cmt
@@ -326,7 +344,8 @@ setMethod(
       dir_sth(
         im_dir = as.matrix(x@topo@rl_dir, wide = TRUE),
         im_sth = as.matrix(x@topo@rl_rds, wide = TRUE),
-        im_fDo = x@helpers@im_fDo
+        im_fDo = x@helpers@im_fDo,
+        is_ths = x@is_ths
       ),
       crs = x@helpers@cs_cmt,
       extent = x@helpers@ex_cmt

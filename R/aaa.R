@@ -331,6 +331,8 @@ setMethod(
 #'   optionally the Monte Carlo input data directory (second position).
 #' @slot ls_ini A logical scalar specifying if the state of an existing project
 #'   was loaded from disk.
+#' @slot is_ths An integer scalar holding the number of threads to use for
+#'   processing.
 #' @slot is_MCi An integer scalar holding the current Monte Carlo iteration if
 #'   applicable.
 #' @slot cv_MCl A character vector holding the names of the layers, which shall
@@ -353,6 +355,7 @@ setClass(
   slots = c(
     cv_dir     = "character",
     ls_ini     = "logical",
+    is_ths     = "integer",
     is_MCi     = "integer",
     cv_MCl     = "character",
     parameters = "RPhosFateParameters2",
@@ -365,6 +368,7 @@ setClass(
   prototype = list(
     cv_dir = character(),
     ls_ini = FALSE,
+    is_ths = 1L,
     is_MCi = integer(),
     cv_MCl = "xxt"
   )
@@ -381,6 +385,9 @@ setMethod(
     )
     if ("ls_ini" %in% argumentNames) {
       .Object@ls_ini <- arguments$ls_ini
+    }
+    if ("is_ths" %in% argumentNames) {
+      .Object@is_ths <- arguments$is_ths
     }
     if ("is_MCi" %in% argumentNames) {
       .Object@is_MCi <- arguments$is_MCi
@@ -433,6 +440,7 @@ setValidity(
       assertDirectoryExists(object@cv_dir[2L], .var.name = "cv_dir[2L]")
     }
     qassert(object@ls_ini, "B1"    , .var.name = "ls_ini")
+    qassert(object@is_ths, "I1(0,)", .var.name = "is_ths")
     qassert(object@is_MCi, "I?[0,)", .var.name = "is_MCi")
     qassert(object@cv_MCl, "S+"    , .var.name = "cv_MCl")
 

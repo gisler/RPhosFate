@@ -1,6 +1,7 @@
 # RPhosFate v1.0.4.9000
 
 * Switched to utilising the `SpatRaster` class from the `terra` package instead of the `RasterLayer` class from the `raster` package. However, the transition from `raster` to `terra` is not yet complete.
+* Added extended support for parallel processing.
 * Ceased support for _Erdas Imagine_ (\*.img) raster files.
 * Dropped backward compatibility to major version zero.
 * Major internal code improvements.

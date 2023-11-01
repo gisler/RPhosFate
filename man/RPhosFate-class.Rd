@@ -16,6 +16,9 @@ optionally the Monte Carlo input data directory (second position).}
 \item{\code{ls_ini}}{A logical scalar specifying if the state of an existing project
 was loaded from disk.}
 
+\item{\code{is_ths}}{An integer scalar holding the number of threads to use for
+processing.}
+
 \item{\code{is_MCi}}{An integer scalar holding the current Monte Carlo iteration if
 applicable.}
 

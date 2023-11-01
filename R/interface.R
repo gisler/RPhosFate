@@ -84,13 +84,15 @@ RPhosFate <- function(...) {
 #' * \emph{xxt_out:} Substance outlet loads of subsurface drainages in t/cell/yr
 #' (SS) or kg/cell/yr, for example, \emph{ppt_out} for PP outlet loads.
 #'
-#' @section Data management arguments:
+#' @section Data management and processing arguments:
 #' * `cv_dir`: A character vector specifying the project root (first position)
 #' and optionally the Monte Carlo input data directory (second position).
 #' * `ls_ini`: A logical scalar specifying if the state of an existing project
 #' shall be loaded from disk (defaults to `FALSE`). Parameters or substance
 #' parameter values specified via the `...` argument take precedence over loaded
 #' ones.
+#' * `is_ths`: An integer scalar holding the number of threads to use for
+#' processing (defaults to 1).
 #' * `is_MCi`: An integer scalar specifying the current Monte Carlo iteration if
 #' applicable (defaults to `integer()`, which means Monte Carlo simulation mode
 #' is disabled).
