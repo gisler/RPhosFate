@@ -85,7 +85,8 @@ for (layer in layers) {
   expect_true(
     terra::all.equal(
       getLayer(x      , layer),
-      getLayer(control, layer)
+      getLayer(control, layer),
+      maxcell = Inf
     ),
     info = 'substance independent "firstRun" outputs are correct'
   )
@@ -101,7 +102,8 @@ for (i in seq_along(layers$layer)) {
   expect_true(
     terra::all.equal(
       getLayer(x      , layers$layer[i], layers$substance[i]),
-      getLayer(control, layers$layer[i], layers$substance[i])
+      getLayer(control, layers$layer[i], layers$substance[i]),
+      maxcell = Inf
     ),
     info = 'substance dependent "firstRun" outputs are correct'
   )
@@ -115,7 +117,8 @@ for (emissiveSubstance in setdiff(slotNames(control@substances), "SS")) {
     expect_true(
       terra::all.equal(
         getLayer(x      , layer, emissiveSubstance),
-        getLayer(control, layer, emissiveSubstance)
+        getLayer(control, layer, emissiveSubstance),
+        maxcell = Inf
       ),
       info = sprintf(
         '%s "subsequentRun" outputs are correct',

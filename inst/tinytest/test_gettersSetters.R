@@ -39,7 +39,8 @@ for (layer in layers) {
         }
 
         rl
-      }
+      },
+      maxcell = Inf
     ),
     info = '"getLayer" works correctly'
   )

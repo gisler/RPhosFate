@@ -45,7 +45,8 @@ if (.Platform$OS.type == "windows" && tinytest::at_home()) {
     expect_true(
       terra::all.equal(
         terra::rast(layer),
-        getLayer(control, sub("\\.tif$", "", basename(layer)))
+        getLayer(control, sub("\\.tif$", "", basename(layer))),
+        maxcell = Inf
       ),
       info = '"DEMrelatedInput" outputs are correct (standard use case)'
     )

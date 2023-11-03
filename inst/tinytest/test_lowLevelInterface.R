@@ -21,7 +21,8 @@ for (layer in layers) {
   expect_true(
     terra::all.equal(
       getLayer(x      , layer),
-      getLayer(control, layer)
+      getLayer(control, layer),
+      maxcell = Inf
     ),
     info = '"erosionPrerequisites" outputs are correct'
   )
@@ -33,7 +34,8 @@ x <- erosion(x)
 expect_true(
   terra::all.equal(
     getLayer(x      , "ero"),
-    getLayer(control, "ero")
+    getLayer(control, "ero"),
+    maxcell = Inf
   ),
   info = '"erosion" output is correct'
 )
@@ -45,7 +47,8 @@ for (emissiveSubstance in setdiff(slotNames(control@substances), "SS")) {
   expect_true(
     terra::all.equal(
       getLayer(x      , "xxe", emissiveSubstance),
-      getLayer(control, "xxe", emissiveSubstance)
+      getLayer(control, "xxe", emissiveSubstance),
+      maxcell = Inf
     ),
     info = sprintf('%s "emission" output is correct', emissiveSubstance)
   )
@@ -59,7 +62,8 @@ for (layer in layers) {
   expect_true(
     terra::all.equal(
       getLayer(x      , layer),
-      getLayer(control, layer)
+      getLayer(control, layer),
+      maxcell = Inf
     ),
     info = '"transportPrerequisites" outputs are correct'
   )
@@ -83,7 +87,8 @@ for (substance in slotNames(control@substances)) {
     expect_true(
       terra::all.equal(
         getLayer(x      , layer, substance),
-        getLayer(control, layer, substance)
+        getLayer(control, layer, substance),
+        maxcell = Inf
       ),
       info = sprintf('%s "transport" outputs are correct', substance)
     )
