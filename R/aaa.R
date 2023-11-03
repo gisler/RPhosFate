@@ -4,7 +4,6 @@
 #' @import terra
 #' @importFrom graphics abline clip par
 #' @importFrom Rcpp sourceCpp
-#' @importFrom spatstat.geom as.owin as.ppp nncross
 #' @importFrom stats cor optim optimize sd setNames
 #' @importFrom yaml read_yaml write_yaml
 #' @importFrom utils modifyList packageVersion

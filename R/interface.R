@@ -374,11 +374,14 @@ setMethod(
     assertdf_cdt(x)
 
     df_ggs <- findNearestNeighbour(
-      x@parameters@df_cdt[, c("x", "y", "ID")],
-      cbind(crds(x@topo@rl_cha), values(x@topo@rl_cha, na.rm = TRUE)),
-      x@helpers@ex_cmt
+      vect(
+        x@parameters@df_cdt[, c("ID", "x", "y")],
+        geom = c("x", "y"),
+        crs = x@helpers@cs_cmt
+      ),
+      as.points(x@topo@rl_cha)
     )
-    x@parameters@df_cdt[, c("x", "y")] <- df_ggs[, c("Y.x", "Y.y")]
+    x@parameters@df_cdt[, c("x", "y")] <- df_ggs[, c("x", "y")]
 
     x
   }

@@ -4,6 +4,7 @@
 * Added `is_ths` parameter: allows for specifying the number of threads to use for processing. 
 * Ceased support for _Erdas Imagine_ (\*.img) raster files.
 * Dropped backward compatibility to major version zero.
+* Removed `spatstat.geom` from imported packages list (utilised functionality is now also provided by `terra`).
 * Major internal code improvements.
 
 # RPhosFate v1.0.4

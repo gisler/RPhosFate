@@ -361,20 +361,19 @@ setMethod(
 
     # Nearest channel cells for inlet cells
     df_out <- findNearestNeighbour(
-      cbind(crds(x@topo@rl_inl), values(x@topo@rl_inl, na.rm = TRUE)),
-      cbind(crds(x@topo@rl_cha), values(x@topo@rl_cha, na.rm = TRUE)),
-      x@helpers@ex_cmt
+      as.points(x@topo@rl_inl),
+      as.points(x@topo@rl_cha)
     )
 
     # X-coordinates of nearest channel cells to column numbers
-    df_out$Y.x <- colFromX(x@topo@rl_inl, df_out$Y.x)
+    df_out$x <- colFromX(x@topo@rl_inl, df_out$x)
     # Y-coordinates of nearest channel cells to row numbers
-    df_out$Y.y <- rowFromY(x@topo@rl_inl, df_out$Y.y)
+    df_out$y <- rowFromY(x@topo@rl_inl, df_out$y)
 
     # Substituting inlet values with integer codes identifying nearest channel
     # cells
-    df_out$code <- as.integer(df_out$Y.y * x@helpers@is_cls + df_out$Y.x)
-    x@topo@rl_inl <- subst(x@topo@rl_inl, df_out[["inl"]], df_out[["code"]])
+    df_out$code <- as.integer(df_out$y * x@helpers@is_cls + df_out$x)
+    x@topo@rl_inl <- subst(x@topo@rl_inl, df_out[["from_id"]], df_out[["code"]])
 
     x@transport@rl_rhy <- writeLayer(x, "rhy", x@transport@rl_rhy, "FLT8S")
     x@topo@rl_rip      <- writeLayer(x, "rip", x@topo@rl_rip     , "INT4S")
