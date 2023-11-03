@@ -3,12 +3,12 @@
 \name{getLayer,RPhosFate-method}
 \alias{getLayer,RPhosFate-method}
 \alias{getLayer}
-\alias{[,RPhosFate,ANY,ANY,ANY-method}
+\alias{[,RPhosFate,ANY,ANY-method}
 \title{Get layer}
 \usage{
 \S4method{getLayer}{RPhosFate}(x, i, j = NULL)
 
-\S4method{[}{RPhosFate,ANY,ANY,ANY}(x, i, j)
+\S4method{[}{RPhosFate,ANY,ANY}(x, i, j)
 }
 \arguments{
 \item{x}{An S4 \code{\linkS4class{RPhosFate}} river catchment object.}
