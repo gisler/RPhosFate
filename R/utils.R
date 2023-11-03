@@ -61,7 +61,6 @@ findNearestNeighbour <- function(X, Y) {
   Y <- Y[nn$to_id, ]
 
   cbind(
-    values(X),
     values(nn),
     crds(Y, df = TRUE)
   )

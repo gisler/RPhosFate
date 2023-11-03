@@ -361,7 +361,7 @@ setMethod(
 
     # Nearest channel cells for inlet cells
     df_out <- findNearestNeighbour(
-      as.points(x@topo@rl_inl),
+      sort(as.points(x@topo@rl_inl), "inl"),
       as.points(x@topo@rl_cha)
     )
 

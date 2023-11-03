@@ -375,7 +375,7 @@ setMethod(
 
     df_ggs <- findNearestNeighbour(
       vect(
-        x@parameters@df_cdt[, c("ID", "x", "y")],
+        x@parameters@df_cdt[, c("x", "y")],
         geom = c("x", "y"),
         crs = x@helpers@cs_cmt
       ),
