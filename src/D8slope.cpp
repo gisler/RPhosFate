@@ -5,11 +5,11 @@
 
 // [[Rcpp::export]]
 arma::dmat D8slope(
-  arma::imat& im_dir,
-  arma::dmat& nm_dem,
-  arma::imat& im_fDo,
-  double ns_fpl,
-  int is_ths = 1
+  const arma::imat& im_dir,
+  const arma::dmat& nm_dem,
+  const arma::imat& im_fDo,
+  const double ns_fpl,
+  const int is_ths = 1
 ) {
   /* With integers, missing values are stored as the smallest integer
    * (-2.147.483.648). See also https://adv-r.hadley.nz/rcpp.html

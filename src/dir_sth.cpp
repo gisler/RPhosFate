@@ -5,10 +5,10 @@
 
 // [[Rcpp::export]]
 arma::imat dir_sth(
-  arma::imat& im_dir,
-  arma::imat& im_sth,
-  arma::imat& im_fDo,
-  int is_ths = 1
+  const arma::imat& im_dir,
+  const arma::imat& im_sth,
+  const arma::imat& im_fDo,
+  const int is_ths = 1
 ) {
   /* With integers, missing values are stored as the smallest integer
    * (-2.147.483.648). See also https://adv-r.hadley.nz/rcpp.html
