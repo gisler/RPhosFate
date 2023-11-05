@@ -2,7 +2,7 @@
 
 * Switched to utilising the `SpatRaster` class from the `terra` package instead of the `RasterLayer` class from the `raster` package. However, the transition from `raster` to `terra` is not yet complete.
 * Added `is_ths` parameter: allows for specifying the number of threads to use for processing. 
-* Ceased support for _Erdas Imagine_ (\*.img) raster files.
+* Ceased support for _ERDAS IMAGINE_ (\*.img) raster files.
 * Dropped backward compatibility to major version zero.
 * Removed `spatstat.geom` from imported packages list (utilised functionality is now also provided by `terra`).
 * Major internal code improvements.
@@ -12,13 +12,13 @@
 * The current `raster` package does not compress _GeoTIFF_ raster files any longer by default. This is probably due to the switch from `rgdal` to `terra` and has been fixed by generally using the _LZW_ algorithm.
 * Fixed warning "GDAL Message 6: driver GTiff does not support creation option COMPRESSED" curiously only occurring in the reference on GitHub Pages.
 * Removed `hydroGOF` from imported packages list (`maptools` is retiring and `hydroGOF` depends on it via `hydroTSM`). Thanks to Roger Bivand for raising this issue (#17).
-* Bumped minimum tested R version from 4.2.2 to 4.2.3 using the corresponding Posit Public Package Manager snapshot.
+* Bumped minimum tested R version from 4.2.2 to 4.2.3 using the corresponding _Posit_ public package manager snapshot.
 * Slightly improved documentation.
 
 # RPhosFate v1.0.3
 
 * Removed `rgdal` from suggested packages list and set minimum required version of the `raster` package to ≥ 3.6.3 (`rgdal` is retiring and `raster` ≥ 3.6.3 does not depend on it any longer). Thanks to Roger Bivand for raising this issue (#17).
-* Bumped minimum tested R version from 4.1.2 to 4.2.2 using the corresponding MRAN repository snapshot.
+* Bumped minimum tested R version from 4.1.2 to 4.2.2 using the corresponding _MRAN_ repository snapshot.
 * Slightly improved documentation.
 * Minor internal code improvements.
 
@@ -58,8 +58,8 @@
 # RPhosFate v0.10.0
 
 * `DEMrelatedInput()` function now calculates the slopes from the breached DEM (stream burning is undone beforehand).
-* Switched to utilising _GeoTIFF_ (\*.tif) instead of _Erdas Imagine_ (\*.img) raster files.
-* Added `cs_fex` argument to `DEMrelatedInput()` function: allows for using _Erdas Imagine_ raster files for backward compatibility.
+* Switched to utilising _GeoTIFF_ (\*.tif) instead of _ERDAS IMAGINE_ (\*.img) raster files.
+* Added `cs_fex` argument to `DEMrelatedInput()` function: allows for using _ERDAS IMAGINE_ raster files for backward compatibility.
 * Added `cs_dir` argument to `DEMrelatedInput()` function: allows for utilising an existing D8 flow directions raster using _ArcGIS_ codes.
 * Added `demoProject()` function providing training data.
 * Added examples to documentation.
