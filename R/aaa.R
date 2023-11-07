@@ -10,9 +10,9 @@
 #' @useDynLib RPhosFate, .registration = TRUE
 NULL
 
-#### Class RPhosFateParameters2 ####
+#### Class RPhosFateParameters ####
 setClass(
-  "RPhosFateParameters2",
+  "RPhosFateParameters",
   slots = c(
     ns_slp_min = "numeric",
     ns_slp_max = "numeric",
@@ -48,13 +48,13 @@ setClass(
 )
 setMethod(
   "initialize",
-  "RPhosFateParameters2",
+  "RPhosFateParameters",
   function(.Object, arguments) {
     populateParameterSlots(.Object, arguments)
   }
 )
 setValidity(
-  "RPhosFateParameters2",
+  "RPhosFateParameters",
   function(object) {
     qassert(object@ns_slp_min, "N1[0,)", .var.name = "ns_slp_min")
     assertNumber(
@@ -357,7 +357,7 @@ setClass(
     is_ths     = "integer",
     is_MCi     = "integer",
     cv_MCl     = "character",
-    parameters = "RPhosFateParameters2",
+    parameters = "RPhosFateParameters",
     topo       = "RPhosFateTopo",
     erosion    = "RPhosFateErosion",
     transport  = "RPhosFateTransport",
@@ -419,7 +419,7 @@ setMethod(
       c("RPhosFate", "cv_dir", "ls_ini", "is_MCi", "cv_MCl")
     )]
 
-    .Object@parameters <- new("RPhosFateParameters2", arguments)
+    .Object@parameters <- new("RPhosFateParameters", arguments)
     .Object@topo       <- new("RPhosFateTopo", .Object)
     .Object@erosion    <- new("RPhosFateErosion", .Object)
     .Object@transport  <- new("RPhosFateTransport", .Object)
