@@ -1,6 +1,6 @@
 # RPhosFate v1.0.4.9000
 
-* Switched to utilising the `SpatRaster` class from the `terra` package instead of the `RasterLayer` class from the `raster` package. However, the transition from `raster` to `terra` is not yet complete.
+* Switched to utilising the `SpatRaster` class from the `terra` package instead of the `RasterLayer` class from the `raster` package. However, the transition from `raster` to `terra` encompasses only the core and not `DEMrelatedInput()` yet.
 * Added `is_ths` parameter: allows for specifying the number of threads to use for processing. 
 * Ceased support for _ERDAS IMAGINE_ (\*.img) raster files in `DEMrelatedInput()`. Their support will eventually be removed entirely some time in the future.
 * Dropped backward compatibility to major version zero.

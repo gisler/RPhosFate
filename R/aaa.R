@@ -413,6 +413,12 @@ setMethod(
 
     if (file.exists(file.path("Input", "acc_wtd.img"))) {
       .Object@cs_fex <- ".img"
+      warning(
+        "Support for ERDAS IMAGINE raster files is deprecated and will be ",
+        "removed some time in the future. Please start using GeoTIFF raster ",
+        "files at your earliest convenience.",
+        call. = FALSE
+      )
     }
 
     .Object@substances <- new("RPhosFateSubstances", .Object)
