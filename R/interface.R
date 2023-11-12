@@ -84,13 +84,15 @@ RPhosFate <- function(...) {
 #' * \emph{xxt_out:} Substance outlet loads of subsurface drainages in t/cell/yr
 #' (SS) or kg/cell/yr, for example, \emph{ppt_out} for PP outlet loads.
 #'
-#' @section Data management arguments:
+#' @section Data management and processing arguments:
 #' * `cv_dir`: A character vector specifying the project root (first position)
 #' and optionally the Monte Carlo input data directory (second position).
 #' * `ls_ini`: A logical scalar specifying if the state of an existing project
 #' shall be loaded from disk (defaults to `FALSE`). Parameters or substance
 #' parameter values specified via the `...` argument take precedence over loaded
 #' ones.
+#' * `is_ths`: An integer scalar holding the number of threads to use for
+#' processing (defaults to 1).
 #' * `is_MCi`: An integer scalar specifying the current Monte Carlo iteration if
 #' applicable (defaults to `integer()`, which means Monte Carlo simulation mode
 #' is disabled).
@@ -241,10 +243,10 @@ setMethod(
     x <- erosionPrerequisites(x)
     x <- erosion(x)
     for (emissiveSubstance in setdiff(slotNames(x@substances), "SS")) {
-      if (compareRaster(
+      if (compareGeom(
         x@topo@rl_acc_wtd,
         slot(x@substances, emissiveSubstance)@rl_xxc,
-        stopiffalse = FALSE
+        stopOnError = FALSE
       )) {
         x <- emission(x, emissiveSubstance)
       }
@@ -372,11 +374,14 @@ setMethod(
     assertdf_cdt(x)
 
     df_ggs <- findNearestNeighbour(
-      x@parameters@df_cdt[, c("x", "y", "ID")],
-      rasterToPoints(x@topo@rl_cha),
-      x@helpers@ex_cmt
+      vect(
+        x@parameters@df_cdt[, c("x", "y")],
+        geom = c("x", "y"),
+        crs = x@helpers@cs_cmt
+      ),
+      as.points(x@topo@rl_cha)
     )
-    x@parameters@df_cdt[, c("x", "y")] <- df_ggs[, c("Y.x", "Y.y")]
+    x@parameters@df_cdt[, c("x", "y")] <- df_ggs[, c("x", "y")]
 
     x
   }
@@ -473,7 +478,7 @@ setMethod(
     nv_mld <- extract(
       slot(x@substances, substance)@rl_xxt,
       as.matrix(x@parameters@df_cdt[, c("x", "y")])
-    )
+    )[[1L]]
     nv_old <- x@parameters@df_cdt[[col]]
 
     assertNumeric(
@@ -508,7 +513,11 @@ setMethod(
       1 - (sum(extract(
         slot(x@substances, substance)@rl_xxt,
         x@parameters@nm_olc
-      )) / cellStats(slot(x@substances, substance)@rl_xxt_inp, sum))
+      )[[1L]]) / global(
+        slot(x@substances, substance)@rl_xxt_inp,
+        "sum",
+        na.rm = TRUE
+      )[[1L]])
     )
     names(metrics) <- c(x@helpers@cv_met, "inChannelRetentionRatio")
 
@@ -551,7 +560,7 @@ setMethod(
     abline(0, 1.3, col = "grey50", lty = "longdash")
     abline(0, 1.0)
     par(xpd = NA)
-    points(
+    graphics::points(
       nv_old,
       nv_mld,
       pch = 21L,

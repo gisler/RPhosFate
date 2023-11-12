@@ -16,16 +16,15 @@ optionally the Monte Carlo input data directory (second position).}
 \item{\code{ls_ini}}{A logical scalar specifying if the state of an existing project
 was loaded from disk.}
 
+\item{\code{is_ths}}{An integer scalar holding the number of threads to use for
+processing.}
+
 \item{\code{is_MCi}}{An integer scalar holding the current Monte Carlo iteration if
 applicable.}
 
 \item{\code{cv_MCl}}{A character vector holding the names of the layers, which shall
 be written to disk with the associated Monte Carlo iteration in their
 filenames upon calling the appropriate methods.}
-
-\item{\code{cs_fex}}{A character string holding the automatically determined file
-extension of the provided raster files (either \code{".tif"} or \code{".img"} for
-backward compatibility).}
 
 \item{\code{parameters}}{An S4 object holding the model parameters.}
 

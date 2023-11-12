@@ -3,12 +3,12 @@
 \name{getLayer,RPhosFate-method}
 \alias{getLayer,RPhosFate-method}
 \alias{getLayer}
-\alias{[,RPhosFate,ANY,ANY,ANY-method}
+\alias{[,RPhosFate,ANY,ANY-method}
 \title{Get layer}
 \usage{
 \S4method{getLayer}{RPhosFate}(x, i, j = NULL)
 
-\S4method{[}{RPhosFate,ANY,ANY,ANY}(x, i, j)
+\S4method{[}{RPhosFate,ANY,ANY}(x, i, j)
 }
 \arguments{
 \item{x}{An S4 \code{\linkS4class{RPhosFate}} river catchment object.}
@@ -23,7 +23,7 @@ information.}
 \item{j}{A character string specifying a substance if applicable.}
 }
 \value{
-A \code{\link[raster:Raster-classes]{raster::RasterLayer}} object.
+A \code{\link[terra:SpatRaster-class]{terra::SpatRaster}} object.
 }
 \description{
 Obtains a project raster layer for further analysis.
