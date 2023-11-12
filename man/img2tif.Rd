@@ -2,18 +2,22 @@
 % Please edit documentation in R/input.R
 \name{img2tif}
 \alias{img2tif}
-\title{Convert ERDAS IMAGINE to GeoTIFF raster files}
+\title{Convert \emph{ERDAS IMAGINE} to \emph{GeoTIFF} raster files}
 \usage{
-img2tif(cs_dir)
+img2tif(cs_dir, cs_crs = NULL)
 }
 \arguments{
 \item{cs_dir}{A character string specifying an existing directory.}
+
+\item{cs_crs}{An optional character string used to set the coordinate
+reference system of all processed raster files. See \code{\link[terra:crs]{terra::crs}} for
+further information.}
 }
 \value{
-A character vector containing the paths to the converted ERDAS
-IMAGINE raster files.
+A character vector containing the paths to the converted \emph{ERDAS
+IMAGINE} raster files.
 }
 \description{
-Converts all ERDAS IMAGINE raster files in a directory and its subdirectories
-into GeoTIFF raster files.
+Converts all \emph{ERDAS IMAGINE} raster files in a directory and its
+subdirectories into \emph{GeoTIFF} raster files.
 }

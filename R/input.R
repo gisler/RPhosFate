@@ -590,12 +590,15 @@ DEMrelatedInput <- function(
 #' subdirectories into _GeoTIFF_ raster files.
 #'
 #' @param cs_dir A character string specifying an existing directory.
+#' @param cs_crs An optional character string used to set the coordinate
+#'   reference system of all processed raster files. See [`terra::crs`] for
+#'   further information.
 #'
 #' @return A character vector containing the paths to the converted _ERDAS
 #'   IMAGINE_ raster files.
 #'
 #' @export
-img2tif <- function(cs_dir) {
+img2tif <- function(cs_dir, cs_crs = NULL) {
   assertDirectoryExists(cs_dir, access = "w")
 
   files <- list.files(
@@ -608,6 +611,12 @@ img2tif <- function(cs_dir) {
   for (file in files) {
     rl <- rast(file)
     datatype <- datatype(rl)
+
+    if (!is.null(cs_crs)) {
+      qassert(cs_crs, "S1")
+
+      crs(rl) <- cs_crs
+    }
 
     writeRaster(
       rl,

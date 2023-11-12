@@ -5,6 +5,7 @@
 * Ceased support for _ERDAS IMAGINE_ (\*.img) raster files. `img2tif()` can be used to convert all _ERDAS IMAGINE_ raster files in a directory and its subdirectories into _GeoTIFF_ raster files.
 * Dropped backward compatibility to major version zero.
 * Removed `spatstat.geom` from imported packages list (utilised functionality is now also provided by `terra`).
+* Bumped minimum tested R version from 4.2.3 to 4.3.2 using the corresponding _Posit_ public package manager snapshot.
 * Major internal code improvements.
 
 # RPhosFate v1.0.4
