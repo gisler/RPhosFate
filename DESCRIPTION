@@ -30,6 +30,7 @@ Imports:
     Rcpp,
     stats,
     terra,
+    tools,
     utils,
     yaml
 Suggests:

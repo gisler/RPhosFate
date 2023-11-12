@@ -582,3 +582,39 @@ DEMrelatedInput <- function(
 
   nm_olc
 }
+
+#' Convert _ERDAS IMAGINE_ to _GeoTIFF_ raster files
+#'
+#' @description
+#' Converts all _ERDAS IMAGINE_ raster files in a directory and its
+#' subdirectories into _GeoTIFF_ raster files.
+#'
+#' @param cs_dir A character string specifying an existing directory.
+#'
+#' @return A character vector containing the paths to the converted _ERDAS
+#'   IMAGINE_ raster files.
+#'
+#' @export
+img2tif <- function(cs_dir) {
+  assertDirectoryExists(cs_dir, access = "w")
+
+  files <- list.files(
+    cs_dir,
+    pattern = "\\.img$",
+    full.names = TRUE,
+    recursive = TRUE
+  )
+
+  for (file in files) {
+    rl <- rast(file)
+    datatype <- datatype(rl)
+
+    writeRaster(
+      rl,
+      paste0(tools::file_path_sans_ext(file), ".tif"),
+      datatype = datatype
+    )
+  }
+
+  files
+}

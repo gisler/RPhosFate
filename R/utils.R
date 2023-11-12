@@ -41,18 +41,18 @@ determineMCfilename <- function(cmt, layer) {
   if (length(cmt@cv_dir) == 2L) {
     MCfilename <- file.path(
       cmt@cv_dir[2L],
-      paste0(basename(layer), cmt@is_MCi, cmt@cs_fex)
+      paste0(basename(layer), cmt@is_MCi, ".tif")
     )
     if (file.exists(MCfilename)) {
       return(MCfilename)
     }
   }
 
-  MCfilename <- paste0(layer, cmt@is_MCi, cmt@cs_fex)
+  MCfilename <- paste0(layer, cmt@is_MCi, ".tif")
   if (file.exists(MCfilename)) {
     MCfilename
   } else {
-    paste0(layer, cmt@cs_fex)
+    paste0(layer, ".tif")
   }
 }
 
@@ -119,7 +119,7 @@ readLayer <- function(cmt, layer, isRequiredInputLayer = FALSE) {
   if (length(cmt@is_MCi) == 1L) {
     filename <- determineMCfilename(cmt, layer)
   } else {
-    filename <- paste0(layer, cmt@cs_fex)
+    filename <- paste0(layer, ".tif")
   }
 
   if (isRequiredInputLayer) {
@@ -163,13 +163,12 @@ writeLayer <- function(cmt, layer, rl, datatype, substance = NULL) {
     }
     name <- paste0(layer, cmt@is_MCi)
     set.names(rl, name)
-    filename <- paste0(name, cmt@cs_fex)
+    filename <- paste0(name, ".tif")
 
     writeRaster(
       rl,
       filename = filename,
       datatype = datatype,
-      gdal = if (cmt@cs_fex == ".img") "COMPRESSED=YES" else "COMPRESS=LZW",
       overwrite = TRUE
     )
 

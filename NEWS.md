@@ -2,7 +2,7 @@
 
 * Switched to utilising the `SpatRaster` class from the `terra` package instead of the `RasterLayer` class from the `raster` package. However, the transition from `raster` to `terra` encompasses only the core and not `DEMrelatedInput()` yet.
 * Added `is_ths` parameter: allows for specifying the number of threads to use for processing. 
-* Ceased support for _ERDAS IMAGINE_ (\*.img) raster files in `DEMrelatedInput()`. Their support will eventually be removed entirely some time in the future.
+* Ceased support for _ERDAS IMAGINE_ (\*.img) raster files. `img2tif()` can be used to convert all _ERDAS IMAGINE_ raster files in a directory and its subdirectories into _GeoTIFF_ raster files.
 * Dropped backward compatibility to major version zero.
 * Removed `spatstat.geom` from imported packages list (utilised functionality is now also provided by `terra`).
 * Major internal code improvements.

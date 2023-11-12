@@ -337,9 +337,6 @@ setMethod(
 #' @slot cv_MCl A character vector holding the names of the layers, which shall
 #'   be written to disk with the associated Monte Carlo iteration in their
 #'   filenames upon calling the appropriate methods.
-#' @slot cs_fex A character string holding the automatically determined file
-#'   extension of the provided raster files (either `".tif"` or `".img"` for
-#'   backward compatibility).
 #' @slot parameters An S4 object holding the model parameters.
 #' @slot topo An S4 object holding the raster layers related to topography in
 #'   the broader sense.
@@ -360,7 +357,6 @@ setClass(
     is_ths     = "integer",
     is_MCi     = "integer",
     cv_MCl     = "character",
-    cs_fex     = "character",
     parameters = "RPhosFateParameters",
     topo       = "RPhosFateTopo",
     erosion    = "RPhosFateErosion",
@@ -373,8 +369,7 @@ setClass(
     ls_ini = FALSE,
     is_ths = 1L,
     is_MCi = integer(),
-    cv_MCl = "xxt",
-    cs_fex = ".tif"
+    cv_MCl = "xxt"
   )
 )
 setMethod(
@@ -409,16 +404,6 @@ setMethod(
     }
     if (!dir.exists("Result")) {
       dir.create("Result")
-    }
-
-    if (file.exists(file.path("Input", "acc_wtd.img"))) {
-      .Object@cs_fex <- ".img"
-      warning(
-        "Support for ERDAS IMAGINE raster files is deprecated and will be ",
-        "removed some time in the future. Please start using GeoTIFF raster ",
-        "files at your earliest convenience.",
-        call. = FALSE
-      )
     }
 
     .Object@substances <- new("RPhosFateSubstances", .Object)
