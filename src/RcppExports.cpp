@@ -12,30 +12,30 @@ Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
 #endif
 
 // D8slope
-arma::dmat D8slope(arma::imat& im_dir, arma::dmat& nm_dem, arma::imat& im_fDo, double ns_fpl, int is_ths);
+arma::dmat D8slope(const arma::imat& im_dir, const arma::dmat& nm_dem, const arma::imat& im_fDo, const double ns_fpl, const int is_ths);
 RcppExport SEXP _RPhosFate_D8slope(SEXP im_dirSEXP, SEXP nm_demSEXP, SEXP im_fDoSEXP, SEXP ns_fplSEXP, SEXP is_thsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< arma::imat& >::type im_dir(im_dirSEXP);
-    Rcpp::traits::input_parameter< arma::dmat& >::type nm_dem(nm_demSEXP);
-    Rcpp::traits::input_parameter< arma::imat& >::type im_fDo(im_fDoSEXP);
-    Rcpp::traits::input_parameter< double >::type ns_fpl(ns_fplSEXP);
-    Rcpp::traits::input_parameter< int >::type is_ths(is_thsSEXP);
+    Rcpp::traits::input_parameter< const arma::imat& >::type im_dir(im_dirSEXP);
+    Rcpp::traits::input_parameter< const arma::dmat& >::type nm_dem(nm_demSEXP);
+    Rcpp::traits::input_parameter< const arma::imat& >::type im_fDo(im_fDoSEXP);
+    Rcpp::traits::input_parameter< const double >::type ns_fpl(ns_fplSEXP);
+    Rcpp::traits::input_parameter< const int >::type is_ths(is_thsSEXP);
     rcpp_result_gen = Rcpp::wrap(D8slope(im_dir, nm_dem, im_fDo, ns_fpl, is_ths));
     return rcpp_result_gen;
 END_RCPP
 }
 // dir_sth
-arma::imat dir_sth(arma::imat& im_dir, arma::imat& im_sth, arma::imat& im_fDo, int is_ths);
+arma::imat dir_sth(const arma::imat& im_dir, const arma::imat& im_sth, const arma::imat& im_fDo, const int is_ths);
 RcppExport SEXP _RPhosFate_dir_sth(SEXP im_dirSEXP, SEXP im_sthSEXP, SEXP im_fDoSEXP, SEXP is_thsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< arma::imat& >::type im_dir(im_dirSEXP);
-    Rcpp::traits::input_parameter< arma::imat& >::type im_sth(im_sthSEXP);
-    Rcpp::traits::input_parameter< arma::imat& >::type im_fDo(im_fDoSEXP);
-    Rcpp::traits::input_parameter< int >::type is_ths(is_thsSEXP);
+    Rcpp::traits::input_parameter< const arma::imat& >::type im_dir(im_dirSEXP);
+    Rcpp::traits::input_parameter< const arma::imat& >::type im_sth(im_sthSEXP);
+    Rcpp::traits::input_parameter< const arma::imat& >::type im_fDo(im_fDoSEXP);
+    Rcpp::traits::input_parameter< const int >::type is_ths(is_thsSEXP);
     rcpp_result_gen = Rcpp::wrap(dir_sth(im_dir, im_sth, im_fDo, is_ths));
     return rcpp_result_gen;
 END_RCPP

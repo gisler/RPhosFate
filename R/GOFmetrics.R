@@ -20,7 +20,7 @@ kge <- function(mld, old) {
 }
 
 mdrae <- function(rae) {
-  MdRAE <- median(rae)
+  MdRAE <- stats::median(rae)
 
   if (qtest(MdRAE, "N1(,)")) {
     MdRAE

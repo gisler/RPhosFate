@@ -25,7 +25,7 @@ expect_identical(
   info = "parameters are created correctly"
 )
 
-expect_identical(
+expect_equal(
   y,
   z,
   info = '"RPhosFate" and "catchment" yield identical results (creation)'
@@ -52,7 +52,7 @@ expect_identical(
   info = "parameters are loaded correctly"
 )
 
-expect_identical(
+expect_equal(
   y,
   z,
   info = '"RPhosFate" and "catchment" yield identical results (loading)'
@@ -83,9 +83,10 @@ x <- firstRun(x, "SS")
 layers <- c("inl", "LFa", "rhy", "rip", "SFa", "slp_cap", "ero")
 for (layer in layers) {
   expect_true(
-    raster::all.equal(
+    terra::all.equal(
       getLayer(x      , layer),
-      getLayer(control, layer)
+      getLayer(control, layer),
+      maxcell = Inf
     ),
     info = 'substance independent "firstRun" outputs are correct'
   )
@@ -99,9 +100,10 @@ layers <- list(
 )
 for (i in seq_along(layers$layer)) {
   expect_true(
-    raster::all.equal(
+    terra::all.equal(
       getLayer(x      , layers$layer[i], layers$substance[i]),
-      getLayer(control, layers$layer[i], layers$substance[i])
+      getLayer(control, layers$layer[i], layers$substance[i]),
+      maxcell = Inf
     ),
     info = 'substance dependent "firstRun" outputs are correct'
   )
@@ -113,9 +115,10 @@ for (emissiveSubstance in setdiff(slotNames(control@substances), "SS")) {
   x <- subsequentRun(x, emissiveSubstance)
   for (layer in layers) {
     expect_true(
-      raster::all.equal(
+      terra::all.equal(
         getLayer(x      , layer, emissiveSubstance),
-        getLayer(control, layer, emissiveSubstance)
+        getLayer(control, layer, emissiveSubstance),
+        maxcell = Inf
       ),
       info = sprintf(
         '%s "subsequentRun" outputs are correct',
@@ -187,7 +190,7 @@ x <- RPhosFate(
 )
 
 expect_identical(
-  basename(x@erosion@rl_CFa@file@name),
+  basename(terra::sources(x@erosion@rl_CFa)),
   "CFa1.tif",
   info = "Monte Carlo input data is detected (separate directory)"
 )
@@ -220,7 +223,7 @@ x <- RPhosFate(
 )
 
 expect_identical(
-  basename(x@substances@PP@rl_xxt_cld@file@name),
+  basename(terra::sources(x@substances@PP@rl_xxt_cld)),
   "ppt_cld1.tif",
   info = "Monte Carlo input data is detected (project root subdirectories)"
 )

@@ -98,7 +98,7 @@ kg/cell/yr, for example, \emph{ppt_inp} for PP inputs into surface waters.
 }
 }
 
-\section{Data management arguments}{
+\section{Data management and processing arguments}{
 
 \itemize{
 \item \code{cv_dir}: A character vector specifying the project root (first position)
@@ -107,6 +107,8 @@ and optionally the Monte Carlo input data directory (second position).
 shall be loaded from disk (defaults to \code{FALSE}). Parameters or substance
 parameter values specified via the \code{...} argument take precedence over loaded
 ones.
+\item \code{is_ths}: An integer scalar holding the number of threads to use for
+processing (defaults to 1).
 \item \code{is_MCi}: An integer scalar specifying the current Monte Carlo iteration if
 applicable (defaults to \code{integer()}, which means Monte Carlo simulation mode
 is disabled).

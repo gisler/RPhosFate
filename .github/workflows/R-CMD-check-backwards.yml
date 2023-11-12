@@ -28,8 +28,8 @@ jobs:
         run: |
           install.packages("remotes")
           remotes::install_cran(
-            c("checkmate", "raster", "Rcpp", "RcppArmadillo", "spatstat.geom", "yaml", "whitebox", "rcmdcheck"),
-            repos = "https://packagemanager.posit.co/cran/2023-03-15",
+            c("checkmate", "raster", "Rcpp", "RcppArmadillo", "terra", "yaml", "whitebox", "rcmdcheck"),
+            repos = "https://packagemanager.posit.co/cran/2023-10-31",
             type = "win.binary",
             dependencies = TRUE
           )

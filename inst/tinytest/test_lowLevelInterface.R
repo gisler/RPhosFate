@@ -19,9 +19,10 @@ x <- erosionPrerequisites(x)
 layers <- c("LFa", "SFa", "slp_cap")
 for (layer in layers) {
   expect_true(
-    raster::all.equal(
+    terra::all.equal(
       getLayer(x      , layer),
-      getLayer(control, layer)
+      getLayer(control, layer),
+      maxcell = Inf
     ),
     info = '"erosionPrerequisites" outputs are correct'
   )
@@ -31,9 +32,10 @@ for (layer in layers) {
 x <- erosion(x)
 
 expect_true(
-  raster::all.equal(
+  terra::all.equal(
     getLayer(x      , "ero"),
-    getLayer(control, "ero")
+    getLayer(control, "ero"),
+    maxcell = Inf
   ),
   info = '"erosion" output is correct'
 )
@@ -43,9 +45,10 @@ for (emissiveSubstance in setdiff(slotNames(control@substances), "SS")) {
   x <- emission(x, emissiveSubstance)
 
   expect_true(
-    raster::all.equal(
+    terra::all.equal(
       getLayer(x      , "xxe", emissiveSubstance),
-      getLayer(control, "xxe", emissiveSubstance)
+      getLayer(control, "xxe", emissiveSubstance),
+      maxcell = Inf
     ),
     info = sprintf('%s "emission" output is correct', emissiveSubstance)
   )
@@ -57,9 +60,10 @@ x <- transportPrerequisites(x)
 layers <- c("inl", "rhy", "rip")
 for (layer in layers) {
   expect_true(
-    raster::all.equal(
+    terra::all.equal(
       getLayer(x      , layer),
-      getLayer(control, layer)
+      getLayer(control, layer),
+      maxcell = Inf
     ),
     info = '"transportPrerequisites" outputs are correct'
   )
@@ -81,9 +85,10 @@ for (substance in slotNames(control@substances)) {
 
   for (layer in layers) {
     expect_true(
-      raster::all.equal(
+      terra::all.equal(
         getLayer(x      , layer, substance),
-        getLayer(control, layer, substance)
+        getLayer(control, layer, substance),
+        maxcell = Inf
       ),
       info = sprintf('%s "transport" outputs are correct', substance)
     )

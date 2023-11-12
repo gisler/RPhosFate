@@ -17,8 +17,7 @@ DEMrelatedInput(
   ns_brn = 50,
   is_adj = 1L,
   is_ths = 1L,
-  ls_tmp = FALSE,
-  cs_fex = c("tif", "img")
+  ls_tmp = FALSE
 )
 }
 \arguments{
@@ -61,10 +60,6 @@ toolchain and/or platform).}
 
 \item{ls_tmp}{A logical scalar specifying if the temporary files created
 during computation shall be kept.}
-
-\item{cs_fex}{A character string specifying the file extension of the created
-raster files (either the default \code{"tif"} or \code{"img"} for backward
-compatibility).}
 }
 \value{
 A two column numeric \code{\link{matrix}} specifying one or more catchment
