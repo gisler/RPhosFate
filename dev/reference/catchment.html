@@ -183,8 +183,8 @@ kg/cell/yr, for example, <em>ppt_inp</em> for PP inputs into surface waters.</p>
 <li><p><em>xxt_out:</em> Substance outlet loads of subsurface drainages in t/cell/yr
 (SS) or kg/cell/yr, for example, <em>ppt_out</em> for PP outlet loads.</p></li>
 </ul></div>
-    <div id="data-management-arguments">
-    <h2>Data management arguments</h2>
+    <div id="data-management-and-processing-arguments">
+    <h2>Data management and processing arguments</h2>
     
 
 <ul><li><p><code>cv_dir</code>: A character vector specifying the project root (first position)
@@ -193,6 +193,8 @@ and optionally the Monte Carlo input data directory (second position).</p></li>
 shall be loaded from disk (defaults to <code>FALSE</code>). Parameters or substance
 parameter values specified via the <code>...</code> argument take precedence over loaded
 ones.</p></li>
+<li><p><code>is_ths</code>: An integer scalar holding the number of threads to use for
+processing (defaults to 1).</p></li>
 <li><p><code>is_MCi</code>: An integer scalar specifying the current Monte Carlo iteration if
 applicable (defaults to <code><a href="https://rdrr.io/r/base/integer.html" class="external-link">integer()</a></code>, which means Monte Carlo simulation mode
 is disabled).</p></li>
