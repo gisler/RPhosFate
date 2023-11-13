@@ -35,6 +35,7 @@ reference:
     contents:
       - DEMrelatedInput
       - demoProject
+      - img2tif
   - title: "Project management"
     contents:
       - catchment
