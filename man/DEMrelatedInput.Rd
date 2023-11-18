@@ -30,15 +30,14 @@ raster digital elevation model.}
 \item{cs_cha}{A character string specifying a path to a potentially large
 raster providing channels.}
 
-\item{sp_msk}{An \code{\link[sp:SpatialPolygonsDataFrame-class]{sp::SpatialPolygonsDataFrame}} providing a somewhat
-oversized catchment mask used to clip the potentially large input rasters
-for further processing.}
+\item{sp_msk}{A \code{\link[terra:SpatVector-class]{terra::SpatVector}} providing a somewhat oversized
+catchment polygon mask used to clip the potentially large input rasters for
+further processing.}
 
-\item{sp_olp}{An \code{\link[sp:SpatialPointsDataFrame-class]{sp::SpatialPointsDataFrame}} providing the desired
-catchment outlet(s).}
+\item{sp_olp}{A \code{\link[terra:SpatVector-class]{terra::SpatVector}} providing the desired catchment
+outlet point(s).}
 
-\item{sp_sds}{An \code{\link[sp:SpatialPointsDataFrame-class]{sp::SpatialPointsDataFrame}} providing channel
-sources.}
+\item{sp_sds}{A \code{\link[terra:SpatVector-class]{terra::SpatVector}} providing channel source points.}
 
 \item{cs_rds}{An optional character string specifying a path to a potentially
 large raster providing roads.}
@@ -115,9 +114,9 @@ nm_olc <- DEMrelatedInput(
   cv_dir = cv_dir,
   cs_dem = file.path(cs_dir_lrg, "dem_lrg.tif"),
   cs_cha = file.path(cs_dir_lrg, "cha_lrg.tif"),
-  sp_msk = raster::shapefile(file.path(cs_dir_lrg, "msk.shp")),
-  sp_olp = raster::shapefile(file.path(cs_dir_lrg, "olp.shp")),
-  sp_sds = raster::shapefile(file.path(cs_dir_lrg, "sds.shp")),
+  sp_msk = terra::vect(file.path(cs_dir_lrg, "msk.shp")),
+  sp_olp = terra::vect(file.path(cs_dir_lrg, "olp.shp")),
+  sp_sds = terra::vect(file.path(cs_dir_lrg, "sds.shp")),
   cs_rds = file.path(cs_dir_lrg, "rds_lrg.tif"),
   cs_wgs = file.path(cs_dir_lrg, "wgs_lrg.tif"),
   ls_tmp = TRUE
