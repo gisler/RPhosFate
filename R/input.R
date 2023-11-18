@@ -139,9 +139,9 @@ demoProject <- function(cs_dir = tempdir(TRUE)) {
 #'   cv_dir = cv_dir,
 #'   cs_dem = file.path(cs_dir_lrg, "dem_lrg.tif"),
 #'   cs_cha = file.path(cs_dir_lrg, "cha_lrg.tif"),
-#'   sp_msk = raster::shapefile(file.path(cs_dir_lrg, "msk.shp")),
-#'   sp_olp = raster::shapefile(file.path(cs_dir_lrg, "olp.shp")),
-#'   sp_sds = raster::shapefile(file.path(cs_dir_lrg, "sds.shp")),
+#'   sp_msk = terra::vect(file.path(cs_dir_lrg, "msk.shp")),
+#'   sp_olp = terra::vect(file.path(cs_dir_lrg, "olp.shp")),
+#'   sp_sds = terra::vect(file.path(cs_dir_lrg, "sds.shp")),
 #'   cs_rds = file.path(cs_dir_lrg, "rds_lrg.tif"),
 #'   cs_wgs = file.path(cs_dir_lrg, "wgs_lrg.tif"),
 #'   ls_tmp = TRUE
@@ -188,9 +188,9 @@ DEMrelatedInput <- function(
   qassert(cv_dir, "S+")
   qassert(cs_dem, "S1")
   qassert(cs_cha, "S1")
-  assertClass(sp_msk, "SpatialPolygonsDataFrame")
-  assertClass(sp_olp, "SpatialPointsDataFrame")
-  assertClass(sp_sds, "SpatialPointsDataFrame")
+  assertClass(sp_msk, "SpatVector")
+  assertClass(sp_olp, "SpatVector")
+  assertClass(sp_sds, "SpatVector")
   if (!is.null(cs_rds)) {
     qassert(cs_rds, "S1")
   }
@@ -215,7 +215,7 @@ DEMrelatedInput <- function(
   on.exit(setwd(cs_dir_old))
 
   # Extract oversized DEM by mask
-  rl_dem_ovr <- raster(cs_dem)
+  rl_dem_ovr <- rast(cs_dem)
   rl_dem_ovr <- adjustExtent(rl_dem_ovr, sp_msk)
   rl_dem_ovr <- mask(
     rl_dem_ovr,
@@ -226,32 +226,31 @@ DEMrelatedInput <- function(
   )
 
   # Burn streams (oversized DEM)
-  rl_cha_map <- raster(cs_cha)
+  rl_cha_map <- rast(cs_cha)
   rl_cha_map <- adjustExtent(rl_cha_map, sp_msk)
 
-  rl_dem_bnt <- overlay(
-    x = rl_dem_ovr,
-    y = rl_cha_map,
+  rl_dem_bnt <- lapp(
+    c(x = rl_dem_ovr, y = rl_cha_map),
     fun = function(x, y) {
       ifelse(is.na(y), x, x - ns_brn)
-    }
+    },
+    cores = is_ths
   )
 
   for (i in seq_len(is_adj)) {
-    rl_cha_map[adjacent(
+    rl_cha_map[as.integer(adjacent(
       rl_cha_map,
-      Which(!is.na(rl_cha_map), cells = TRUE),
-      directions = 8,
-      pairs = FALSE,
+      cells(rl_cha_map),
+      directions = "queen",
       include = TRUE
-    )] <- 1L
+    ))] <- 1L
 
-    rl_dem_bnt <- overlay(
-      x = rl_dem_bnt,
-      y = rl_cha_map,
+    rl_dem_bnt <- lapp(
+      c(x = rl_dem_bnt, y = rl_cha_map),
       fun = function(x, y) {
         ifelse(is.na(y), x, x - ns_brn)
-      }
+      },
+      cores = is_ths
     )
   }
 
@@ -261,7 +260,7 @@ DEMrelatedInput <- function(
     datatype = "FLT8S",
     overwrite = TRUE
   )
-  rl_dem_bnt <- raster("dem_bnt.tif")
+  rl_dem_bnt <- rast("dem_bnt.tif")
   rm(rl_cha_map)
 
   # Breach depressions (oversized DEM)
@@ -278,7 +277,7 @@ DEMrelatedInput <- function(
       esri_pntr = TRUE
     )
   } else {
-    rl_dir_ovr <- raster(cs_dir)
+    rl_dir_ovr <- rast(cs_dir)
     rl_dir_ovr <- adjustExtent(rl_dir_ovr, sp_msk)
     rl_dir_ovr <- mask(
       rl_dir_ovr,
@@ -290,7 +289,7 @@ DEMrelatedInput <- function(
   }
 
   # Identify watershed
-  shapefile(sp_olp, "olp.shp", overwrite = TRUE)
+  writeVector(sp_olp, "olp.shp", overwrite = TRUE)
   whitebox::wbt_watershed(
     d8_pntr = file.path(normalizePath("."), "dir_ovr.tif"),
     pour_pts = file.path(normalizePath("."), "olp.shp"),
@@ -299,7 +298,7 @@ DEMrelatedInput <- function(
   )
 
   rl_wsh <- trim(
-    raster("wsh_ovr.tif"),
+    rast("wsh_ovr.tif"),
     filename = "wsh.tif",
     datatype = "INT1U",
     overwrite = TRUE
@@ -307,7 +306,7 @@ DEMrelatedInput <- function(
 
   # Extract flow directions by watershed
   rl_dir <- mask(
-    crop(raster("dir_ovr.tif"), rl_wsh),
+    crop(rast("dir_ovr.tif"), rl_wsh),
     rl_wsh,
     filename = "dir.tif",
     datatype = "INT4S",
@@ -315,7 +314,7 @@ DEMrelatedInput <- function(
   )
 
   # Determine channel cells
-  shapefile(sp_sds, "sds.shp", overwrite = TRUE)
+  writeVector(sp_sds, "sds.shp", overwrite = TRUE)
   whitebox::wbt_trace_downslope_flowpaths(
     seed_pts = file.path(normalizePath("."), "sds.shp"),
     d8_pntr = file.path(normalizePath("."), "dir.tif"),
@@ -323,7 +322,7 @@ DEMrelatedInput <- function(
     esri_pntr = TRUE
   )
 
-  rl_cha <- raster("cha.tif")
+  rl_cha <- rast("cha.tif")
   rl_cha[!is.na(rl_cha)] <- 1L
   writeRaster(
     rl_cha,
@@ -331,11 +330,11 @@ DEMrelatedInput <- function(
     datatype = "INT1U",
     overwrite = TRUE
   )
-  rl_cha <- raster("cha.tif")
+  rl_cha <- rast("cha.tif")
 
   # Determine road cells
   if (!is.null(cs_rds)) {
-    rl_rds <- raster(cs_rds)
+    rl_rds <- rast(cs_rds)
     rl_rds <- adjustExtent(rl_rds, rl_wsh)
     rl_rds[!rl_rds %in% c(0L, 1L)] <- NA_integer_
     rl_rds <- mask(
@@ -354,16 +353,14 @@ DEMrelatedInput <- function(
       datatype = "INT1U",
       overwrite = TRUE
     )
-    rl_rds <- raster("rds.tif")
+    rl_rds <- rast("rds.tif")
   }
 
   # Calculate flow accumulations
-  rl_dir_tau <- subs(
+  rl_dir_tau <- subst(
     rl_dir,
-    data.frame(
-      by    = c(1L, 2L, 4L, 8L, 16L, 32L, 64L, 128L),
-      which = c(1L, 8L, 7L, 6L,  5L,  4L,  3L,   2L)
-    ),
+    from = c(1L, 2L, 4L, 8L, 16L, 32L, 64L, 128L),
+    to   = c(1L, 8L, 7L, 6L,  5L,  4L,  3L,   2L),
     filename = "dir_tau.tif",
     datatype = "INT1U",
     overwrite = TRUE
@@ -380,7 +377,7 @@ DEMrelatedInput <- function(
   )
 
   if (!is.null(cs_wgs)) {
-    rl_wgs <- raster(cs_wgs)
+    rl_wgs <- rast(cs_wgs)
     rl_wgs <- adjustExtent(rl_wgs, rl_wsh)
     rl_wgs <- mask(
       rl_wgs,
@@ -405,16 +402,19 @@ DEMrelatedInput <- function(
   }
 
   if (!is.null(cs_rds)) {
-    rl_dir_rds <- overlay(
-      x = rl_dir_tau,
-      y = raster("cha.tif"),
-      z = rl_rds,
+    rl_dir_rds <- lapp(
+      c(
+        x = rl_dir_tau,
+        y = rast("cha.tif"),
+        z = rl_rds
+      ),
       fun = function(x, y, z) {
         ifelse(is.na(y), ifelse(is.na(z), x, NA_integer_), x)
       },
+      cores = is_ths,
       filename = "dir_tau_rds.tif",
-      datatype = "INT1U",
-      overwrite = TRUE
+      overwrite = TRUE,
+      wopt = list(datatype = "INT1U")
     )
 
     system2(
@@ -427,13 +427,19 @@ DEMrelatedInput <- function(
       )
     )
 
-    rl_acc <- overlay(
-      x = rl_cha,
-      y = raster("acc_rds.tif"),
-      z = raster("acc.tif"),
+    rl_acc <- lapp(
+      c(
+        x = rl_cha,
+        y = rast("acc_rds.tif"),
+        z = rast("acc.tif")
+      ),
       fun = function(x, y, z) {
         ifelse(is.na(x), y, z)
       },
+      cores = is_ths
+    )
+    writeRaster(
+      rl_acc,
       filename = "acc.tif",
       datatype = "INT4S",
       overwrite = TRUE
@@ -454,53 +460,64 @@ DEMrelatedInput <- function(
       file.copy("acc_rds.tif", "acc_wtd_rds.tif", overwrite = TRUE)
     }
 
-    rl_acc_wtd <- overlay(
-      x = rl_cha,
-      y = raster("acc_wtd_rds.tif"),
-      z = raster("acc_wtd.tif"),
+    rl_acc_wtd <- lapp(
+      c(
+        x = rl_cha,
+        y = rast("acc_wtd_rds.tif"),
+        z = rast("acc_wtd.tif")
+      ),
       fun = function(x, y, z) {
         ifelse(is.na(x), y, z)
       },
+      cores = is_ths
+    )
+    writeRaster(
+      rl_acc_wtd,
       filename = "acc_wtd.tif",
       datatype = "FLT8S",
       overwrite = TRUE
     )
-  } else {
-    rl_acc <- raster("acc.tif")
-    rl_acc_wtd <- raster("acc_wtd.tif")
   }
 
+  rl_acc <- rast("acc.tif")
+  rl_acc_wtd <- rast("acc_wtd.tif")
+
   # Undo stream burning (oversized DEM)
-  rl_cha_map <- raster(cs_cha)
+  rl_cha_map <- rast(cs_cha)
   rl_cha_map <- adjustExtent(rl_cha_map, sp_msk)
 
   rl_cha_map_cha <- rl_cha_map
-  rl_cha_map_cha[rl_cha == 1L] <- 1L
+  rl_cha_map_cha[extend(rl_cha, rl_cha_map_cha) == 1L] <- 1L
 
-  rl_dem_brd <- raster("dem_bnt_brd.tif")
-  rl_dem_brd <- overlay(
-    x = rl_dem_brd,
-    y = rl_cha_map_cha,
+  rl_dem_brd <- rast("dem_bnt_brd.tif")
+  rl_dem_brd <- lapp(
+    c(
+      x = rl_dem_brd,
+      y = rl_cha_map_cha
+    ),
     fun = function(x, y) {
       ifelse(is.na(y), x, x + ns_brn)
-    }
+    },
+    cores = is_ths
   )
 
   for (i in seq_len(is_adj)) {
-    rl_cha_map[union(adjacent(
+    rl_cha_map[union(as.integer(adjacent(
       rl_cha_map,
-      Which(!is.na(rl_cha_map), cells = TRUE),
-      directions = 8,
-      pairs = FALSE,
+      cells(rl_cha_map),
+      directions = "queen",
       include = TRUE
-    ), Which(rl_cha_map_cha == 1L, cells = TRUE))] <- 1L
+    )), cells(rl_cha_map_cha == 1L))] <- 1L
 
-    rl_dem_brd <- overlay(
-      x = rl_dem_brd,
-      y = rl_cha_map,
+    rl_dem_brd <- lapp(
+      c(
+        x = rl_dem_brd,
+        y = rl_cha_map
+      ),
       fun = function(x, y) {
         ifelse(is.na(y), x, x + ns_brn)
-      }
+      },
+      cores = is_ths
     )
   }
 
@@ -515,8 +532,8 @@ DEMrelatedInput <- function(
 
   # Calculate D8 slopes (oversized DEM)
   nm_slp_ovr <- D8slope(
-    im_dir = as.matrix(raster("dir_ovr.tif")),
-    nm_dem = as.matrix(rl_dem_brd),
+    im_dir = as.matrix(rast("dir_ovr.tif"), wide = TRUE),
+    nm_dem = as.matrix(rl_dem_brd, wide = TRUE),
     im_fDo = matrix(
       c(32L, 16L, 8L, 64L, 0L, 4L, 128L, 1L, 2L),
       3L
@@ -526,7 +543,7 @@ DEMrelatedInput <- function(
   )
 
   rl_slp <- mask(
-    crop(raster(nm_slp_ovr, template = rl_dem_ovr), rl_wsh),
+    crop(rast(nm_slp_ovr, crs = crs(rl_dem_ovr), extent = ext(rl_dem_ovr)), rl_wsh),
     rl_wsh,
     filename = "slp.tif",
     datatype = "FLT8S",
@@ -549,16 +566,15 @@ DEMrelatedInput <- function(
     writeRaster(
       toInput[[i]],
       filename = file.path("..", paste0(names(toInput)[i], ".tif")),
-      datatype = dataType(toInput[[i]]),
-      options = "COMPRESS=LZW",
+      datatype = datatype(toInput[[i]]),
       overwrite = TRUE
     )
   }
 
   # Determine outlet coordinates
   nm_slp <- D8slope(
-    im_dir = as.matrix(rl_dir),
-    nm_dem = as.matrix(rl_dem),
+    im_dir = as.matrix(rl_dir, wide = TRUE),
+    nm_dem = as.matrix(rl_dem, wide = TRUE),
     im_fDo = matrix(
       c(32L, 16L, 8L, 64L, 0L, 4L, 128L, 1L, 2L),
       3L
@@ -566,12 +582,12 @@ DEMrelatedInput <- function(
     ns_fpl = xres(rl_dem),
     is_ths = is_ths
   )
-  rl_slp <- raster(nm_slp, template = rl_dem)
+  rl_slp <- rast(nm_slp, crs = crs(rl_dem), extent = ext(rl_dem))
   rm(nm_slp)
 
   nm_olc <- xyFromCell(
     rl_acc,
-    Which(is.na(rl_slp) & !is.na(rl_cha), cells = TRUE)
+    cells(is.na(rl_slp) & !is.na(rl_cha))
   )
 
   # Clean up temporary files
