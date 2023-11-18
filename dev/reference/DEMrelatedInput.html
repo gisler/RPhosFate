@@ -135,19 +135,18 @@ raster providing channels.</p></dd>
 
 
 <dt>sp_msk</dt>
-<dd><p>An <code><a href="https://rdrr.io/pkg/sp/man/SpatialPolygonsDataFrame-class.html" class="external-link">sp::SpatialPolygonsDataFrame</a></code> providing a somewhat
-oversized catchment mask used to clip the potentially large input rasters
-for further processing.</p></dd>
+<dd><p>A <code><a href="https://rdrr.io/pkg/terra/man/SpatVector-class.html" class="external-link">terra::SpatVector</a></code> providing a somewhat oversized
+catchment polygon mask used to clip the potentially large input rasters for
+further processing.</p></dd>
 
 
 <dt>sp_olp</dt>
-<dd><p>An <code><a href="https://rdrr.io/pkg/sp/man/SpatialPointsDataFrame-class.html" class="external-link">sp::SpatialPointsDataFrame</a></code> providing the desired
-catchment outlet(s).</p></dd>
+<dd><p>A <code><a href="https://rdrr.io/pkg/terra/man/SpatVector-class.html" class="external-link">terra::SpatVector</a></code> providing the desired catchment
+outlet point(s).</p></dd>
 
 
 <dt>sp_sds</dt>
-<dd><p>An <code><a href="https://rdrr.io/pkg/sp/man/SpatialPointsDataFrame-class.html" class="external-link">sp::SpatialPointsDataFrame</a></code> providing channel
-sources.</p></dd>
+<dd><p>A <code><a href="https://rdrr.io/pkg/terra/man/SpatVector-class.html" class="external-link">terra::SpatVector</a></code> providing channel source points.</p></dd>
 
 
 <dt>cs_rds</dt>
@@ -238,9 +237,9 @@ Processes 30, 846–857.</cite></p>
 <span class="r-in"><span>  cv_dir <span class="op">=</span> <span class="va">cv_dir</span>,</span></span>
 <span class="r-in"><span>  cs_dem <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">cs_dir_lrg</span>, <span class="st">"dem_lrg.tif"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  cs_cha <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">cs_dir_lrg</span>, <span class="st">"cha_lrg.tif"</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>  sp_msk <span class="op">=</span> <span class="fu">raster</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/raster/man/shapefile.html" class="external-link">shapefile</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">cs_dir_lrg</span>, <span class="st">"msk.shp"</span><span class="op">)</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>  sp_olp <span class="op">=</span> <span class="fu">raster</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/raster/man/shapefile.html" class="external-link">shapefile</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">cs_dir_lrg</span>, <span class="st">"olp.shp"</span><span class="op">)</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>  sp_sds <span class="op">=</span> <span class="fu">raster</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/raster/man/shapefile.html" class="external-link">shapefile</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">cs_dir_lrg</span>, <span class="st">"sds.shp"</span><span class="op">)</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  sp_msk <span class="op">=</span> <span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/vect.html" class="external-link">vect</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">cs_dir_lrg</span>, <span class="st">"msk.shp"</span><span class="op">)</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  sp_olp <span class="op">=</span> <span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/vect.html" class="external-link">vect</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">cs_dir_lrg</span>, <span class="st">"olp.shp"</span><span class="op">)</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  sp_sds <span class="op">=</span> <span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/vect.html" class="external-link">vect</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">cs_dir_lrg</span>, <span class="st">"sds.shp"</span><span class="op">)</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  cs_rds <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">cs_dir_lrg</span>, <span class="st">"rds_lrg.tif"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  cs_wgs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">cs_dir_lrg</span>, <span class="st">"wgs_lrg.tif"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  ls_tmp <span class="op">=</span> <span class="cn">TRUE</span></span></span>
