@@ -1,6 +1,5 @@
 #' @import checkmate
 #' @import methods
-#' @import raster
 #' @import terra
 #' @importFrom graphics abline clip par
 #' @importFrom Rcpp sourceCpp
