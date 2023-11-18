@@ -67,13 +67,12 @@ demoProject <- function(cs_dir = tempdir(TRUE)) {
 #'   raster digital elevation model.
 #' @param cs_cha A character string specifying a path to a potentially large
 #'   raster providing channels.
-#' @param sp_msk An [`sp::SpatialPolygonsDataFrame-class`] providing a somewhat
-#'   oversized catchment mask used to clip the potentially large input rasters
-#'   for further processing.
-#' @param sp_olp An [`sp::SpatialPointsDataFrame-class`] providing the desired
-#'   catchment outlet(s).
-#' @param sp_sds An [`sp::SpatialPointsDataFrame-class`] providing channel
-#'   sources.
+#' @param sp_msk A [`terra::SpatVector-class`] providing a somewhat oversized
+#'   catchment polygon mask used to clip the potentially large input rasters for
+#'   further processing.
+#' @param sp_olp A [`terra::SpatVector-class`] providing the desired catchment
+#'   outlet point(s).
+#' @param sp_sds A [`terra::SpatVector-class`] providing channel source points.
 #' @param cs_rds An optional character string specifying a path to a potentially
 #'   large raster providing roads.
 #' @param cs_wgs An optional character string specifying a path to a potentially
@@ -189,8 +188,11 @@ DEMrelatedInput <- function(
   qassert(cs_dem, "S1")
   qassert(cs_cha, "S1")
   assertClass(sp_msk, "SpatVector")
+  assertTRUE(is.polygons(sp_msk))
   assertClass(sp_olp, "SpatVector")
+  assertTRUE(is.points(sp_olp))
   assertClass(sp_sds, "SpatVector")
+  assertTRUE(is.points(sp_sds))
   if (!is.null(cs_rds)) {
     qassert(cs_rds, "S1")
   }
@@ -491,10 +493,7 @@ DEMrelatedInput <- function(
 
   rl_dem_brd <- rast("dem_bnt_brd.tif")
   rl_dem_brd <- lapp(
-    c(
-      x = rl_dem_brd,
-      y = rl_cha_map_cha
-    ),
+    c(x = rl_dem_brd, y = rl_cha_map_cha),
     fun = function(x, y) {
       ifelse(is.na(y), x, x + ns_brn)
     },
@@ -507,13 +506,10 @@ DEMrelatedInput <- function(
       cells(rl_cha_map),
       directions = "queen",
       include = TRUE
-    )), cells(rl_cha_map_cha == 1L))] <- 1L
+    )), unlist(cells(rl_cha_map_cha, 1L)))] <- 1L
 
     rl_dem_brd <- lapp(
-      c(
-        x = rl_dem_brd,
-        y = rl_cha_map
-      ),
+      c(x = rl_dem_brd, y = rl_cha_map),
       fun = function(x, y) {
         ifelse(is.na(y), x, x + ns_brn)
       },
@@ -562,11 +558,13 @@ DEMrelatedInput <- function(
     slp     = rl_slp    ,
     wsh     = rl_wsh
   )
-  for (i in seq_along(toInput)) {
+  for (item in names(toInput)) {
+    set.names(toInput[[item]], item)
+
     writeRaster(
-      toInput[[i]],
-      filename = file.path("..", paste0(names(toInput)[i], ".tif")),
-      datatype = datatype(toInput[[i]]),
+      toInput[[item]],
+      filename = file.path("..", paste0(item, ".tif")),
+      datatype = datatype(toInput[[item]]),
       overwrite = TRUE
     )
   }
@@ -587,7 +585,7 @@ DEMrelatedInput <- function(
 
   nm_olc <- xyFromCell(
     rl_acc,
-    cells(is.na(rl_slp) & !is.na(rl_cha))
+    unlist(cells(is.na(rl_slp) & !is.na(rl_cha), 1L))
   )
 
   # Clean up temporary files
