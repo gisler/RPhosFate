@@ -330,7 +330,7 @@ setMethod(
 #' @slot ls_ini A logical scalar specifying if the state of an existing project
 #'   was loaded from disk.
 #' @slot is_ths An integer scalar holding the number of threads to use for
-#'   processing.
+#'   processing, were applicable.
 #' @slot is_MCi An integer scalar holding the current Monte Carlo iteration if
 #'   applicable.
 #' @slot cv_MCl A character vector holding the names of the layers, which shall
