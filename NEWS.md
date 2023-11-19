@@ -1,7 +1,7 @@
 # RPhosFate v1.0.4.9000
 
 * Switched to utilising the `SpatRaster` and `SpatVector` classes from the `terra` package instead of the `RasterLayer` class from the `raster` and the `Spatial*DataFrame` classes from the `sp` packages.
-* Added `is_ths` argument to `RPhosFate()` and `catchment()` constructors: allows for specifying the number of threads to use for processing. 
+* Added `is_ths` argument to `RPhosFate()` and `catchment()` constructors: allows for specifying the number of threads to use for processing, were applicable. 
 * Ceased support for _ERDAS IMAGINE_ (\*.img) raster files. `img2tif()` can be used to convert all _ERDAS IMAGINE_ raster files in a directory and its subdirectories into _GeoTIFF_ raster files.
 * Dropped backward compatibility to major version zero.
 * Removed `spatstat.geom` from imported packages list (utilised functionality is now also provided by `terra`).
