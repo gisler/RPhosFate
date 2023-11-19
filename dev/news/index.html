@@ -85,7 +85,7 @@
     <div class="section level2">
 <h2 class="page-header" data-toc-text="1.0.4.9000" id="rphosfate-v1049000">RPhosFate v1.0.4.9000<a class="anchor" aria-label="anchor" href="#rphosfate-v1049000"></a></h2>
 <ul><li>Switched to utilising the <code>SpatRaster</code> and <code>SpatVector</code> classes from the <code>terra</code> package instead of the <code>RasterLayer</code> class from the <code>raster</code> and the <code>Spatial*DataFrame</code> classes from the <code>sp</code> packages.</li>
-<li>Added <code>is_ths</code> argument to <code><a href="../reference/catchment.html">RPhosFate()</a></code> and <code><a href="../reference/catchment.html">catchment()</a></code> constructors: allows for specifying the number of threads to use for processing, were applicable.</li>
+<li>Added <code>is_ths</code> argument to <code><a href="../reference/catchment.html">RPhosFate()</a></code> and <code><a href="../reference/catchment.html">catchment()</a></code> constructors: allows for specifying the number of threads to use for processing, where applicable.</li>
 <li>Ceased support for <em>ERDAS IMAGINE</em> (*.img) raster files. <code><a href="../reference/img2tif.html">img2tif()</a></code> can be used to convert all <em>ERDAS IMAGINE</em> raster files in a directory and its subdirectories into <em>GeoTIFF</em> raster files.</li>
 <li>Dropped backward compatibility to major version zero.</li>
 <li>Removed <code>spatstat.geom</code> from imported packages list (utilised functionality is now also provided by <code>terra</code>).</li>
