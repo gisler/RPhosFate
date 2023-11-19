@@ -53,9 +53,8 @@ large raster providing D8 flow directions using \emph{ArcGIS} codes.}
 \item{is_adj}{A numeric scalar specifying how many cells adjacent to channels
 shall be burnt.}
 
-\item{is_ths}{An integer scalar specifying the number of threads to use
-during computation (no effect in case \emph{OpenMP} is not supported by the
-toolchain and/or platform).}
+\item{is_ths}{An integer scalar specifying the number of threads to use for
+processing, were applicable.}
 
 \item{ls_tmp}{A logical scalar specifying if the temporary files created
 during computation shall be kept.}

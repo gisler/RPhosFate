@@ -6,6 +6,7 @@
 * Dropped backward compatibility to major version zero.
 * Removed `spatstat.geom` from imported packages list (utilised functionality is now also provided by `terra`).
 * Bumped minimum tested R version from 4.2.3 to 4.3.2 using the corresponding _Posit_ public package manager snapshot.
+* Slightly improved documentation.
 * Major internal code improvements.
 
 # RPhosFate v1.0.4

@@ -17,7 +17,7 @@ optionally the Monte Carlo input data directory (second position).}
 was loaded from disk.}
 
 \item{\code{is_ths}}{An integer scalar holding the number of threads to use for
-processing.}
+processing, were applicable.}
 
 \item{\code{is_MCi}}{An integer scalar holding the current Monte Carlo iteration if
 applicable.}
