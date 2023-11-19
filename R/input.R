@@ -83,7 +83,7 @@ demoProject <- function(cs_dir = tempdir(TRUE)) {
 #' @param is_adj A numeric scalar specifying how many cells adjacent to channels
 #'   shall be burnt.
 #' @param is_ths An integer scalar specifying the number of threads to use for
-#'   processing, were applicable.
+#'   processing, where applicable.
 #' @param ls_tmp A logical scalar specifying if the temporary files created
 #'   during computation shall be kept.
 #'
