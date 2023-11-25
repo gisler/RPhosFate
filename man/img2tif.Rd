@@ -10,11 +10,11 @@ img2tif(cs_dir, cs_crs = NULL)
 \item{cs_dir}{A character string specifying an existing directory.}
 
 \item{cs_crs}{An optional character string used to set the coordinate
-reference system of all processed raster files. See \code{\link[terra:crs]{terra::crs}} for
-further information.}
+reference system of all output raster files. See \code{\link[terra:crs]{terra::crs}} for further
+information.}
 }
 \value{
-A character vector containing the paths to the converted \emph{ERDAS
+A character vector containing the paths to the processed \emph{ERDAS
 IMAGINE} raster files.
 }
 \description{
