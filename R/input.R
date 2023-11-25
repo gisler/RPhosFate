@@ -604,10 +604,10 @@ DEMrelatedInput <- function(
 #'
 #' @param cs_dir A character string specifying an existing directory.
 #' @param cs_crs An optional character string used to set the coordinate
-#'   reference system of all processed raster files. See [`terra::crs`] for
-#'   further information.
+#'   reference system of all output raster files. See [`terra::crs`] for further
+#'   information.
 #'
-#' @return A character vector containing the paths to the converted _ERDAS
+#' @return A character vector containing the paths to the processed _ERDAS
 #'   IMAGINE_ raster files.
 #'
 #' @export
