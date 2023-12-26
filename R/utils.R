@@ -157,7 +157,7 @@ slots2list <- function(parameters) {
 
 writeLayer <- function(cmt, layer, rl, datatype, substance = NULL) {
   if (length(cmt@is_MCi) == 0L || (length(cmt@is_MCi) == 1L &&
-      layer %in% cmt@cv_MCl)) {
+        layer %in% cmt@cv_MCl)) {
     if (!is.null(substance)) {
       layer <- sub("^xx", tolower(substance), layer)
     }

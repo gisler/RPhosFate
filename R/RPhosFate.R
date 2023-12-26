@@ -92,7 +92,7 @@ setMethod(
     x@erosion@rl_LFa <- lapp(
       c(x = rl_acc_wtd_ovl, y = rl_LFa_m),
       fun = function(x, y) {
-        ((x * is_res)^(1 + y) - ((x - 1) * is_res)^(1 + y)) / # nolint
+        ((x * is_res)^(1 + y) - ((x - 1) * is_res)^(1 + y)) /
           (is_res * 22.13^y)
       },
       cores = x@is_ths
