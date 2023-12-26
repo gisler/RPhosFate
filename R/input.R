@@ -162,7 +162,7 @@ DEMrelatedInput <- function(
   ls_tmp = FALSE
 ) {
   if (!requireNamespace("whitebox", quietly = TRUE) ||
-      packageVersion("whitebox") < package_version("2.0.0")) {
+        packageVersion("whitebox") < package_version("2.0.0")) {
     stop(
       'Package "whitebox" (v2.0.0 or higher) must be installed for this ',
       "functionality.",
@@ -403,14 +403,14 @@ DEMrelatedInput <- function(
   }
 
   if (!is.null(cs_rds)) {
-    rl_dir_rds <- lapp(
+    lapp(
       c(
         x = rl_dir_tau,
         y = rast("cha.tif"),
         z = rl_rds
       ),
       fun = function(x, y, z) {
-        ifelse(is.na(y), ifelse(is.na(z), x, NA_integer_), x)
+        ifelse(is.na(y), ifelse(is.na(z), x, NA_integer_), x) # nolint
       },
       cores = is_ths,
       filename = "dir_tau_rds.tif",

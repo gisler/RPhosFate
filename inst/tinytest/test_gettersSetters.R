@@ -13,7 +13,7 @@ x <- RPhosFate(
   ls_ini = TRUE
 )
 
-source("parameters.R", local = TRUE) # nolint
+source("parameters.R", local = TRUE)
 
 #### getLayer and [ extract operator ####
 layers <- list.files(
