@@ -11,14 +11,9 @@ arma::dmat D8slope(
   const double ns_fpl,
   const int is_ths = 1
 ) {
-  /* With integers, missing values are stored as the smallest integer
-   * (-2.147.483.648). See also https://adv-r.hadley.nz/rcpp.html
-   */
-  const int NA_integer_ = Rcpp::IntegerVector::get_na();
-
   arma::dmat nm_dem_pad(
     arma::size(nm_dem) + 2,
-    arma::fill::value(Rcpp::NumericVector::get_na())
+    arma::fill::value(NA_REAL)
   );
   nm_dem_pad(1, 1, arma::size(nm_dem)) = nm_dem;
 
@@ -28,13 +23,13 @@ arma::dmat D8slope(
 
   arma::dmat nm_slp(
     arma::size(nm_dem),
-    arma::fill::value(Rcpp::NumericVector::get_na())
+    arma::fill::value(NA_REAL)
   );
 
   #pragma omp parallel for num_threads(is_ths) collapse(2)
   for (arma::uword i = 1; i < nm_dem_pad.n_rows - 1; ++i) {
     for (arma::uword j = 1; j < nm_dem_pad.n_cols - 1; ++j) {
-      if (im_dir.at(i - 1, j - 1) == NA_integer_) {
+      if (Rcpp::IntegerMatrix::is_na(im_dir.at(i - 1, j - 1))) {
         continue;
       }
 
