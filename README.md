@@ -16,7 +16,7 @@ Install the latest release from CRAN:
 
 [![CRAN Version](https://www.r-pkg.org/badges/version/RPhosFate)](https://cran.r-project.org/package=RPhosFate) [![CRAN Checks](https://badges.cranchecks.info/worst/RPhosFate.svg)](https://cran.r-project.org/web/checks/check_results_RPhosFate.html)
 
-Install the development version from GitHub (requires [Rtools](https://cran.r-project.org/bin/windows/Rtools/) on Windows and the `remotes` package):
+Install the [development version](https://gisler.github.io/RPhosFate/dev/) from GitHub (requires [Rtools](https://cran.r-project.org/bin/windows/Rtools/) on Windows and the `remotes` package):
 
 `remotes::install_github("gisler/RPhosFate")`
 
