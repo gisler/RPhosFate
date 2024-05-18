@@ -14,6 +14,7 @@ DEMrelatedInput(
   cs_rds = NULL,
   cs_wgs = NULL,
   cs_dir = NULL,
+  ns_cha = NULL,
   ns_brn = 50,
   is_adj = 1L,
   is_ths = 1L,
@@ -47,6 +48,9 @@ large raster providing flow accumulation weights.}
 
 \item{cs_dir}{An optional character string specifying a path to a potentially
 large raster providing D8 flow directions using \emph{ArcGIS} codes.}
+
+\item{ns_cha}{An optional numeric scalar specifying the minimum (weighted)
+flow accumulation determining a channel.}
 
 \item{ns_brn}{A numeric scalar specifying the stream burning step size in m.}
 
@@ -93,6 +97,9 @@ Providing existing flow directions prevents calculating them, which, for
 example, may be useful in case the effect of tillage directions has been
 enforced on topographic flow directions in advance. Please note that doing so
 renders stream burning and depression breaching without effect.
+
+\code{ns_cha} can be used to enhance the channel network obtained by the tracing
+of downslope flowpaths from the provided channel sources.
 
 \emph{dem} represents the breached DEM with reversed stream burning if applicable.
 This processed DEM also serves as the basis for the calculation of the D8

@@ -79,6 +79,8 @@ demoProject <- function(cs_dir = tempdir(TRUE)) {
 #'   large raster providing flow accumulation weights.
 #' @param cs_dir An optional character string specifying a path to a potentially
 #'   large raster providing D8 flow directions using _ArcGIS_ codes.
+#' @param ns_cha An optional numeric scalar specifying the minimum (weighted)
+#'   flow accumulation determining a channel.
 #' @param ns_brn A numeric scalar specifying the stream burning step size in m.
 #' @param is_adj A numeric scalar specifying how many cells adjacent to channels
 #'   shall be burnt.
@@ -107,6 +109,9 @@ demoProject <- function(cs_dir = tempdir(TRUE)) {
 #' example, may be useful in case the effect of tillage directions has been
 #' enforced on topographic flow directions in advance. Please note that doing so
 #' renders stream burning and depression breaching without effect.
+#'
+#' `ns_cha` can be used to enhance the channel network obtained by the tracing
+#' of downslope flowpaths from the provided channel sources.
 #'
 #' _dem_ represents the breached DEM with reversed stream burning if applicable.
 #' This processed DEM also serves as the basis for the calculation of the D8
@@ -156,6 +161,7 @@ DEMrelatedInput <- function(
   cs_rds = NULL,
   cs_wgs = NULL,
   cs_dir = NULL,
+  ns_cha = NULL,
   ns_brn = 50,
   is_adj = 1L,
   is_ths = 1L,
@@ -200,6 +206,9 @@ DEMrelatedInput <- function(
   }
   if (!is.null(cs_dir)) {
     qassert(cs_dir, "S1")
+  }
+  if (!is.null(ns_cha)) {
+    qassert(ns_cha, "N1[1,)")
   }
   qassert(ns_brn, "N1[0,)")
   qassert(is_adj, "X1[0,)")
@@ -402,11 +411,25 @@ DEMrelatedInput <- function(
     file.copy("acc.tif", "acc_wtd.tif", overwrite = TRUE)
   }
 
+  # Enhance channels
+  if (!is.null(ns_cha)) {
+    rl_cha[rast("acc_wtd.tif") >= ns_cha] <- 1L
+
+    writeRaster(
+      rl_cha,
+      filename = "cha.tif",
+      datatype = "INT1U",
+      overwrite = TRUE
+    )
+    rl_cha <- rast("cha.tif")
+  }
+
+  # Calculate flow accumulations considering roads
   if (!is.null(cs_rds)) {
     lapp(
       c(
         x = rl_dir_tau,
-        y = rast("cha.tif"),
+        y = rl_cha,
         z = rl_rds
       ),
       fun = function(x, y, z) {
