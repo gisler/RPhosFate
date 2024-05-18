@@ -14,6 +14,7 @@ DEMrelatedInput(
   cs_rds = NULL,
   cs_wgs = NULL,
   cs_dir = NULL,
+  ns_cha = NULL,
   ns_brn = 50,
   is_adj = 1L,
   is_ths = 1L,
@@ -47,6 +48,8 @@ large raster providing flow accumulation weights.}
 
 \item{cs_dir}{An optional character string specifying a path to a potentially
 large raster providing D8 flow directions using \emph{ArcGIS} codes.}
+
+\item{ns_cha}{An optional numeric scalar specifying the}
 
 \item{ns_brn}{A numeric scalar specifying the stream burning step size in m.}
 

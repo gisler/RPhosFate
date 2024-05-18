@@ -79,6 +79,7 @@ demoProject <- function(cs_dir = tempdir(TRUE)) {
 #'   large raster providing flow accumulation weights.
 #' @param cs_dir An optional character string specifying a path to a potentially
 #'   large raster providing D8 flow directions using _ArcGIS_ codes.
+#' @param ns_cha An optional numeric scalar specifying the
 #' @param ns_brn A numeric scalar specifying the stream burning step size in m.
 #' @param is_adj A numeric scalar specifying how many cells adjacent to channels
 #'   shall be burnt.
@@ -156,6 +157,7 @@ DEMrelatedInput <- function(
   cs_rds = NULL,
   cs_wgs = NULL,
   cs_dir = NULL,
+  ns_cha = NULL,
   ns_brn = 50,
   is_adj = 1L,
   is_ths = 1L,
