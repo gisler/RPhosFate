@@ -37,13 +37,13 @@ jobs:
       # Checkout the code base #
       ##########################
       - name: Checkout Code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       ################################
       # Run linter against code base #
       ################################
       - name: Lint Code Base
-        uses: github/super-linter@v4
+        uses: github/super-linter@v6
         env:
           VALIDATE_ALL_CODEBASE: true
           DEFAULT_BRANCH: main
