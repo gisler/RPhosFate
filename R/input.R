@@ -1,3 +1,7 @@
+adjustExtent <- function(rl, ex) {
+  extend(crop(rl, ex), ex)
+}
+
 dataLicense <- readLines("inst/tinytest/LICENSE.md")[-1]
 #' Demonstration project
 #'
@@ -49,15 +53,32 @@ demoProject <- function(cs_dir = tempdir(TRUE)) {
   normalizePath(demoRoot, winslash = .Platform$file.sep)
 }
 
+D8insteadDInf <- function(rl_dir_inf, rl_cha, is_ths) {
+  rl_dir_inf <- lapp(
+    c(x = rl_dir_inf, y = rl_cha),
+    function(x, y) {
+      ifelse(is.na(y), x, round(x / 45) * 45)
+    },
+    cores = is_ths
+  )
+
+  writeRaster(
+    rl_dir_inf,
+    filename = "dir_inf.tif",
+    datatype = "FLT8S",
+    overwrite = TRUE
+  )
+  rast("dir_inf.tif")
+}
+
 #' DEM related input
 #'
 #' @description
 #' Clips, pre-processes and calculates or determines all input data related to
-#' the digital elevation model (DEM) in the broader sense: \emph{acc, acc_wtd,
-#' cha, dem, dir, rds, slp,} and _wsh._
+#' the digital elevation model (DEM) in the broader sense: \emph{acc_inf, cha,
+#' dem, dir_inf, rds, slp_inf,} and _wsh._
 #'
-#' Requires _[TauDEM](https://hydrology.usu.edu/taudem/taudem5/downloads.html)_
-#' 5.3.7 and the
+#' Requires the
 #' _[WhiteboxTools](https://www.whiteboxgeo.com/download-whiteboxtools/)_ binary
 #' ([`whitebox::install_whitebox`]) to be installed on your computer.
 #'
@@ -75,12 +96,8 @@ demoProject <- function(cs_dir = tempdir(TRUE)) {
 #' @param sp_sds A [`terra::SpatVector-class`] providing channel source points.
 #' @param cs_rds An optional character string specifying a path to a potentially
 #'   large raster providing roads.
-#' @param cs_wgs An optional character string specifying a path to a potentially
-#'   large raster providing flow accumulation weights.
-#' @param cs_dir An optional character string specifying a path to a potentially
-#'   large raster providing D8 flow directions using _ArcGIS_ codes.
-#' @param ns_cha An optional numeric scalar specifying the minimum (weighted)
-#'   flow accumulation determining a channel.
+#' @param ns_cha An optional numeric scalar specifying the minimum D8 flow
+#'   accumulation determining a channel.
 #' @param ns_brn A numeric scalar specifying the stream burning step size in m.
 #' @param is_adj A numeric scalar specifying how many cells adjacent to channels
 #'   shall be burnt.
@@ -102,19 +119,11 @@ demoProject <- function(cs_dir = tempdir(TRUE)) {
 #' When roads are provided, they are considered as flow obstacles breaking the
 #' continuity of the calculated flow accumulations.
 #'
-#' In case no flow accumulation weights are provided, _acc_ and \emph{acc_wtd}
-#' are identical.
-#'
-#' Providing existing flow directions prevents calculating them, which, for
-#' example, may be useful in case the effect of tillage directions has been
-#' enforced on topographic flow directions in advance. Please note that doing so
-#' renders stream burning and depression breaching without effect.
-#'
 #' `ns_cha` can be used to enhance the channel network obtained by the tracing
 #' of downslope flowpaths from the provided channel sources.
 #'
 #' _dem_ represents the breached DEM with reversed stream burning if applicable.
-#' This processed DEM also serves as the basis for the calculation of the D8
+#' This processed DEM also serves as the basis for the calculation of the DInf
 #' slopes provided by _slp._
 #'
 #' @return A two column numeric [`matrix`] specifying one or more catchment
@@ -146,7 +155,6 @@ demoProject <- function(cs_dir = tempdir(TRUE)) {
 #'   sp_olp = terra::vect(file.path(cs_dir_lrg, "olp.shp")),
 #'   sp_sds = terra::vect(file.path(cs_dir_lrg, "sds.shp")),
 #'   cs_rds = file.path(cs_dir_lrg, "rds_lrg.tif"),
-#'   cs_wgs = file.path(cs_dir_lrg, "wgs_lrg.tif"),
 #'   ls_tmp = TRUE
 #' )}
 #'
@@ -159,8 +167,6 @@ DEMrelatedInput <- function(
   sp_olp,
   sp_sds,
   cs_rds = NULL,
-  cs_wgs = NULL,
-  cs_dir = NULL,
   ns_cha = NULL,
   ns_brn = 50,
   is_adj = 1L,
@@ -182,13 +188,6 @@ DEMrelatedInput <- function(
       call. = FALSE
     )
   }
-  if (Sys.which("mpiexec") == "" || Sys.which("AreaD8") == "") {
-    stop(
-      '"TauDEM" must be installed and added to the "PATH" environment ',
-      "variable for this functionality.",
-      call. = FALSE
-    )
-  }
   qassert(cv_dir, "S+")
   qassert(cs_dem, "S1")
   qassert(cs_cha, "S1")
@@ -200,12 +199,6 @@ DEMrelatedInput <- function(
   assertTRUE(is.points(sp_sds))
   if (!is.null(cs_rds)) {
     qassert(cs_rds, "S1")
-  }
-  if (!is.null(cs_wgs)) {
-    qassert(cs_wgs, "S1")
-  }
-  if (!is.null(cs_dir)) {
-    qassert(cs_dir, "S1")
   }
   if (!is.null(ns_cha)) {
     qassert(ns_cha, "N1[1,)")
@@ -279,24 +272,17 @@ DEMrelatedInput <- function(
     output = file.path(normalizePath("."), "dem_bnt_brd.tif")
   )
 
-  # Calculate or extract D8 flow directions (oversized DEM)
-  if (is.null(cs_dir)) {
-    whitebox::wbt_d8_pointer(
-      dem = file.path(normalizePath("."), "dem_bnt_brd.tif"),
-      output = file.path(normalizePath("."), "dir_ovr.tif"),
-      esri_pntr = TRUE
-    )
-  } else {
-    rl_dir_ovr <- rast(cs_dir)
-    rl_dir_ovr <- adjustExtent(rl_dir_ovr, sp_msk)
-    rl_dir_ovr <- mask(
-      rl_dir_ovr,
-      sp_msk,
-      filename = "dir_ovr.tif",
-      datatype = "INT4S",
-      overwrite = TRUE
-    )
-  }
+  # Calculate D8 and DInf flow directions (oversized DEM)
+  whitebox::wbt_d8_pointer(
+    dem = file.path(normalizePath("."), "dem_bnt_brd.tif"),
+    output = file.path(normalizePath("."), "dir_ovr.tif"),
+    esri_pntr = TRUE
+  )
+
+  whitebox::wbt_d_inf_pointer(
+    dem = file.path(normalizePath("."), "dem_bnt_brd.tif"),
+    output = file.path(normalizePath("."), "dir_inf_ovr.tif")
+  )
 
   # Identify watershed
   writeVector(sp_olp, "olp.shp", overwrite = TRUE)
@@ -314,7 +300,7 @@ DEMrelatedInput <- function(
     overwrite = TRUE
   )
 
-  # Extract flow directions by watershed
+  # Extract D8 and DInf flow directions by watershed
   rl_dir <- mask(
     crop(rast("dir_ovr.tif"), rl_wsh),
     rl_wsh,
@@ -323,7 +309,15 @@ DEMrelatedInput <- function(
     overwrite = TRUE
   )
 
-  # Determine channel cells
+  rl_dir_inf <- mask(
+    crop(rast("dir_inf_ovr.tif"), rl_wsh),
+    rl_wsh,
+    filename = "dir_inf.tif",
+    datatype = "FLT8S",
+    overwrite = TRUE
+  )
+
+  # Trace channel cells
   writeVector(sp_sds, "sds.shp", overwrite = TRUE)
   whitebox::wbt_trace_downslope_flowpaths(
     seed_pts = file.path(normalizePath("."), "sds.shp"),
@@ -341,6 +335,45 @@ DEMrelatedInput <- function(
     overwrite = TRUE
   )
   rl_cha <- rast("cha.tif")
+
+  rl_dir_inf <- D8insteadDInf(rl_dir_inf, rl_cha, is_ths)
+
+  # Enhance channels and "backup" traced ones
+  if (!is.null(ns_cha)) {
+    writeRaster(
+      rl_cha,
+      filename = "cha_trc.tif",
+      datatype = "INT1U",
+      overwrite = TRUE
+    )
+
+    whitebox::wbt_d8_flow_accumulation(
+      input = "dir.tif",
+      output = "acc.tif",
+      pntr = TRUE,
+      esri_pntr = TRUE
+    )
+
+    rl_cha[rast("acc.tif") >= ns_cha] <- 1L
+
+    writeRaster(
+      rl_cha,
+      filename = "cha.tif",
+      datatype = "INT1U",
+      overwrite = TRUE
+    )
+    rl_cha <- rast("cha.tif")
+
+    rl_dir_inf <- D8insteadDInf(rl_dir_inf, rl_cha, is_ths)
+  }
+
+  # Calculate DInf flow accumulations
+  whitebox::wbt_d_inf_flow_accumulation(
+    input = "dir_inf.tif",
+    output = "acc_inf.tif",
+    out_type = "cells",
+    pntr = TRUE
+  )
 
   # Determine road cells
   if (!is.null(cs_rds)) {
@@ -366,69 +399,11 @@ DEMrelatedInput <- function(
     rl_rds <- rast("rds.tif")
   }
 
-  # Calculate flow accumulations
-  rl_dir_tau <- subst(
-    rl_dir,
-    from = c(1L, 2L, 4L, 8L, 16L, 32L, 64L, 128L),
-    to   = c(1L, 8L, 7L, 6L,  5L,  4L,  3L,   2L),
-    filename = "dir_tau.tif",
-    datatype = "INT1U",
-    overwrite = TRUE
-  )
-
-  system2(
-    "mpiexec",
-    sprintf(
-      "-n %s AreaD8 -nc -p %s -ad8 %s",
-      is_ths,
-      shQuote(file.path(normalizePath("."), "dir_tau.tif")),
-      shQuote(file.path(normalizePath("."), "acc.tif"))
-    )
-  )
-
-  if (!is.null(cs_wgs)) {
-    rl_wgs <- rast(cs_wgs)
-    rl_wgs <- adjustExtent(rl_wgs, rl_wsh)
-    rl_wgs <- mask(
-      rl_wgs,
-      rl_wsh,
-      filename = "wgs.tif",
-      datatype = "FLT8S",
-      overwrite = TRUE
-    )
-
-    system2(
-      "mpiexec",
-      sprintf(
-        "-n %s AreaD8 -nc -p %s -ad8 %s -wg %s",
-        is_ths,
-        shQuote(file.path(normalizePath("."), "dir_tau.tif")),
-        shQuote(file.path(normalizePath("."), "acc_wtd.tif")),
-        shQuote(file.path(normalizePath("."), "wgs.tif"))
-      )
-    )
-  } else {
-    file.copy("acc.tif", "acc_wtd.tif", overwrite = TRUE)
-  }
-
-  # Enhance channels
-  if (!is.null(ns_cha)) {
-    rl_cha[rast("acc_wtd.tif") >= ns_cha] <- 1L
-
-    writeRaster(
-      rl_cha,
-      filename = "cha.tif",
-      datatype = "INT1U",
-      overwrite = TRUE
-    )
-    rl_cha <- rast("cha.tif")
-  }
-
-  # Calculate flow accumulations considering roads
+  # Calculate DInf flow accumulations considering roads
   if (!is.null(cs_rds)) {
     lapp(
       c(
-        x = rl_dir_tau,
+        x = rl_dir_inf,
         y = rl_cha,
         z = rl_rds
       ),
@@ -436,26 +411,23 @@ DEMrelatedInput <- function(
         ifelse(is.na(y), ifelse(is.na(z), x, NA_integer_), x) # nolint
       },
       cores = is_ths,
-      filename = "dir_tau_rds.tif",
+      filename = "dir_inf_rds.tif",
       overwrite = TRUE,
-      wopt = list(datatype = "INT1U")
+      wopt = list(datatype = "FLT8S")
     )
 
-    system2(
-      "mpiexec",
-      sprintf(
-        "-n %s AreaD8 -nc -p %s -ad8 %s",
-        is_ths,
-        shQuote(file.path(normalizePath("."), "dir_tau_rds.tif")),
-        shQuote(file.path(normalizePath("."), "acc_rds.tif"))
-      )
+    whitebox::wbt_d_inf_flow_accumulation(
+      input = "dir_inf_rds.tif",
+      output = "acc_inf_rds.tif",
+      out_type = "cells",
+      pntr = TRUE
     )
 
-    rl_acc <- lapp(
+    rl_acc_inf <- lapp(
       c(
         x = rl_cha,
-        y = rast("acc_rds.tif"),
-        z = rast("acc.tif")
+        y = rast("acc_inf_rds.tif"),
+        z = rast("acc_inf.tif")
       ),
       fun = function(x, y, z) {
         ifelse(is.na(x), y, z)
@@ -463,55 +435,21 @@ DEMrelatedInput <- function(
       cores = is_ths
     )
     writeRaster(
-      rl_acc,
-      filename = "acc.tif",
-      datatype = "INT4S",
-      overwrite = TRUE
-    )
-
-    if (!is.null(cs_wgs)) {
-      system2(
-        "mpiexec",
-        sprintf(
-          "-n %s AreaD8 -nc -p %s -ad8 %s -wg %s",
-          is_ths,
-          shQuote(file.path(normalizePath("."), "dir_tau_rds.tif")),
-          shQuote(file.path(normalizePath("."), "acc_wtd_rds.tif")),
-          shQuote(file.path(normalizePath("."), "wgs.tif"))
-        )
-      )
-    } else {
-      file.copy("acc_rds.tif", "acc_wtd_rds.tif", overwrite = TRUE)
-    }
-
-    rl_acc_wtd <- lapp(
-      c(
-        x = rl_cha,
-        y = rast("acc_wtd_rds.tif"),
-        z = rast("acc_wtd.tif")
-      ),
-      fun = function(x, y, z) {
-        ifelse(is.na(x), y, z)
-      },
-      cores = is_ths
-    )
-    writeRaster(
-      rl_acc_wtd,
-      filename = "acc_wtd.tif",
+      rl_acc_inf,
+      filename = "acc_inf.tif",
       datatype = "FLT8S",
       overwrite = TRUE
     )
   }
 
-  rl_acc <- rast("acc.tif")
-  rl_acc_wtd <- rast("acc_wtd.tif")
+  rl_acc_inf <- rast("acc_inf.tif")
 
   # Undo stream burning (oversized DEM)
   rl_cha_map <- rast(cs_cha)
   rl_cha_map <- adjustExtent(rl_cha_map, sp_msk)
 
   rl_cha_map_cha <- rl_cha_map
-  rl_cha_map_cha[extend(rl_cha, rl_cha_map_cha) == 1L] <- 1L
+  rl_cha_map_cha[extend(rast("cha_trc.tif"), rl_cha_map_cha) == 1L] <- 1L
 
   rl_dem_brd <- rast("dem_bnt_brd.tif")
   rl_dem_brd <- lapp(
@@ -548,8 +486,8 @@ DEMrelatedInput <- function(
     overwrite = TRUE
   )
 
-  # Calculate D8 slopes (oversized DEM)
-  nm_slp_ovr <- D8slope(
+  # Calculate DInf slopes (oversized DEM)
+  nm_slp_inf_ovr <- D8slope( #f Change to future DInfSlope()
     im_dir = as.matrix(rast("dir_ovr.tif"), wide = TRUE),
     nm_dem = as.matrix(rl_dem_brd, wide = TRUE),
     im_fDo = matrix(
@@ -560,24 +498,23 @@ DEMrelatedInput <- function(
     is_ths = is_ths
   )
 
-  rl_slp <- mask(
-    crop(rast(nm_slp_ovr, crs = crs(rl_dem_ovr), extent = ext(rl_dem_ovr)), rl_wsh),
+  rl_slp_inf <- mask(
+    crop(rast(nm_slp_inf_ovr, crs = crs(rl_dem_ovr), extent = ext(rl_dem_ovr)), rl_wsh),
     rl_wsh,
-    filename = "slp.tif",
+    filename = "slp_inf.tif",
     datatype = "FLT8S",
     overwrite = TRUE
   )
-  rm(nm_slp_ovr)
+  rm(nm_slp_inf_ovr)
 
   # Copy data to "Input" directory
   toInput <- list(
-    acc     = rl_acc    ,
-    acc_wtd = rl_acc_wtd,
+    acc_inf = rl_acc_inf,
     cha     = rl_cha    ,
     dem     = rl_dem    ,
-    dir     = rl_dir    ,
+    dir_inf = rl_dir_inf,
     rds     = rl_rds    ,
-    slp     = rl_slp    ,
+    slp_inf = rl_slp_inf,
     wsh     = rl_wsh
   )
   for (item in names(toInput)) {
@@ -592,7 +529,7 @@ DEMrelatedInput <- function(
   }
 
   # Determine outlet coordinates
-  nm_slp <- D8slope(
+  nm_slp <- D8slope( #f Change to future DInfSlope()?
     im_dir = as.matrix(rl_dir, wide = TRUE),
     nm_dem = as.matrix(rl_dem, wide = TRUE),
     im_fDo = matrix(

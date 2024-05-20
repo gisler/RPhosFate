@@ -12,8 +12,6 @@ DEMrelatedInput(
   sp_olp,
   sp_sds,
   cs_rds = NULL,
-  cs_wgs = NULL,
-  cs_dir = NULL,
   ns_cha = NULL,
   ns_brn = 50,
   is_adj = 1L,
@@ -43,14 +41,8 @@ outlet point(s).}
 \item{cs_rds}{An optional character string specifying a path to a potentially
 large raster providing roads.}
 
-\item{cs_wgs}{An optional character string specifying a path to a potentially
-large raster providing flow accumulation weights.}
-
-\item{cs_dir}{An optional character string specifying a path to a potentially
-large raster providing D8 flow directions using \emph{ArcGIS} codes.}
-
-\item{ns_cha}{An optional numeric scalar specifying the minimum (weighted)
-flow accumulation determining a channel.}
+\item{ns_cha}{An optional numeric scalar specifying the minimum D8 flow
+accumulation determining a channel.}
 
 \item{ns_brn}{A numeric scalar specifying the stream burning step size in m.}
 
@@ -69,11 +61,10 @@ outlet coordinates and side effects in the form of raster files.
 }
 \description{
 Clips, pre-processes and calculates or determines all input data related to
-the digital elevation model (DEM) in the broader sense: \emph{acc, acc_wtd,
-cha, dem, dir, rds, slp,} and \emph{wsh.}
+the digital elevation model (DEM) in the broader sense: \emph{acc_inf, cha,
+dem, dir_inf, rds, slp_inf,} and \emph{wsh.}
 
-Requires \emph{\href{https://hydrology.usu.edu/taudem/taudem5/downloads.html}{TauDEM}}
-5.3.7 and the
+Requires the
 \emph{\href{https://www.whiteboxgeo.com/download-whiteboxtools/}{WhiteboxTools}} binary
 (\code{\link[whitebox:install_whitebox]{whitebox::install_whitebox}}) to be installed on your computer.
 }
@@ -90,19 +81,11 @@ approximately into the direction of channel cells (no effect with \code{ns_brn =
 When roads are provided, they are considered as flow obstacles breaking the
 continuity of the calculated flow accumulations.
 
-In case no flow accumulation weights are provided, \emph{acc} and \emph{acc_wtd}
-are identical.
-
-Providing existing flow directions prevents calculating them, which, for
-example, may be useful in case the effect of tillage directions has been
-enforced on topographic flow directions in advance. Please note that doing so
-renders stream burning and depression breaching without effect.
-
 \code{ns_cha} can be used to enhance the channel network obtained by the tracing
 of downslope flowpaths from the provided channel sources.
 
 \emph{dem} represents the breached DEM with reversed stream burning if applicable.
-This processed DEM also serves as the basis for the calculation of the D8
+This processed DEM also serves as the basis for the calculation of the DInf
 slopes provided by \emph{slp.}
 }
 \examples{
@@ -124,7 +107,6 @@ nm_olc <- DEMrelatedInput(
   sp_olp = terra::vect(file.path(cs_dir_lrg, "olp.shp")),
   sp_sds = terra::vect(file.path(cs_dir_lrg, "sds.shp")),
   cs_rds = file.path(cs_dir_lrg, "rds_lrg.tif"),
-  cs_wgs = file.path(cs_dir_lrg, "wgs_lrg.tif"),
   ls_tmp = TRUE
 )}
 

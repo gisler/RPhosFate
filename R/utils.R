@@ -1,7 +1,3 @@
-adjustExtent <- function(rl, ex) {
-  extend(crop(rl, ex), ex)
-}
-
 adjustMetric <- function(metric, metrics) {
   if (metric == "PBIAS") {
     abs(metrics[metric])
