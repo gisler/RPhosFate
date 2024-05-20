@@ -86,7 +86,7 @@ of downslope flowpaths from the provided channel sources.
 
 \emph{dem} represents the breached DEM with reversed stream burning if applicable.
 This processed DEM also serves as the basis for the calculation of the DInf
-slopes provided by \emph{slp.}
+slopes provided by \emph{slp_inf.}
 }
 \examples{
 \dontrun{

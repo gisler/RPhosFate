@@ -124,7 +124,7 @@ D8insteadDInf <- function(rl_dir_inf, rl_cha, is_ths) {
 #'
 #' _dem_ represents the breached DEM with reversed stream burning if applicable.
 #' This processed DEM also serves as the basis for the calculation of the DInf
-#' slopes provided by _slp._
+#' slopes provided by \emph{slp_inf.}
 #'
 #' @return A two column numeric [`matrix`] specifying one or more catchment
 #'   outlet coordinates and side effects in the form of raster files.
