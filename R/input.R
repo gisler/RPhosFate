@@ -411,8 +411,15 @@ DEMrelatedInput <- function(
     file.copy("acc.tif", "acc_wtd.tif", overwrite = TRUE)
   }
 
-  # Enhance channels
+  # Enhance channels and "backup" traced ones
   if (!is.null(ns_cha)) {
+    writeRaster(
+      rl_cha,
+      filename = "cha_trc.tif",
+      datatype = "INT1U",
+      overwrite = TRUE
+    )
+
     rl_cha[rast("acc_wtd.tif") >= ns_cha] <- 1L
 
     writeRaster(
@@ -511,7 +518,7 @@ DEMrelatedInput <- function(
   rl_cha_map <- adjustExtent(rl_cha_map, sp_msk)
 
   rl_cha_map_cha <- rl_cha_map
-  rl_cha_map_cha[extend(rl_cha, rl_cha_map_cha) == 1L] <- 1L
+  rl_cha_map_cha[extend(rast("cha_trc.tif"), rl_cha_map_cha) == 1L] <- 1L
 
   rl_dem_brd <- rast("dem_bnt_brd.tif")
   rl_dem_brd <- lapp(
