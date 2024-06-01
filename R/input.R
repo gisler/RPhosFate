@@ -536,7 +536,7 @@ DEMrelatedInput <- function(
   rm(nm_slp)
 
   nm_olc <- xyFromCell(
-    rl_acc,
+    rl_acc_inf,
     unlist(cells(is.na(rl_slp) & !is.na(rl_cha), 1L))
   )
 
