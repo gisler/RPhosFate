@@ -322,31 +322,24 @@ DEMrelatedInput <- function(
   whitebox::wbt_trace_downslope_flowpaths(
     seed_pts = file.path(normalizePath("."), "sds.shp"),
     d8_pntr = file.path(normalizePath("."), "dir.tif"),
-    output = file.path(normalizePath("."), "cha.tif"),
+    output = file.path(normalizePath("."), "cha_trc.tif"),
     esri_pntr = TRUE
   )
 
-  rl_cha <- rast("cha.tif")
+  rl_cha <- rast("cha_trc.tif")
   rl_cha[!is.na(rl_cha)] <- 1L
   writeRaster(
     rl_cha,
-    filename = "cha.tif",
+    filename = "cha_trc.tif",
     datatype = "INT1U",
     overwrite = TRUE
   )
-  rl_cha <- rast("cha.tif")
+  rl_cha <- rast("cha_trc.tif")
 
   rl_dir_inf <- D8insteadDInf(rl_dir_inf, rl_cha, is_ths)
 
-  # Enhance channels and "backup" traced ones
+  # Enhance channels
   if (!is.null(ns_cha)) {
-    writeRaster(
-      rl_cha,
-      filename = "cha_trc.tif",
-      datatype = "INT1U",
-      overwrite = TRUE
-    )
-
     whitebox::wbt_d8_flow_accumulation(
       input = "dir.tif",
       output = "acc.tif",
@@ -449,12 +442,7 @@ DEMrelatedInput <- function(
   rl_cha_map <- adjustExtent(rl_cha_map, sp_msk)
 
   rl_cha_map_cha <- rl_cha_map
-  if (!is.null(ns_cha)) {
-    rl_cha <- rast("cha_trc.tif")
-  } else {
-    rl_cha <- rast("cha.tif")
-  }
-  rl_cha_map_cha[extend(rl_cha, rl_cha_map_cha) == 1L] <- 1L
+  rl_cha_map_cha[extend(rast("cha_trc.tif"), rl_cha_map_cha) == 1L] <- 1L
 
   rl_dem_brd <- rast("dem_bnt_brd.tif")
   rl_dem_brd <- lapp(
