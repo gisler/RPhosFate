@@ -5,6 +5,10 @@ D8slope <- function(im_dir, nm_dem, im_fDo, ns_fpl, is_ths = 1L) {
     .Call(`_RPhosFate_D8slope`, im_dir, nm_dem, im_fDo, ns_fpl, is_ths)
 }
 
+DInfSlope <- function(nm_dir_inf, nm_dem, ns_res, is_ths = 1L) {
+    .Call(`_RPhosFate_DInfSlope`, nm_dir_inf, nm_dem, ns_res, is_ths)
+}
+
 dir_sth <- function(im_dir, im_sth, im_fDo, is_ths = 1L) {
     .Call(`_RPhosFate_dir_sth`, im_dir, im_sth, im_fDo, is_ths)
 }

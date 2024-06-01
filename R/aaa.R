@@ -279,8 +279,8 @@ setClass(
   slots = c(
     cs_cmt     = "character",     # Coordinate reference system of river catchment
     ex_cmt     = "SpatExtent",    # Extent of river catchment
-    is_res     = "integer",       # Cell resolution in m
-    is_siz     = "integer",       # Cell area in m^2
+    ns_res     = "numeric",       # Cell resolution in m
+    ns_siz     = "numeric",       # Cell area in m^2
     is_rws     = "integer",       # Number of rows
     is_cls     = "integer",       # Number of columns
     iv_fDo_dgl = "integer",       # Diagonal outflow direction vector
@@ -299,8 +299,8 @@ setMethod(
 
     .Object@cs_cmt     <- crs(cmt@topo@rl_acc_wtd)
     .Object@ex_cmt     <- ext(cmt@topo@rl_acc_wtd)
-    .Object@is_res     <- as.integer(xres(cmt@topo@rl_acc_wtd))
-    .Object@is_siz     <- as.integer(.Object@is_res^2)
+    .Object@ns_res     <- xres(cmt@topo@rl_acc_wtd)
+    .Object@ns_siz     <- .Object@ns_res^2
     .Object@is_rws     <- as.integer(nrow(cmt@topo@rl_acc_wtd))
     .Object@is_cls     <- as.integer(ncol(cmt@topo@rl_acc_wtd))
     .Object@iv_fDo_dgl <- cmt@parameters@iv_fDo[c(1L, 3L, 7L, 9L)]

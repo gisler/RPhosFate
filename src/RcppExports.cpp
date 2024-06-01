@@ -26,6 +26,20 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// DInfSlope
+arma::dmat DInfSlope(const arma::dmat& nm_dir_inf, const arma::dmat& nm_dem, const double ns_res, const int is_ths);
+RcppExport SEXP _RPhosFate_DInfSlope(SEXP nm_dir_infSEXP, SEXP nm_demSEXP, SEXP ns_resSEXP, SEXP is_thsSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const arma::dmat& >::type nm_dir_inf(nm_dir_infSEXP);
+    Rcpp::traits::input_parameter< const arma::dmat& >::type nm_dem(nm_demSEXP);
+    Rcpp::traits::input_parameter< const double >::type ns_res(ns_resSEXP);
+    Rcpp::traits::input_parameter< const int >::type is_ths(is_thsSEXP);
+    rcpp_result_gen = Rcpp::wrap(DInfSlope(nm_dir_inf, nm_dem, ns_res, is_ths));
+    return rcpp_result_gen;
+END_RCPP
+}
 // dir_sth
 arma::imat dir_sth(const arma::imat& im_dir, const arma::imat& im_sth, const arma::imat& im_fDo, const int is_ths);
 RcppExport SEXP _RPhosFate_dir_sth(SEXP im_dirSEXP, SEXP im_sthSEXP, SEXP im_fDoSEXP, SEXP is_thsSEXP) {
@@ -66,6 +80,7 @@ END_RCPP
 
 static const R_CallMethodDef CallEntries[] = {
     {"_RPhosFate_D8slope", (DL_FUNC) &_RPhosFate_D8slope, 5},
+    {"_RPhosFate_DInfSlope", (DL_FUNC) &_RPhosFate_DInfSlope, 4},
     {"_RPhosFate_dir_sth", (DL_FUNC) &_RPhosFate_dir_sth, 4},
     {"_RPhosFate_transportCpp", (DL_FUNC) &_RPhosFate_transportCpp, 13},
     {NULL, NULL, 0}

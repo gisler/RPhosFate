@@ -181,7 +181,7 @@ setMethod(
       x@erosion@rl_LFa *
       x@erosion@rl_SFa *
       x@erosion@rl_CFa *
-      x@helpers@is_siz * 1e-4
+      x@helpers@ns_siz * 1e-4
 
     x@erosion@rl_ero <- writeLayer(x, "ero", x@erosion@rl_ero, "FLT8S")
 
@@ -318,11 +318,11 @@ setMethod(
     # Hydraulic radius in m
     ns_rhy_a <- x@parameters@ns_rhy_a
     ns_rhy_b <- x@parameters@ns_rhy_b
-    is_siz <- x@helpers@is_siz
+    ns_siz <- x@helpers@ns_siz
     x@transport@rl_rhy <- app(
       x@topo@rl_acc_wtd,
       function(x) {
-        ns_rhy_a * (x * is_siz * 1e-6)^ns_rhy_b
+        ns_rhy_a * (x * ns_siz * 1e-6)^ns_rhy_b
       },
       cores = x@is_ths
     )

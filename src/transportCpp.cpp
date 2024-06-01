@@ -150,7 +150,7 @@ List transportCpp(
   double ns_man_rip = parameters.slot("ns_man_rip");
   double ns_man_cha = parameters.slot("ns_man_cha");
   double ns_dep_cha = parameters.slot("ns_dep_cha");
-  int is_res = helpers.slot("is_res");
+  double ns_res = helpers.slot("ns_res");
   int is_rws = helpers.slot("is_rws");
   int is_cls = helpers.slot("is_cls");
   IntegerMatrix im_fDo = helpers.slot("im_fDo");
@@ -175,7 +175,7 @@ List transportCpp(
   NumericMatrix nm_tfc_tpt = na_real_matrix(is_rws, is_cls); // Transport transfer coefficient (empty matrix to loop through)
   NumericMatrix nm_tfc_rip = na_real_matrix(is_rws, is_cls); // Riparian zone transfer coefficient (empty matrix to loop through)
 
-  double ns_fpl     = static_cast<double>(is_res); // Flow path length
+  double ns_fpl     = ns_res; // Flow path length
   double ns_fpl_dgl = sqrt(2.0 * pow(ns_fpl, 2.0)); // Diagonal flow path length
   double ns_fpl_rip = (ns_fpl - ns_fpl * ns_cha_rto) / 2.0; // Riparian zone flow path length
 
