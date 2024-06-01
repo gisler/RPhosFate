@@ -13,7 +13,7 @@ arma::imat dir_sth(
   arma::imat im_sth_pad(arma::size(im_sth) + 2, arma::fill::value(NA_INTEGER));
   im_sth_pad(1, 1, arma::size(im_sth)) = im_sth;
 
-  int is_sth = {1};
+  int is_sth{1};
   arma::imat im_xxx(arma::size(im_sth), arma::fill::value(NA_INTEGER));
 
   #pragma omp parallel for num_threads(is_ths) collapse(2)
@@ -24,7 +24,7 @@ arma::imat dir_sth(
         continue;
       }
 
-      int is_tmp;
+      int is_tmp{};
       is_tmp = arma::conv_to<int>::from(
         im_sth_pad.submat(i - 1, j - 1, i + 1, j + 1).eval().elem(
           arma::find(im_dir.at(i - 1, j - 1) == im_fDo)
