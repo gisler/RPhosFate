@@ -13,21 +13,21 @@ const struct {
 } drdc;
 
 struct X1X2 {
-  double x1{};
-  double x2{};
+  double ns_x1{};
+  double ns_x2{};
 };
 
 class MovingWindow {
 public:
-  const arma::uword is_rws{};
-  const arma::uword is_cls{};
+  const arma::sword is_rws{};
+  const arma::sword is_cls{};
 
-  arma::uword determineFacet(const double ns_dir_inf);
+  arma::uword determineFacet(const double& ns_dir_inf);
 
   X1X2 determine_x1x2(
-    const double ns_dir_inf,
-    const arma::uword i,
-    const arma::uword j,
+    const double& ns_dir_inf,
+    const arma::uword& i,
+    const arma::uword& j,
     const arma::dmat& nm_xxx
   );
 };
