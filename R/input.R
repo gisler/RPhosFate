@@ -480,14 +480,10 @@ DEMrelatedInput <- function(
   )
 
   # Calculate DInf slopes (oversized DEM)
-  nm_slp_inf_ovr <- D8slope( #f Change to future DInfSlope()
-    im_dir = as.matrix(rast("dir_ovr.tif"), wide = TRUE),
+  nm_slp_inf_ovr <- DInfSlope(
+    nm_dir_inf = as.matrix(rast("dir_inf_ovr.tif"), wide = TRUE),
     nm_dem = as.matrix(rl_dem_brd, wide = TRUE),
-    im_fDo = matrix(
-      c(32L, 16L, 8L, 64L, 0L, 4L, 128L, 1L, 2L),
-      3L
-    ),
-    ns_fpl = xres(rl_dem),
+    ns_res = xres(rl_dem_brd),
     is_ths = is_ths
   )
 
@@ -522,14 +518,10 @@ DEMrelatedInput <- function(
   }
 
   # Determine outlet coordinates
-  nm_slp <- D8slope( #f Change to future DInfSlope()?
-    im_dir = as.matrix(rl_dir, wide = TRUE),
+  nm_slp <- DInfSlope(
+    nm_dir_inf = as.matrix(rl_dir_inf, wide = TRUE),
     nm_dem = as.matrix(rl_dem, wide = TRUE),
-    im_fDo = matrix(
-      c(32L, 16L, 8L, 64L, 0L, 4L, 128L, 1L, 2L),
-      3L
-    ),
-    ns_fpl = xres(rl_dem),
+    ns_res = xres(rl_dem),
     is_ths = is_ths
   )
   rl_slp <- rast(nm_slp, crs = crs(rl_dem), extent = ext(rl_dem))
