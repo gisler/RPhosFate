@@ -54,6 +54,8 @@ demoProject <- function(cs_dir = tempdir(TRUE)) {
 }
 
 D8insteadDInf <- function(rl_dir_inf, rl_cha, is_ths) {
+  rl_dir_inf[rl_dir_inf == -1] <- NA_real_
+
   rl_dir_inf <- lapp(
     c(x = rl_dir_inf, y = rl_cha),
     function(x, y) {
@@ -68,7 +70,6 @@ D8insteadDInf <- function(rl_dir_inf, rl_cha, is_ths) {
     datatype = "FLT8S",
     overwrite = TRUE
   )
-  rast("dir_inf.tif")
 }
 
 #' DEM related input
@@ -229,11 +230,11 @@ DEMrelatedInput <- function(
   )
 
   # Burn streams (oversized DEM)
-  rl_cha_map <- rast(cs_cha)
-  rl_cha_map <- adjustExtent(rl_cha_map, sp_msk)
+  rl_cha_ovr <- rast(cs_cha)
+  rl_cha_ovr <- adjustExtent(rl_cha_ovr, sp_msk)
 
-  rl_dem_bnt <- lapp(
-    c(x = rl_dem_ovr, y = rl_cha_map),
+  rl_dem_ovr_bnt <- lapp(
+    c(x = rl_dem_ovr, y = rl_cha_ovr),
     fun = function(x, y) {
       ifelse(is.na(y), x, x - ns_brn)
     },
@@ -241,55 +242,50 @@ DEMrelatedInput <- function(
   )
 
   for (i in seq_len(is_adj)) {
-    rl_cha_map[as.integer(adjacent(
-      rl_cha_map,
-      cells(rl_cha_map),
+    rl_cha_ovr[as.integer(adjacent(
+      rl_cha_ovr,
+      cells(rl_cha_ovr),
       directions = "queen",
       include = TRUE
     ))] <- 1L
 
-    rl_dem_bnt <- lapp(
-      c(x = rl_dem_bnt, y = rl_cha_map),
+    rl_dem_ovr_bnt <- lapp(
+      c(x = rl_dem_ovr_bnt, y = rl_cha_ovr),
       fun = function(x, y) {
         ifelse(is.na(y), x, x - ns_brn)
       },
       cores = is_ths
     )
   }
+  rm(rl_cha_ovr)
 
   writeRaster(
-    rl_dem_bnt,
-    filename = "dem_bnt.tif",
+    rl_dem_ovr_bnt,
+    filename = "dem_ovr_bnt.tif",
     datatype = "FLT8S",
     overwrite = TRUE
   )
-  rl_dem_bnt <- rast("dem_bnt.tif")
-  rm(rl_cha_map)
+  rl_dem_ovr_bnt <- rast("dem_ovr_bnt.tif")
 
   # Breach depressions (oversized DEM)
   whitebox::wbt_breach_depressions(
-    dem = file.path(normalizePath("."), "dem_bnt.tif"),
-    output = file.path(normalizePath("."), "dem_bnt_brd.tif")
+    dem = "dem_ovr_bnt.tif",
+    output = "dem_ovr_bnt_brd.tif"
   )
 
-  # Calculate D8 and DInf flow directions (oversized DEM)
+  # Calculate D8 flow directions (oversized DEM)
   whitebox::wbt_d8_pointer(
-    dem = file.path(normalizePath("."), "dem_bnt_brd.tif"),
-    output = file.path(normalizePath("."), "dir_ovr.tif"),
+    dem = "dem_ovr_bnt_brd.tif",
+    output = "dir_ovr.tif",
     esri_pntr = TRUE
-  )
-
-  whitebox::wbt_d_inf_pointer(
-    dem = file.path(normalizePath("."), "dem_bnt_brd.tif"),
-    output = file.path(normalizePath("."), "dir_inf_ovr.tif")
   )
 
   # Identify watershed
   writeVector(sp_olp, "olp.shp", overwrite = TRUE)
   whitebox::wbt_watershed(
-    d8_pntr = file.path(normalizePath("."), "dir_ovr.tif"),
-    pour_pts = file.path(normalizePath("."), "olp.shp"),
-    output = file.path(normalizePath("."), "wsh_ovr.tif"),
+    d8_pntr = "dir_ovr.tif",
+    pour_pts = "olp.shp",
+    output = "wsh_ovr.tif",
     esri_pntr = TRUE
   )
 
@@ -300,8 +296,8 @@ DEMrelatedInput <- function(
     overwrite = TRUE
   )
 
-  # Extract D8 and DInf flow directions by watershed
-  rl_dir <- mask(
+  # Extract D8 flow directions by watershed
+  mask(
     crop(rast("dir_ovr.tif"), rl_wsh),
     rl_wsh,
     filename = "dir.tif",
@@ -309,25 +305,18 @@ DEMrelatedInput <- function(
     overwrite = TRUE
   )
 
-  rl_dir_inf <- mask(
-    crop(rast("dir_inf_ovr.tif"), rl_wsh),
-    rl_wsh,
-    filename = "dir_inf.tif",
-    datatype = "FLT8S",
-    overwrite = TRUE
-  )
-
   # Trace channel cells
   writeVector(sp_sds, "sds.shp", overwrite = TRUE)
   whitebox::wbt_trace_downslope_flowpaths(
-    seed_pts = file.path(normalizePath("."), "sds.shp"),
-    d8_pntr = file.path(normalizePath("."), "dir.tif"),
-    output = file.path(normalizePath("."), "cha_trc.tif"),
+    seed_pts = "sds.shp",
+    d8_pntr = "dir.tif",
+    output = "cha_trc.tif",
     esri_pntr = TRUE
   )
 
   rl_cha <- rast("cha_trc.tif")
   rl_cha[!is.na(rl_cha)] <- 1L
+
   writeRaster(
     rl_cha,
     filename = "cha_trc.tif",
@@ -335,8 +324,6 @@ DEMrelatedInput <- function(
     overwrite = TRUE
   )
   rl_cha <- rast("cha_trc.tif")
-
-  rl_dir_inf <- D8insteadDInf(rl_dir_inf, rl_cha, is_ths)
 
   # Enhance channels
   if (!is.null(ns_cha)) {
@@ -356,9 +343,24 @@ DEMrelatedInput <- function(
       overwrite = TRUE
     )
     rl_cha <- rast("cha.tif")
-
-    rl_dir_inf <- D8insteadDInf(rl_dir_inf, rl_cha, is_ths)
   }
+
+  # Extract burnt and breached DEM by watershed
+  mask(
+    crop(rast("dem_ovr_bnt_brd.tif"), rl_wsh),
+    rl_wsh,
+    filename = "dem_bnt_brd.tif",
+    datatype = "FLT8S",
+    overwrite = TRUE
+  )
+
+  # Calculate DInf flow directions
+  whitebox::wbt_d_inf_pointer(
+    dem = "dem_bnt_brd.tif",
+    output = "dir_inf.tif"
+  )
+
+  rl_dir_inf <- D8insteadDInf(rast("dir_inf.tif"), rl_cha, is_ths)
 
   # Calculate DInf flow accumulations
   whitebox::wbt_d_inf_flow_accumulation(
@@ -372,7 +374,9 @@ DEMrelatedInput <- function(
   if (!is.null(cs_rds)) {
     rl_rds <- rast(cs_rds)
     rl_rds <- adjustExtent(rl_rds, rl_wsh)
+
     rl_rds[!rl_rds %in% c(0L, 1L)] <- NA_integer_
+
     rl_rds <- mask(
       rl_rds,
       rl_wsh,
@@ -383,6 +387,7 @@ DEMrelatedInput <- function(
   } else {
     rl_rds <- rl_wsh
     rl_rds[] <- NA_integer_
+
     writeRaster(
       rl_rds,
       filename = "rds.tif",
@@ -427,6 +432,7 @@ DEMrelatedInput <- function(
       },
       cores = is_ths
     )
+
     writeRaster(
       rl_acc_inf,
       filename = "acc_inf.tif",
@@ -438,15 +444,14 @@ DEMrelatedInput <- function(
   rl_acc_inf <- rast("acc_inf.tif")
 
   # Undo stream burning (oversized DEM)
-  rl_cha_map <- rast(cs_cha)
-  rl_cha_map <- adjustExtent(rl_cha_map, sp_msk)
+  rl_cha_ovr <- rast(cs_cha)
+  rl_cha_ovr <- adjustExtent(rl_cha_ovr, sp_msk)
 
-  rl_cha_map_cha <- rl_cha_map
-  rl_cha_map_cha[extend(rast("cha_trc.tif"), rl_cha_map_cha) == 1L] <- 1L
+  rl_cha_ovr_cha <- rl_cha_ovr
+  rl_cha_ovr_cha[extend(rast("cha_trc.tif"), rl_cha_ovr_cha) == 1L] <- 1L
 
-  rl_dem_brd <- rast("dem_bnt_brd.tif")
-  rl_dem_brd <- lapp(
-    c(x = rl_dem_brd, y = rl_cha_map_cha),
+  rl_dem_ovr_brd <- lapp(
+    c(x = rast("dem_ovr_bnt_brd.tif"), y = rl_cha_ovr_cha),
     fun = function(x, y) {
       ifelse(is.na(y), x, x + ns_brn)
     },
@@ -454,41 +459,38 @@ DEMrelatedInput <- function(
   )
 
   for (i in seq_len(is_adj)) {
-    rl_cha_map[union(as.integer(adjacent(
-      rl_cha_map,
-      cells(rl_cha_map),
+    rl_cha_ovr[union(as.integer(adjacent(
+      rl_cha_ovr,
+      cells(rl_cha_ovr),
       directions = "queen",
       include = TRUE
-    )), unlist(cells(rl_cha_map_cha, 1L)))] <- 1L
+    )), unlist(cells(rl_cha_ovr_cha, 1L)))] <- 1L
 
-    rl_dem_brd <- lapp(
-      c(x = rl_dem_brd, y = rl_cha_map),
+    rl_dem_ovr_brd <- lapp(
+      c(x = rl_dem_ovr_brd, y = rl_cha_ovr),
       fun = function(x, y) {
         ifelse(is.na(y), x, x + ns_brn)
       },
       cores = is_ths
     )
   }
-
-  # Extract DEM by watershed
-  rl_dem <- mask(
-    crop(rl_dem_brd, rl_wsh),
-    rl_wsh,
-    filename = "dem.tif",
-    datatype = "FLT8S",
-    overwrite = TRUE
-  )
+  rm(rl_cha_ovr, rl_cha_ovr_cha)
 
   # Calculate DInf slopes (oversized DEM)
   nm_slp_inf_ovr <- DInfSlope(
-    nm_dir_inf = as.matrix(rast("dir_inf_ovr.tif"), wide = TRUE),
-    nm_dem = as.matrix(rl_dem_brd, wide = TRUE),
-    ns_res = xres(rl_dem_brd),
+    nm_dir_inf = as.matrix(extend(rl_dir_inf, rl_dem_ovr_brd), wide = TRUE),
+    nm_dem = as.matrix(rl_dem_ovr_brd, wide = TRUE),
+    ns_res = xres(rl_dem_ovr_brd),
     is_ths = is_ths
   )
 
+  # Extract DInf slopes by watershed
   rl_slp_inf <- mask(
-    crop(rast(nm_slp_inf_ovr, crs = crs(rl_dem_ovr), extent = ext(rl_dem_ovr)), rl_wsh),
+    crop(rast(
+      nm_slp_inf_ovr,
+      crs = crs(rl_dem_ovr_brd),
+      extent = ext(rl_dem_ovr_brd)
+    ), rl_wsh),
     rl_wsh,
     filename = "slp_inf.tif",
     datatype = "FLT8S",
@@ -496,11 +498,26 @@ DEMrelatedInput <- function(
   )
   rm(nm_slp_inf_ovr)
 
+  # Extract breached DEM by watershed
+  rl_dem_brd <- mask(
+    crop(rl_dem_ovr_brd, rl_wsh),
+    rl_wsh,
+    filename = "dem_brd.tif",
+    datatype = "FLT8S",
+    overwrite = TRUE
+  )
+
+  # Determine outlet coordinates
+  nm_olc <- xyFromCell(
+    rl_acc_inf,
+    unlist(cells(is.na(rl_slp_inf) & !is.na(rl_cha), 1L))
+  )
+
   # Copy data to "Input" directory
   toInput <- list(
     acc_inf = rl_acc_inf,
     cha     = rl_cha    ,
-    dem     = rl_dem    ,
+    dem     = rl_dem_brd,
     dir_inf = rl_dir_inf,
     rds     = rl_rds    ,
     slp_inf = rl_slp_inf,
@@ -516,21 +533,6 @@ DEMrelatedInput <- function(
       overwrite = TRUE
     )
   }
-
-  # Determine outlet coordinates
-  nm_slp <- DInfSlope(
-    nm_dir_inf = as.matrix(rl_dir_inf, wide = TRUE),
-    nm_dem = as.matrix(rl_dem, wide = TRUE),
-    ns_res = xres(rl_dem),
-    is_ths = is_ths
-  )
-  rl_slp <- rast(nm_slp, crs = crs(rl_dem), extent = ext(rl_dem))
-  rm(nm_slp)
-
-  nm_olc <- xyFromCell(
-    rl_acc_inf,
-    unlist(cells(is.na(rl_slp) & !is.na(rl_cha), 1L))
-  )
 
   # Clean up temporary files
   if (!ls_tmp) {
