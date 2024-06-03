@@ -22,7 +22,8 @@ arma::uword MovingWindow::determineFacet(const double& ns_dir_inf) {
     us_fct = 8;
   } else{
     // Rcpp::stop("\"dir_inf\" out of range.");
-    Rcpp::Rcout << ns_dir_inf << std::endl;
+    // throw Rcpp::exception("\"dir_inf\" out of range.");
+    Rcpp::Rcerr << "Warning: \"dir_inf\" out of range." << std::endl;
   }
 
   return us_fct;
