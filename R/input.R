@@ -53,25 +53,6 @@ demoProject <- function(cs_dir = tempdir(TRUE)) {
   normalizePath(demoRoot, winslash = .Platform$file.sep)
 }
 
-D8insteadDInf <- function(rl_dir_inf, rl_cha, is_ths) {
-  rl_dir_inf[rl_dir_inf == -1] <- NA_real_
-
-  rl_dir_inf <- lapp(
-    c(x = rl_dir_inf, y = rl_cha),
-    function(x, y) {
-      ifelse(is.na(y), x, round(x / 45) * 45)
-    },
-    cores = is_ths
-  )
-
-  writeRaster(
-    rl_dir_inf,
-    filename = "dir_inf.tif",
-    datatype = "FLT8S",
-    overwrite = TRUE
-  )
-}
-
 #' DEM related input
 #'
 #' @description
@@ -359,8 +340,47 @@ DEMrelatedInput <- function(
     dem = "dem_bnt_brd.tif",
     output = "dir_inf.tif"
   )
+  rl_dir_inf <- rast("dir_inf.tif")
 
-  rl_dir_inf <- D8insteadDInf(rast("dir_inf.tif"), rl_cha, is_ths)
+  rl_dir_inf[rl_dir_inf == -1] <- NA_real_
+
+  rl_dir_inf <- lapp(
+    c(x = rl_dir_inf, y = rl_cha),
+    function(x, y) {
+      ifelse(is.na(y), x, round(x / 45) * 45)
+    },
+    cores = is_ths
+  )
+
+  # Determine outlet coordinates
+  nm_olc <- xyFromCell(
+    rl_cha,
+    unlist(cells(is.na(rl_dir_inf) & !is.na(rl_cha), 1L))
+  )
+
+  # Complement DInf at outlet coordinates
+  DInfInsteadD8 <- c(
+      "1" =  90,
+      "2" = 135,
+      "4" = 180,
+      "8" = 225,
+     "16" = 270,
+     "32" = 315,
+     "64" =   0,
+    "128" =  45
+  )
+
+  df_dir_olc <- rast("dir.tif")[cellFromXY(rl_dir_inf, nm_olc)]
+  df_dir_olc[[1L]] <- DInfInsteadD8[as.character(df_dir_olc[[1L]])]
+  rl_dir_inf[cellFromXY(rl_dir_inf, nm_olc)] <- df_dir_olc
+
+  writeRaster(
+    rl_dir_inf,
+    filename = "dir_inf.tif",
+    datatype = "FLT8S",
+    overwrite = TRUE
+  )
+  rl_dir_inf <- rast("dir_inf.tif")
 
   # Calculate DInf flow accumulations
   whitebox::wbt_d_inf_flow_accumulation(
@@ -476,7 +496,7 @@ DEMrelatedInput <- function(
   }
   rm(rl_cha_ovr, rl_cha_ovr_cha)
 
-  # Calculate DInf slopes (oversized DEM)
+  # Calculate (oversized DEM) and extract DInf slopes by watershed
   nm_slp_inf_ovr <- DInfSlope(
     nm_dir_inf = as.matrix(extend(rl_dir_inf, rl_dem_ovr_brd), wide = TRUE),
     nm_dem = as.matrix(rl_dem_ovr_brd, wide = TRUE),
@@ -484,13 +504,12 @@ DEMrelatedInput <- function(
     is_ths = is_ths
   )
 
-  # Extract DInf slopes by watershed
-  rl_slp_inf <- mask(
-    crop(rast(
+  rl_slp_inf <- crop(
+    rast(
       nm_slp_inf_ovr,
       crs = crs(rl_dem_ovr_brd),
       extent = ext(rl_dem_ovr_brd)
-    ), rl_wsh),
+    ),
     rl_wsh,
     filename = "slp_inf.tif",
     datatype = "FLT8S",
@@ -505,12 +524,6 @@ DEMrelatedInput <- function(
     filename = "dem_brd.tif",
     datatype = "FLT8S",
     overwrite = TRUE
-  )
-
-  # Determine outlet coordinates
-  nm_olc <- xyFromCell(
-    rl_acc_inf,
-    unlist(cells(is.na(rl_slp_inf) & !is.na(rl_cha), 1L))
   )
 
   # Copy data to "Input" directory

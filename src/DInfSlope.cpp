@@ -30,7 +30,7 @@ arma::dmat DInfSlope(
     for (arma::uword j = 0; j < nm_dem.n_cols; ++j) {
       ns_dir_inf = nm_dir_inf.at(i, j);
 
-      if (ns_dir_inf == -1.0 || Rcpp::NumericMatrix::is_na(ns_dir_inf)) {
+      if (Rcpp::NumericMatrix::is_na(ns_dir_inf) || ns_dir_inf == -1.0) {
         continue;
       }
 
@@ -53,6 +53,10 @@ arma::dmat DInfSlope(
 
       ns_s2 = (e1e2.ns_x1 - e1e2.ns_x2) / ns_res;
       nm_slp_inf.at(i, j) = std::sqrt(ns_s1 * ns_s1 + ns_s2 * ns_s2);
+      if (i == 0) {
+        Rcpp::Rcout << ns_e0 << ", " << e1e2.ns_x1 << ", " << e1e2.ns_x2 << ", " << ns_s1 << ", " << ns_s2;
+
+      }
     }
   }
 
