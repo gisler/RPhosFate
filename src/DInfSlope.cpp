@@ -34,8 +34,14 @@ arma::dmat DInfSlope(
         continue;
       }
 
-      ns_e0 = nm_dem.at(i, j);
       e1e2 = movingWindow.determine_x1x2(ns_dir_inf, i, j, nm_dem);
+
+      if (Rcpp::NumericMatrix::is_na(e1e2.ns_x1) &&
+          Rcpp::NumericMatrix::is_na(e1e2.ns_x2)) {
+        continue;
+      }
+
+      ns_e0 = nm_dem.at(i, j);
 
       if (Rcpp::NumericMatrix::is_na(e1e2.ns_x1) ||
           std::set<double>{45.0, 135.0, 225.0, 315.0}.count(ns_dir_inf) > 0) {
@@ -53,10 +59,6 @@ arma::dmat DInfSlope(
 
       ns_s2 = (e1e2.ns_x1 - e1e2.ns_x2) / ns_res;
       nm_slp_inf.at(i, j) = std::sqrt(ns_s1 * ns_s1 + ns_s2 * ns_s2);
-      if (i == 0) {
-        Rcpp::Rcout << ns_e0 << ", " << e1e2.ns_x1 << ", " << e1e2.ns_x2 << ", " << ns_s1 << ", " << ns_s2;
-
-      }
     }
   }
 
