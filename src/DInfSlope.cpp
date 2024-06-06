@@ -18,16 +18,12 @@ arma::dmat DInfSlope(
     static_cast<arma::sword>(nm_dem.n_rows),
     static_cast<arma::sword>(nm_dem.n_cols)
   };
-  X1X2 e1e2{};
+  X1X2<double> e1e2{};
 
   arma::dmat nm_slp_inf(
     arma::size(nm_dem),
     arma::fill::value(NA_REAL)
   );
-
-  // Can be used for NA debugging:
-  // Rcpp::Rcout << NA_REAL << ", " << NA_INTEGER << std::endl;
-  // Rcpp::Rcout << (200.0 - NA_REAL) / 10.0 << std::endl;
 
   #pragma omp parallel for num_threads(is_ths) collapse(2)
   for (arma::uword i = 0; i < nm_dem.n_rows; ++i) {
@@ -38,24 +34,30 @@ arma::dmat DInfSlope(
         continue;
       }
 
-      ns_e0 = nm_dem.at(i, j);
-      e1e2 = movingWindow.determine_x1x2(ns_dir_inf, i, j, nm_dem);
+      e1e2 = movingWindow.determine_x1x2<double>(ns_dir_inf, i, j, nm_dem, NA_REAL);
 
-      if (Rcpp::NumericMatrix::is_na(e1e2.ns_x1) ||
-          std::set<double>{45.0, 135.0, 225.0, 315.0}.count(ns_dir_inf) > 0) {
-        nm_slp_inf.at(i, j) = (ns_e0 - e1e2.ns_x2) / ns_res_dgl;
+      if (Rcpp::NumericMatrix::is_na(e1e2.x1) &&
+          Rcpp::NumericMatrix::is_na(e1e2.x2)) {
         continue;
       }
 
-      ns_s1 = (ns_e0 - e1e2.ns_x1) / ns_res;
+      ns_e0 = nm_dem.at(i, j);
 
-      if (Rcpp::NumericMatrix::is_na(e1e2.ns_x2) ||
-          std::set<double>{0.0, 90.0, 180.0, 270.0, 360.0}.count(ns_dir_inf) > 0) {
+      if (std::set<double>{45.0, 135.0, 225.0, 315.0}.count(ns_dir_inf) > 0 ||
+          Rcpp::NumericMatrix::is_na(e1e2.x1)) {
+        nm_slp_inf.at(i, j) = (ns_e0 - e1e2.x2) / ns_res_dgl;
+        continue;
+      }
+
+      ns_s1 = (ns_e0 - e1e2.x1) / ns_res;
+
+      if (std::set<double>{0.0, 90.0, 180.0, 270.0, 360.0}.count(ns_dir_inf) > 0 ||
+          Rcpp::NumericMatrix::is_na(e1e2.x2)) {
         nm_slp_inf.at(i, j) = ns_s1;
         continue;
       }
 
-      ns_s2 = (e1e2.ns_x1 - e1e2.ns_x2) / ns_res;
+      ns_s2 = (e1e2.x1 - e1e2.x2) / ns_res;
       nm_slp_inf.at(i, j) = std::sqrt(ns_s1 * ns_s1 + ns_s2 * ns_s2);
     }
   }
