@@ -21,6 +21,8 @@ arma::uword MovingWindow::determineFacet(const double& ns_dir_inf) {
   } else if (ns_dir_inf <  135.0 && ns_dir_inf >=  90.0) {
     us_fct = 7;
   } else{
+    // The first two crash R (v4.4.0 with Rcpp v1.0.12), but would be better
+    // choices:
     // Rcpp::stop("\"dir_inf\" out of range.");
     // throw Rcpp::exception("\"dir_inf\" out of range.");
     Rcpp::Rcerr << "Warning: \"dir_inf\" out of range." << std::endl;
