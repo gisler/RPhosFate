@@ -13,8 +13,6 @@ example("emission", "RPhosFate", run.dontrun = TRUE)
 unlink(cv_dir, recursive = TRUE)
 example("transportPrerequisites", "RPhosFate", run.dontrun = TRUE)
 unlink(cv_dir, recursive = TRUE)
-example("transportCalcOrder", "RPhosFate", run.dontrun = TRUE)
-unlink(cv_dir, recursive = TRUE)
 example("transport", "RPhosFate", run.dontrun = TRUE)
 unlink(cv_dir, recursive = TRUE)
 

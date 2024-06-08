@@ -34,7 +34,6 @@ x <- erosionPrerequisites(x)
 x <- erosion(x)
 x <- emission(x, "PP")
 x <- transportPrerequisites(x)
-x <- transportCalcOrder(x)
 
 x <- transport(x, "PP")}
 

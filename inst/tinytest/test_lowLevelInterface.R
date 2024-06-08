@@ -69,15 +69,6 @@ for (layer in layers) {
   )
 }
 
-#### transportCalcOrder ####
-x <- transportCalcOrder(x)
-
-expect_identical(
-  x@helpers@order,
-  control@helpers@order,
-  info = '"transportCalcOrder" is correct'
-)
-
 #### transport ####
 layers <- c("xxr", "xxt", "xxt_cld", "xxt_ctf", "xxt_inp", "xxt_out")
 for (substance in slotNames(control@substances)) {

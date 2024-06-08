@@ -385,80 +385,6 @@ setMethod(
   }
 )
 
-#### transportCalcOrder ####
-#' @export
-setGeneric(
-  "transportCalcOrder",
-  function(x, ...) standardGeneric("transportCalcOrder")
-)
-#' Transport calculation order
-#'
-#' Determines the cell transport calculation order.
-#'
-#' @inheritParams erosionPrerequisites,RPhosFate-method
-#'
-#' @inherit catchment return
-#'
-#' @seealso [`firstRun`], [`subsequentRun`]
-#'
-#' @examples
-#' \donttest{
-#' # temporary demonstration project copy
-#' cv_dir <- demoProject()
-#' # load temporary demonstration project
-#' x <- RPhosFate(
-#'   cv_dir = cv_dir,
-#'   ls_ini = TRUE
-#' )
-#'
-#' x <- transportCalcOrder(x)}
-#'
-#' @aliases transportCalcOrder
-#'
-#' @export
-setMethod(
-  "transportCalcOrder",
-  "RPhosFate",
-  function(x) {
-    compareGeom(
-      x@topo@rl_acc_inf,
-      x@topo@rl_acc,
-      x@topo@rl_cha
-    )
-
-    # Overland flow accumulation
-    rl_acc_ovl <- x@topo@rl_acc
-    rl_acc_ovl[!is.na(x@topo@rl_cha)] <- NA_integer_
-
-    # Channel flow accumulation
-    rl_acc_cha <- x@topo@rl_acc
-    rl_acc_cha[ is.na(x@topo@rl_cha)] <- NA_integer_
-
-    # Transport calculation order as row-major index
-    im_acc_ovl <- as.matrix(rl_acc_ovl)
-    im_acc_cha <- as.matrix(rl_acc_cha)
-    ar_ord_ovl <- tapply(seq_along(im_acc_ovl), im_acc_ovl, identity, simplify = FALSE)
-    ar_ord_cha <- tapply(seq_along(im_acc_cha), im_acc_cha, identity, simplify = FALSE)
-
-    # Row and column numbers from index (C++ has zero-based indexing)
-    iv_ord_ovl <- rowColFromCell(rl_acc_ovl, unlist(ar_ord_ovl)) - 1
-    iv_ord_cha <- rowColFromCell(rl_acc_cha, unlist(ar_ord_cha)) - 1
-    storage.mode(iv_ord_ovl) <- "integer"
-    storage.mode(iv_ord_cha) <- "integer"
-
-    # Overland as well as channel row and column numbers for top-down
-    # computation
-    x@helpers@order@iv_ord_row <- c(iv_ord_ovl[, 1L], iv_ord_cha[, 1L])
-    x@helpers@order@iv_ord_col <- c(iv_ord_ovl[, 2L], iv_ord_cha[, 2L])
-
-    # Reverse overland row and column numbers for bottom-up computation
-    x@helpers@order@iv_ord_ovl_row_rev <- rev(iv_ord_ovl[, 1L])
-    x@helpers@order@iv_ord_ovl_col_rev <- rev(iv_ord_ovl[, 2L])
-
-    x
-  }
-)
-
 #### transport ####
 #' @export
 setGeneric(
@@ -494,7 +420,6 @@ setGeneric(
 #' x <- erosion(x)
 #' x <- emission(x, "PP")
 #' x <- transportPrerequisites(x)
-#' x <- transportCalcOrder(x)
 #'
 #' x <- transport(x, "PP")}
 #'

@@ -204,10 +204,9 @@ setGeneric(
 #' First run
 #'
 #' Calls [`erosionPrerequisites`], [`erosion`], [`emission`],
-#' [`transportPrerequisites`], [`transportCalcOrder`] and [`transport`] in the
-#' mentioned order. While [`transport`] is called for the specified substance
-#' only, [`emission`] is called for all substances whose top soil concentrations
-#' have been provided.
+#' [`transportPrerequisites`] and [`transport`] in the mentioned order. While
+#' [`transport`] is called for the specified substance only, [`emission`] is
+#' called for all substances whose top soil concentrations have been provided.
 #'
 #' @inheritParams emission,RPhosFate-method
 #'
@@ -248,7 +247,6 @@ setMethod(
       }
     }
     x <- transportPrerequisites(x)
-    x <- transportCalcOrder(x)
     transport(x, substance)
   }
 )
@@ -262,8 +260,8 @@ setGeneric(
 #' Subsequent run
 #'
 #' Calls [`transport`] for the specified substance and optionally
-#' [`erosionPrerequisites`], [`erosion`], [`emission`],
-#' [`transportPrerequisites`] and/or [`transportCalcOrder`] beforehand.
+#' [`erosionPrerequisites`], [`erosion`], [`emission`] and
+#' [`transportPrerequisites`] beforehand.
 #'
 #' @inheritParams emission,RPhosFate-method
 #' @param erosionPrerequisites A logical scalar specifying if
@@ -273,8 +271,6 @@ setGeneric(
 #'   never called with `substance = "SS"` though.
 #' @param transportPrerequisites A logical scalar specifying if
 #'   [`transportPrerequisites`] is called.
-#' @param transportCalcOrder A logical scalar specifying if
-#'   [`transportCalcOrder`] is called.
 #'
 #' @inherit erosionPrerequisites,RPhosFate-method return
 #'
@@ -322,9 +318,6 @@ setMethod(
     }
     if (transportPrerequisites) {
       x <- transportPrerequisites(x)
-    }
-    if (transportCalcOrder || length(x@helpers@order@iv_ord_row) == 0L) {
-      x <- transportCalcOrder(x)
     }
 
     transport(x, substance)
