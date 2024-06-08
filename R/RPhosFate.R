@@ -10,9 +10,7 @@ setGeneric(
 #' Erosion prerequisites
 #'
 #' Calculates and writes capped slopes, L- and RUSLE S-factors (equations for
-#' summer conditions and slopes \eqn{\geq}{≥} 15 ft) to disk. Weighted flow
-#' accumulations less than one are set to one for the calculation of the
-#' L-factors.
+#' summer conditions and slopes \eqn{\geq}{≥} 15 ft) to disk.
 #'
 #' @param x An S4 [`RPhosFate-class`] river catchment object.
 #'
@@ -20,6 +18,10 @@ setGeneric(
 #'   the form of raster files.
 #'
 #' @references
+#' \cite{Desmet, P.J.J., Govers, G., 1996. A GIS procedure for automatically
+#' calculating the USLE LS factor on topographically complex landscape units.
+#' Journal of Soil and Water Conservation 51, 427–433.}
+#'
 #' \cite{Renard, K.G., Foster, G.R., Weesies, G.A., McCool, D.K., Yoder, D.C.,
 #' 1997. Predicting soil erosion by water: a guide to conservation planning with
 #' the Revised Universal Soil Loss Equation (RUSLE), Agriculture Handbook. U.S.
@@ -46,13 +48,13 @@ setMethod(
   "erosionPrerequisites",
   "RPhosFate",
   function(x) {
-    compareGeom(x@topo@rl_acc_wtd, x@topo@rl_slp, x@topo@rl_cha)
+    compareGeom(x@topo@rl_acc_inf, x@topo@rl_slp_inf, x@topo@rl_cha)
 
     cs_dir_old <- setwd(file.path(x@cv_dir[1L], "Intermediate"))
     on.exit(setwd(cs_dir_old))
 
     # Capped slope in % (also relevant for transport)
-    x@topo@rl_slp_cap <- x@topo@rl_slp
+    x@topo@rl_slp_cap <- x@topo@rl_slp_inf
     x@topo@rl_slp_cap[x@topo@rl_slp_cap < x@parameters@ns_slp_min] <- x@parameters@ns_slp_min
     x@topo@rl_slp_cap[x@topo@rl_slp_cap > x@parameters@ns_slp_max] <- x@parameters@ns_slp_max
 
@@ -65,10 +67,10 @@ setMethod(
       cores = x@is_ths
     )
 
-    # Weighted overland flow accumulation
-    rl_acc_wtd_ovl <- x@topo@rl_acc_wtd
-    rl_acc_wtd_ovl[!is.na(x@topo@rl_cha)] <- NA_real_
-    rl_acc_wtd_ovl[rl_acc_wtd_ovl < 1] <- 1
+    # Overland flow accumulation
+    rl_acc_inf_ovl <- x@topo@rl_acc_inf
+    rl_acc_inf_ovl[!is.na(x@topo@rl_cha)] <- NA_real_
+    rl_acc_inf_ovl[rl_acc_inf_ovl < 1] <- 1
 
     # Ratio of rill to interrill erosion
     rl_LFa_b <- app(
@@ -90,7 +92,7 @@ setMethod(
     # L factor
     is_res <- x@helpers@is_res
     x@erosion@rl_LFa <- lapp(
-      c(x = rl_acc_wtd_ovl, y = rl_LFa_m),
+      c(x = rl_acc_inf_ovl, y = rl_LFa_m),
       fun = function(x, y) {
         ((x * is_res)^(1 + y) - ((x - 1) * is_res)^(1 + y)) /
           (is_res * 22.13^y)
@@ -163,7 +165,7 @@ setMethod(
   "RPhosFate",
   function(x) {
     compareGeom(
-      x@topo@rl_acc_wtd,
+      x@topo@rl_acc_inf,
       x@erosion@rl_RFa,
       x@erosion@rl_KFa,
       x@erosion@rl_LFa,
@@ -230,7 +232,7 @@ setMethod(
   function(x, substance = "PP") {
     assertChoice(substance, slotNames(x@substances))
     compareGeom(
-      x@topo@rl_acc_wtd,
+      x@topo@rl_acc_inf,
       x@erosion@rl_ero,
       slot(x@substances, substance)@rl_xxc,
       x@topo@rl_clc
@@ -306,7 +308,7 @@ setMethod(
   "RPhosFate",
   function(x) {
     compareGeom(
-      x@topo@rl_acc_wtd,
+      x@topo@rl_acc_inf,
       x@topo@rl_dir,
       x@topo@rl_cha,
       x@topo@rl_rds
@@ -419,7 +421,7 @@ setMethod(
   "RPhosFate",
   function(x) {
     compareGeom(
-      x@topo@rl_acc_wtd,
+      x@topo@rl_acc_inf,
       x@topo@rl_acc,
       x@topo@rl_cha
     )
@@ -505,7 +507,7 @@ setMethod(
   function(x, substance = "PP") {
     assertChoice(substance, slotNames(x@substances))
     compareGeom(
-      x@topo@rl_acc_wtd,
+      x@topo@rl_acc_inf,
       x@topo@rl_cha,
       x@topo@rl_dir,
       x@topo@rl_inl,
