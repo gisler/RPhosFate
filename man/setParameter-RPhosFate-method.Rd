@@ -54,8 +54,6 @@ default).
 coefficients required for substance \code{\link{transport}}, for example, \code{c(SS = 0.6, PP = 0.6)} (no default).
 \item \code{nv_enr_rto} A named numeric vector specifying the substance enrichment
 ratios required for substance except SS \code{\link{transport}}, for example, \code{c(PP = 2.0)} (calibration parameter; no default).
-\item \code{iv_fDo}: An integer vector specifying the outflow direction vector
-required for substance \code{\link{transport}} (defaults to \emph{ArcGIS} codes).
 \item \code{nm_olc}: A two column numeric \code{\link{matrix}} specifying one or more catchment
 outlet coordinates required for the in-channel retention ratio of
 \code{\link{calibrationQuality}} (no default).

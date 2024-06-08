@@ -114,7 +114,11 @@ nm_olc <- DEMrelatedInput(
 \references{
 \cite{Lindsay, J.B., 2016. Efficient hybrid breaching-filling sink removal
 methods for flow path enforcement in digital elevation models. Hydrological
-Processes 30, 846–857.}
+Processes 30, 846–857. https://doi.org/10.1002/hyp.10648}
+
+\cite{Tarboton, D.G., 1997. A new method for the determination of flow
+directions and upslope areas in grid digital elevation models. Water Resour.
+Res. 33, 309–319. https://doi.org/10.1029/96WR03137}
 }
 \seealso{
 \code{\link{RPhosFate}}, \code{\link{catchment}}

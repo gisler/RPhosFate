@@ -30,17 +30,15 @@ RPhosFate <- function(...) {
 #' roads must be considered during generation of the flow accumulation layers
 #' and also be cut out from them in order to be properly respected):
 #'
-#' * _acc:_ Flow accumulations required for [`transportCalcOrder`].
-#' * \emph{acc_wtd:} Weighted flow accumulations required for everything (can be
-#' equal to _acc_).
+#' * \emph{acc_inf:} D-infinity flow accumulations required for everything.
 #' * _CFa:_ (R)USLE C-factors required for [`erosion`].
 #' * _cha:_ Channel cells required for everything (`1`: channel cell, `NA`: no
 #' channel cell).
 #' * _clc:_ Clay contents of top soils in % required for substance
 #' [`emission`]s.
 #' * _dem:_ Digital elevation model in m a.s.l. (optional).
-#' * _dir:_ D8 flow directions required for [`transportPrerequisites`] and
-#' substance [`transport`].
+#' * \emph{dir_inf:} D-infinity flow directions required for
+#' [`transportPrerequisites`] and substance [`transport`].
 #' * _fid:_ Field IDs (optional).
 #' * _KFa:_ (R)USLE K-factors required for [`erosion`].
 #' * _lue:_ Land use classes (optional).
@@ -52,7 +50,7 @@ RPhosFate <- function(...) {
 #' without subsurface drainage, `1`: road cell with subsurface drainage, `NA`:
 #' no road cell).
 #' * _RFa:_ (R)USLE R-factors required for [`erosion`].
-#' * _slp:_ Slopes in % required for everything.
+#' * \emph{slp_inf:} D-infinity slopes in % required for everything.
 #' * _wsh:_ Watershed (optional).
 #'
 #' @section _Intermediate_ subdirectory:
@@ -136,8 +134,6 @@ RPhosFate <- function(...) {
 #' * `nv_enr_rto` A named numeric vector specifying the substance enrichment
 #' ratios required for substance except SS [`transport`], for example, `c(PP =
 #' 2.0)` (calibration parameter; no default).
-#' * `iv_fDo`: An integer vector specifying the outflow direction vector
-#' required for substance [`transport`] (defaults to _ArcGIS_ codes).
 #' * `nm_olc`: A two column numeric [`matrix`] specifying one or more catchment
 #' outlet coordinates required for the in-channel retention ratio of
 #' [`calibrationQuality`] (no default).

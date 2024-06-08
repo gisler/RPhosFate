@@ -24,7 +24,6 @@ setClass(
     ns_dep_cha = "numeric",
     nv_tfc_inl = "numeric",
     nv_enr_rto = "numeric",
-    iv_fDo     = "integer",
     nm_olc     = "matrix",
     df_cdt     = "data.frame"
   ),
@@ -40,7 +39,6 @@ setClass(
     ns_dep_cha = numeric(),
     nv_tfc_inl = numeric(),
     nv_enr_rto = numeric(),
-    iv_fDo     = c(32L, 16L, 8L, 64L, 0L, 4L, 128L, 1L, 2L),
     nm_olc     = matrix(NA_real_),
     df_cdt     = data.frame()
   )
@@ -67,7 +65,6 @@ setValidity(
     qassert(object@ns_cha_rto, "N1(0,1]", .var.name = "ns_cha_rto")
     qassert(object@ns_man_rip, "N1(0,)" , .var.name = "ns_man_rip")
     qassert(object@ns_man_cha, "N1(0,)" , .var.name = "ns_man_cha")
-    qassert(object@iv_fDo    , "I9[0,)" , .var.name = "iv_fDo"    )
 
     TRUE
   }
@@ -77,18 +74,17 @@ setValidity(
 setClass(
   "RPhosFateTopo",
   slots = c(
-    rl_acc     = "SpatRaster",
-    rl_acc_wtd = "SpatRaster",
+    rl_acc_inf = "SpatRaster",
     rl_cha     = "SpatRaster",
     rl_clc     = "SpatRaster",
     rl_dem     = "SpatRaster",
-    rl_dir     = "SpatRaster",
+    rl_dir_inf = "SpatRaster",
     rl_fid     = "SpatRaster",
     rl_inl     = "SpatRaster",
     rl_lue     = "SpatRaster",
     rl_rds     = "SpatRaster",
     rl_rip     = "SpatRaster",
-    rl_slp     = "SpatRaster",
+    rl_slp_inf = "SpatRaster",
     rl_slp_cap = "SpatRaster",
     rl_wsh     = "SpatRaster"
   )
@@ -101,16 +97,15 @@ setMethod(
     on.exit(setwd(cs_dir_old))
 
     setwd("Input")
-    .Object@rl_acc     <- readLayer(cmt, "acc"          )
-    .Object@rl_acc_wtd <- readLayer(cmt, "acc_wtd", TRUE)
+    .Object@rl_acc_inf <- readLayer(cmt, "acc_inf", TRUE)
     .Object@rl_cha     <- readLayer(cmt, "cha"    , TRUE)
     .Object@rl_clc     <- readLayer(cmt, "clc"          )
     .Object@rl_dem     <- readLayer(cmt, "dem"          )
-    .Object@rl_dir     <- readLayer(cmt, "dir"          )
+    .Object@rl_dir_inf <- readLayer(cmt, "dir_inf"      )
     .Object@rl_fid     <- readLayer(cmt, "fid"          )
     .Object@rl_lue     <- readLayer(cmt, "lue"          )
     .Object@rl_rds     <- readLayer(cmt, "rds"          )
-    .Object@rl_slp     <- readLayer(cmt, "slp"    , TRUE)
+    .Object@rl_slp_inf <- readLayer(cmt, "slp_inf", TRUE)
     .Object@rl_wsh     <- readLayer(cmt, "wsh"          )
 
     setwd("../Intermediate")
@@ -262,32 +257,17 @@ setMethod(
   }
 )
 
-#### Class RPhosFateOrder ####
-setClass(
-  "RPhosFateOrder",
-  slots = c(
-    iv_ord_row = "integer",
-    iv_ord_col = "integer",
-    iv_ord_ovl_row_rev = "integer",
-    iv_ord_ovl_col_rev = "integer"
-  )
-)
-
 #### Class RPhosFateHelpers ####
 setClass(
   "RPhosFateHelpers",
   slots = c(
-    cs_cmt     = "character",     # Coordinate reference system of river catchment
-    ex_cmt     = "SpatExtent",    # Extent of river catchment
-    ns_res     = "numeric",       # Cell resolution in m
-    ns_siz     = "numeric",       # Cell area in m^2
-    is_rws     = "integer",       # Number of rows
-    is_cls     = "integer",       # Number of columns
-    iv_fDo_dgl = "integer",       # Diagonal outflow direction vector
-    im_fDo     = "matrix",        # Outflow direction matrix
-    im_fDi     = "matrix",        # Inflow direction matrix
-    cv_met     = "character",     # Implemented calibration quality metrics
-    order      = "RPhosFateOrder" # Transport calculation order
+    cs_cmt = "character",  # Coordinate reference system of river catchment
+    ex_cmt = "SpatExtent", # Extent of river catchment
+    ns_res = "numeric",    # Cell resolution in m
+    ns_siz = "numeric",    # Cell area in m^2
+    is_rws = "integer",    # Number of rows
+    is_cls = "integer",    # Number of columns
+    cv_met = "character"   # Implemented calibration quality metrics
   )
 )
 setMethod(
@@ -297,24 +277,17 @@ setMethod(
     cs_dir_old <- setwd(cmt@cv_dir[1L])
     on.exit(setwd(cs_dir_old))
 
-    .Object@cs_cmt     <- crs(cmt@topo@rl_acc_wtd)
-    .Object@ex_cmt     <- ext(cmt@topo@rl_acc_wtd)
-    .Object@ns_res     <- xres(cmt@topo@rl_acc_wtd)
-    .Object@ns_siz     <- .Object@ns_res^2
-    .Object@is_rws     <- as.integer(nrow(cmt@topo@rl_acc_wtd))
-    .Object@is_cls     <- as.integer(ncol(cmt@topo@rl_acc_wtd))
-    .Object@iv_fDo_dgl <- cmt@parameters@iv_fDo[c(1L, 3L, 7L, 9L)]
-    .Object@im_fDo     <- matrix(cmt@parameters@iv_fDo, 3L)
-    .Object@im_fDi     <- matrix(rev(cmt@parameters@iv_fDo), 3L)
-
+    .Object@cs_cmt <- crs(cmt@topo@rl_acc_inf)
+    .Object@ex_cmt <- ext(cmt@topo@rl_acc_inf)
+    .Object@ns_res <- xres(cmt@topo@rl_acc_inf)
+    .Object@ns_siz <- .Object@ns_res^2
+    .Object@is_rws <- as.integer(nrow(cmt@topo@rl_acc_inf))
+    .Object@is_cls <- as.integer(ncol(cmt@topo@rl_acc_inf))
     .Object@cv_met <- c(
       "NSE", "mNSE", "KGE", "RMSE",
       "PBIAS", "RSR", "RCV",
       "GMRAE", "MdRAE"
     )
-    if (cmt@ls_ini && file.exists("order.rds")) {
-      .Object@order <- readRDS("order.rds")
-    }
 
     .Object
   }

@@ -282,7 +282,7 @@ setGeneric(
 #' @references
 #' \cite{Molnár, P., Ramírez, J.A., 1998. Energy dissipation theories and
 #' optimal channel characteristics of river networks. Water Resources Research
-#' 34, 1809–1818.}
+#' 34, 1809–1818. https://doi.org/10.1029/98WR00983}
 #'
 #' @seealso [`firstRun`], [`subsequentRun`]
 #'
