@@ -302,8 +302,7 @@ setMethod(
     erosionPrerequisites = FALSE,
     erosion = FALSE,
     emission = FALSE,
-    transportPrerequisites = FALSE,
-    transportCalcOrder = FALSE
+    transportPrerequisites = FALSE
   ) {
     assertChoice(substance, slotNames(x@substances))
 

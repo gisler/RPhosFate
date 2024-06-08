@@ -11,8 +11,7 @@
   erosionPrerequisites = FALSE,
   erosion = FALSE,
   emission = FALSE,
-  transportPrerequisites = FALSE,
-  transportCalcOrder = FALSE
+  transportPrerequisites = FALSE
 )
 }
 \arguments{
