@@ -563,7 +563,7 @@ DEMrelatedInput <- function(
   # Calculate D8 slopes (oversized DEM)
   nm_slp_ovr <- D8slope(
     im_dir = as.matrix(rast("dir_ovr.tif"), wide = TRUE),
-    nm_dem = as.matrix(rl_dem_brd, wide = TRUE),
+    nm_dem = as.matrix(rast("dem_ovr.tif"), wide = TRUE),
     im_fDo = matrix(
       c(32L, 16L, 8L, 64L, 0L, 4L, 128L, 1L, 2L),
       3L
