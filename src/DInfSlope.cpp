@@ -34,7 +34,7 @@ arma::dmat DInfSlope(
         continue;
       }
 
-      e1e2 = movingWindow.determine_x1x2<double>(ns_dir_inf, i, j, nm_dem, NA_REAL);
+      e1e2 = movingWindow.get_x1x2<double>(ns_dir_inf, i, j, nm_dem, NA_REAL);
 
       if (Rcpp::NumericMatrix::is_na(e1e2.x1) &&
           Rcpp::NumericMatrix::is_na(e1e2.x2)) {
