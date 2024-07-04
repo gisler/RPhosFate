@@ -16,6 +16,7 @@ DEMrelatedInput(
   ns_brn = 50,
   is_adj = 1L,
   is_ths = 1L,
+  ls_fD8 = FALSE,
   ls_tmp = FALSE
 )
 }
@@ -52,6 +53,10 @@ shall be burnt.}
 \item{is_ths}{An integer scalar specifying the number of threads to use for
 processing, where applicable.}
 
+\item{ls_fD8}{A logical scalar specifying if D8 flow directions shall be
+mimicked, i.e. the D-infinity flow directions are rounded to the nearest 45
+degrees.}
+
 \item{ls_tmp}{A logical scalar specifying if the temporary files created
 during computation shall be kept.}
 }
@@ -85,8 +90,8 @@ continuity of the calculated flow accumulations.
 of downslope flowpaths from the provided channel sources.
 
 \emph{dem} represents the breached DEM with reversed stream burning if applicable.
-This processed DEM also serves as the basis for the calculation of the DInf
-slopes provided by \emph{slp_inf.}
+This processed DEM also serves as the basis for the calculation of the
+D-infinity slopes provided by \emph{slp_inf.}
 }
 \examples{
 \dontrun{

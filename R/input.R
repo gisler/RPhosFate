@@ -85,6 +85,9 @@ demoProject <- function(cs_dir = tempdir(TRUE)) {
 #'   shall be burnt.
 #' @param is_ths An integer scalar specifying the number of threads to use for
 #'   processing, where applicable.
+#' @param ls_fD8 A logical scalar specifying if D8 flow directions shall be
+#'   mimicked, i.e. the D-infinity flow directions are rounded to the nearest 45
+#'   degrees.
 #' @param ls_tmp A logical scalar specifying if the temporary files created
 #'   during computation shall be kept.
 #'
@@ -105,8 +108,8 @@ demoProject <- function(cs_dir = tempdir(TRUE)) {
 #' of downslope flowpaths from the provided channel sources.
 #'
 #' _dem_ represents the breached DEM with reversed stream burning if applicable.
-#' This processed DEM also serves as the basis for the calculation of the DInf
-#' slopes provided by \emph{slp_inf.}
+#' This processed DEM also serves as the basis for the calculation of the
+#' D-infinity slopes provided by \emph{slp_inf.}
 #'
 #' @return A two column numeric [`matrix`] specifying one or more catchment
 #'   outlet coordinates and side effects in the form of raster files.
@@ -157,6 +160,7 @@ DEMrelatedInput <- function(
   ns_brn = 50,
   is_adj = 1L,
   is_ths = 1L,
+  ls_fD8 = FALSE,
   ls_tmp = FALSE
 ) {
   if (!requireNamespace("whitebox", quietly = TRUE) ||
@@ -348,13 +352,23 @@ DEMrelatedInput <- function(
 
   rl_dir_inf[rl_dir_inf == -1] <- NA_real_
 
-  rl_dir_inf <- lapp(
-    c(x = rl_dir_inf, y = rl_cha),
-    function(x, y) {
-      ifelse(is.na(y), x, round(x / 45) * 45)
-    },
-    cores = is_ths
-  )
+  if (ls_fD8) {
+    rl_dir_inf <- app(
+      rl_dir_inf,
+      function(x) {
+        round(x / 45) * 45
+      },
+      cores = is_ths
+    )
+  } else {
+    rl_dir_inf <- lapp(
+      c(x = rl_dir_inf, y = rl_cha),
+      function(x, y) {
+        ifelse(is.na(y), x, round(x / 45) * 45)
+      },
+      cores = is_ths
+    )
+  }
 
   # Determine outlet coordinates
   nm_olc <- xyFromCell(
