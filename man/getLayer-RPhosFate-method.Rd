@@ -34,15 +34,17 @@ This directory holds all possible user input raster data (flow obstacles like
 roads must be considered during generation of the flow accumulation layers
 and also be cut out from them in order to be properly respected):
 \itemize{
-\item \emph{acc_inf:} D-infinity flow accumulations required for everything.
+\item \emph{acc_inf:} D-infinity flow accumulations in number of upslope grid
+cells required for everything.
 \item \emph{CFa:} (R)USLE C-factors required for \code{\link{erosion}}.
 \item \emph{cha:} Channel cells required for everything (\code{1}: channel cell, \code{NA}: no
 channel cell).
 \item \emph{clc:} Clay contents of top soils in \% required for substance
 \code{\link{emission}}s.
 \item \emph{dem:} Digital elevation model in m a.s.l. (optional).
-\item \emph{dir_inf:} D-infinity flow directions required for
-\code{\link{transportPrerequisites}} and substance \code{\link{transport}}.
+\item \emph{dir_inf:} D-infinity flow directions in azimuth degrees (0 to 360)
+measured from north required for \code{\link{transportPrerequisites}} and substance
+\code{\link{transport}}.
 \item \emph{fid:} Field IDs (optional).
 \item \emph{KFa:} (R)USLE K-factors required for \code{\link{erosion}}.
 \item \emph{lue:} Land use classes (optional).

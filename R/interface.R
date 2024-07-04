@@ -30,15 +30,17 @@ RPhosFate <- function(...) {
 #' roads must be considered during generation of the flow accumulation layers
 #' and also be cut out from them in order to be properly respected):
 #'
-#' * \emph{acc_inf:} D-infinity flow accumulations required for everything.
+#' * \emph{acc_inf:} D-infinity flow accumulations in number of upslope grid
+#' cells required for everything.
 #' * _CFa:_ (R)USLE C-factors required for [`erosion`].
 #' * _cha:_ Channel cells required for everything (`1`: channel cell, `NA`: no
 #' channel cell).
 #' * _clc:_ Clay contents of top soils in % required for substance
 #' [`emission`]s.
 #' * _dem:_ Digital elevation model in m a.s.l. (optional).
-#' * \emph{dir_inf:} D-infinity flow directions required for
-#' [`transportPrerequisites`] and substance [`transport`].
+#' * \emph{dir_inf:} D-infinity flow directions in azimuth degrees (0 to 360)
+#' measured from north required for [`transportPrerequisites`] and substance
+#' [`transport`].
 #' * _fid:_ Field IDs (optional).
 #' * _KFa:_ (R)USLE K-factors required for [`erosion`].
 #' * _lue:_ Land use classes (optional).
