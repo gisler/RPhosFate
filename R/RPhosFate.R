@@ -48,7 +48,12 @@ setMethod(
   "erosionPrerequisites",
   "RPhosFate",
   function(x) {
-    compareGeom(x@topo@rl_acc_inf, x@topo@rl_slp_inf, x@topo@rl_cha)
+    compareGeom(
+      x@topo@rl_acc_inf,
+      x@topo@rl_dir_inf,
+      x@topo@rl_slp_inf,
+      x@topo@rl_cha
+    )
 
     cs_dir_old <- setwd(file.path(x@cv_dir[1L], "Intermediate"))
     on.exit(setwd(cs_dir_old))
@@ -70,32 +75,23 @@ setMethod(
     # Overland flow accumulation
     rl_acc_inf_ovl <- x@topo@rl_acc_inf
     rl_acc_inf_ovl[!is.na(x@topo@rl_cha)] <- NA_real_
-    rl_acc_inf_ovl[rl_acc_inf_ovl < 1] <- 1
-
-    # Ratio of rill to interrill erosion
-    rl_LFa_b <- app(
-      rl_slp_cap_rad,
-      function(x) {
-        sin(x) / (0.0896 * (3 * sin(x)^0.8 + 0.56))
-      },
-      cores = x@is_ths
-    )
-    # Rill erodibility parameter
-    rl_LFa_m <- app(
-      rl_LFa_b,
-      function(x) {
-        x / (1 + x)
-      },
-      cores = x@is_ths
-    )
 
     # L factor
-    is_res <- x@helpers@is_res
+    ns_siz <- x@helpers@ns_siz
+    ns_res <- x@helpers@ns_res
+
     x@erosion@rl_LFa <- lapp(
-      c(x = rl_acc_inf_ovl, y = rl_LFa_m),
-      fun = function(x, y) {
-        ((x * is_res)^(1 + y) - ((x - 1) * is_res)^(1 + y)) /
-          (is_res * 22.13^y)
+      c(x = rl_acc_inf_ovl, y = rl_slp_cap_rad, z = x@topo@rl_dir_inf),
+      fun = function(x, y, z) {
+        # Ratio of rill to interrill erosion
+        b <- sin(y) / (0.0896 * (3 * sin(y)^0.8 + 0.56))
+        # Rill erodibility parameter
+        m <- b / (1 + b)
+
+        z_rad = z * pi / 180
+
+        ((x * ns_siz)^(m + 1) - ((x - 1) * ns_siz)^(m + 1)) /
+          (ns_res^(m + 2) * (abs(sin(z_rad)) + abs(cos(z_rad)))^m * 22.13^m)
       },
       cores = x@is_ths
     )
@@ -104,7 +100,11 @@ setMethod(
     x@erosion@rl_SFa <- lapp(
       c(x = rl_slp_cap_rad, y = x@topo@rl_slp_cap),
       fun = function(x, y) {
-        ifelse(y < 9, 10.8 * sin(x) + 0.03, 16.8 * sin(x) - 0.5)
+        ifelse(
+          y < 9,
+          10.8 * sin(x) + 0.03,
+          16.8 * sin(x) - 0.5
+        )
       },
       cores = x@is_ths
     )
