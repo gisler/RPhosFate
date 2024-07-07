@@ -50,7 +50,7 @@ public:
 
 #endif
 
-FacetRowsCols MovingWindow::determineFacetRowsCols(
+inline FacetRowsCols MovingWindow::determineFacetRowsCols(
   const double& ns_dir_inf,
   const arma::uword& us_row,
   const arma::uword& us_col
@@ -110,7 +110,7 @@ FacetRowsCols MovingWindow::determineFacetRowsCols(
 }
 
 template <typename T>
-X1X2<T> MovingWindow::get_x1x2(
+inline X1X2<T> MovingWindow::get_x1x2(
     const double& ns_dir_inf,
     const arma::uword& i,
     const arma::uword& j,

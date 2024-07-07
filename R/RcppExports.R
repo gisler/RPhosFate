@@ -5,8 +5,8 @@ DInfSlope <- function(nm_dir_inf, nm_dem, ns_res, is_ths = 1L) {
     .Call(`_RPhosFate_DInfSlope`, nm_dir_inf, nm_dem, ns_res, is_ths)
 }
 
-dir_sth <- function(im_dir, im_sth, im_fDo, is_ths = 1L) {
-    .Call(`_RPhosFate_dir_sth`, im_dir, im_sth, im_fDo, is_ths)
+rip_inl <- function(nm_dir_inf, im_cha, im_rds, is_ths = 1L) {
+    .Call(`_RPhosFate_rip_inl`, nm_dir_inf, im_cha, im_rds, is_ths)
 }
 
 transportCpp <- function(parameters, ns_dep_ovl, ns_tfc_inl, helpers, order, im_cha, im_dir, im_inl, im_rip, nm_man, nm_xxe, nm_rhy, nm_slp) {

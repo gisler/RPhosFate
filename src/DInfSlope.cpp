@@ -15,19 +15,19 @@ arma::dmat DInfSlope(
 
   double ns_dir_inf{}, ns_e0{}, ns_s1{}, ns_s2{};
   MovingWindow movingWindow{
-    static_cast<arma::sword>(nm_dem.n_rows),
-    static_cast<arma::sword>(nm_dem.n_cols)
+    static_cast<arma::sword>(nm_dir_inf.n_rows),
+    static_cast<arma::sword>(nm_dir_inf.n_cols)
   };
   X1X2<double> e1e2{};
 
   arma::dmat nm_slp_inf(
-    arma::size(nm_dem),
+    arma::size(nm_dir_inf),
     arma::fill::value(NA_REAL)
   );
 
   #pragma omp parallel for num_threads(is_ths) collapse(2)
-  for (arma::uword i = 0; i < nm_dem.n_rows; ++i) {
-    for (arma::uword j = 0; j < nm_dem.n_cols; ++j) {
+  for (arma::uword i = 0; i < nm_dir_inf.n_rows; ++i) {
+    for (arma::uword j = 0; j < nm_dir_inf.n_cols; ++j) {
       ns_dir_inf = nm_dir_inf.at(i, j);
 
       if (Rcpp::NumericMatrix::is_na(ns_dir_inf) || ns_dir_inf == -1.0) {

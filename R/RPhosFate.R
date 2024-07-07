@@ -309,7 +309,7 @@ setMethod(
   function(x) {
     compareGeom(
       x@topo@rl_acc_inf,
-      x@topo@rl_dir,
+      x@topo@rl_dir_inf,
       x@topo@rl_cha,
       x@topo@rl_rds
     )
@@ -321,45 +321,26 @@ setMethod(
     ns_rhy_a <- x@parameters@ns_rhy_a
     ns_rhy_b <- x@parameters@ns_rhy_b
     ns_siz <- x@helpers@ns_siz
+
     x@transport@rl_rhy <- app(
-      x@topo@rl_acc_wtd,
+      x@topo@rl_acc_inf,
       function(x) {
         ns_rhy_a * (x * ns_siz * 1e-6)^ns_rhy_b
       },
       cores = x@is_ths
     )
 
-    # Riparian zone cells
-    x@topo@rl_rip <- rast(
-      dir_sth(
-        im_dir = as.matrix(x@topo@rl_dir, wide = TRUE),
-        im_sth = as.matrix(x@topo@rl_cha, wide = TRUE),
-        im_fDo = x@helpers@im_fDo,
-        is_ths = x@is_ths
-      ),
-      crs = x@helpers@cs_cmt,
-      extent = x@helpers@ex_cmt
+    # Riparian zone and inlet cells
+    li_rip_inl <- rip_inl(
+      nm_dir_inf = as.matrix(x@topo@rl_dir_inf, wide = TRUE),
+      im_cha = as.matrix(x@topo@rl_cha, wide = TRUE),
+      im_rds = as.matrix(x@topo@rl_rds, wide = TRUE),
+      is_ths = x@is_ths
     )
 
-    # Inlet cells
-    x@topo@rl_inl <- rast(
-      dir_sth(
-        im_dir = as.matrix(x@topo@rl_dir, wide = TRUE),
-        im_sth = as.matrix(x@topo@rl_rds, wide = TRUE),
-        im_fDo = x@helpers@im_fDo,
-        is_ths = x@is_ths
-      ),
-      crs = x@helpers@cs_cmt,
-      extent = x@helpers@ex_cmt
-    )
+    x@topo@rl_rip <- rast(li_rip_inl$im_rip, crs = x@helpers@cs_cmt, extent = x@helpers@ex_cmt)
+    x@topo@rl_inl <- rast(li_rip_inl$im_inl, crs = x@helpers@cs_cmt, extent = x@helpers@ex_cmt)
     set.names(x@topo@rl_inl, "inl")
-
-    # No inlet cells at channel cells
-    x@topo@rl_inl[!is.na(x@topo@rl_cha)] <- NA_integer_
-    # No riparian zone cells at road cells
-    x@topo@rl_rip[!is.na(x@topo@rl_rds)] <- NA_integer_
-    # No inlet cells at riparian zone cells
-    x@topo@rl_inl[!is.na(x@topo@rl_rip)] <- NA_integer_
 
     # Nearest channel cells for inlet cells
     df_out <- findNearestNeighbour(
