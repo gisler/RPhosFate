@@ -33,9 +33,10 @@ Rcpp::List rip_inl(
     for (arma::uword j = 0; j < nm_dir_inf.n_cols; ++j) {
       ns_dir_inf = nm_dir_inf.at(i, j);
 
-      if ( Rcpp::NumericMatrix::is_na(ns_dir_inf) ||
-          !Rcpp::IntegerMatrix::is_na(im_cha.at(i, j)) ||
-          !Rcpp::IntegerMatrix::is_na(im_rds.at(i, j))) {
+      if (!Rcpp::IntegerMatrix::is_na(im_cha.at(i, j)) ||
+          !Rcpp::IntegerMatrix::is_na(im_rds.at(i, j)) ||
+           Rcpp::NumericMatrix::is_na(ns_dir_inf) ||
+           ns_dir_inf == -1.0) {
         continue;
       }
 
