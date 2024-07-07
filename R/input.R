@@ -79,15 +79,15 @@ demoProject <- function(cs_dir = tempdir(TRUE)) {
 #' @param cs_rds An optional character string specifying a path to a potentially
 #'   large raster providing roads.
 #' @param ns_cha An optional numeric scalar specifying the minimum D8 flow
-#'   accumulation determining a channel.
+#'   accumulation in number of upslope grid cells determining a channel.
 #' @param ns_brn A numeric scalar specifying the stream burning step size in m.
 #' @param is_adj A numeric scalar specifying how many cells adjacent to channels
 #'   shall be burnt.
 #' @param is_ths An integer scalar specifying the number of threads to use for
 #'   processing, where applicable.
 #' @param ls_fD8 A logical scalar specifying if D8 flow directions shall be
-#'   mimicked, i.e. the D-infinity flow directions are rounded to the nearest 45
-#'   degrees.
+#'   mimicked, i.e. the D-infinity flow directions are rounded to the nearest
+#'   multiple of 45 degrees.
 #' @param ls_tmp A logical scalar specifying if the temporary files created
 #'   during computation shall be kept.
 #'
@@ -444,7 +444,15 @@ DEMrelatedInput <- function(
         z = rl_rds
       ),
       fun = function(x, y, z) {
-        ifelse(is.na(y), ifelse(is.na(z), x, NA_integer_), x) # nolint
+        ifelse(
+          is.na(y),
+          ifelse(
+            is.na(z),
+            x,
+            NA_integer_
+          ),
+          x
+        )
       },
       cores = is_ths,
       filename = "dir_inf_rds.tif",

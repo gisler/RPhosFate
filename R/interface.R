@@ -38,8 +38,9 @@ RPhosFate <- function(...) {
 #' * _clc:_ Clay contents of top soils in % required for substance
 #' [`emission`]s.
 #' * _dem:_ Digital elevation model in m a.s.l. (optional).
-#' * \emph{dir_inf:} D-infinity flow directions in azimuth degrees (0 to 360)
-#' measured from north required for [`transportPrerequisites`] and substance
+#' * \emph{dir_inf:} D-infinity flow directions in azimuth degrees
+#' measured from north (0 to 360 clockwise) required for
+#' [`transportPrerequisites`] and substance
 #' [`transport`].
 #' * _fid:_ Field IDs (optional).
 #' * _KFa:_ (R)USLE K-factors required for [`erosion`].

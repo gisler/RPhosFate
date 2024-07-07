@@ -44,8 +44,9 @@ channel cell).
 \item \emph{clc:} Clay contents of top soils in \% required for substance
 \code{\link{emission}}s.
 \item \emph{dem:} Digital elevation model in m a.s.l. (optional).
-\item \emph{dir_inf:} D-infinity flow directions in azimuth degrees (0 to 360)
-measured from north required for \code{\link{transportPrerequisites}} and substance
+\item \emph{dir_inf:} D-infinity flow directions in azimuth degrees
+measured from north (0 to 360 clockwise) required for
+\code{\link{transportPrerequisites}} and substance
 \code{\link{transport}}.
 \item \emph{fid:} Field IDs (optional).
 \item \emph{KFa:} (R)USLE K-factors required for \code{\link{erosion}}.
