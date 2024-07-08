@@ -9,7 +9,7 @@ const struct {
 
   arma::ivec8 iv_x2_dr{-1, -1, -1, -1,  1,  1, 1, 1};
   arma::ivec8 iv_x2_dc{ 1,  1, -1, -1, -1, -1, 1, 1};
-} drdc; // Facets: deltas of rows and cols of x1 and x2
+} fct_drdc; // Facets: deltas of rows and cols of x1 and x2
 
 struct FacetRowsCols {
   bool ls_x1_oob{false}; // Is row or col of x1 out of bounds?
@@ -85,25 +85,25 @@ inline FacetRowsCols MovingWindow::determineFacetRowsCols(
   // Determine rows and cols of x1 and x2
   arma::sword is_row{static_cast<arma::sword>(us_row)};
   arma::sword is_col{static_cast<arma::sword>(us_col)};
-  arma::sword is_x1_row{is_row + drdc.iv_x1_dr[us_fct]};
-  arma::sword is_x1_col{is_col + drdc.iv_x1_dc[us_fct]};
-  arma::sword is_x2_row{is_row + drdc.iv_x2_dr[us_fct]};
-  arma::sword is_x2_col{is_col + drdc.iv_x2_dc[us_fct]};
+  arma::sword is_x1_row{is_row + fct_drdc.iv_x1_dr[us_fct]};
+  arma::sword is_x1_col{is_col + fct_drdc.iv_x1_dc[us_fct]};
+  arma::sword is_x2_row{is_row + fct_drdc.iv_x2_dr[us_fct]};
+  arma::sword is_x2_col{is_col + fct_drdc.iv_x2_dc[us_fct]};
 
   FacetRowsCols fctRC{};
   if (is_x1_row == -1 || is_x1_row == is_rws ||
       is_x1_col == -1 || is_x1_col == is_cls) {
     fctRC.ls_x1_oob = true;
   } else {
-    fctRC.us_x1_r = us_row + drdc.iv_x1_dr[us_fct];
-    fctRC.us_x1_c = us_col + drdc.iv_x1_dc[us_fct];
+    fctRC.us_x1_r = us_row + fct_drdc.iv_x1_dr[us_fct];
+    fctRC.us_x1_c = us_col + fct_drdc.iv_x1_dc[us_fct];
   }
   if (is_x2_row == -1 || is_x2_row == is_rws ||
       is_x2_col == -1 || is_x2_col == is_cls) {
     fctRC.ls_x2_oob = true;
   } else {
-    fctRC.us_x2_r = us_row + drdc.iv_x2_dr[us_fct];
-    fctRC.us_x2_c = us_col + drdc.iv_x2_dc[us_fct];
+    fctRC.us_x2_r = us_row + fct_drdc.iv_x2_dr[us_fct];
+    fctRC.us_x2_c = us_col + fct_drdc.iv_x2_dc[us_fct];
   }
 
   return fctRC;

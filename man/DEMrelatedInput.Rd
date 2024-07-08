@@ -89,9 +89,8 @@ continuity of the calculated flow accumulations.
 \code{ns_cha} can be used to enhance the channel network obtained by the tracing
 of downslope flowpaths from the provided channel sources.
 
-\emph{dem} represents the breached DEM with reversed stream burning if applicable.
-This processed DEM also serves as the basis for the calculation of the
-D-infinity slopes provided by \emph{slp_inf.}
+\emph{dem} represents the original DEM, which also serves as the basis for the
+calculation of the D-infinity slopes provided by \emph{slp_inf.}
 }
 \examples{
 \dontrun{

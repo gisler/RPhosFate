@@ -107,9 +107,8 @@ demoProject <- function(cs_dir = tempdir(TRUE)) {
 #' `ns_cha` can be used to enhance the channel network obtained by the tracing
 #' of downslope flowpaths from the provided channel sources.
 #'
-#' _dem_ represents the breached DEM with reversed stream burning if applicable.
-#' This processed DEM also serves as the basis for the calculation of the
-#' D-infinity slopes provided by \emph{slp_inf.}
+#' _dem_ represents the original DEM, which also serves as the basis for the
+#' calculation of the D-infinity slopes provided by \emph{slp_inf.}
 #'
 #' @return A two column numeric [`matrix`] specifying one or more catchment
 #'   outlet coordinates and side effects in the form of raster files.
@@ -524,17 +523,17 @@ DEMrelatedInput <- function(
 
   # Calculate (oversized DEM) and extract DInf slopes by watershed
   nm_slp_inf_ovr <- DInfSlope(
-    nm_dir_inf = as.matrix(extend(rl_dir_inf, rl_dem_ovr_brd), wide = TRUE),
-    nm_dem = as.matrix(rl_dem_ovr_brd, wide = TRUE),
-    ns_res = xres(rl_dem_ovr_brd),
+    nm_dir_inf = as.matrix(extend(rl_dir_inf, rl_dem_ovr), wide = TRUE),
+    nm_dem = as.matrix(rl_dem_ovr, wide = TRUE),
+    ns_res = xres(rl_dem_ovr),
     is_ths = is_ths
   )
 
   rl_slp_inf <- crop(
     rast(
       nm_slp_inf_ovr,
-      crs = crs(rl_dem_ovr_brd),
-      extent = ext(rl_dem_ovr_brd)
+      crs = crs(rl_dem_ovr),
+      extent = ext(rl_dem_ovr)
     ),
     rl_wsh,
     filename = "slp_inf.tif",
