@@ -127,20 +127,16 @@ inline FacetProperties MovingWindow::determineFacetProperties(
 
   if (is_x1_row == -1 || is_x1_row == is_rws ||
       is_x1_col == -1 || is_x1_col == is_cls ||
-      fct.ns_p1 <= 0.0) {
+      fct.ns_p1 == 0.0) {
     fct.ls_x1_oob = true;
-
-    fct.ns_p2 = 1.0;
   } else {
     fct.us_x1_r = us_row + fct_drdc.iv_x1_dr[us_fct];
     fct.us_x1_c = us_col + fct_drdc.iv_x1_dc[us_fct];
   }
   if (is_x2_row == -1 || is_x2_row == is_rws ||
       is_x2_col == -1 || is_x2_col == is_cls ||
-      fct.ns_p2 <= 0.0) {
+      fct.ns_p2 == 0.0) {
     fct.ls_x2_oob = true;
-
-    fct.ns_p1 = 1.0;
   } else {
     fct.us_x2_r = us_row + fct_drdc.iv_x2_dr[us_fct];
     fct.us_x2_c = us_col + fct_drdc.iv_x2_dc[us_fct];
