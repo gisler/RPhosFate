@@ -43,16 +43,14 @@ arma::dmat DInfSlope(
 
       ns_e0 = nm_dem.at(i, j);
 
-      if (std::set<double>{45.0, 135.0, 225.0, 315.0}.count(ns_dir_inf) > 0 ||
-          Rcpp::NumericMatrix::is_na(e1e2.x1)) {
+      if (Rcpp::NumericMatrix::is_na(e1e2.x1)) {
         nm_slp_inf.at(i, j) = (ns_e0 - e1e2.x2) / ns_res_dgl * 100.0;
         continue;
       }
 
       ns_s1 = (ns_e0 - e1e2.x1) / ns_res;
 
-      if (std::set<double>{0.0, 90.0, 180.0, 270.0, 360.0}.count(ns_dir_inf) > 0 ||
-          Rcpp::NumericMatrix::is_na(e1e2.x2)) {
+      if (Rcpp::NumericMatrix::is_na(e1e2.x2)) {
         nm_slp_inf.at(i, j) = ns_s1 * 100.0;
         continue;
       }
