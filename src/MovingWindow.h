@@ -27,7 +27,7 @@ const struct {
   arma::uvec3 uv_oob_uc{2, 4, 7}; // Indices, which are out of bounds when col == max col
 
   arma::uvec3 uv_oob{0, 0, 0}; // Vector for setting indices, which are out of bounds to 0
-} ifl_drdc;
+} ifl;
 
 const struct {
   arma::ivec8 iv_x1_dr{ 0, -1, -1,  0,  0,  1, 1, 0};
@@ -218,38 +218,38 @@ inline arma::dvec8 MovingWindow::get_ifl_p(
 ) {
   arma::uvec8 uv_cll(arma::fill::value(1));
   if (i == 0) {
-    uv_cll.elem(ifl_drdc.uv_oob_lr) = ifl_drdc.uv_oob;
+    uv_cll.elem(ifl.uv_oob_lr) = ifl.uv_oob;
   }
   if (i == us_rws - 1) {
-    uv_cll.elem(ifl_drdc.uv_oob_ur) = ifl_drdc.uv_oob;
+    uv_cll.elem(ifl.uv_oob_ur) = ifl.uv_oob;
   }
   if (j == 0) {
-    uv_cll.elem(ifl_drdc.uv_oob_lc) = ifl_drdc.uv_oob;
+    uv_cll.elem(ifl.uv_oob_lc) = ifl.uv_oob;
   }
   if (j == us_cls - 1) {
-    uv_cll.elem(ifl_drdc.uv_oob_uc) = ifl_drdc.uv_oob;
+    uv_cll.elem(ifl.uv_oob_uc) = ifl.uv_oob;
   }
 
   double ns_dir_inf{};
   arma::dvec8 p(arma::fill::value(NA_REAL));
   for (arma::uword k = 0; k < uv_cll.n_elem; ++k) {
     if (uv_cll[k] == 1) {
-      ns_dir_inf = nm_dir_inf.at(i + ifl_drdc.iv_dr[k], j + ifl_drdc.iv_dc[k]);
+      ns_dir_inf = nm_dir_inf.at(i + ifl.iv_dr[k], j + ifl.iv_dc[k]);
 
       if (k == 6) {
-        if (ns_dir_inf > ifl_drdc.nv_dir_min[k] || ns_dir_inf < ifl_drdc.nv_dir_max[k]) {
-          if (ns_dir_inf <= ifl_drdc.nv_dir_mid[k]) {
-            p[k] = (ns_dir_inf - ifl_drdc.nv_dir_min[k]) / 45.0;
+        if (ns_dir_inf > ifl.nv_dir_min[k] || ns_dir_inf < ifl.nv_dir_max[k]) {
+          if (ns_dir_inf <= ifl.nv_dir_mid[k]) {
+            p[k] = (ns_dir_inf - ifl.nv_dir_min[k]) / 45.0;
           } else {
-            p[k] = (ifl_drdc.nv_dir_max[k] - ns_dir_inf) / 45.0;
+            p[k] = (ifl.nv_dir_max[k] - ns_dir_inf) / 45.0;
           }
         }
       } else {
-        if (ns_dir_inf > ifl_drdc.nv_dir_min[k] && ns_dir_inf < ifl_drdc.nv_dir_max[k]) {
-          if (ns_dir_inf <= ifl_drdc.nv_dir_mid[k]) {
-            p[k] = (ns_dir_inf - ifl_drdc.nv_dir_min[k]) / 45.0;
+        if (ns_dir_inf > ifl.nv_dir_min[k] && ns_dir_inf < ifl.nv_dir_max[k]) {
+          if (ns_dir_inf <= ifl.nv_dir_mid[k]) {
+            p[k] = (ns_dir_inf - ifl.nv_dir_min[k]) / 45.0;
           } else {
-            p[k] = (ifl_drdc.nv_dir_max[k] - ns_dir_inf) / 45.0;
+            p[k] = (ifl.nv_dir_max[k] - ns_dir_inf) / 45.0;
           }
         }
       }
