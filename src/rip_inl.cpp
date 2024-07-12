@@ -13,10 +13,7 @@ Rcpp::List rip_inl(
 ) {
   double ns_dir_inf{};
   int is_rip{1}, is_inl{1};
-  MovingWindow movingWindow{
-    static_cast<arma::sword>(nm_dir_inf.n_rows),
-    static_cast<arma::sword>(nm_dir_inf.n_cols)
-  };
+  MovingWindow movingWindow{nm_dir_inf.n_rows, nm_dir_inf.n_cols};
   X1X2<int> cha1cha2{}, rds1rds2{};
 
   arma::imat im_rip(

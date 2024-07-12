@@ -4,6 +4,29 @@
 #include <RcppArmadillo.h>
 
 const struct {
+  arma::ivec8 iv_dr{-1, -1, -1,
+                     0,      0,
+                     1,  1,  1}; // Deltas of rows
+  arma::ivec8 iv_dc{-1,  0,  1,
+                    -1,      1,
+                    -1,  0,  1}; // Deltas of cols
+
+  arma::dvec8 nv_dir_min{ 90.0, 135.0, 180.0,
+                          45.0,        225.0,
+                           0.0, 315.0, 270.0}; // Lower bounds of inflow directions
+  arma::dvec8 nv_dir_max{180.0, 225.0, 270.0,
+                         135.0,        315.0,
+                          90.0,  45.0, 360.0}; // Upper bounds of inflow directions
+
+  arma::uvec3 uv_oob_lr{0, 1, 2}; // Indices, which are out of bounds when row == 0
+  arma::uvec3 uv_oob_ur{5, 6, 7}; // Indices, which are out of bounds when row == max row
+  arma::uvec3 uv_oob_lc{0, 3, 5}; // Indices, which are out of bounds when col == 0
+  arma::uvec3 uv_oob_uc{2, 4, 7}; // Indices, which are out of bounds when col == max col
+
+  arma::ivec3 iv_oob{0, 0, 0}; // Vector for setting indices, which are out of bounds to 0
+} ifl_drdc;
+
+const struct {
   arma::ivec8 iv_x1_dr{ 0, -1, -1,  0,  0,  1, 1, 0};
   arma::ivec8 iv_x1_dc{ 1,  0,  0, -1, -1,  0, 0, 1};
 
@@ -31,8 +54,17 @@ struct X1X2 {
 
 class MovingWindow {
 public:
+  const arma::uword us_rws{};
+  const arma::uword us_cls{};
   const arma::sword is_rws{};
   const arma::sword is_cls{};
+
+  MovingWindow(arma::uword us_rws, arma::uword us_cls):
+    us_rws{us_rws},
+    us_cls{us_cls},
+    is_rws{static_cast<arma::sword>(us_rws)},
+    is_cls{static_cast<arma::sword>(us_cls)}
+  {}
 
   FacetProperties determineFacetProperties(
     const double& ns_dir_inf,
@@ -47,6 +79,11 @@ public:
     const arma::uword& j,
     const arma::Mat<T>& xm_xxx,
     const T NA
+  );
+
+  arma::dvec8 get_ifl_p(
+    const arma::uword& i,
+    const arma::uword& j
   );
 };
 
@@ -147,11 +184,11 @@ inline FacetProperties MovingWindow::determineFacetProperties(
 
 template <typename T>
 inline X1X2<T> MovingWindow::get_x1x2(
-    const double& ns_dir_inf,
-    const arma::uword& i,
-    const arma::uword& j,
-    const arma::Mat<T>& xm_xxx,
-    const T NA
+  const double& ns_dir_inf,
+  const arma::uword& i,
+  const arma::uword& j,
+  const arma::Mat<T>& xm_xxx,
+  const T NA
 ) {
   FacetProperties fct{determineFacetProperties(ns_dir_inf, i, j)};
 
@@ -168,4 +205,40 @@ inline X1X2<T> MovingWindow::get_x1x2(
   }
 
   return X1X2<T>{x1, x2};
+}
+
+inline arma::dvec8 MovingWindow::get_ifl_p(
+  const arma::uword& i,
+  const arma::uword& j
+) {
+  arma::ivec8 iv_cll(arma::fill::ones);
+  if (i == 0) {
+    iv_cll.elem(ifl_drdc.uv_oob_lr) = ifl_drdc.iv_oob;
+  }
+  if (i == us_rws - 1) {
+    iv_cll.elem(ifl_drdc.uv_oob_ur) = ifl_drdc.iv_oob;
+  }
+  if (j == 0) {
+    iv_cll.elem(ifl_drdc.uv_oob_lc) = ifl_drdc.iv_oob;
+  }
+  if (j == us_cls - 1) {
+    iv_cll.elem(ifl_drdc.uv_oob_uc) = ifl_drdc.iv_oob;
+  }
+
+  arma::dvec8 p(arma::fill::value(NA_REAL));
+  for (arma::uword k = 0; k < iv_cll.n_elem; ++k) {
+    if (iv_cll[k] == 1) {
+      // if k == 6 {
+      //   if dir > start_fd[i] || dir < end_fd[i] {
+      //     count += 1;
+      //   }
+      // } else {
+      //   if dir > start_fd[i] && dir < end_fd[i] {
+      //     count += 1;
+      //   }
+      // }
+    }
+  }
+
+  return p;
 }

@@ -14,10 +14,7 @@ arma::dmat DInfSlope(
   const double ns_res_dgl{std::sqrt(2.0 * ns_res * ns_res)};
 
   double ns_dir_inf{}, ns_e0{}, ns_s1{}, ns_s2{};
-  MovingWindow movingWindow{
-    static_cast<arma::sword>(nm_dir_inf.n_rows),
-    static_cast<arma::sword>(nm_dir_inf.n_cols)
-  };
+  MovingWindow movingWindow{nm_dir_inf.n_rows, nm_dir_inf.n_cols};
   X1X2<double> e1e2{};
 
   arma::dmat nm_slp_inf(
