@@ -89,6 +89,15 @@ public:
     const arma::uword& us_row,
     const arma::uword& us_col
   );
+
+  template <typename T>
+  arma::Col<T> get_ifl(
+    const arma::dvec8& nv_ifl_p,
+    const arma::uword& us_row,
+    const arma::uword& us_col,
+    const arma::Mat<T>& xm_xxx,
+    const T NA
+  );
 };
 
 #endif
@@ -257,4 +266,22 @@ inline arma::dvec8 MovingWindow::get_ifl_p(
   }
 
   return nv_ifl_p;
+}
+
+template <typename T>
+inline arma::Col<T> MovingWindow::get_ifl(
+  const arma::dvec8& nv_ifl_p,
+  const arma::uword& us_row,
+  const arma::uword& us_col,
+  const arma::Mat<T>& xm_xxx,
+  const T NA
+) {
+  arma::Col<T> xv_ifl(nv_ifl_p.n_elem, arma::fill::value(NA));
+  for (arma::uword k = 0; k < nv_ifl_p.n_elem; ++k) {
+    if (nv_ifl_p[k] > 0.0) {
+      xv_ifl[k] = xm_xxx.at(us_row + ifl.iv_dr[k], us_col + ifl.iv_dc[k]);
+    }
+  }
+
+  return xv_ifl;
 }

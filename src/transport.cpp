@@ -8,10 +8,12 @@
 Rcpp::List transportCpp(
   arma::dmat& nm_acc_inf,
   arma::dmat& nm_dir_inf,
+  arma::imat& im_cha,
   const int is_ths = 1
 ) {
   MovingWindow movingWindow{nm_dir_inf.n_rows, nm_dir_inf.n_cols};
 
+  // Determine number of inflowing cells
   arma::imat im_ifl(
     arma::size(nm_dir_inf),
     arma::fill::value(NA_INTEGER)
@@ -20,12 +22,76 @@ Rcpp::List transportCpp(
   #pragma omp parallel for num_threads(is_ths) collapse(2)
   for (arma::uword i = 0; i < nm_dir_inf.n_rows; ++i) {
     for (arma::uword j = 0; j < nm_dir_inf.n_cols; ++j) {
-      if (Rcpp::NumericMatrix::is_na(nm_acc_inf(i, j))) {
+      if (Rcpp::NumericMatrix::is_na(nm_acc_inf.at(i, j)) ||
+          Rcpp::NumericMatrix::is_na(nm_dir_inf.at(i, j))) {
         continue;
       }
 
-      im_ifl(i, j) = arma::accu(movingWindow.get_ifl_p(nm_dir_inf, i, j) > 0);
+      arma::dvec8 nv_ifl_p{movingWindow.get_ifl_p(nm_dir_inf, i, j)};
+      im_ifl.at(i, j) = arma::accu(
+        movingWindow.get_ifl<double>(nv_ifl_p, i, j, nm_acc_inf, NA_REAL) > 0.0
+      );
     }
+  }
+
+  // Determine transport calculation order
+  arma::uword n_all{arma::accu(im_ifl >= 0)};
+  arma::uvec uv_ord_r(n_all, arma::fill::value(0));
+  arma::uvec uv_ord_c(n_all, arma::fill::value(0));
+
+  arma::uword stack{0};
+
+  #pragma omp parallel for num_threads(is_ths) collapse(2)
+  for (arma::uword i = 0; i < im_ifl.n_rows; ++i) {
+    for (arma::uword j = 0; j < im_ifl.n_cols; ++j) {
+      if (im_ifl.at(i, j) == 0) {
+        uv_ord_r[stack] = i;
+        uv_ord_c[stack] = j;
+        ++stack;
+      }
+    }
+  }
+
+  // arma::imat im_ord(
+  //   arma::size(nm_dir_inf),
+  //   arma::fill::value(NA_INTEGER)
+  // );
+
+  arma::sword x1{}, x2{};
+  for (arma::uword n = 0; n < uv_ord_r.n_elem; ++n) {
+    FacetProperties fct{movingWindow.determineFacetProperties(
+      nm_dir_inf.at(uv_ord_r[n], uv_ord_c[n]),
+      uv_ord_r[n],
+      uv_ord_c[n]
+    )};
+
+    x1 = im_ifl.at(fct.us_x1_r, fct.us_x1_c);
+    if (Rcpp::IntegerMatrix::is_na(x1) || fct.ls_x1_oob) {
+      x1 = NA_INTEGER;
+    } else {
+      --x1;
+      im_ifl.at(fct.us_x1_r, fct.us_x1_c) = x1;
+    }
+    x2 = im_ifl.at(fct.us_x2_r, fct.us_x2_c);
+    if (Rcpp::IntegerMatrix::is_na(x2) || fct.ls_x2_oob) {
+      x2 = NA_INTEGER;
+    } else {
+      --x2;
+      im_ifl.at(fct.us_x2_r, fct.us_x2_c) = x2;
+    }
+
+    if (x1 == 0) {
+      uv_ord_r[stack] = fct.us_x1_r;
+      uv_ord_c[stack] = fct.us_x1_c;
+      ++stack;
+    }
+    if (x2 == 0) {
+      uv_ord_r[stack] = fct.us_x2_r;
+      uv_ord_c[stack] = fct.us_x2_c;
+      ++stack;
+    }
+
+    // im_ord.at(uv_ord_r[n], uv_ord_c[n]) = n;
   }
 
 //   double ns_cha_rto = parameters.slot("ns_cha_rto");
@@ -194,6 +260,7 @@ Rcpp::List transportCpp(
     // Rcpp::Named("nm_xxt_out") = nm_xxt_out,
     // Rcpp::Named("nm_xxt_cld") = nm_xxt_cld,
     // Rcpp::Named("nm_xxt_ctf") = nm_xxt_ctf
-    Rcpp::Named("im_ifl") = im_ifl
+    Rcpp::Named("im_ifl") = im_ifl//,
+    // Rcpp::Named("im_ord") = im_ord
   );
 }
