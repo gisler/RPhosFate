@@ -12,9 +12,9 @@ Rcpp::List rip_inl(
   const int is_ths = 1
 ) {
   double ns_dir_inf{};
-  int is_rip{1}, is_inl{1};
   MovingWindow movingWindow{nm_dir_inf.n_rows, nm_dir_inf.n_cols};
   X1X2<int> cha1cha2{}, rds1rds2{};
+  int is_rip{1}, is_inl{1};
 
   arma::imat im_rip(
     arma::size(nm_dir_inf),

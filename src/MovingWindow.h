@@ -14,6 +14,9 @@ const struct {
   arma::dvec8 nv_dir_min{ 90.0, 135.0, 180.0,
                           45.0,        225.0,
                            0.0, 315.0, 270.0}; // Lower bounds of inflow directions
+  arma::dvec8 nv_dir_mid{135.0, 180.0, 225.0,
+                          90.0,        270.0,
+                          45.0, 360.0, 315.0}; // Midpoint of inflow directions
   arma::dvec8 nv_dir_max{180.0, 225.0, 270.0,
                          135.0,        315.0,
                           90.0,  45.0, 360.0}; // Upper bounds of inflow directions
@@ -23,7 +26,7 @@ const struct {
   arma::uvec3 uv_oob_lc{0, 3, 5}; // Indices, which are out of bounds when col == 0
   arma::uvec3 uv_oob_uc{2, 4, 7}; // Indices, which are out of bounds when col == max col
 
-  arma::ivec3 iv_oob{0, 0, 0}; // Vector for setting indices, which are out of bounds to 0
+  arma::uvec3 uv_oob{0, 0, 0}; // Vector for setting indices, which are out of bounds to 0
 } ifl_drdc;
 
 const struct {
@@ -82,6 +85,7 @@ public:
   );
 
   arma::dvec8 get_ifl_p(
+    const arma::dmat& nm_dir_inf,
     const arma::uword& i,
     const arma::uword& j
   );
@@ -208,35 +212,47 @@ inline X1X2<T> MovingWindow::get_x1x2(
 }
 
 inline arma::dvec8 MovingWindow::get_ifl_p(
+  const arma::dmat& nm_dir_inf,
   const arma::uword& i,
   const arma::uword& j
 ) {
-  arma::ivec8 iv_cll(arma::fill::ones);
+  arma::uvec8 uv_cll(arma::fill::value(1));
   if (i == 0) {
-    iv_cll.elem(ifl_drdc.uv_oob_lr) = ifl_drdc.iv_oob;
+    uv_cll.elem(ifl_drdc.uv_oob_lr) = ifl_drdc.uv_oob;
   }
   if (i == us_rws - 1) {
-    iv_cll.elem(ifl_drdc.uv_oob_ur) = ifl_drdc.iv_oob;
+    uv_cll.elem(ifl_drdc.uv_oob_ur) = ifl_drdc.uv_oob;
   }
   if (j == 0) {
-    iv_cll.elem(ifl_drdc.uv_oob_lc) = ifl_drdc.iv_oob;
+    uv_cll.elem(ifl_drdc.uv_oob_lc) = ifl_drdc.uv_oob;
   }
   if (j == us_cls - 1) {
-    iv_cll.elem(ifl_drdc.uv_oob_uc) = ifl_drdc.iv_oob;
+    uv_cll.elem(ifl_drdc.uv_oob_uc) = ifl_drdc.uv_oob;
   }
 
+  double ns_dir_inf{};
   arma::dvec8 p(arma::fill::value(NA_REAL));
-  for (arma::uword k = 0; k < iv_cll.n_elem; ++k) {
-    if (iv_cll[k] == 1) {
-      // if k == 6 {
-      //   if dir > start_fd[i] || dir < end_fd[i] {
-      //     count += 1;
-      //   }
-      // } else {
-      //   if dir > start_fd[i] && dir < end_fd[i] {
-      //     count += 1;
-      //   }
-      // }
+  for (arma::uword k = 0; k < uv_cll.n_elem; ++k) {
+    if (uv_cll[k] == 1) {
+      ns_dir_inf = nm_dir_inf.at(i + ifl_drdc.iv_dr[k], j + ifl_drdc.iv_dc[k]);
+
+      if (k == 6) {
+        if (ns_dir_inf > ifl_drdc.nv_dir_min[k] || ns_dir_inf < ifl_drdc.nv_dir_max[k]) {
+          if (ns_dir_inf <= ifl_drdc.nv_dir_mid[k]) {
+            p[k] = (ns_dir_inf - ifl_drdc.nv_dir_min[k]) / 45.0;
+          } else {
+            p[k] = (ifl_drdc.nv_dir_max[k] - ns_dir_inf) / 45.0;
+          }
+        }
+      } else {
+        if (ns_dir_inf > ifl_drdc.nv_dir_min[k] && ns_dir_inf < ifl_drdc.nv_dir_max[k]) {
+          if (ns_dir_inf <= ifl_drdc.nv_dir_mid[k]) {
+            p[k] = (ns_dir_inf - ifl_drdc.nv_dir_min[k]) / 45.0;
+          } else {
+            p[k] = (ifl_drdc.nv_dir_max[k] - ns_dir_inf) / 45.0;
+          }
+        }
+      }
     }
   }
 
