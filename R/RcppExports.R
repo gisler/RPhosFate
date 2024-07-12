@@ -9,7 +9,7 @@ rip_inl <- function(nm_dir_inf, im_cha, im_rds, is_ths = 1L) {
     .Call(`_RPhosFate_rip_inl`, nm_dir_inf, im_cha, im_rds, is_ths)
 }
 
-transportCpp <- function(parameters, ns_dep_ovl, ns_tfc_inl, helpers, order, im_cha, im_dir, im_inl, im_rip, nm_man, nm_xxe, nm_rhy, nm_slp) {
-    .Call(`_RPhosFate_transportCpp`, parameters, ns_dep_ovl, ns_tfc_inl, helpers, order, im_cha, im_dir, im_inl, im_rip, nm_man, nm_xxe, nm_rhy, nm_slp)
+transportCpp <- function(parameters, ns_dep_ovl, ns_tfc_inl, helpers, im_cha, im_dir, im_inl, im_rip, nm_man, nm_xxe, nm_rhy, nm_slp) {
+    .Call(`_RPhosFate_transportCpp`, parameters, ns_dep_ovl, ns_tfc_inl, helpers, im_cha, im_dir, im_inl, im_rip, nm_man, nm_xxe, nm_rhy, nm_slp)
 }
 

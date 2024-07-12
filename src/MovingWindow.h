@@ -231,7 +231,7 @@ inline arma::dvec8 MovingWindow::get_ifl_p(
   }
 
   double ns_dir_inf{};
-  arma::dvec8 p(arma::fill::value(NA_REAL));
+  arma::dvec8 nv_ifl_p(arma::fill::value(NA_REAL));
   for (arma::uword k = 0; k < uv_cll.n_elem; ++k) {
     if (uv_cll[k] == 1) {
       ns_dir_inf = nm_dir_inf.at(i + ifl.iv_dr[k], j + ifl.iv_dc[k]);
@@ -239,22 +239,22 @@ inline arma::dvec8 MovingWindow::get_ifl_p(
       if (k == 6) {
         if (ns_dir_inf > ifl.nv_dir_min[k] || ns_dir_inf < ifl.nv_dir_max[k]) {
           if (ns_dir_inf <= ifl.nv_dir_mid[k]) {
-            p[k] = (ns_dir_inf - ifl.nv_dir_min[k]) / 45.0;
+            nv_ifl_p[k] = (ns_dir_inf - ifl.nv_dir_min[k]) / 45.0;
           } else {
-            p[k] = (ifl.nv_dir_max[k] - ns_dir_inf) / 45.0;
+            nv_ifl_p[k] = (ifl.nv_dir_max[k] - ns_dir_inf) / 45.0;
           }
         }
       } else {
         if (ns_dir_inf > ifl.nv_dir_min[k] && ns_dir_inf < ifl.nv_dir_max[k]) {
           if (ns_dir_inf <= ifl.nv_dir_mid[k]) {
-            p[k] = (ns_dir_inf - ifl.nv_dir_min[k]) / 45.0;
+            nv_ifl_p[k] = (ns_dir_inf - ifl.nv_dir_min[k]) / 45.0;
           } else {
-            p[k] = (ifl.nv_dir_max[k] - ns_dir_inf) / 45.0;
+            nv_ifl_p[k] = (ifl.nv_dir_max[k] - ns_dir_inf) / 45.0;
           }
         }
       }
     }
   }
 
-  return p;
+  return nv_ifl_p;
 }

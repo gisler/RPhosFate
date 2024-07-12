@@ -40,25 +40,24 @@ BEGIN_RCPP
 END_RCPP
 }
 // transportCpp
-List transportCpp(S4 parameters, double ns_dep_ovl, double ns_tfc_inl, S4 helpers, S4 order, IntegerMatrix im_cha, IntegerMatrix im_dir, IntegerMatrix im_inl, IntegerMatrix im_rip, NumericMatrix nm_man, NumericMatrix nm_xxe, NumericMatrix nm_rhy, NumericMatrix nm_slp);
-RcppExport SEXP _RPhosFate_transportCpp(SEXP parametersSEXP, SEXP ns_dep_ovlSEXP, SEXP ns_tfc_inlSEXP, SEXP helpersSEXP, SEXP orderSEXP, SEXP im_chaSEXP, SEXP im_dirSEXP, SEXP im_inlSEXP, SEXP im_ripSEXP, SEXP nm_manSEXP, SEXP nm_xxeSEXP, SEXP nm_rhySEXP, SEXP nm_slpSEXP) {
+Rcpp::List transportCpp(Rcpp::S4 parameters, double ns_dep_ovl, double ns_tfc_inl, Rcpp::S4 helpers, arma::imat& im_cha, arma::imat& im_dir, arma::imat& im_inl, arma::imat& im_rip, arma::dmat& nm_man, arma::dmat& nm_xxe, arma::dmat& nm_rhy, arma::dmat& nm_slp);
+RcppExport SEXP _RPhosFate_transportCpp(SEXP parametersSEXP, SEXP ns_dep_ovlSEXP, SEXP ns_tfc_inlSEXP, SEXP helpersSEXP, SEXP im_chaSEXP, SEXP im_dirSEXP, SEXP im_inlSEXP, SEXP im_ripSEXP, SEXP nm_manSEXP, SEXP nm_xxeSEXP, SEXP nm_rhySEXP, SEXP nm_slpSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< S4 >::type parameters(parametersSEXP);
+    Rcpp::traits::input_parameter< Rcpp::S4 >::type parameters(parametersSEXP);
     Rcpp::traits::input_parameter< double >::type ns_dep_ovl(ns_dep_ovlSEXP);
     Rcpp::traits::input_parameter< double >::type ns_tfc_inl(ns_tfc_inlSEXP);
-    Rcpp::traits::input_parameter< S4 >::type helpers(helpersSEXP);
-    Rcpp::traits::input_parameter< S4 >::type order(orderSEXP);
-    Rcpp::traits::input_parameter< IntegerMatrix >::type im_cha(im_chaSEXP);
-    Rcpp::traits::input_parameter< IntegerMatrix >::type im_dir(im_dirSEXP);
-    Rcpp::traits::input_parameter< IntegerMatrix >::type im_inl(im_inlSEXP);
-    Rcpp::traits::input_parameter< IntegerMatrix >::type im_rip(im_ripSEXP);
-    Rcpp::traits::input_parameter< NumericMatrix >::type nm_man(nm_manSEXP);
-    Rcpp::traits::input_parameter< NumericMatrix >::type nm_xxe(nm_xxeSEXP);
-    Rcpp::traits::input_parameter< NumericMatrix >::type nm_rhy(nm_rhySEXP);
-    Rcpp::traits::input_parameter< NumericMatrix >::type nm_slp(nm_slpSEXP);
-    rcpp_result_gen = Rcpp::wrap(transportCpp(parameters, ns_dep_ovl, ns_tfc_inl, helpers, order, im_cha, im_dir, im_inl, im_rip, nm_man, nm_xxe, nm_rhy, nm_slp));
+    Rcpp::traits::input_parameter< Rcpp::S4 >::type helpers(helpersSEXP);
+    Rcpp::traits::input_parameter< arma::imat& >::type im_cha(im_chaSEXP);
+    Rcpp::traits::input_parameter< arma::imat& >::type im_dir(im_dirSEXP);
+    Rcpp::traits::input_parameter< arma::imat& >::type im_inl(im_inlSEXP);
+    Rcpp::traits::input_parameter< arma::imat& >::type im_rip(im_ripSEXP);
+    Rcpp::traits::input_parameter< arma::dmat& >::type nm_man(nm_manSEXP);
+    Rcpp::traits::input_parameter< arma::dmat& >::type nm_xxe(nm_xxeSEXP);
+    Rcpp::traits::input_parameter< arma::dmat& >::type nm_rhy(nm_rhySEXP);
+    Rcpp::traits::input_parameter< arma::dmat& >::type nm_slp(nm_slpSEXP);
+    rcpp_result_gen = Rcpp::wrap(transportCpp(parameters, ns_dep_ovl, ns_tfc_inl, helpers, im_cha, im_dir, im_inl, im_rip, nm_man, nm_xxe, nm_rhy, nm_slp));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -66,7 +65,7 @@ END_RCPP
 static const R_CallMethodDef CallEntries[] = {
     {"_RPhosFate_DInfSlope", (DL_FUNC) &_RPhosFate_DInfSlope, 4},
     {"_RPhosFate_rip_inl", (DL_FUNC) &_RPhosFate_rip_inl, 4},
-    {"_RPhosFate_transportCpp", (DL_FUNC) &_RPhosFate_transportCpp, 13},
+    {"_RPhosFate_transportCpp", (DL_FUNC) &_RPhosFate_transportCpp, 12},
     {NULL, NULL, 0}
 };
 
