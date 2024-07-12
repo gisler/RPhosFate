@@ -86,8 +86,8 @@ public:
 
   arma::dvec8 get_ifl_p(
     const arma::dmat& nm_dir_inf,
-    const arma::uword& i,
-    const arma::uword& j
+    const arma::uword& us_row,
+    const arma::uword& us_col
   );
 };
 
@@ -213,20 +213,20 @@ inline X1X2<T> MovingWindow::get_x1x2(
 
 inline arma::dvec8 MovingWindow::get_ifl_p(
   const arma::dmat& nm_dir_inf,
-  const arma::uword& i,
-  const arma::uword& j
+  const arma::uword& us_row,
+  const arma::uword& us_col
 ) {
   arma::uvec8 uv_cll(arma::fill::value(1));
-  if (i == 0) {
+  if (us_row == 0) {
     uv_cll.elem(ifl.uv_oob_lr) = ifl.uv_oob;
   }
-  if (i == us_rws - 1) {
+  if (us_row == us_rws - 1) {
     uv_cll.elem(ifl.uv_oob_ur) = ifl.uv_oob;
   }
-  if (j == 0) {
+  if (us_col == 0) {
     uv_cll.elem(ifl.uv_oob_lc) = ifl.uv_oob;
   }
-  if (j == us_cls - 1) {
+  if (us_col == us_cls - 1) {
     uv_cll.elem(ifl.uv_oob_uc) = ifl.uv_oob;
   }
 
@@ -234,11 +234,11 @@ inline arma::dvec8 MovingWindow::get_ifl_p(
   arma::dvec8 nv_ifl_p(arma::fill::value(NA_REAL));
   for (arma::uword k = 0; k < uv_cll.n_elem; ++k) {
     if (uv_cll[k] == 1) {
-      ns_dir_inf = nm_dir_inf.at(i + ifl.iv_dr[k], j + ifl.iv_dc[k]);
+      ns_dir_inf = nm_dir_inf.at(us_row + ifl.iv_dr[k], us_col + ifl.iv_dc[k]);
 
       if (k == 6) {
         if (ns_dir_inf > ifl.nv_dir_min[k] || ns_dir_inf < ifl.nv_dir_max[k]) {
-          if (ns_dir_inf <= ifl.nv_dir_mid[k]) {
+          if (ns_dir_inf > ifl.nv_dir_min[k]) {
             nv_ifl_p[k] = (ns_dir_inf - ifl.nv_dir_min[k]) / 45.0;
           } else {
             nv_ifl_p[k] = (ifl.nv_dir_max[k] - ns_dir_inf) / 45.0;

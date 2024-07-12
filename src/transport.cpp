@@ -6,19 +6,28 @@
 
 // [[Rcpp::export]]
 Rcpp::List transportCpp(
-  Rcpp::S4 parameters,
-  double ns_dep_ovl,
-  double ns_tfc_inl,
-  Rcpp::S4 helpers,
-  arma::imat& im_cha,
-  arma::imat& im_dir,
-  arma::imat& im_inl,
-  arma::imat& im_rip,
-  arma::dmat& nm_man,
-  arma::dmat& nm_xxe,
-  arma::dmat& nm_rhy,
-  arma::dmat& nm_slp
+  arma::dmat& nm_acc_inf,
+  arma::dmat& nm_dir_inf,
+  const int is_ths = 1
 ) {
+  MovingWindow movingWindow{nm_dir_inf.n_rows, nm_dir_inf.n_cols};
+
+  arma::imat im_ifl(
+    arma::size(nm_dir_inf),
+    arma::fill::value(NA_INTEGER)
+  );
+
+  #pragma omp parallel for num_threads(is_ths) collapse(2)
+  for (arma::uword i = 0; i < nm_dir_inf.n_rows; ++i) {
+    for (arma::uword j = 0; j < nm_dir_inf.n_cols; ++j) {
+      if (Rcpp::NumericMatrix::is_na(nm_acc_inf(i, j))) {
+        continue;
+      }
+
+      im_ifl(i, j) = arma::accu(movingWindow.get_ifl_p(nm_dir_inf, i, j) > 0);
+    }
+  }
+
 //   double ns_cha_rto = parameters.slot("ns_cha_rto");
 //   double ns_man_rip = parameters.slot("ns_man_rip");
 //   double ns_man_cha = parameters.slot("ns_man_cha");
@@ -185,7 +194,6 @@ Rcpp::List transportCpp(
     // Rcpp::Named("nm_xxt_out") = nm_xxt_out,
     // Rcpp::Named("nm_xxt_cld") = nm_xxt_cld,
     // Rcpp::Named("nm_xxt_ctf") = nm_xxt_ctf
-    Rcpp::Named("im_tst") = im_cha
+    Rcpp::Named("im_ifl") = im_ifl
   );
 }
-
