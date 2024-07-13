@@ -277,6 +277,7 @@ inline arma::Col<T> MovingWindow::get_ifl(
   const T NA
 ) {
   arma::Col<T> xv_ifl(nv_ifl_p.n_elem, arma::fill::value(NA));
+
   for (arma::uword k = 0; k < nv_ifl_p.n_elem; ++k) {
     if (nv_ifl_p[k] > 0.0) {
       xv_ifl[k] = xm_xxx.at(us_row + ifl.iv_dr[k], us_col + ifl.iv_dc[k]);

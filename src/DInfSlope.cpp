@@ -12,10 +12,7 @@ arma::dmat DInfSlope(
   const int is_ths = 1
 ) {
   const double ns_res_dgl{std::sqrt(2.0 * ns_res * ns_res)};
-
-  double ns_dir_inf{}, ns_e0{}, ns_s1{}, ns_s2{};
   MovingWindow movingWindow{nm_dir_inf.n_rows, nm_dir_inf.n_cols};
-  X1X2<double> e1e2{};
 
   arma::dmat nm_slp_inf(
     arma::size(nm_dir_inf),
@@ -25,6 +22,9 @@ arma::dmat DInfSlope(
   #pragma omp parallel for num_threads(is_ths) collapse(2)
   for (arma::uword i = 0; i < nm_dir_inf.n_rows; ++i) {
     for (arma::uword j = 0; j < nm_dir_inf.n_cols; ++j) {
+      double ns_dir_inf{}, ns_e0{}, ns_s1{}, ns_s2{};
+      X1X2<double> e1e2{};
+
       ns_dir_inf = nm_dir_inf.at(i, j);
 
       if (Rcpp::NumericMatrix::is_na(ns_dir_inf) || ns_dir_inf == -1.0) {

@@ -22,12 +22,18 @@ Rcpp::List transportCpp(
   #pragma omp parallel for num_threads(is_ths) collapse(2)
   for (arma::uword i = 0; i < nm_dir_inf.n_rows; ++i) {
     for (arma::uword j = 0; j < nm_dir_inf.n_cols; ++j) {
+      double ns_dir_inf{};
+      arma::dvec8 nv_ifl_p{};
+
+      ns_dir_inf = nm_dir_inf.at(i, j);
+
       if (Rcpp::NumericMatrix::is_na(nm_acc_inf.at(i, j)) ||
-          Rcpp::NumericMatrix::is_na(nm_dir_inf.at(i, j))) {
+          Rcpp::NumericMatrix::is_na(ns_dir_inf) ||
+          ns_dir_inf == -1.0) {
         continue;
       }
 
-      arma::dvec8 nv_ifl_p{movingWindow.get_ifl_p(nm_dir_inf, i, j)};
+      nv_ifl_p = movingWindow.get_ifl_p(nm_dir_inf, i, j);
       im_ifl.at(i, j) = arma::accu(
         movingWindow.get_ifl<double>(nv_ifl_p, i, j, nm_acc_inf, NA_REAL) > 0.0
       );
@@ -57,13 +63,15 @@ Rcpp::List transportCpp(
   //   arma::fill::value(NA_INTEGER)
   // );
 
+  FacetProperties fct{};
   arma::sword x1{}, x2{};
+
   for (arma::uword n = 0; n < uv_ord_r.n_elem; ++n) {
-    FacetProperties fct{movingWindow.determineFacetProperties(
+    fct = movingWindow.determineFacetProperties(
       nm_dir_inf.at(uv_ord_r[n], uv_ord_c[n]),
       uv_ord_r[n],
       uv_ord_c[n]
-    )};
+    );
 
     x1 = im_ifl.at(fct.us_x1_r, fct.us_x1_c);
     if (Rcpp::IntegerMatrix::is_na(x1) || fct.ls_x1_oob) {
