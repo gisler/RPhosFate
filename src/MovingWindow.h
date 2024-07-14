@@ -55,6 +55,16 @@ struct X1X2 {
   T x2{};
 };
 
+struct CalcOrder {
+  arma::uvec uv_r{};
+  arma::uvec uv_c{};
+
+  CalcOrder(arma::uword n):
+    uv_r(n, 0),
+    uv_c(n, 0)
+  {}
+};
+
 class MovingWindow {
 public:
   const arma::uword us_rws{};
@@ -165,6 +175,9 @@ inline FacetProperties MovingWindow::determineFacetProperties(
     // Rcpp::stop("\"dir_inf\" out of range.");
     // throw Rcpp::exception("\"dir_inf\" out of range.");
     Rcpp::Rcerr << "Warning: \"dir_inf\" out of range." << std::endl;
+
+    fct.ls_x1_oob = true;
+    fct.ls_x2_oob = true;
   }
 
   // Determine rows and cols of x1 and x2
@@ -204,8 +217,8 @@ inline X1X2<T> MovingWindow::get_x1x2(
   const T NA
 ) {
   FacetProperties fct{determineFacetProperties(ns_dir_inf, i, j)};
-
   T x1{}, x2{};
+
   if (fct.ls_x1_oob) {
     x1 = NA;
   } else {
@@ -226,6 +239,7 @@ inline arma::dvec8 MovingWindow::get_ifl_p(
   const arma::uword& us_col
 ) {
   arma::uvec8 uv_cll(arma::fill::value(1));
+
   if (us_row == 0) {
     uv_cll.elem(ifl.uv_oob_lr) = ifl.uv_oob;
   }
@@ -241,6 +255,7 @@ inline arma::dvec8 MovingWindow::get_ifl_p(
 
   double ns_dir_inf{};
   arma::dvec8 nv_ifl_p(arma::fill::value(NA_REAL));
+
   for (arma::uword k = 0; k < uv_cll.n_elem; ++k) {
     if (uv_cll[k] == 1) {
       ns_dir_inf = nm_dir_inf.at(us_row + ifl.iv_dr[k], us_col + ifl.iv_dc[k]);
@@ -276,7 +291,7 @@ inline arma::Col<T> MovingWindow::get_ifl(
   const arma::Mat<T>& xm_xxx,
   const T NA
 ) {
-  arma::Col<T> xv_ifl(nv_ifl_p.n_elem, arma::fill::value(NA));
+  arma::Col<T> xv_ifl(8, arma::fill::value(NA));
 
   for (arma::uword k = 0; k < nv_ifl_p.n_elem; ++k) {
     if (nv_ifl_p[k] > 0.0) {

@@ -13,6 +13,10 @@ Rcpp::List transportCpp(
 ) {
   MovingWindow movingWindow{nm_dir_inf.n_rows, nm_dir_inf.n_cols};
 
+  /* Transport calculation order
+     ===========================
+  */
+
   // Determine number of inflowing cells
   arma::imat im_ifl(
     arma::size(nm_dir_inf),
@@ -40,20 +44,18 @@ Rcpp::List transportCpp(
     }
   }
 
-  // Determine transport calculation order
-  arma::uword n_all{arma::accu(im_ifl >= 0)};
-  arma::uvec uv_ord_r(n_all, arma::fill::value(0));
-  arma::uvec uv_ord_c(n_all, arma::fill::value(0));
+  // Determine order of rows and cols indices
+  CalcOrder ord(arma::accu(im_ifl >= 0));
 
-  arma::uword stack{0};
+  arma::uword us_pos{0};
 
   #pragma omp parallel for num_threads(is_ths) collapse(2)
   for (arma::uword i = 0; i < im_ifl.n_rows; ++i) {
     for (arma::uword j = 0; j < im_ifl.n_cols; ++j) {
       if (im_ifl.at(i, j) == 0) {
-        uv_ord_r[stack] = i;
-        uv_ord_c[stack] = j;
-        ++stack;
+        ord.uv_r[us_pos] = i;
+        ord.uv_c[us_pos] = j;
+        ++us_pos;
       }
     }
   }
@@ -66,11 +68,11 @@ Rcpp::List transportCpp(
   FacetProperties fct{};
   arma::sword x1{}, x2{};
 
-  for (arma::uword n = 0; n < uv_ord_r.n_elem; ++n) {
+  for (arma::uword n = 0; n < ord.uv_r.n_elem; ++n) {
     fct = movingWindow.determineFacetProperties(
-      nm_dir_inf.at(uv_ord_r[n], uv_ord_c[n]),
-      uv_ord_r[n],
-      uv_ord_c[n]
+      nm_dir_inf.at(ord.uv_r[n], ord.uv_c[n]),
+      ord.uv_r[n],
+      ord.uv_c[n]
     );
 
     x1 = im_ifl.at(fct.us_x1_r, fct.us_x1_c);
@@ -89,18 +91,23 @@ Rcpp::List transportCpp(
     }
 
     if (x1 == 0) {
-      uv_ord_r[stack] = fct.us_x1_r;
-      uv_ord_c[stack] = fct.us_x1_c;
-      ++stack;
+      ord.uv_r[us_pos] = fct.us_x1_r;
+      ord.uv_c[us_pos] = fct.us_x1_c;
+      ++us_pos;
     }
     if (x2 == 0) {
-      uv_ord_r[stack] = fct.us_x2_r;
-      uv_ord_c[stack] = fct.us_x2_c;
-      ++stack;
+      ord.uv_r[us_pos] = fct.us_x2_r;
+      ord.uv_c[us_pos] = fct.us_x2_c;
+      ++us_pos;
     }
 
-    // im_ord.at(uv_ord_r[n], uv_ord_c[n]) = n;
+    // im_ord.at(ord.uv_r[n], ord.uv_c[n]) = n;
   }
+
+  /* Transport
+     =========
+  */
+
 
 //   double ns_cha_rto = parameters.slot("ns_cha_rto");
 //   double ns_man_rip = parameters.slot("ns_man_rip");
