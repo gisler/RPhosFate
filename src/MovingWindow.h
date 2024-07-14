@@ -60,8 +60,8 @@ struct CalcOrder {
   arma::uvec uv_c{};
 
   CalcOrder(arma::uword n):
-    uv_r(n, 0),
-    uv_c(n, 0)
+    uv_r(n, arma::fill::value(0)),
+    uv_c(n, arma::fill::value(0))
   {}
 };
 
