@@ -56,13 +56,16 @@ struct X1X2 {
 };
 
 struct CalcOrder {
-  arma::uvec uv_r{};
-  arma::uvec uv_c{};
+  std::vector<arma::uword> uv_r{};
+  std::vector<arma::uword> uv_c{};
 
   CalcOrder(arma::uword n):
-    uv_r(n, arma::fill::value(0)),
-    uv_c(n, arma::fill::value(0))
-  {}
+    uv_r{},
+    uv_c{}
+  {
+    uv_r.reserve(n);
+    uv_c.reserve(n);
+  }
 };
 
 class MovingWindow {

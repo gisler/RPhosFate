@@ -399,18 +399,17 @@ setMethod(
     assertChoice(substance, slotNames(x@substances))
     compareGeom(
       x@topo@rl_acc_inf,
+      x@topo@rl_dir_inf,
       x@topo@rl_cha,
-      x@topo@rl_dir,
-      x@topo@rl_inl,
       x@topo@rl_rip,
+      x@topo@rl_inl,
+      x@topo@rl_slp_cap,
       x@transport@rl_man,
       if (substance == "SS") {
         x@erosion@rl_ero
       } else {
         slot(x@substances, substance)@rl_xxe
-      },
-      x@transport@rl_rhy,
-      x@topo@rl_slp_cap
+      }
     )
     qassert(x@parameters@ns_dep_ovl, "N1[0,)", .var.name = "ns_dep_ovl")
     qassert(x@parameters@ns_dep_cha, "N1[0,)", .var.name = "ns_dep_cha")

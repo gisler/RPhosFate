@@ -47,15 +47,11 @@ Rcpp::List transportCpp(
   // Determine order of rows and cols indices
   CalcOrder ord(arma::accu(im_ifl >= 0));
 
-  arma::uword us_pos{0};
-
-  #pragma omp parallel for num_threads(is_ths) collapse(2)
   for (arma::uword i = 0; i < im_ifl.n_rows; ++i) {
     for (arma::uword j = 0; j < im_ifl.n_cols; ++j) {
       if (im_ifl.at(i, j) == 0) {
-        ord.uv_r[us_pos] = i;
-        ord.uv_c[us_pos] = j;
-        ++us_pos;
+        ord.uv_r.push_back(i);
+        ord.uv_c.push_back(j);
       }
     }
   }
@@ -68,37 +64,39 @@ Rcpp::List transportCpp(
   FacetProperties fct{};
   arma::sword x1{}, x2{};
 
-  for (arma::uword n = 0; n < ord.uv_r.n_elem; ++n) {
+  for (arma::uword n = 0; n < ord.uv_r.capacity(); ++n) {
     fct = movingWindow.determineFacetProperties(
       nm_dir_inf.at(ord.uv_r[n], ord.uv_c[n]),
       ord.uv_r[n],
       ord.uv_c[n]
     );
 
-    x1 = im_ifl.at(fct.us_x1_r, fct.us_x1_c);
-    if (Rcpp::IntegerMatrix::is_na(x1) || fct.ls_x1_oob) {
+    if (fct.ls_x1_oob) {
       x1 = NA_INTEGER;
     } else {
-      --x1;
-      im_ifl.at(fct.us_x1_r, fct.us_x1_c) = x1;
+      x1 = im_ifl.at(fct.us_x1_r, fct.us_x1_c);
+      if (!Rcpp::IntegerMatrix::is_na(x1)) {
+        --x1;
+        im_ifl.at(fct.us_x1_r, fct.us_x1_c) = x1;
+      }
     }
-    x2 = im_ifl.at(fct.us_x2_r, fct.us_x2_c);
-    if (Rcpp::IntegerMatrix::is_na(x2) || fct.ls_x2_oob) {
+    if (fct.ls_x2_oob) {
       x2 = NA_INTEGER;
     } else {
-      --x2;
-      im_ifl.at(fct.us_x2_r, fct.us_x2_c) = x2;
+      x2 = im_ifl.at(fct.us_x2_r, fct.us_x2_c);
+      if (!Rcpp::IntegerMatrix::is_na(x2)) {
+        --x2;
+        im_ifl.at(fct.us_x2_r, fct.us_x2_c) = x2;
+      }
     }
 
     if (x1 == 0) {
-      ord.uv_r[us_pos] = fct.us_x1_r;
-      ord.uv_c[us_pos] = fct.us_x1_c;
-      ++us_pos;
+      ord.uv_r.push_back(fct.us_x1_r);
+      ord.uv_c.push_back(fct.us_x1_c);
     }
     if (x2 == 0) {
-      ord.uv_r[us_pos] = fct.us_x2_r;
-      ord.uv_c[us_pos] = fct.us_x2_c;
-      ++us_pos;
+      ord.uv_r.push_back(fct.us_x2_r);
+      ord.uv_c.push_back(fct.us_x2_c);
     }
 
     // im_ord.at(ord.uv_r[n], ord.uv_c[n]) = n;
