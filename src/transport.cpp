@@ -39,7 +39,7 @@ Rcpp::List transportCpp(
 
       nv_ifl_p = movingWindow.get_ifl_p(nm_dir_inf, i, j);
       im_ifl.at(i, j) = arma::accu(
-        movingWindow.get_ifl<double>(nv_ifl_p, i, j, nm_acc_inf, NA_REAL) > 0.0
+        movingWindow.get_ifl_x<double>(nv_ifl_p, i, j, nm_acc_inf, NA_REAL) > 0.0
       );
     }
   }
@@ -66,8 +66,7 @@ Rcpp::List transportCpp(
 
   for (arma::uword n = 0; n < ord.uv_r.capacity(); ++n) {
     if (n == ord.uv_r.size()) {
-      Rcpp::Rcerr << "Warning: Could not determine a hydrologic consistent transport calculation order." << std::endl;
-      continue;
+      Rcpp::stop("Warning: Could not determine a hydrologic consistent transport calculation order.");
     }
 
     fct = movingWindow.determineFacetProperties(

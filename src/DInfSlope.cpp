@@ -12,6 +12,7 @@ arma::dmat DInfSlope(
   const int is_ths = 1
 ) {
   const double ns_res_dgl{std::sqrt(2.0 * ns_res * ns_res)};
+
   MovingWindow movingWindow{nm_dir_inf.n_rows, nm_dir_inf.n_cols};
 
   arma::dmat nm_slp_inf(

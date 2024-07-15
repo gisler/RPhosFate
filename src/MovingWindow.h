@@ -104,7 +104,7 @@ public:
   );
 
   template <typename T>
-  arma::Col<T> get_ifl(
+  arma::Col<T> get_ifl_x(
     const arma::dvec8& nv_ifl_p,
     const arma::uword& us_row,
     const arma::uword& us_col,
@@ -173,11 +173,7 @@ inline FacetProperties MovingWindow::determineFacetProperties(
     fct.ns_p1 = 1.0 - fct.ns_p2;
 
   } else {
-    // The first two crash R (v4.4.0 with Rcpp v1.0.12), but would be better
-    // choices:
-    // Rcpp::stop("\"dir_inf\" out of range.");
-    // throw Rcpp::exception("\"dir_inf\" out of range.");
-    Rcpp::Rcerr << "Warning: \"dir_inf\" out of range." << std::endl;
+    Rcpp::stop("\"dir_inf\" out of range.");
 
     fct.ls_x1_oob = true;
     fct.ls_x2_oob = true;
@@ -287,7 +283,7 @@ inline arma::dvec8 MovingWindow::get_ifl_p(
 }
 
 template <typename T>
-inline arma::Col<T> MovingWindow::get_ifl(
+inline arma::Col<T> MovingWindow::get_ifl_x(
   const arma::dvec8& nv_ifl_p,
   const arma::uword& us_row,
   const arma::uword& us_col,
