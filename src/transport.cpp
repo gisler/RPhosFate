@@ -65,6 +65,11 @@ Rcpp::List transportCpp(
   arma::sword x1{}, x2{};
 
   for (arma::uword n = 0; n < ord.uv_r.capacity(); ++n) {
+    if (n == ord.uv_r.size()) {
+      Rcpp::Rcerr << "Warning: Could not determine a hydrologic consistent transport calculation order." << std::endl;
+      continue;
+    }
+
     fct = movingWindow.determineFacetProperties(
       nm_dir_inf.at(ord.uv_r[n], ord.uv_c[n]),
       ord.uv_r[n],
