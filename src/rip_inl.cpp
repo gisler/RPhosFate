@@ -44,11 +44,13 @@ Rcpp::List rip_inl(
       if (!Rcpp::IntegerMatrix::is_na(cha1cha2.x1) ||
           !Rcpp::IntegerMatrix::is_na(cha1cha2.x2)) {
         im_rip.at(i, j) = is_rip;
+        # pragma omp atomic
         ++is_rip;
       }
       if ((rds1rds2.x1 == 1 && Rcpp::IntegerMatrix::is_na(cha1cha2.x1)) ||
           (rds1rds2.x2 == 1 && Rcpp::IntegerMatrix::is_na(cha1cha2.x2))) {
         im_inl.at(i, j) = is_inl;
+        # pragma omp atomic
         ++is_inl;
       }
     }
