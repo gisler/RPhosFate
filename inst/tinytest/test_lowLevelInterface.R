@@ -57,7 +57,7 @@ for (emissiveSubstance in setdiff(slotNames(control@substances), "SS")) {
 #### transportPrerequisites ####
 x <- transportPrerequisites(x)
 
-layers <- c("inl", "rhy", "rip")
+layers <- c("inl", "rip")
 for (layer in layers) {
   expect_true(
     terra::all.equal(

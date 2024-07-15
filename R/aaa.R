@@ -156,8 +156,7 @@ setMethod(
 setClass(
   "RPhosFateTransport",
   slots = c(
-    rl_man = "SpatRaster",
-    rl_rhy = "SpatRaster"
+    rl_man = "SpatRaster"
   )
 )
 setMethod(
@@ -169,9 +168,6 @@ setMethod(
 
     setwd("Input")
     .Object@rl_man <- readLayer(cmt, "man")
-
-    setwd("../Intermediate")
-    .Object@rl_rhy <- readLayer(cmt, "rhy")
 
     .Object
   }

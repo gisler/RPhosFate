@@ -274,17 +274,12 @@ setGeneric(
 )
 #' Transport prerequisites
 #'
-#' Calculates hydraulic radii and determines cells representing inlets as well
-#' as riparian zones before writing them to disk.
+#' Determines cells representing inlets as well as riparian zones before writing
+#' them to disk.
 #'
 #' @inheritParams erosionPrerequisites,RPhosFate-method
 #'
 #' @inherit erosionPrerequisites,RPhosFate-method return
-#'
-#' @references
-#' \cite{Molnár, P., Ramírez, J.A., 1998. Energy dissipation theories and
-#' optimal channel characteristics of river networks. Water Resources Research
-#' 34, 1809–1818. https://doi.org/10.1029/98WR00983}
 #'
 #' @seealso [`firstRun`], [`subsequentRun`]
 #'
@@ -317,19 +312,6 @@ setMethod(
     cs_dir_old <- setwd(file.path(x@cv_dir[1L], "Intermediate"))
     on.exit(setwd(cs_dir_old))
 
-    # Hydraulic radius in m
-    ns_rhy_a <- x@parameters@ns_rhy_a
-    ns_rhy_b <- x@parameters@ns_rhy_b
-    ns_siz <- x@helpers@ns_siz
-
-    x@transport@rl_rhy <- app(
-      x@topo@rl_acc_inf,
-      function(x) {
-        ns_rhy_a * (x * ns_siz * 1e-6)^ns_rhy_b
-      },
-      cores = x@is_ths
-    )
-
     # Riparian zone and inlet cells
     li_rip_inl <- rip_inl(
       nm_dir_inf = as.matrix(x@topo@rl_dir_inf, wide = TRUE),
@@ -358,7 +340,6 @@ setMethod(
     df_out$code <- as.integer(df_out$y * x@helpers@is_cls + df_out$x)
     x@topo@rl_inl <- subst(x@topo@rl_inl, df_out[["from_id"]], df_out[["code"]])
 
-    x@transport@rl_rhy <- writeLayer(x, "rhy", x@transport@rl_rhy, "FLT8S")
     x@topo@rl_rip      <- writeLayer(x, "rip", x@topo@rl_rip     , "INT4S")
     x@topo@rl_inl      <- writeLayer(x, "inl", x@topo@rl_inl     , "INT4S")
 
@@ -384,6 +365,10 @@ setGeneric(
 #' @references
 #' \cite{Engman, E.T., 1986. Roughness coefficients for routing surface runoff.
 #' Journal of Irrigation and Drainage Engineering 112, 39–53.}
+#'
+#' \cite{Molnár, P., Ramírez, J.A., 1998. Energy dissipation theories and
+#' optimal channel characteristics of river networks. Water Resources Research
+#' 34, 1809–1818. https://doi.org/10.1029/98WR00983}
 #'
 #' @seealso [`firstRun`], [`subsequentRun`]
 #'

@@ -70,7 +70,6 @@ This directory holds intermediate calculations:
 \itemize{
 \item \emph{inl:} Cells representing inlets at roads (storm drains).
 \item \emph{LFa:} L-factors.
-\item \emph{rhy:} Hydraulic radii in m.
 \item \emph{rip:} Cells representing the riparian zones within channel cells.
 \item \emph{SFa:} RUSLE S-factors.
 \item \emph{slp_cap:} Capped slopes in \%.

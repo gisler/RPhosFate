@@ -41,6 +41,10 @@ x <- transport(x, "PP")}
 \references{
 \cite{Engman, E.T., 1986. Roughness coefficients for routing surface runoff.
 Journal of Irrigation and Drainage Engineering 112, 39–53.}
+
+\cite{Molnár, P., Ramírez, J.A., 1998. Energy dissipation theories and
+optimal channel characteristics of river networks. Water Resources Research
+34, 1809–1818. https://doi.org/10.1029/98WR00983}
 }
 \seealso{
 \code{\link{firstRun}}, \code{\link{subsequentRun}}

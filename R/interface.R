@@ -61,7 +61,6 @@ RPhosFate <- function(...) {
 #'
 #' * _inl:_ Cells representing inlets at roads (storm drains).
 #' * _LFa:_ L-factors.
-#' * _rhy:_ Hydraulic radii in m.
 #' * _rip:_ Cells representing the riparian zones within channel cells.
 #' * _SFa:_ RUSLE S-factors.
 #' * \emph{slp_cap:} Capped slopes in %.
