@@ -241,7 +241,7 @@ setMethod(
     x <- erosion(x)
     for (emissiveSubstance in setdiff(slotNames(x@substances), "SS")) {
       if (compareGeom(
-        x@topo@rl_acc_wtd,
+        x@topo@rl_acc_inf,
         slot(x@substances, emissiveSubstance)@rl_xxc,
         stopOnError = FALSE
       )) {
