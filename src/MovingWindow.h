@@ -83,31 +83,31 @@ public:
   {}
 
   FacetProperties determineFacetProperties(
-    const double& ns_dir_inf,
-    const arma::uword& us_row,
-    const arma::uword& us_col
+    const double ns_dir_inf,
+    const arma::uword us_row,
+    const arma::uword us_col
   );
 
   template <typename T>
   X1X2<T> get_x1x2(
-    const double& ns_dir_inf,
-    const arma::uword& i,
-    const arma::uword& j,
+    const double ns_dir_inf,
+    const arma::uword i,
+    const arma::uword j,
     const arma::Mat<T>& xm_xxx,
     const T NA
   );
 
   arma::dvec8 get_ifl_p(
     const arma::dmat& nm_dir_inf,
-    const arma::uword& us_row,
-    const arma::uword& us_col
+    const arma::uword us_row,
+    const arma::uword us_col
   );
 
   template <typename T>
   arma::Col<T> get_ifl_x(
     const arma::dvec8& nv_ifl_p,
-    const arma::uword& us_row,
-    const arma::uword& us_col,
+    const arma::uword us_row,
+    const arma::uword us_col,
     const arma::Mat<T>& xm_xxx,
     const T NA
   );
@@ -116,9 +116,9 @@ public:
 #endif
 
 inline FacetProperties MovingWindow::determineFacetProperties(
-  const double& ns_dir_inf,
-  const arma::uword& us_row,
-  const arma::uword& us_col
+  const double ns_dir_inf,
+  const arma::uword us_row,
+  const arma::uword us_col
 ) {
   arma::uword us_fct{};
   FacetProperties fct{};
@@ -209,9 +209,9 @@ inline FacetProperties MovingWindow::determineFacetProperties(
 
 template <typename T>
 inline X1X2<T> MovingWindow::get_x1x2(
-  const double& ns_dir_inf,
-  const arma::uword& i,
-  const arma::uword& j,
+  const double ns_dir_inf,
+  const arma::uword i,
+  const arma::uword j,
   const arma::Mat<T>& xm_xxx,
   const T NA
 ) {
@@ -234,8 +234,8 @@ inline X1X2<T> MovingWindow::get_x1x2(
 
 inline arma::dvec8 MovingWindow::get_ifl_p(
   const arma::dmat& nm_dir_inf,
-  const arma::uword& us_row,
-  const arma::uword& us_col
+  const arma::uword us_row,
+  const arma::uword us_col
 ) {
   arma::uvec8 uv_cll(arma::fill::value(1));
 
@@ -285,8 +285,8 @@ inline arma::dvec8 MovingWindow::get_ifl_p(
 template <typename T>
 inline arma::Col<T> MovingWindow::get_ifl_x(
   const arma::dvec8& nv_ifl_p,
-  const arma::uword& us_row,
-  const arma::uword& us_col,
+  const arma::uword us_row,
+  const arma::uword us_col,
   const arma::Mat<T>& xm_xxx,
   const T NA
 ) {
