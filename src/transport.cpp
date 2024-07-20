@@ -133,11 +133,11 @@ Rcpp::List transportCpp(
     ns_dep_ovl_tmp : ns_dep_ovl_tmp / ns_enr_rto};
   const double ns_dep_cha{parameters.slot("ns_dep_cha")};
 
-  const double ns_res = helpers.slot("ns_res");
-  const double ns_siz = helpers.slot("ns_siz");
+  const double ns_res{helpers.slot("ns_res")};
+  const double ns_siz{helpers.slot("ns_siz")};
 
   // Flow path length of riparian zone cells
-  const double ns_fpl_rip = (ns_res - ns_res * ns_cha_rto) / 2.0;
+  const double ns_fpl_rip{(ns_res - ns_res * ns_cha_rto) / 2.0};
 
   int is_cha{}, is_rds{}, is_rip{}, is_inl{};
   double ns_dir_inf{}, ns_man{};

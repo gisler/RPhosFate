@@ -26,10 +26,7 @@ Rcpp::List ripInlCpp(
   #pragma omp parallel for num_threads(is_ths) collapse(2)
   for (arma::uword i = 0; i < nm_dir_inf.n_rows; ++i) {
     for (arma::uword j = 0; j < nm_dir_inf.n_cols; ++j) {
-      double ns_dir_inf{};
-      X1X2<int> cha1cha2{}, rds1rds2{};
-
-      ns_dir_inf = nm_dir_inf.at(i, j);
+      double ns_dir_inf{nm_dir_inf.at(i, j)};
 
       if ( Rcpp::NumericMatrix::is_na(ns_dir_inf) ||
           !Rcpp::IntegerMatrix::is_na(im_cha.at(i, j)) ||
@@ -38,8 +35,8 @@ Rcpp::List ripInlCpp(
         continue;
       }
 
-      cha1cha2 = movingWindow.get_x1x2<int>(ns_dir_inf, i, j, im_cha, NA_INTEGER);
-      rds1rds2 = movingWindow.get_x1x2<int>(ns_dir_inf, i, j, im_rds, NA_INTEGER);
+      X1X2<int> cha1cha2{movingWindow.get_x1x2<int>(ns_dir_inf, i, j, im_cha, NA_INTEGER)};
+      X1X2<int> rds1rds2{movingWindow.get_x1x2<int>(ns_dir_inf, i, j, im_rds, NA_INTEGER)};
 
       if (!Rcpp::IntegerMatrix::is_na(cha1cha2.x1) ||
           !Rcpp::IntegerMatrix::is_na(cha1cha2.x2)) {
