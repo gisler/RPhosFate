@@ -4,64 +4,64 @@
 #include <RcppArmadillo.h>
 
 const struct {
-  arma::ivec8 iv_dr{-1, -1, -1,
-                     0,      0,
-                     1,  1,  1}; // Deltas of rows
-  arma::ivec8 iv_dc{-1,  0,  1,
-                    -1,      1,
-                    -1,  0,  1}; // Deltas of cols
+  arma::ivec8 iv_dr {-1, -1, -1,
+                      0,      0,
+                      1,  1,  1}; // Deltas of rows
+  arma::ivec8 iv_dc {-1,  0,  1,
+                     -1,      1,
+                     -1,  0,  1}; // Deltas of cols
 
-  arma::dvec8 nv_dir_min{ 90.0, 135.0, 180.0,
-                          45.0,        225.0,
-                           0.0, 315.0, 270.0}; // Lower bounds of inflow directions
-  arma::dvec8 nv_dir_mid{135.0, 180.0, 225.0,
-                          90.0,        270.0,
-                          45.0, 360.0, 315.0}; // Midpoint of inflow directions
-  arma::dvec8 nv_dir_max{180.0, 225.0, 270.0,
-                         135.0,        315.0,
-                          90.0,  45.0, 360.0}; // Upper bounds of inflow directions
+  arma::dvec8 nv_dir_min { 90.0, 135.0, 180.0,
+                           45.0,        225.0,
+                            0.0, 315.0, 270.0}; // Lower bounds of inflow directions
+  arma::dvec8 nv_dir_mid {135.0, 180.0, 225.0,
+                           90.0,        270.0,
+                           45.0, 360.0, 315.0}; // Midpoint of inflow directions
+  arma::dvec8 nv_dir_max {180.0, 225.0, 270.0,
+                          135.0,        315.0,
+                           90.0,  45.0, 360.0}; // Upper bounds of inflow directions
 
-  arma::uvec3 uv_oob_lr{0, 1, 2}; // Indices, which are out of bounds when row == 0
-  arma::uvec3 uv_oob_ur{5, 6, 7}; // Indices, which are out of bounds when row == max row
-  arma::uvec3 uv_oob_lc{0, 3, 5}; // Indices, which are out of bounds when col == 0
-  arma::uvec3 uv_oob_uc{2, 4, 7}; // Indices, which are out of bounds when col == max col
+  arma::uvec3 uv_oob_lr {0, 1, 2}; // Indices, which are out of bounds when row == 0
+  arma::uvec3 uv_oob_ur {5, 6, 7}; // Indices, which are out of bounds when row == max row
+  arma::uvec3 uv_oob_lc {0, 3, 5}; // Indices, which are out of bounds when col == 0
+  arma::uvec3 uv_oob_uc {2, 4, 7}; // Indices, which are out of bounds when col == max col
 
-  arma::uvec3 uv_oob{0, 0, 0}; // Vector for setting indices, which are out of bounds to 0
+  arma::uvec3 uv_oob {0, 0, 0}; // Vector for setting indices, which are out of bounds to 0
 } ifl;
 
 const struct {
-  arma::ivec8 iv_x1_dr{ 0, -1, -1,  0,  0,  1, 1, 0};
-  arma::ivec8 iv_x1_dc{ 1,  0,  0, -1, -1,  0, 0, 1};
+  arma::ivec8 iv_x1_dr { 0, -1, -1,  0,  0,  1, 1, 0};
+  arma::ivec8 iv_x1_dc { 1,  0,  0, -1, -1,  0, 0, 1};
 
-  arma::ivec8 iv_x2_dr{-1, -1, -1, -1,  1,  1, 1, 1};
-  arma::ivec8 iv_x2_dc{ 1,  1, -1, -1, -1, -1, 1, 1};
+  arma::ivec8 iv_x2_dr {-1, -1, -1, -1,  1,  1, 1, 1};
+  arma::ivec8 iv_x2_dc { 1,  1, -1, -1, -1, -1, 1, 1};
 } fct_drdc; // Facets: deltas of rows and cols of x1 and x2
 
 struct FacetProperties {
-  bool ls_x1_oob{false}; // Is row or col of x1 out of bounds or proportion of x1 == 0.0?
-  double ns_p1{};        // Proportion of x1
-  arma::uword us_x1_r{}; // Row of x1
-  arma::uword us_x1_c{}; // Col of x1
+  bool ls_x1_oob {false}; // Is row or col of x1 out of bounds or proportion of x1 == 0.0?
+  double ns_p1 {};        // Proportion of x1
+  arma::uword us_x1_r {}; // Row of x1
+  arma::uword us_x1_c {}; // Col of x1
 
-  bool ls_x2_oob{false}; // Is row or col of x2 out of bounds or proportion of x2 == 0.0?
-  double ns_p2{};        // Proportion of x2
-  arma::uword us_x2_r{}; // Row of x2
-  arma::uword us_x2_c{}; // Col of x2
+  bool ls_x2_oob {false}; // Is row or col of x2 out of bounds or proportion of x2 == 0.0?
+  double ns_p2 {};        // Proportion of x2
+  arma::uword us_x2_r {}; // Row of x2
+  arma::uword us_x2_c {}; // Col of x2
 };
 
 template <typename T>
 struct X1X2 {
-  T x1{};
-  T x2{};
+  T x1 {};
+  T x2 {};
 };
 
 struct CalcOrder {
-  std::vector<arma::uword> uv_r{};
-  std::vector<arma::uword> uv_c{};
+  std::vector<arma::uword> uv_r {};
+  std::vector<arma::uword> uv_c {};
 
   CalcOrder(arma::uword n):
-    uv_r{},
-    uv_c{}
+    uv_r {},
+    uv_c {}
   {
     uv_r.reserve(n);
     uv_c.reserve(n);
@@ -70,16 +70,16 @@ struct CalcOrder {
 
 class MovingWindow {
 public:
-  const arma::uword us_rws{};
-  const arma::uword us_cls{};
-  const arma::sword is_rws{};
-  const arma::sword is_cls{};
+  const arma::uword us_rws {};
+  const arma::uword us_cls {};
+  const arma::sword is_rws {};
+  const arma::sword is_cls {};
 
   MovingWindow(arma::uword us_rws, arma::uword us_cls):
-    us_rws{us_rws},
-    us_cls{us_cls},
-    is_rws{static_cast<arma::sword>(us_rws)},
-    is_cls{static_cast<arma::sword>(us_cls)}
+    us_rws {us_rws},
+    us_cls {us_cls},
+    is_rws {static_cast<arma::sword>(us_rws)},
+    is_cls {static_cast<arma::sword>(us_cls)}
   {}
 
   FacetProperties determineFacetProperties(
@@ -120,8 +120,8 @@ inline FacetProperties MovingWindow::determineFacetProperties(
   const arma::uword us_row,
   const arma::uword us_col
 ) {
-  arma::uword us_fct{};
-  FacetProperties fct{};
+  arma::uword us_fct {};
+  FacetProperties fct {};
 
   // Determine facet and proportions of x1 and x2
   if        (ns_dir_inf >=  45.0 && ns_dir_inf <   90.0) {
@@ -180,12 +180,12 @@ inline FacetProperties MovingWindow::determineFacetProperties(
   }
 
   // Determine rows and cols of x1 and x2
-  arma::sword is_row{static_cast<arma::sword>(us_row)};
-  arma::sword is_col{static_cast<arma::sword>(us_col)};
-  arma::sword is_x1_row{is_row + fct_drdc.iv_x1_dr[us_fct]};
-  arma::sword is_x1_col{is_col + fct_drdc.iv_x1_dc[us_fct]};
-  arma::sword is_x2_row{is_row + fct_drdc.iv_x2_dr[us_fct]};
-  arma::sword is_x2_col{is_col + fct_drdc.iv_x2_dc[us_fct]};
+  arma::sword is_row {static_cast<arma::sword>(us_row)};
+  arma::sword is_col {static_cast<arma::sword>(us_col)};
+  arma::sword is_x1_row {is_row + fct_drdc.iv_x1_dr[us_fct]};
+  arma::sword is_x1_col {is_col + fct_drdc.iv_x1_dc[us_fct]};
+  arma::sword is_x2_row {is_row + fct_drdc.iv_x2_dr[us_fct]};
+  arma::sword is_x2_col {is_col + fct_drdc.iv_x2_dc[us_fct]};
 
   if (is_x1_row == -1 || is_x1_row == is_rws ||
       is_x1_col == -1 || is_x1_col == is_cls ||
@@ -215,8 +215,8 @@ inline X1X2<T> MovingWindow::get_x1x2(
   const arma::Mat<T>& xm_xxx,
   const T NA
 ) {
-  FacetProperties fct{determineFacetProperties(ns_dir_inf, i, j)};
-  T x1{}, x2{};
+  FacetProperties fct {determineFacetProperties(ns_dir_inf, i, j)};
+  T x1 {}, x2 {};
 
   if (fct.ls_x1_oob) {
     x1 = NA;
@@ -229,7 +229,7 @@ inline X1X2<T> MovingWindow::get_x1x2(
     x2 = xm_xxx.at(fct.us_x2_r, fct.us_x2_c);
   }
 
-  return X1X2<T>{x1, x2};
+  return X1X2<T> {x1, x2};
 }
 
 inline arma::dvec8 MovingWindow::get_ifl_p(
@@ -252,7 +252,7 @@ inline arma::dvec8 MovingWindow::get_ifl_p(
     uv_cll.elem(ifl.uv_oob_uc) = ifl.uv_oob;
   }
 
-  double ns_dir_inf{};
+  double ns_dir_inf {};
   arma::dvec8 nv_ifl_p(arma::fill::value(NA_REAL));
 
   for (arma::uword k = 0; k < uv_cll.n_elem; ++k) {

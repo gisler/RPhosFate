@@ -19,7 +19,7 @@ Rcpp::List transportCpp(
   const Rcpp::S4& helpers,
   const int is_ths = 1
 ) {
-  MovingWindow movingWindow{nm_dir_inf.n_rows, nm_dir_inf.n_cols};
+  MovingWindow movingWindow {nm_dir_inf.n_rows, nm_dir_inf.n_cols};
 
   /* Transport calculation order
    * ===========================
@@ -37,7 +37,7 @@ Rcpp::List transportCpp(
   #pragma omp parallel for num_threads(is_ths) collapse(2)
   for (arma::uword i = 0; i < nm_dir_inf.n_rows; ++i) {
     for (arma::uword j = 0; j < nm_dir_inf.n_cols; ++j) {
-      double ns_dir_inf{nm_dir_inf.at(i, j)};
+      double ns_dir_inf {nm_dir_inf.at(i, j)};
 
       if (Rcpp::NumericMatrix::is_na(nm_acc_inf.at(i, j)) ||
           Rcpp::NumericMatrix::is_na(ns_dir_inf) ||
@@ -45,7 +45,7 @@ Rcpp::List transportCpp(
         continue;
       }
 
-      arma::dvec8 nv_ifl_p{movingWindow.get_ifl_p(nm_dir_inf, i, j)};
+      arma::dvec8 nv_ifl_p {movingWindow.get_ifl_p(nm_dir_inf, i, j)};
       im_ifl.at(i, j) = arma::accu(
         movingWindow.get_ifl_x<double>(nv_ifl_p, i, j, nm_acc_inf, NA_REAL) > 0.0
       );
@@ -72,8 +72,8 @@ Rcpp::List transportCpp(
   //   arma::fill::value(NA_INTEGER)
   // );
 
-  FacetProperties fct{};
-  arma::sword x1{}, x2{};
+  FacetProperties fct {};
+  arma::sword x1 {}, x2 {};
 
   for (arma::uword n = 0; n < ord.uv_r.capacity(); ++n) {
     if (n == ord.uv_r.size()) {
@@ -125,34 +125,34 @@ Rcpp::List transportCpp(
    * ----------------------------
    */
 
-  const double ns_rhy_a{parameters.slot("ns_rhy_a")};
-  const double ns_rhy_b{parameters.slot("ns_rhy_b")};
-  const double ns_tfc_inl{parameters.slot("ns_tfc_inl")};
-  const double ns_cha_rto{parameters.slot("ns_cha_rto")};
-  const double ns_man_rip{parameters.slot("ns_man_rip")};
-  const double ns_man_cha{parameters.slot("ns_man_cha")};
+  const double ns_rhy_a {parameters.slot("ns_rhy_a")};
+  const double ns_rhy_b {parameters.slot("ns_rhy_b")};
+  const double ns_tfc_inl {parameters.slot("ns_tfc_inl")};
+  const double ns_cha_rto {parameters.slot("ns_cha_rto")};
+  const double ns_man_rip {parameters.slot("ns_man_rip")};
+  const double ns_man_cha {parameters.slot("ns_man_cha")};
 
-  const Rcpp::NumericVector nv_enr_rto{parameters.slot("nv_enr_rto")};
-  const double ns_enr_rto{nv_enr_rto[substance]};
+  const Rcpp::NumericVector nv_enr_rto {parameters.slot("nv_enr_rto")};
+  const double ns_enr_rto {nv_enr_rto[substance]};
 
-  const double ns_dep_ovl_tmp{parameters.slot("ns_dep_ovl")};
-  const double ns_dep_ovl{(substance == "SS") ?
+  const double ns_dep_ovl_tmp {parameters.slot("ns_dep_ovl")};
+  const double ns_dep_ovl {(substance == "SS") ?
     ns_dep_ovl_tmp : ns_dep_ovl_tmp / ns_enr_rto};
-  const double ns_dep_cha{parameters.slot("ns_dep_cha")};
+  const double ns_dep_cha {parameters.slot("ns_dep_cha")};
 
-  const double ns_res{helpers.slot("ns_res")};
-  const double ns_siz{helpers.slot("ns_siz")};
+  const double ns_res {helpers.slot("ns_res")};
+  const double ns_siz {helpers.slot("ns_siz")};
 
   // Flow path length of riparian zone cells
-  const double ns_fpl_rip{(ns_res - ns_res * ns_cha_rto) / 2.0};
+  const double ns_fpl_rip {(ns_res - ns_res * ns_cha_rto) / 2.0};
 
-  int is_cha{}, is_rds{}, is_rip{}, is_inl{};
-  double ns_dir_inf{}, ns_man{};
+  int is_cha {}, is_rds {}, is_rip {}, is_inl {};
+  double ns_dir_inf {}, ns_man {};
 
-  double ns_rhy{}, ns_dir_inf_rad{}, ns_fpl{}, ns_v{}, ns_rtm{}, ns_rtm_rip{},
-    ns_tfc_ifl{}, ns_tfc_lcl{}, ns_tfc_rip{};
+  double ns_rhy {}, ns_dir_inf_rad {}, ns_fpl {}, ns_v {}, ns_rtm {},
+    ns_rtm_rip {}, ns_tfc_ifl {}, ns_tfc_lcl {}, ns_tfc_rip {};
 
-  arma::uword i{}, j{};
+  arma::uword i {}, j {};
 
   arma::dmat nm_xxr(
       arma::size(nm_dir_inf),
