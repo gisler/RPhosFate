@@ -8,13 +8,14 @@
 Rcpp::List transportCpp(
   const arma::dmat& nm_acc_inf,
   const arma::dmat& nm_dir_inf,
-  const arma::dmat& nm_slp_inf,
+  const arma::dmat& nm_slp_cap,
   const arma::dmat& nm_man,
+  const arma::dmat& nm_xxe,
   const arma::imat& im_cha,
   const arma::imat& im_rds,
   const arma::imat& im_rip,
   const arma::imat& im_inl,
-  const Rcpp::String substance,
+  const Rcpp::String& substance,
   const Rcpp::S4& parameters,
   const Rcpp::S4& helpers,
   const int is_ths = 1
@@ -47,7 +48,7 @@ Rcpp::List transportCpp(
 
       arma::dvec8 nv_ifl_p {movingWindow.get_ifl_p(nm_dir_inf, i, j)};
       im_ifl.at(i, j) = arma::accu(
-        movingWindow.get_ifl_x<double>(nv_ifl_p, i, j, nm_acc_inf, NA_REAL) > 0.0
+        movingWindow.get_ifl_x<double>(nv_ifl_p, i, j, nm_acc_inf) > 0.0
       );
     }
   }
@@ -127,44 +128,42 @@ Rcpp::List transportCpp(
 
   const double ns_rhy_a {parameters.slot("ns_rhy_a")};
   const double ns_rhy_b {parameters.slot("ns_rhy_b")};
-  const double ns_tfc_inl {parameters.slot("ns_tfc_inl")};
   const double ns_cha_rto {parameters.slot("ns_cha_rto")};
   const double ns_man_rip {parameters.slot("ns_man_rip")};
   const double ns_man_cha {parameters.slot("ns_man_cha")};
 
-  const Rcpp::NumericVector nv_enr_rto {parameters.slot("nv_enr_rto")};
-  const double ns_enr_rto {nv_enr_rto[substance]};
-
+  const Rcpp::NumericVector nv_tfc_inl = parameters.slot("nv_tfc_inl");
+  const double ns_tfc_inl {nv_tfc_inl[substance]};
+  const Rcpp::NumericVector nv_enr_rto = parameters.slot("nv_enr_rto");
+  const double ns_enr_rto {(substance == "SS") ? 1.0 : nv_enr_rto[substance]};
   const double ns_dep_ovl_tmp {parameters.slot("ns_dep_ovl")};
-  const double ns_dep_ovl {(substance == "SS") ?
-    ns_dep_ovl_tmp : ns_dep_ovl_tmp / ns_enr_rto};
+  const double ns_dep_ovl {ns_dep_ovl_tmp / ns_enr_rto};
   const double ns_dep_cha {parameters.slot("ns_dep_cha")};
 
   const double ns_res {helpers.slot("ns_res")};
   const double ns_siz {helpers.slot("ns_siz")};
 
-  // Flow path length of riparian zone cells
+  // Flow path length of riparian zone
   const double ns_fpl_rip {(ns_res - ns_res * ns_cha_rto) / 2.0};
+  // Strickler coefficient of riparian zone
+  const double ns_str_rip {1.0 / ns_man_rip};
 
-  int is_cha {}, is_rds {}, is_rip {}, is_inl {};
-  double ns_dir_inf {}, ns_man {};
-
-  double ns_rhy {}, ns_dir_inf_rad {}, ns_fpl {}, ns_v {}, ns_rtm {},
-    ns_rtm_rip {}, ns_tfc_ifl {}, ns_tfc_lcl {}, ns_tfc_rip {};
-
-  arma::uword i {}, j {};
-
+  // Output variables
   arma::dmat nm_xxr(
-      arma::size(nm_dir_inf),
-      arma::fill::value(NA_REAL)
+    arma::size(nm_dir_inf),
+    arma::fill::value(NA_REAL)
   );
   arma::dmat nm_xxt(
+    arma::size(nm_dir_inf),
+    arma::fill::value(NA_REAL)
+  );
+  arma::dmat nm_xxt_inp(
       arma::size(nm_dir_inf),
       arma::fill::value(NA_REAL)
   );
   arma::dmat nm_xxt_out(
-      arma::size(nm_dir_inf),
-      arma::fill::value(NA_REAL)
+    arma::size(nm_dir_inf),
+    arma::fill::value(NA_REAL)
   );
 
   /* Calculation of retentions and transports
@@ -172,56 +171,143 @@ Rcpp::List transportCpp(
    */
 
   for (arma::uword n = 0; n < ord.uv_r.size(); ++n) {
-    i = ord.uv_r[n];
-    j = ord.uv_c[n];
+    arma::uword i {ord.uv_r[n]};
+    arma::uword j {ord.uv_c[n]};
 
-    is_cha = im_cha.at(i, j);
-    is_rds = im_rds.at(i, j);
-    is_rip = im_rip.at(i, j);
-    is_inl = im_inl.at(i, j);
-    ns_dir_inf = nm_dir_inf.at(i, j);
+    int is_cha {im_cha.at(i, j)};
+    int is_rip {im_rip.at(i, j)};
+    int is_inl {im_inl.at(i, j)};
+    double ns_xxe {nm_xxe.at(i, j)};
+    double ns_dir_inf {nm_dir_inf.at(i, j)};
+    double ns_slp_cap {nm_slp_cap.at(i, j) / 100.0};
 
-    if (Rcpp::IntegerMatrix::is_na(is_cha)) {
-      ns_man = nm_man.at(i, j);
-    } else {
-      ns_man = ns_man_cha;
-    }
-
-    // Hydraulic radius
-    ns_rhy = ns_rhy_a * std::pow(nm_acc_inf.at(i, j) * ns_siz * 1e-6, ns_rhy_b);
     // Flow direction in radian
-    ns_dir_inf_rad = ns_dir_inf * arma::datum::pi / 180.0;
+    double ns_dir_inf_rad {ns_dir_inf * arma::datum::pi / 180.0};
     // Flow path length
-    ns_fpl = ns_res * (std::abs(std::sin(ns_dir_inf_rad)) +
-      std::abs(std::cos(ns_dir_inf_rad)));
-    // Flow velocity
-    ns_v = (1.0 / ns_man) * std::pow(ns_rhy, 2.0 / 3.0) *
-      std::pow(nm_slp_inf.at(i, j) / 100.0, 1.0 / 2.0);
+    double ns_fpl {ns_res * (std::abs(std::sin(ns_dir_inf_rad)) +
+      std::abs(std::cos(ns_dir_inf_rad)))};
+    // Strickler coefficient
+    double ns_str {(Rcpp::IntegerMatrix::is_na(is_cha)) ?
+      1.0 / nm_man.at(i, j) : 1.0 / ns_man_cha};
+    // Hydraulic radius
+    double ns_rhy {ns_rhy_a * std::pow(
+      nm_acc_inf.at(i, j) * ns_siz * 1e-6,
+      ns_rhy_b
+    )};
     // Residence time
-    ns_rtm = ns_fpl / ns_v;
-    // Residence time of riparian zone cell
-    if (!Rcpp::IntegerMatrix::is_na(is_rip)) {
-      ns_rtm_rip = ns_fpl_rip / ns_v;
-    }
+    double ns_rtm {ns_fpl / (ns_str * std::pow(ns_rhy, 2.0 / 3.0) *
+      std::sqrt(ns_slp_cap))};
 
-    // nv_ifl_p = movingWindow.get_ifl_p(nm_dir_inf, i, j);
-    // im_ifl.at(i, j) = arma::accu(
-    //   movingWindow.get_ifl_x<double>(nv_ifl_p, i, j, nm_acc_inf, NA_REAL) > 0.0
-    // );
-    // Transfer coefficients
+    // Inflow proportions
+    arma::dvec8 nv_ifl_p {movingWindow.get_ifl_p(nm_dir_inf, i, j)};
+
+    // Overland cell
     if (Rcpp::IntegerMatrix::is_na(is_cha)) {
-      // Overland cell
-      ns_tfc_ifl = std::exp(-ns_dep_ovl * ns_rtm);
-      ns_tfc_lcl = std::exp(-ns_dep_ovl * ns_rtm * 0.5);
+      // Retention coefficients
+      double ns_tfc_ifl {1.0 - std::exp(-ns_dep_ovl * ns_rtm)};
+      double ns_tfc_lcl {1.0 - std::exp(-ns_dep_ovl * ns_rtm * 0.5)};
 
-      // Riparian zone cell
+      // Inflowing load
+      arma::dvec8 nv_xxt_ifl {movingWindow.get_ifl_x<double>(nv_ifl_p, i, j, nm_xxt) %
+        nv_ifl_p};
+      double ns_xxt_ifl {arma::accu(nv_xxt_ifl)};
+
+      // Retention
+      double ns_xxr {ns_xxt_ifl * ns_tfc_ifl + ns_xxe * ns_tfc_lcl};
+      nm_xxr.at(i, j) = ns_xxr;
+      // Transport
+      double ns_xxt {ns_xxt_ifl + ns_xxe - ns_xxr};
+      nm_xxt.at(i, j) = ns_xxt;
+
+      // Riparian zone or riparian zone as well as inlet cell
       if (!Rcpp::IntegerMatrix::is_na(is_rip)) {
-        ns_tfc_rip = std::exp(-ns_dep_ovl * ns_rtm_rip);
+        // Residence time of riparian zone
+        double ns_rtm_rip {ns_fpl_rip / (ns_str_rip *
+          std::pow(ns_rhy, 2.0 / 3.0) * std::sqrt(ns_slp_cap))}; //f factor out std::pow(ns_rhy, 2.0 / 3.0) * std::sqrt(ns_slp_cap)
+
+        // Retention coefficient of riparian zone
+        double ns_tfc_rip {1.0 - std::exp(-ns_dep_ovl * ns_rtm_rip)};
+
+        // Respect proportions in case cell is not also an inlet cell
+        double ns_xxt_p {0.0};
+        if (Rcpp::IntegerMatrix::is_na(is_inl)) {
+          X1X2<int> cha1cha2 = movingWindow.get_x1x2<int>(ns_dir_inf, i, j, im_cha, NA_INTEGER);
+
+          if (!Rcpp::IntegerMatrix::is_na(cha1cha2.x1)) {
+            ns_xxt_p += ns_xxt * cha1cha2.ns_p1;
+          }
+          if (!Rcpp::IntegerMatrix::is_na(cha1cha2.x2)) {
+            ns_xxt_p += ns_xxt * cha1cha2.ns_p2;
+          }
+        } else {
+          ns_xxt_p = ns_xxt;
+        }
+
+        // Retention and transport
+        nm_xxt_inp.at(i, j) = ns_xxt_p - ns_xxt_p * ns_tfc_rip;
+
+      // Inlet cell
+      } else if (!Rcpp::IntegerMatrix::is_na(is_inl)) {
+        // Respect proportions
+        X1X2<int> rds1rds2 = movingWindow.get_x1x2<int>(ns_dir_inf, i, j, im_rds, NA_INTEGER);
+
+        double ns_xxt_p {0.0};
+        if (!Rcpp::IntegerMatrix::is_na(rds1rds2.x1)) {
+          ns_xxt_p += ns_xxt * rds1rds2.ns_p1;
+        }
+        if (!Rcpp::IntegerMatrix::is_na(rds1rds2.x2)) {
+          ns_xxt_p += ns_xxt * rds1rds2.ns_p2;
+        }
+
+        // Retention and transport
+        double ns_xxt_inp {ns_xxt_p * (1.0 - ns_tfc_inl)};
+        nm_xxt_inp.at(i, j) = ns_xxt_inp;
+
+        // Outlet row and col from inlet code (C++ indices start at 0)
+        std::div_t code {std::div(im_inl.at(i, j), movingWindow.is_cls)};
+        arma::uword is_row {static_cast<arma::uword>(code.quot - 1)};
+        arma::uword is_col {static_cast<arma::uword>(code.rem  - 1)};
+
+        // Outlet load
+        double ns_xxt_out {nm_xxt_out.at(is_row, is_col)};
+        if (Rcpp::NumericMatrix::is_na(ns_xxt_out)) {
+          ns_xxt_out = 0.0;
+        }
+
+        nm_xxt_out(is_row, is_col) = ns_xxt_out + ns_xxt_inp;
       }
+    // Channel cell
     } else {
-      // Channel cell
-      ns_tfc_ifl = std::exp(-ns_dep_cha * ns_rtm);
-      ns_tfc_lcl = std::exp(-ns_dep_cha * ns_rtm * 0.5);
+      // Retention coefficients
+      double ns_tfc_inp {1.0 - std::exp(-ns_dep_ovl * ns_rtm)};
+      double ns_tfc_cha {1.0 - std::exp(-ns_dep_cha * ns_rtm)};
+
+      // Inflowing overland load
+      arma::dvec8 nv_xxt_inp {
+        movingWindow.get_ifl_x<double>(nv_ifl_p, i, j, nm_xxt_inp) %
+          nv_ifl_p
+      };
+      double ns_xxt_inp {arma::accu(nv_xxt_inp)};
+
+      // Inflowing channel load
+      arma::dvec8 nv_xxt_cha {
+        movingWindow.get_ifl_x<double>(nv_ifl_p, i, j, nm_xxt) %
+          movingWindow.get_ifl_x<int>(nv_ifl_p, i, j, im_cha) %
+          nv_ifl_p
+      };
+      double ns_xxt_cha {arma::accu(nv_xxt_cha)};
+
+      // Retention
+      double ns_xxr {ns_xxt_inp * ns_tfc_inp + ns_xxt_cha * ns_tfc_cha};
+      nm_xxr.at(i, j) = ns_xxr;
+      // Transport
+      double ns_xxt_out {nm_xxt_out.at(i, j)};
+      if (Rcpp::NumericMatrix::is_na(ns_xxt_out)) {
+        ns_xxt_out = 0.0;
+      }
+
+      double ns_xxt {ns_xxt_inp + ns_xxt_cha - ns_xxr + ns_xxt_out};
+      nm_xxt.at(i, j) = ns_xxt;
     }
   }
 
@@ -233,61 +319,17 @@ Rcpp::List transportCpp(
    * ----------------------------
    */
 
-  for (arma::uword n = ord.uv_r.size() - 1; n >= 0; --n) {
-    i = ord.uv_r[n];
-    j = ord.uv_c[n];
+  for (arma::uword n = ord.uv_r.size() - 1; n > 0; --n) {
+    arma::uword i {ord.uv_r[n]};
+    arma::uword j {ord.uv_c[n]};
 
-    is_cha = im_cha.at(i, j);
+    int is_cha {im_cha.at(i, j)};
 
     if (!Rcpp::IntegerMatrix::is_na(is_cha)) {
       continue;
     }
   }
 
-//   /* Transport
-//      =========
-//   */
-//   NumericMatrix nm_xxr_inp = na_real_matrix(is_rws, is_cls); // Retention of riparian zone and inlets (empty matrix to loop through)
-//   NumericMatrix nm_xxt_inp = na_real_matrix(is_rws, is_cls); // Transport of riparian zone and inlets (empty matrix to loop through)
-
-//   div_t code;
-//
-//   n = iv_ord_row.size();
-//   for (int i = 0; i < n; ++i) { // Top-down calculation of retention and transport (overland and channels)
-//     im_fDi_foc = im_fDi; // Moving inflow direction window
-//     moving_data_window(iv_ord_row[i], iv_ord_col[i], is_rws, is_cls, is_row_min, is_row_max, is_col_min, is_col_max, im_fDi_foc);
-//     im_foc     = im_dir(Range(is_row_min, is_row_max), Range(is_col_min, is_col_max)); // Moving potential inflow direction window
-//     nm_xxt_foc = nm_xxt(Range(is_row_min, is_row_max), Range(is_col_min, is_col_max)); // Moving transport data window
-//     if (IntegerMatrix::is_na(im_cha(iv_ord_row[i], iv_ord_col[i]))) { // Overland
-//       nm_xxr(iv_ord_row[i], iv_ord_col[i]) = nm_xxe(iv_ord_row[i], iv_ord_col[i]) * (1.0 - nm_tfc_lcl(iv_ord_row[i], iv_ord_col[i])) + focal_sum_matrix_cond(nm_xxt_foc, im_fDi_foc, im_foc) * (1.0 - nm_tfc_tpt(iv_ord_row[i], iv_ord_col[i])); // Retention
-//       nm_xxt(iv_ord_row[i], iv_ord_col[i]) = nm_xxe(iv_ord_row[i], iv_ord_col[i]) + focal_sum_matrix_cond(nm_xxt_foc, im_fDi_foc, im_foc) - nm_xxr(iv_ord_row[i], iv_ord_col[i]); // Transport
-//       if (!IntegerMatrix::is_na(im_rip(iv_ord_row[i], iv_ord_col[i]))) { // Riparian zone
-//         nm_xxr_inp(iv_ord_row[i], iv_ord_col[i]) = nm_xxt(iv_ord_row[i], iv_ord_col[i]) * (1.0 - nm_tfc_rip(iv_ord_row[i], iv_ord_col[i])); // Retention of riparian zone
-//         nm_xxt_inp(iv_ord_row[i], iv_ord_col[i]) = nm_xxt(iv_ord_row[i], iv_ord_col[i]) - nm_xxr_inp(iv_ord_row[i], iv_ord_col[i]); // Transport of riparian zone
-//       } else if (!IntegerMatrix::is_na(im_inl(iv_ord_row[i], iv_ord_col[i]))) { // Inlet
-//         nm_xxr_inp(iv_ord_row[i], iv_ord_col[i]) = nm_xxt(iv_ord_row[i], iv_ord_col[i]) * (1.0 - ns_tfc_inl); // Retention of inlet
-//         nm_xxt_inp(iv_ord_row[i], iv_ord_col[i]) = nm_xxt(iv_ord_row[i], iv_ord_col[i]) - nm_xxr_inp(iv_ord_row[i], iv_ord_col[i]); // Transport of inlet
-//         code = div(im_inl(iv_ord_row[i], iv_ord_col[i]), is_cls);
-//         is_row = code.quot - 1; // Outlet row number from integer code (C++ indices start at 0)
-//         is_col = code.rem - 1; // Outlet column number from integer code (C++ indices start at 0)
-//         if (NumericMatrix::is_na(nm_xxt_out(is_row, is_col))) { // Outlet load
-//           nm_xxt_out(is_row, is_col) =  nm_xxt_inp(iv_ord_row[i], iv_ord_col[i]);
-//         } else {
-//           nm_xxt_out(is_row, is_col) += nm_xxt_inp(iv_ord_row[i], iv_ord_col[i]);
-//         }
-//       }
-//     } else { // Channel
-//       nm_xxt_inp_foc = nm_xxt_inp(Range(is_row_min, is_row_max), Range(is_col_min, is_col_max)); // Moving transport of riparian zone and inlet data window
-//       im_cha_foc     =     im_cha(Range(is_row_min, is_row_max), Range(is_col_min, is_col_max)); // Moving channel data window
-//       nm_xxr(iv_ord_row[i], iv_ord_col[i]) = focal_sum_matrix_cond(nm_xxt_inp_foc, im_fDi_foc, im_foc) * (1.0 - nm_tfc_lcl(iv_ord_row[i], iv_ord_col[i])) + focal_sum_two_matrix_cond(nm_xxt_foc, im_fDi_foc, im_foc, im_cha_foc) * (1.0 - nm_tfc_tpt(iv_ord_row[i], iv_ord_col[i]));
-//       if (NumericMatrix::is_na(nm_xxt_out(iv_ord_row[i], iv_ord_col[i]))) {
-//         nm_xxt(iv_ord_row[i], iv_ord_col[i]) = focal_sum_matrix_cond(nm_xxt_inp_foc, im_fDi_foc, im_foc) + focal_sum_two_matrix_cond(nm_xxt_foc, im_fDi_foc, im_foc, im_cha_foc) - nm_xxr(iv_ord_row[i], iv_ord_col[i]);
-//       } else {
-//         nm_xxt(iv_ord_row[i], iv_ord_col[i]) = focal_sum_matrix_cond(nm_xxt_inp_foc, im_fDi_foc, im_foc) + focal_sum_two_matrix_cond(nm_xxt_foc, im_fDi_foc, im_foc, im_cha_foc) + nm_xxt_out(iv_ord_row[i], iv_ord_col[i]) - nm_xxr(iv_ord_row[i], iv_ord_col[i]);
-//       }
-//     }
-//   }
-//
 //   /* Cell loads & transfers
 //      ----------------------
 //   */
@@ -328,10 +370,10 @@ Rcpp::List transportCpp(
 //   }
 
   return Rcpp::List::create(
-    // Rcpp::Named("nm_xxr"    ) = nm_xxr    ,
-    // Rcpp::Named("nm_xxt"    ) = nm_xxt    ,
-    // Rcpp::Named("nm_xxt_inp") = nm_xxt_inp,
-    // Rcpp::Named("nm_xxt_out") = nm_xxt_out,
+    Rcpp::Named("nm_xxr"    ) = nm_xxr    ,
+    Rcpp::Named("nm_xxt"    ) = nm_xxt    ,
+    Rcpp::Named("nm_xxt_inp") = nm_xxt_inp,
+    Rcpp::Named("nm_xxt_out") = nm_xxt_out,
     // Rcpp::Named("nm_xxt_cld") = nm_xxt_cld,
     // Rcpp::Named("nm_xxt_ctf") = nm_xxt_ctf
     Rcpp::Named("im_ifl") = im_ifl//,

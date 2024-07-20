@@ -400,16 +400,17 @@ setMethod(
     compareGeom(
       x@topo@rl_acc_inf,
       x@topo@rl_dir_inf,
-      x@topo@rl_cha,
-      x@topo@rl_rip,
-      x@topo@rl_inl,
       x@topo@rl_slp_cap,
       x@transport@rl_man,
       if (substance == "SS") {
         x@erosion@rl_ero
       } else {
         slot(x@substances, substance)@rl_xxe
-      }
+      },
+      x@topo@rl_cha,
+      x@topo@rl_rds,
+      x@topo@rl_rip,
+      x@topo@rl_inl
     )
     qassert(x@parameters@ns_dep_ovl, "N1[0,)", .var.name = "ns_dep_ovl")
     qassert(x@parameters@ns_dep_cha, "N1[0,)", .var.name = "ns_dep_cha")
@@ -430,35 +431,44 @@ setMethod(
     on.exit(setwd(cs_dir_old))
 
     li_tpt <- transportCpp(
-      parameters = x@parameters,
-      ns_dep_ovl = if (substance == "SS") {
-        x@parameters@ns_dep_ovl
-      } else {
-        x@parameters@ns_dep_ovl / x@parameters@nv_enr_rto[substance]
-      },
-      ns_tfc_inl = x@parameters@nv_tfc_inl[substance],
-      helpers    = x@helpers,
-      order      = x@helpers@order,
-      im_cha     = as.matrix(x@topo@rl_cha, wide = TRUE),
-      im_dir     = as.matrix(x@topo@rl_dir, wide = TRUE),
-      im_inl     = as.matrix(x@topo@rl_inl, wide = TRUE),
-      im_rip     = as.matrix(x@topo@rl_rip, wide = TRUE),
-      nm_man     = as.matrix(x@transport@rl_man, wide = TRUE),
-      nm_xxe     = if (substance == "SS") {
+      nm_acc_inf = as.matrix(x@topo@rl_acc_inf, wide = TRUE),
+      nm_dir_inf = as.matrix(x@topo@rl_dir_inf, wide = TRUE),
+      nm_slp_cap = as.matrix(x@topo@rl_slp_cap, wide = TRUE),
+      nm_man = as.matrix(x@transport@rl_man, wide = TRUE),
+      nm_xxe = if (substance == "SS") {
         as.matrix(x@erosion@rl_ero, wide = TRUE)
       } else {
         as.matrix(slot(x@substances, substance)@rl_xxe, wide = TRUE)
       },
-      nm_rhy     = as.matrix(x@transport@rl_rhy, wide = TRUE),
-      nm_slp     = as.matrix(x@topo@rl_slp_cap, wide = TRUE)
+      im_cha = as.matrix(x@topo@rl_cha, wide = TRUE),
+      im_rds = as.matrix(x@topo@rl_rds, wide = TRUE),
+      im_rip = as.matrix(x@topo@rl_rip, wide = TRUE),
+      im_inl = as.matrix(x@topo@rl_inl, wide = TRUE),
+      substance = substance,
+      parameters = x@parameters,
+      helpers = x@helpers,
+      is_ths = x@is_ths
     )
 
     slot(x@substances, substance)@rl_xxr     <- writeLayer(x, "xxr"    , rast(li_tpt$nm_xxr    , crs = x@helpers@cs_cmt, extent = x@helpers@ex_cmt), "FLT8S", substance)
+    slot(x@substances, substance)@rl_xxt     <- writeLayer(x, "xxt"    , rast(li_tpt$nm_xxt    , crs = x@helpers@cs_cmt, extent = x@helpers@ex_cmt), "FLT8S", substance)
     slot(x@substances, substance)@rl_xxt_inp <- writeLayer(x, "xxt_inp", rast(li_tpt$nm_xxt_inp, crs = x@helpers@cs_cmt, extent = x@helpers@ex_cmt), "FLT8S", substance)
     slot(x@substances, substance)@rl_xxt_out <- writeLayer(x, "xxt_out", rast(li_tpt$nm_xxt_out, crs = x@helpers@cs_cmt, extent = x@helpers@ex_cmt), "FLT8S", substance)
-    slot(x@substances, substance)@rl_xxt     <- writeLayer(x, "xxt"    , rast(li_tpt$nm_xxt    , crs = x@helpers@cs_cmt, extent = x@helpers@ex_cmt), "FLT8S", substance)
-    slot(x@substances, substance)@rl_xxt_ctf <- writeLayer(x, "xxt_ctf", rast(li_tpt$nm_xxt_ctf, crs = x@helpers@cs_cmt, extent = x@helpers@ex_cmt), "FLT8S", substance)
-    slot(x@substances, substance)@rl_xxt_cld <- writeLayer(x, "xxt_cld", rast(li_tpt$nm_xxt_cld, crs = x@helpers@cs_cmt, extent = x@helpers@ex_cmt), "FLT8S", substance)
+    # slot(x@substances, substance)@rl_xxt_ctf <- writeLayer(x, "xxt_ctf", rast(li_tpt$nm_xxt_ctf, crs = x@helpers@cs_cmt, extent = x@helpers@ex_cmt), "FLT8S", substance)
+    # slot(x@substances, substance)@rl_xxt_cld <- writeLayer(x, "xxt_cld", rast(li_tpt$nm_xxt_cld, crs = x@helpers@cs_cmt, extent = x@helpers@ex_cmt), "FLT8S", substance)
+
+    writeRaster(
+      rast(li_tpt$im_ifl, crs = x@helpers@cs_cmt, extent = x@helpers@ex_cmt),
+      filename = "ifl.tif",
+      datatype = "INT4S",
+      overwrite = TRUE
+    )
+    # writeRaster(
+    #   rast(li_tpt$im_ord, crs = x@helpers@cs_cmt, extent = x@helpers@ex_cmt),
+    #   filename = "ord.tif",
+    #   datatype = "INT4S",
+    #   overwrite = TRUE
+    # )
 
     x
   }

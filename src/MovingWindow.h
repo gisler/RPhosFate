@@ -52,7 +52,10 @@ struct FacetProperties {
 template <typename T>
 struct X1X2 {
   T x1 {};
+  double ns_p1 {};
+
   T x2 {};
+  double ns_p2 {};
 };
 
 struct CalcOrder {
@@ -103,11 +106,12 @@ public:
     const arma::uword us_col
   );
 
+  template <typename T>
   arma::dvec8 get_ifl_x(
     const arma::dvec8& nv_ifl_p,
     const arma::uword us_row,
     const arma::uword us_col,
-    const arma::dmat& xm_xxx
+    const arma::Mat<T>& xm_xxx
   );
 };
 
@@ -214,20 +218,19 @@ inline X1X2<T> MovingWindow::get_x1x2(
   const T NA
 ) {
   FacetProperties fct {determineFacetProperties(ns_dir_inf, i, j)};
-  T x1 {}, x2 {};
+  T x1 {NA}, x2 {NA};
+  double ns_p1 {NA_REAL}, ns_p2 {NA_REAL};
 
-  if (fct.ls_x1_oob) {
-    x1 = NA;
-  } else {
+  if (!fct.ls_x1_oob) {
     x1 = xm_xxx.at(fct.us_x1_r, fct.us_x1_c);
+    ns_p1 = fct.ns_p1;
   }
-  if (fct.ls_x2_oob) {
-    x2 = NA;
-  } else {
+  if (!fct.ls_x2_oob) {
     x2 = xm_xxx.at(fct.us_x2_r, fct.us_x2_c);
+    ns_p2 = fct.ns_p2;
   }
 
-  return X1X2<T> {x1, x2};
+  return X1X2<T> {x1, ns_p1, x2, ns_p2};
 }
 
 inline arma::dvec8 MovingWindow::get_ifl_p(
@@ -280,20 +283,23 @@ inline arma::dvec8 MovingWindow::get_ifl_p(
   return nv_ifl_p;
 }
 
+template <typename T>
 inline arma::dvec8 MovingWindow::get_ifl_x(
   const arma::dvec8& nv_ifl_p,
   const arma::uword us_row,
   const arma::uword us_col,
-  const arma::dmat& xm_xxx
+  const arma::Mat<T>& xm_xxx
 ) {
   double ns_ifl {};
   arma::dvec8 nv_ifl(arma::fill::zeros);
 
   for (arma::uword k = 0; k < nv_ifl_p.n_elem; ++k) {
     if (nv_ifl_p[k] > 0.0) {
-      ns_ifl = xm_xxx.at(us_row + ifl.iv_dr[k], us_col + ifl.iv_dc[k]);
+      ns_ifl = static_cast<double>(
+        xm_xxx.at(us_row + ifl.iv_dr[k], us_col + ifl.iv_dc[k])
+      );
 
-      if (!Rcpp::NumericVector::is_na(ns_ifl)) {
+      if (ns_ifl > 0.0) {
         nv_ifl[k] = ns_ifl;
       }
     }
