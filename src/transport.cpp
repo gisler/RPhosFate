@@ -22,10 +22,13 @@ Rcpp::List transportCpp(
   MovingWindow movingWindow{nm_dir_inf.n_rows, nm_dir_inf.n_cols};
 
   /* Transport calculation order
-     ===========================
-  */
+   * ===========================
+   */
 
-  // Determine number of inflowing cells
+  /* Determine number of inflowing cells
+   * -----------------------------------
+   */
+
   arma::imat im_ifl(
     arma::size(nm_dir_inf),
     arma::fill::value(NA_INTEGER)
@@ -34,10 +37,7 @@ Rcpp::List transportCpp(
   #pragma omp parallel for num_threads(is_ths) collapse(2)
   for (arma::uword i = 0; i < nm_dir_inf.n_rows; ++i) {
     for (arma::uword j = 0; j < nm_dir_inf.n_cols; ++j) {
-      double ns_dir_inf{};
-      arma::dvec8 nv_ifl_p{};
-
-      ns_dir_inf = nm_dir_inf.at(i, j);
+      double ns_dir_inf{nm_dir_inf.at(i, j)};
 
       if (Rcpp::NumericMatrix::is_na(nm_acc_inf.at(i, j)) ||
           Rcpp::NumericMatrix::is_na(ns_dir_inf) ||
@@ -45,14 +45,17 @@ Rcpp::List transportCpp(
         continue;
       }
 
-      nv_ifl_p = movingWindow.get_ifl_p(nm_dir_inf, i, j);
+      arma::dvec8 nv_ifl_p{movingWindow.get_ifl_p(nm_dir_inf, i, j)};
       im_ifl.at(i, j) = arma::accu(
         movingWindow.get_ifl_x<double>(nv_ifl_p, i, j, nm_acc_inf, NA_REAL) > 0.0
       );
     }
   }
 
-  // Determine order of rows and cols indices
+  /* Determine order of rows and cols indices
+   * ----------------------------------------
+   */
+
   CalcOrder ord(arma::accu(im_ifl >= 0));
 
   for (arma::uword i = 0; i < im_ifl.n_rows; ++i) {
@@ -114,9 +117,13 @@ Rcpp::List transportCpp(
     // im_ord.at(ord.uv_r[n], ord.uv_c[n]) = n;
   }
 
-  /* Transport
-     =========
-  */
+  /* Retentions and transports
+   * =========================
+   */
+
+  /* Global variable declarations
+   * ----------------------------
+   */
 
   const double ns_rhy_a{parameters.slot("ns_rhy_a")};
   const double ns_rhy_b{parameters.slot("ns_rhy_b")};
@@ -146,6 +153,23 @@ Rcpp::List transportCpp(
     ns_tfc_ifl{}, ns_tfc_lcl{}, ns_tfc_rip{};
 
   arma::uword i{}, j{};
+
+  arma::dmat nm_xxr(
+      arma::size(nm_dir_inf),
+      arma::fill::value(NA_REAL)
+  );
+  arma::dmat nm_xxt(
+      arma::size(nm_dir_inf),
+      arma::fill::value(NA_REAL)
+  );
+  arma::dmat nm_xxt_out(
+      arma::size(nm_dir_inf),
+      arma::fill::value(NA_REAL)
+  );
+
+  /* Calculation of retentions and transports
+   * ----------------------------------------
+   */
 
   for (arma::uword n = 0; n < ord.uv_r.size(); ++n) {
     i = ord.uv_r[n];
@@ -179,6 +203,11 @@ Rcpp::List transportCpp(
     if (!Rcpp::IntegerMatrix::is_na(is_rip)) {
       ns_rtm_rip = ns_fpl_rip / ns_v;
     }
+
+    // nv_ifl_p = movingWindow.get_ifl_p(nm_dir_inf, i, j);
+    // im_ifl.at(i, j) = arma::accu(
+    //   movingWindow.get_ifl_x<double>(nv_ifl_p, i, j, nm_acc_inf, NA_REAL) > 0.0
+    // );
     // Transfer coefficients
     if (Rcpp::IntegerMatrix::is_na(is_cha)) {
       // Overland cell
@@ -194,46 +223,34 @@ Rcpp::List transportCpp(
       ns_tfc_ifl = std::exp(-ns_dep_cha * ns_rtm);
       ns_tfc_lcl = std::exp(-ns_dep_cha * ns_rtm * 0.5);
     }
-
-
-
-
-
-
   }
 
+  /* Cell loads and transfers
+   * ========================
+   */
 
-//   n = is_rws * is_cls;
-//   for (int i = 0; i < n; ++i) {
-//
-//
+  /* Global variable declarations
+   * ----------------------------
+   */
+
+  for (arma::uword n = ord.uv_r.size() - 1; n >= 0; --n) {
+    i = ord.uv_r[n];
+    j = ord.uv_c[n];
+
+    is_cha = im_cha.at(i, j);
+
+    if (!Rcpp::IntegerMatrix::is_na(is_cha)) {
+      continue;
+    }
+  }
+
 //   /* Transport
 //      =========
 //   */
-//   NumericMatrix nm_xxr     = na_real_matrix(is_rws, is_cls); // Retention (empty matrix to loop through)
-//   NumericMatrix nm_xxt     = na_real_matrix(is_rws, is_cls); // Transport (empty matrix to loop through)
 //   NumericMatrix nm_xxr_inp = na_real_matrix(is_rws, is_cls); // Retention of riparian zone and inlets (empty matrix to loop through)
 //   NumericMatrix nm_xxt_inp = na_real_matrix(is_rws, is_cls); // Transport of riparian zone and inlets (empty matrix to loop through)
-//   NumericMatrix nm_xxt_out = na_real_matrix(is_rws, is_cls); // Outlet loads (empty matrix to loop through)
-//   NumericMatrix nm_xxt_cld = na_real_matrix(is_rws, is_cls); // Cell loads (empty matrix to loop through)
-//   NumericMatrix nm_xxt_ctf = na_real_matrix(is_rws, is_cls); // Cell transfers (empty matrix to loop through)
-//
-//   IntegerMatrix im_fDi_foc;
-//   int is_row_min;
-//   int is_row_max;
-//   int is_col_min;
-//   int is_col_max;
-//   IntegerMatrix im_foc;
-//   NumericMatrix nm_xxt_foc;
-//
-//   /* Transport
-//      ---------
-//   */
+
 //   div_t code;
-//   int is_row;
-//   int is_col;
-//   NumericMatrix nm_xxt_inp_foc;
-//   IntegerMatrix im_cha_foc;
 //
 //   n = iv_ord_row.size();
 //   for (int i = 0; i < n; ++i) { // Top-down calculation of retention and transport (overland and channels)
@@ -279,6 +296,8 @@ Rcpp::List transportCpp(
 //   NumericMatrix nm_xxt_ctf_foc;
 //
 //   NumericMatrix nm_xxe_net = matrix_minus_matrix_elementwise(nm_xxe, nm_xxr); // Net emission
+//   NumericMatrix nm_xxt_cld = na_real_matrix(is_rws, is_cls); // Cell loads (empty matrix to loop through)
+//   NumericMatrix nm_xxt_ctf = na_real_matrix(is_rws, is_cls); // Cell transfers (empty matrix to loop through)
 //
 //   n = iv_ord_ovl_row_rev.size();
 //   for (int i = 0; i < n; ++i) { // Bottom-up calculation of cell loads and transfers (overland)
