@@ -204,8 +204,8 @@ Rcpp::List transportCpp(
     // Overland cell
     if (Rcpp::IntegerMatrix::is_na(is_cha)) {
       // Retention coefficients
-      double ns_tfc_ifl {1.0 - std::exp(-ns_dep_ovl * ns_rtm)};
-      double ns_tfc_lcl {1.0 - std::exp(-ns_dep_ovl * ns_rtm * 0.5)};
+      double ns_rtc_ifl {1.0 - std::exp(-ns_dep_ovl * ns_rtm)};
+      double ns_rtc_lcl {1.0 - std::exp(-ns_dep_ovl * ns_rtm * 0.5)};
 
       // Inflowing load
       arma::dvec8 nv_xxt_ifl {movingWindow.get_ifl_x<double>(nv_ifl_p, i, j, nm_xxt) %
@@ -213,7 +213,7 @@ Rcpp::List transportCpp(
       double ns_xxt_ifl {arma::accu(nv_xxt_ifl)};
 
       // Retention
-      double ns_xxr {ns_xxt_ifl * ns_tfc_ifl + ns_xxe * ns_tfc_lcl};
+      double ns_xxr {ns_xxt_ifl * ns_rtc_ifl + ns_xxe * ns_rtc_lcl};
       nm_xxr.at(i, j) = ns_xxr;
       // Transport
       double ns_xxt {ns_xxt_ifl + ns_xxe - ns_xxr};
@@ -221,30 +221,34 @@ Rcpp::List transportCpp(
 
       // Riparian zone or riparian zone as well as inlet cell
       if (!Rcpp::IntegerMatrix::is_na(is_rip)) {
-        // Residence time of riparian zone
-        double ns_rtm_rip {ns_fpl_rip / (ns_str_rip *
-          std::pow(ns_rhy, 2.0 / 3.0) * std::sqrt(ns_slp_cap))}; //f factor out std::pow(ns_rhy, 2.0 / 3.0) * std::sqrt(ns_slp_cap)
-
-        // Retention coefficient of riparian zone
-        double ns_tfc_rip {1.0 - std::exp(-ns_dep_ovl * ns_rtm_rip)};
-
-        // Respect proportions in case cell is not also an inlet cell
-        double ns_xxt_p {0.0};
-        if (Rcpp::IntegerMatrix::is_na(is_inl)) {
-          X1X2<int> cha1cha2 = movingWindow.get_x1x2<int>(ns_dir_inf, i, j, im_cha, NA_INTEGER);
-
-          if (!Rcpp::IntegerMatrix::is_na(cha1cha2.x1)) {
-            ns_xxt_p += ns_xxt * cha1cha2.ns_p1;
-          }
-          if (!Rcpp::IntegerMatrix::is_na(cha1cha2.x2)) {
-            ns_xxt_p += ns_xxt * cha1cha2.ns_p2;
-          }
+        if (ns_cha_rto == 1.0) {
+          nm_xxt_inp.at(i, j) = ns_xxt;
         } else {
-          ns_xxt_p = ns_xxt;
-        }
+          // Residence time of riparian zone
+          double ns_rtm_rip {ns_fpl_rip / (ns_str_rip *
+            std::pow(ns_rhy, 2.0 / 3.0) * std::sqrt(ns_slp_cap))}; //f factor out std::pow(ns_rhy, 2.0 / 3.0) * std::sqrt(ns_slp_cap)
 
-        // Retention and transport
-        nm_xxt_inp.at(i, j) = ns_xxt_p - ns_xxt_p * ns_tfc_rip;
+          // Retention coefficient of riparian zone
+          double ns_rtc_rip {1.0 - std::exp(-ns_dep_ovl * ns_rtm_rip)};
+
+          // Respect proportions in case cell is not also an inlet cell
+          double ns_xxt_p {0.0};
+          if (Rcpp::IntegerMatrix::is_na(is_inl)) {
+            X1X2<int> cha1cha2 = movingWindow.get_x1x2<int>(ns_dir_inf, i, j, im_cha, NA_INTEGER);
+
+            if (!Rcpp::IntegerMatrix::is_na(cha1cha2.x1)) {
+              ns_xxt_p += ns_xxt * cha1cha2.ns_p1;
+            }
+            if (!Rcpp::IntegerMatrix::is_na(cha1cha2.x2)) {
+              ns_xxt_p += ns_xxt * cha1cha2.ns_p2;
+            }
+          } else {
+            ns_xxt_p = ns_xxt;
+          }
+
+          // Retention and transport
+          nm_xxt_inp.at(i, j) = ns_xxt_p - ns_xxt_p * ns_rtc_rip;
+        }
 
       // Inlet cell
       } else if (!Rcpp::IntegerMatrix::is_na(is_inl)) {
@@ -276,11 +280,11 @@ Rcpp::List transportCpp(
 
         nm_xxt_out(is_row, is_col) = ns_xxt_out + ns_xxt_inp;
       }
+
     // Channel cell
     } else {
-      // Retention coefficients
-      double ns_tfc_inp {1.0 - std::exp(-ns_dep_ovl * ns_rtm)};
-      double ns_tfc_cha {1.0 - std::exp(-ns_dep_cha * ns_rtm)};
+      // Retention coefficient
+      double ns_rtc_cha {1.0 - std::exp(-ns_dep_cha * ns_rtm)};
 
       // Inflowing overland load
       arma::dvec8 nv_xxt_inp {
@@ -298,7 +302,7 @@ Rcpp::List transportCpp(
       double ns_xxt_cha {arma::accu(nv_xxt_cha)};
 
       // Retention
-      double ns_xxr {ns_xxt_inp * ns_tfc_inp + ns_xxt_cha * ns_tfc_cha};
+      double ns_xxr {(ns_xxt_inp + ns_xxt_cha) * ns_rtc_cha};
       nm_xxr.at(i, j) = ns_xxr;
       // Transport
       double ns_xxt_out {nm_xxt_out.at(i, j)};
