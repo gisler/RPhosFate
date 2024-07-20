@@ -103,13 +103,11 @@ public:
     const arma::uword us_col
   );
 
-  template <typename T>
-  arma::Col<T> get_ifl_x(
+  arma::dvec8 get_ifl_x(
     const arma::dvec8& nv_ifl_p,
     const arma::uword us_row,
     const arma::uword us_col,
-    const arma::Mat<T>& xm_xxx,
-    const T NA
+    const arma::dmat& xm_xxx
   );
 };
 
@@ -253,7 +251,7 @@ inline arma::dvec8 MovingWindow::get_ifl_p(
   }
 
   double ns_dir_inf {};
-  arma::dvec8 nv_ifl_p(arma::fill::value(NA_REAL));
+  arma::dvec8 nv_ifl_p(arma::fill::zeros);
 
   for (arma::uword k = 0; k < uv_cll.n_elem; ++k) {
     if (uv_cll[k] == 1) {
@@ -282,21 +280,24 @@ inline arma::dvec8 MovingWindow::get_ifl_p(
   return nv_ifl_p;
 }
 
-template <typename T>
-inline arma::Col<T> MovingWindow::get_ifl_x(
+inline arma::dvec8 MovingWindow::get_ifl_x(
   const arma::dvec8& nv_ifl_p,
   const arma::uword us_row,
   const arma::uword us_col,
-  const arma::Mat<T>& xm_xxx,
-  const T NA
+  const arma::dmat& xm_xxx
 ) {
-  arma::Col<T> xv_ifl(8, arma::fill::value(NA));
+  double ns_ifl {};
+  arma::dvec8 nv_ifl(arma::fill::zeros);
 
   for (arma::uword k = 0; k < nv_ifl_p.n_elem; ++k) {
     if (nv_ifl_p[k] > 0.0) {
-      xv_ifl[k] = xm_xxx.at(us_row + ifl.iv_dr[k], us_col + ifl.iv_dc[k]);
+      ns_ifl = xm_xxx.at(us_row + ifl.iv_dr[k], us_col + ifl.iv_dc[k]);
+
+      if (!Rcpp::NumericVector::is_na(ns_ifl)) {
+        nv_ifl[k] = ns_ifl;
+      }
     }
   }
 
-  return xv_ifl;
+  return nv_ifl;
 }
