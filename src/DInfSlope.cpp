@@ -5,7 +5,7 @@
 #include "MovingWindow.h"
 
 // [[Rcpp::export]]
-arma::dmat DInfSlope(
+arma::dmat DInfSlopeCpp(
   const arma::dmat& nm_dir_inf,
   const arma::dmat& nm_dem,
   const double ns_res,

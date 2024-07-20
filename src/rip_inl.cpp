@@ -5,7 +5,7 @@
 #include "MovingWindow.h"
 
 // [[Rcpp::export]]
-Rcpp::List rip_inl(
+Rcpp::List ripInlCpp(
   const arma::dmat& nm_dir_inf,
   const arma::imat& im_cha,
   const arma::imat& im_rds,

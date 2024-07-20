@@ -120,6 +120,7 @@ Rcpp::List transportCpp(
 
   const double ns_rhy_a{parameters.slot("ns_rhy_a")};
   const double ns_rhy_b{parameters.slot("ns_rhy_b")};
+  const double ns_tfc_inl{parameters.slot("ns_tfc_inl")};
   const double ns_cha_rto{parameters.slot("ns_cha_rto")};
   const double ns_man_rip{parameters.slot("ns_man_rip")};
   const double ns_man_cha{parameters.slot("ns_man_cha")};
@@ -135,11 +136,11 @@ Rcpp::List transportCpp(
   const double ns_res = helpers.slot("ns_res");
   const double ns_siz = helpers.slot("ns_siz");
 
-  // Flow path length of riparian zone cell
+  // Flow path length of riparian zone cells
   const double ns_fpl_rip = (ns_res - ns_res * ns_cha_rto) / 2.0;
 
   int is_cha{}, is_rds{}, is_rip{}, is_inl{};
-  double ns_dir_inf{}, ns_slp_inf{}, ns_man{};
+  double ns_dir_inf{}, ns_man{};
 
   double ns_rhy{}, ns_dir_inf_rad{}, ns_fpl{}, ns_v{}, ns_rtm{}, ns_rtm_rip{},
     ns_tfc_ifl{}, ns_tfc_lcl{}, ns_tfc_rip{};
@@ -150,12 +151,11 @@ Rcpp::List transportCpp(
     i = ord.uv_r[n];
     j = ord.uv_c[n];
 
-    is_cha     = im_cha.at(i, j);
-    is_rds     = im_rds.at(i, j);
-    is_rip     = im_rip.at(i, j);
-    is_inl     = im_inl.at(i, j);
+    is_cha = im_cha.at(i, j);
+    is_rds = im_rds.at(i, j);
+    is_rip = im_rip.at(i, j);
+    is_inl = im_inl.at(i, j);
     ns_dir_inf = nm_dir_inf.at(i, j);
-    ns_slp_inf = nm_slp_inf.at(i, j);
 
     if (Rcpp::IntegerMatrix::is_na(is_cha)) {
       ns_man = nm_man.at(i, j);
@@ -172,23 +172,27 @@ Rcpp::List transportCpp(
       std::abs(std::cos(ns_dir_inf_rad)));
     // Flow velocity
     ns_v = (1.0 / ns_man) * std::pow(ns_rhy, 2.0 / 3.0) *
-      std::pow(ns_slp_inf / 100.0, 1.0 / 2.0); //f check for other uses of slope
+      std::pow(nm_slp_inf.at(i, j) / 100.0, 1.0 / 2.0);
     // Residence time
     ns_rtm = ns_fpl / ns_v;
     // Residence time of riparian zone cell
     if (!Rcpp::IntegerMatrix::is_na(is_rip)) {
       ns_rtm_rip = ns_fpl_rip / ns_v;
     }
-
+    // Transfer coefficients
     if (Rcpp::IntegerMatrix::is_na(is_cha)) {
+      // Overland cell
       ns_tfc_ifl = std::exp(-ns_dep_ovl * ns_rtm);
-      ns_tfc_lcl = ns_tfc_ifl * 0.5;
+      ns_tfc_lcl = std::exp(-ns_dep_ovl * ns_rtm * 0.5);
+
+      // Riparian zone cell
       if (!Rcpp::IntegerMatrix::is_na(is_rip)) {
         ns_tfc_rip = std::exp(-ns_dep_ovl * ns_rtm_rip);
       }
     } else {
+      // Channel cell
       ns_tfc_ifl = std::exp(-ns_dep_cha * ns_rtm);
-      ns_tfc_lcl = ns_tfc_ifl * 0.5;
+      ns_tfc_lcl = std::exp(-ns_dep_cha * ns_rtm * 0.5);
     }
 
 

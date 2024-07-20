@@ -313,7 +313,7 @@ setMethod(
     on.exit(setwd(cs_dir_old))
 
     # Riparian zone and inlet cells
-    li_rip_inl <- rip_inl(
+    li_rip_inl <- ripInlCpp(
       nm_dir_inf = as.matrix(x@topo@rl_dir_inf, wide = TRUE),
       im_cha = as.matrix(x@topo@rl_cha, wide = TRUE),
       im_rds = as.matrix(x@topo@rl_rds, wide = TRUE),
