@@ -148,7 +148,6 @@ Rcpp::List transportCpp(
   // Strickler coefficient of riparian zone
   const double ns_str_rip {1.0 / ns_man_rip};
 
-  // Output variables
   arma::dmat nm_xxr(
     arma::size(nm_dir_inf),
     arma::fill::value(NA_REAL)
@@ -179,6 +178,7 @@ Rcpp::List transportCpp(
     int is_inl {im_inl.at(i, j)};
     double ns_xxe {nm_xxe.at(i, j)};
     double ns_dir_inf {nm_dir_inf.at(i, j)};
+    // Capped slope in m / m
     double ns_slp_cap {nm_slp_cap.at(i, j) / 100.0};
 
     // Flow direction in radian
@@ -194,9 +194,10 @@ Rcpp::List transportCpp(
       nm_acc_inf.at(i, j) * ns_siz * 1e-6,
       ns_rhy_b
     )};
+    // Hydraulic radius and slope part of flow velocity
+    double ns_rhy_slp {std::pow(ns_rhy, 2.0 / 3.0) * std::sqrt(ns_slp_cap)};
     // Residence time
-    double ns_rtm {ns_fpl / (ns_str * std::pow(ns_rhy, 2.0 / 3.0) *
-      std::sqrt(ns_slp_cap))};
+    double ns_rtm {ns_fpl / (ns_str * ns_rhy_slp)};
 
     // Inflow proportions
     arma::dvec8 nv_ifl_p {movingWindow.get_ifl_p(nm_dir_inf, i, j)};
@@ -208,8 +209,10 @@ Rcpp::List transportCpp(
       double ns_rtc_lcl {1.0 - std::exp(-ns_dep_ovl * ns_rtm * 0.5)};
 
       // Inflowing load
-      arma::dvec8 nv_xxt_ifl {movingWindow.get_ifl_x<double>(nv_ifl_p, i, j, nm_xxt) %
-        nv_ifl_p};
+      arma::dvec8 nv_xxt_ifl {
+        movingWindow.get_ifl_x<double>(nv_ifl_p, i, j, nm_xxt) %
+          nv_ifl_p
+      };
       double ns_xxt_ifl {arma::accu(nv_xxt_ifl)};
 
       // Retention
@@ -221,46 +224,51 @@ Rcpp::List transportCpp(
 
       // Riparian zone or riparian zone as well as inlet cell
       if (!Rcpp::IntegerMatrix::is_na(is_rip)) {
-        if (ns_cha_rto == 1.0) {
-          nm_xxt_inp.at(i, j) = ns_xxt;
-        } else {
-          // Residence time of riparian zone
-          double ns_rtm_rip {ns_fpl_rip / (ns_str_rip *
-            std::pow(ns_rhy, 2.0 / 3.0) * std::sqrt(ns_slp_cap))}; //f factor out std::pow(ns_rhy, 2.0 / 3.0) * std::sqrt(ns_slp_cap)
+        // Proportional transport in case cell is not also an inlet cell or both
+        // downward cells are channel cells
+        double ns_xxt_p {};
+        if (Rcpp::IntegerMatrix::is_na(is_inl)) {
+          X1X2<int> cha1cha2 = movingWindow.get_x1x2<int>(ns_dir_inf, i, j, im_cha, NA_INTEGER);
 
-          // Retention coefficient of riparian zone
-          double ns_rtc_rip {1.0 - std::exp(-ns_dep_ovl * ns_rtm_rip)};
-
-          // Respect proportions in case cell is not also an inlet cell
-          double ns_xxt_p {0.0};
-          if (Rcpp::IntegerMatrix::is_na(is_inl)) {
-            X1X2<int> cha1cha2 = movingWindow.get_x1x2<int>(ns_dir_inf, i, j, im_cha, NA_INTEGER);
-
-            if (!Rcpp::IntegerMatrix::is_na(cha1cha2.x1)) {
-              ns_xxt_p += ns_xxt * cha1cha2.ns_p1;
-            }
-            if (!Rcpp::IntegerMatrix::is_na(cha1cha2.x2)) {
-              ns_xxt_p += ns_xxt * cha1cha2.ns_p2;
-            }
-          } else {
+          if (!Rcpp::IntegerMatrix::is_na(cha1cha2.x1) &&
+              !Rcpp::IntegerMatrix::is_na(cha1cha2.x2)) {
             ns_xxt_p = ns_xxt;
+          } else if (!Rcpp::IntegerMatrix::is_na(cha1cha2.x1)) {
+            ns_xxt_p = ns_xxt * cha1cha2.ns_p1;
+          } else if (!Rcpp::IntegerMatrix::is_na(cha1cha2.x2)) {
+            ns_xxt_p = ns_xxt * cha1cha2.ns_p2;
           }
-
-          // Retention and transport
-          nm_xxt_inp.at(i, j) = ns_xxt_p - ns_xxt_p * ns_rtc_rip;
+        } else {
+          ns_xxt_p = ns_xxt;
         }
+
+        // Retention coefficient in case there is a riparian zone defined
+        double ns_rtc_rip {};
+        if (ns_cha_rto < 1.0) {
+          // Residence time
+          double ns_rtm_rip {ns_fpl_rip / (ns_str_rip * ns_rhy_slp)};
+
+          ns_rtc_rip = 1.0 - std::exp(-ns_dep_ovl * ns_rtm_rip);
+        } else {
+          ns_rtc_rip = 0.0;
+        }
+
+        // Retention and transport
+        nm_xxt_inp.at(i, j) = ns_xxt_p - ns_xxt_p * ns_rtc_rip;
 
       // Inlet cell
       } else if (!Rcpp::IntegerMatrix::is_na(is_inl)) {
-        // Respect proportions
+        // Proportional transport in case only one downward cell is a road cell
         X1X2<int> rds1rds2 = movingWindow.get_x1x2<int>(ns_dir_inf, i, j, im_rds, NA_INTEGER);
 
-        double ns_xxt_p {0.0};
-        if (!Rcpp::IntegerMatrix::is_na(rds1rds2.x1)) {
-          ns_xxt_p += ns_xxt * rds1rds2.ns_p1;
-        }
-        if (!Rcpp::IntegerMatrix::is_na(rds1rds2.x2)) {
-          ns_xxt_p += ns_xxt * rds1rds2.ns_p2;
+        double ns_xxt_p {};
+        if (!Rcpp::IntegerMatrix::is_na(rds1rds2.x1) &&
+            !Rcpp::IntegerMatrix::is_na(rds1rds2.x2)) {
+          ns_xxt_p = ns_xxt;
+        } else if (!Rcpp::IntegerMatrix::is_na(rds1rds2.x1)) {
+          ns_xxt_p = ns_xxt * rds1rds2.ns_p1;
+        } else if (!Rcpp::IntegerMatrix::is_na(rds1rds2.x2)) {
+          ns_xxt_p = ns_xxt * rds1rds2.ns_p2;
         }
 
         // Retention and transport
@@ -283,13 +291,14 @@ Rcpp::List transportCpp(
 
     // Channel cell
     } else {
-      // Retention coefficient
-      double ns_rtc_cha {1.0 - std::exp(-ns_dep_cha * ns_rtm)};
+      // Retention coefficients
+      double ns_rtc_ifl {1.0 - std::exp(-ns_dep_cha * ns_rtm)};
+      double ns_rtc_lcl {1.0 - std::exp(-ns_dep_cha * ns_rtm * 0.5)};
 
-      // Inflowing overland load
+      // Inflowing overland load (nm_xxt_inp already considers proportional
+      // transport)
       arma::dvec8 nv_xxt_inp {
-        movingWindow.get_ifl_x<double>(nv_ifl_p, i, j, nm_xxt_inp) %
-          nv_ifl_p
+        movingWindow.get_ifl_x<double>(nv_ifl_p, i, j, nm_xxt_inp)
       };
       double ns_xxt_inp {arma::accu(nv_xxt_inp)};
 
@@ -301,16 +310,18 @@ Rcpp::List transportCpp(
       };
       double ns_xxt_cha {arma::accu(nv_xxt_cha)};
 
-      // Retention
-      double ns_xxr {(ns_xxt_inp + ns_xxt_cha) * ns_rtc_cha};
-      nm_xxr.at(i, j) = ns_xxr;
-      // Transport
+      // Outlet load
       double ns_xxt_out {nm_xxt_out.at(i, j)};
       if (Rcpp::NumericMatrix::is_na(ns_xxt_out)) {
         ns_xxt_out = 0.0;
       }
 
-      double ns_xxt {ns_xxt_inp + ns_xxt_cha - ns_xxr + ns_xxt_out};
+      // Retention
+      double ns_xxr {(ns_xxt_inp + ns_xxt_cha) * ns_rtc_ifl +
+        ns_xxt_out * ns_rtc_lcl};
+      nm_xxr.at(i, j) = ns_xxr;
+      // Transport
+      double ns_xxt {ns_xxt_inp + ns_xxt_cha + ns_xxt_out - ns_xxr};
       nm_xxt.at(i, j) = ns_xxt;
     }
   }
@@ -337,9 +348,6 @@ Rcpp::List transportCpp(
 //   /* Cell loads & transfers
 //      ----------------------
 //   */
-//   double ns_xxt_cld;
-//   double ns_xxt_ctf;
-//   NumericMatrix nm_xxt_ctf_foc;
 //
 //   NumericMatrix nm_xxe_net = matrix_minus_matrix_elementwise(nm_xxe, nm_xxr); // Net emission
 //   NumericMatrix nm_xxt_cld = na_real_matrix(is_rws, is_cls); // Cell loads (empty matrix to loop through)

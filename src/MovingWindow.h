@@ -51,11 +51,11 @@ struct FacetProperties {
 
 template <typename T>
 struct X1X2 {
-  T x1 {};
-  double ns_p1 {};
+  T x1 {}; // Horizontal or vertical cell value
+  double ns_p1 {}; // Proportion of x1
 
-  T x2 {};
-  double ns_p2 {};
+  T x2 {}; // Diagonal cell value
+  double ns_p2 {}; // Proportion of x2
 };
 
 struct CalcOrder {
