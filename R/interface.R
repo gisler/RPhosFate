@@ -103,7 +103,7 @@ RPhosFate <- function(...) {
 #'
 #' @section Model parameter arguments:
 #' * `ns_slp_min`: A numeric scalar specifying the minimum bounding slope in %
-#' (defaults to `0.001`).
+#' (defaults to `1.0`).
 #' * `ns_slp_max`: A numeric scalar specifying the maximum bounding slope in %
 #' (defaults to `999.0`).
 #' * `ns_rhy_a`: A numeric scalar specifying a network constant depending on the

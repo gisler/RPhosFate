@@ -28,7 +28,7 @@ setClass(
     df_cdt     = "data.frame"
   ),
   prototype = list(
-    ns_slp_min = 0.001,
+    ns_slp_min = 1.0,
     ns_slp_max = 999.0,
     ns_rhy_a   = 0.09,
     ns_rhy_b   = 0.50,
