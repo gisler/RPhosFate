@@ -25,11 +25,9 @@ Rcpp::List transportCpp(
   /* Transport calculation order
    * ===========================
    */
-
   /* Determine number of inflowing cells
    * -----------------------------------
    */
-
   arma::imat im_ifl(
     arma::size(nm_dir_inf),
     arma::fill::value(NA_INTEGER)
@@ -56,7 +54,6 @@ Rcpp::List transportCpp(
   /* Determine order of rows and cols indices
    * ----------------------------------------
    */
-
   CalcOrder ord(arma::accu(im_ifl >= 0));
 
   for (arma::uword i = 0; i < im_ifl.n_rows; ++i) {
@@ -73,32 +70,26 @@ Rcpp::List transportCpp(
   //   arma::fill::value(NA_INTEGER)
   // );
 
-  FacetProperties fct {};
-  arma::sword x1 {}, x2 {};
-
   for (arma::uword n = 0; n < ord.uv_r.capacity(); ++n) {
     if (n == ord.uv_r.size()) {
       Rcpp::stop("Warning: Could not determine a hydrologic consistent transport calculation order.");
     }
 
-    fct = movingWindow.determineFacetProperties(
+    FacetProperties fct{movingWindow.determineFacetProperties(
       nm_dir_inf.at(ord.uv_r[n], ord.uv_c[n]),
       ord.uv_r[n],
       ord.uv_c[n]
-    );
+    )};
+    arma::sword x1 {NA_INTEGER}, x2 {NA_INTEGER};
 
-    if (fct.ls_x1_oob) {
-      x1 = NA_INTEGER;
-    } else {
+    if (!fct.ls_x1_oob) {
       x1 = im_ifl.at(fct.us_x1_r, fct.us_x1_c);
       if (!Rcpp::IntegerMatrix::is_na(x1)) {
         --x1;
         im_ifl.at(fct.us_x1_r, fct.us_x1_c) = x1;
       }
     }
-    if (fct.ls_x2_oob) {
-      x2 = NA_INTEGER;
-    } else {
+    if (!fct.ls_x2_oob) {
       x2 = im_ifl.at(fct.us_x2_r, fct.us_x2_c);
       if (!Rcpp::IntegerMatrix::is_na(x2)) {
         --x2;
@@ -121,11 +112,9 @@ Rcpp::List transportCpp(
   /* Retentions and transports
    * =========================
    */
-
   /* Global variable declarations
    * ----------------------------
    */
-
   const double ns_rhy_a {parameters.slot("ns_rhy_a")};
   const double ns_rhy_b {parameters.slot("ns_rhy_b")};
   const double ns_cha_rto {parameters.slot("ns_cha_rto")};
@@ -168,7 +157,6 @@ Rcpp::List transportCpp(
   /* Calculation of retentions and transports
    * ----------------------------------------
    */
-
   for (arma::uword n = 0; n < ord.uv_r.size(); ++n) {
     arma::uword i {ord.uv_r[n]};
     arma::uword j {ord.uv_c[n]};
@@ -235,7 +223,7 @@ Rcpp::List transportCpp(
             ns_xxt_p = ns_xxt;
           } else if (!Rcpp::IntegerMatrix::is_na(cha1cha2.x1)) {
             ns_xxt_p = ns_xxt * cha1cha2.ns_p1;
-          } else if (!Rcpp::IntegerMatrix::is_na(cha1cha2.x2)) {
+          } else {
             ns_xxt_p = ns_xxt * cha1cha2.ns_p2;
           }
         } else {
@@ -267,7 +255,7 @@ Rcpp::List transportCpp(
           ns_xxt_p = ns_xxt;
         } else if (!Rcpp::IntegerMatrix::is_na(rds1rds2.x1)) {
           ns_xxt_p = ns_xxt * rds1rds2.ns_p1;
-        } else if (!Rcpp::IntegerMatrix::is_na(rds1rds2.x2)) {
+        } else {
           ns_xxt_p = ns_xxt * rds1rds2.ns_p2;
         }
 
@@ -305,7 +293,7 @@ Rcpp::List transportCpp(
       // Inflowing channel load
       arma::dvec8 nv_xxt_cha {
         movingWindow.get_ifl_x<double>(nv_ifl_p, i, j, nm_xxt) %
-          movingWindow.get_ifl_x<int>(nv_ifl_p, i, j, im_cha) %
+          (movingWindow.get_ifl_x<int>(nv_ifl_p, i, j, im_cha) > 0.0) %
           nv_ifl_p
       };
       double ns_xxt_cha {arma::accu(nv_xxt_cha)};
@@ -321,22 +309,19 @@ Rcpp::List transportCpp(
         ns_xxt_out * ns_rtc_lcl};
       nm_xxr.at(i, j) = ns_xxr;
       // Transport
-      double ns_xxt {ns_xxt_inp + ns_xxt_cha + ns_xxt_out - ns_xxr};
-      nm_xxt.at(i, j) = ns_xxt;
+      nm_xxt.at(i, j) = ns_xxt_inp + ns_xxt_cha + ns_xxt_out - ns_xxr;
     }
   }
 
   /* Cell loads and transfers
    * ========================
    */
-
   /* Global variable declarations
    * ----------------------------
    */
-
-  for (arma::uword n = ord.uv_r.size() - 1; n > 0; --n) {
-    arma::uword i {ord.uv_r[n]};
-    arma::uword j {ord.uv_c[n]};
+  for (arma::uword n = ord.uv_r.size(); n > 0; --n) {
+    arma::uword i {ord.uv_r[n - 1]};
+    arma::uword j {ord.uv_c[n - 1]};
 
     int is_cha {im_cha.at(i, j)};
 

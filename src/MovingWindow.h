@@ -218,19 +218,18 @@ inline X1X2<T> MovingWindow::get_x1x2(
   const T NA
 ) {
   FacetProperties fct {determineFacetProperties(ns_dir_inf, i, j)};
-  T x1 {NA}, x2 {NA};
-  double ns_p1 {NA_REAL}, ns_p2 {NA_REAL};
+  X1X2<T> x1x2 {NA, NA_REAL, NA, NA_REAL};
 
   if (!fct.ls_x1_oob) {
-    x1 = xm_xxx.at(fct.us_x1_r, fct.us_x1_c);
-    ns_p1 = fct.ns_p1;
+    x1x2.x1 = xm_xxx.at(fct.us_x1_r, fct.us_x1_c);
+    x1x2.ns_p1 = fct.ns_p1;
   }
   if (!fct.ls_x2_oob) {
-    x2 = xm_xxx.at(fct.us_x2_r, fct.us_x2_c);
-    ns_p2 = fct.ns_p2;
+    x1x2.x2 = xm_xxx.at(fct.us_x2_r, fct.us_x2_c);
+    x1x2.ns_p2 = fct.ns_p2;
   }
 
-  return X1X2<T> {x1, ns_p1, x2, ns_p2};
+  return x1x2;
 }
 
 inline arma::dvec8 MovingWindow::get_ifl_p(
@@ -238,7 +237,7 @@ inline arma::dvec8 MovingWindow::get_ifl_p(
   const arma::uword us_row,
   const arma::uword us_col
 ) {
-  arma::uvec8 uv_cll(arma::fill::value(1));
+  arma::uvec8 uv_cll(arma::fill::ones);
 
   if (us_row == 0) {
     uv_cll.elem(ifl.uv_oob_lr) = ifl.uv_oob;
