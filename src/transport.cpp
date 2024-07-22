@@ -336,9 +336,6 @@ Rcpp::List transportCpp(
       continue;
     }
 
-    // Net emission
-    double ns_xxe_net {nm_xxe.at(i, j) - nm_xxr.at(i, j)};
-
     // Inflow proportions
     arma::dvec8 nv_ifl_p {movingWindow.get_ifl_p(nm_dir_inf, i, j)};
 
@@ -347,6 +344,9 @@ Rcpp::List transportCpp(
       movingWindow.get_ifl_x<double>(nv_ifl_p, i, j, nm_xxt) % nv_ifl_p
     };
     double ns_xxt_ifl {arma::accu(nv_xxt_ifl)};
+
+    // Net emission
+    double ns_xxe_net {nm_xxe.at(i, j) - nm_xxr.at(i, j)};
 
     // Initialise intermediate cell load
     double ns_xxt_cld {nm_xxt_ctf.at(i, j)};
@@ -370,7 +370,6 @@ Rcpp::List transportCpp(
       ns_xxt_cld = std::min(ns_xxt_cld, ns_xxe_net);
     }
     nm_xxt_cld.at(i, j) = ns_xxt_cld;
-
     // Cell transfer
     ns_xxt_ctf = std::max(ns_xxt_ctf - ns_xxt_cld, 0.0);
     nm_xxt_ctf.at(i, j) = ns_xxt_ctf;
