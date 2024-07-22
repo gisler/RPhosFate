@@ -454,8 +454,8 @@ setMethod(
     slot(x@substances, substance)@rl_xxt     <- writeLayer(x, "xxt"    , rast(li_tpt$nm_xxt    , crs = x@helpers@cs_cmt, extent = x@helpers@ex_cmt), "FLT8S", substance)
     slot(x@substances, substance)@rl_xxt_inp <- writeLayer(x, "xxt_inp", rast(li_tpt$nm_xxt_inp, crs = x@helpers@cs_cmt, extent = x@helpers@ex_cmt), "FLT8S", substance)
     slot(x@substances, substance)@rl_xxt_out <- writeLayer(x, "xxt_out", rast(li_tpt$nm_xxt_out, crs = x@helpers@cs_cmt, extent = x@helpers@ex_cmt), "FLT8S", substance)
-    # slot(x@substances, substance)@rl_xxt_ctf <- writeLayer(x, "xxt_ctf", rast(li_tpt$nm_xxt_ctf, crs = x@helpers@cs_cmt, extent = x@helpers@ex_cmt), "FLT8S", substance)
-    # slot(x@substances, substance)@rl_xxt_cld <- writeLayer(x, "xxt_cld", rast(li_tpt$nm_xxt_cld, crs = x@helpers@cs_cmt, extent = x@helpers@ex_cmt), "FLT8S", substance)
+    slot(x@substances, substance)@rl_xxt_ctf <- writeLayer(x, "xxt_ctf", rast(li_tpt$nm_xxt_ctf, crs = x@helpers@cs_cmt, extent = x@helpers@ex_cmt), "FLT8S", substance)
+    slot(x@substances, substance)@rl_xxt_cld <- writeLayer(x, "xxt_cld", rast(li_tpt$nm_xxt_cld, crs = x@helpers@cs_cmt, extent = x@helpers@ex_cmt), "FLT8S", substance)
 
     writeRaster(
       rast(li_tpt$im_ifl, crs = x@helpers@cs_cmt, extent = x@helpers@ex_cmt),

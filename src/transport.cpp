@@ -319,61 +319,78 @@ Rcpp::List transportCpp(
   /* Global variable declarations
    * ----------------------------
    */
+  arma::dmat nm_xxt_ctf(
+    arma::size(nm_dir_inf),
+    arma::fill::value(NA_REAL)
+  );
+  arma::dmat nm_xxt_cld(
+    arma::size(nm_dir_inf),
+    arma::fill::value(NA_REAL)
+  );
+
   for (arma::uword n = ord.uv_r.size(); n > 0; --n) {
     arma::uword i {ord.uv_r[n - 1]};
     arma::uword j {ord.uv_c[n - 1]};
 
-    int is_cha {im_cha.at(i, j)};
-
-    if (!Rcpp::IntegerMatrix::is_na(is_cha)) {
+    if (!Rcpp::IntegerMatrix::is_na(im_cha.at(i, j))) {
       continue;
     }
+
+    // Net emission
+    double ns_xxe_net {nm_xxe.at(i, j) - nm_xxr.at(i, j)};
+
+    // Inflow proportions
+    arma::dvec8 nv_ifl_p {movingWindow.get_ifl_p(nm_dir_inf, i, j)};
+
+    // Inflowing overland load
+    arma::dvec8 nv_xxt_ifl {
+      movingWindow.get_ifl_x<double>(nv_ifl_p, i, j, nm_xxt) % nv_ifl_p
+    };
+    double ns_xxt_ifl {arma::accu(nv_xxt_ifl)};
+
+    // Initialise intermediate cell load
+    double ns_xxt_cld {nm_xxt_ctf.at(i, j)};
+    if (Rcpp::NumericMatrix::is_na(ns_xxt_cld)) {
+      ns_xxt_cld = 0.0;
+    }
+    double ns_xxt_inp {nm_xxt_inp.at(i, j)};
+    if (!Rcpp::NumericMatrix::is_na(ns_xxt_inp)) {
+      ns_xxt_cld += ns_xxt_inp;
+    }
+    // Initialise intermediate cell transfer
+    double ns_xxt_ctf {ns_xxt_cld};
+
+    // Cell load
+    double ns_xxt {nm_xxt.at(i, j)};
+    ns_xxt_cld = ns_xxt * ns_xxt_cld / (ns_xxt + ns_xxt_ifl);
+
+    if (!std::isfinite(ns_xxt_cld) || ns_xxe_net < 0.0) {
+      ns_xxt_cld = 0.0;
+    } else {
+      ns_xxt_cld = std::min(ns_xxt_cld, ns_xxe_net);
+    }
+    nm_xxt_cld.at(i, j) = ns_xxt_cld;
+
+    // Cell transfer
+    ns_xxt_ctf = std::max(ns_xxt_ctf - ns_xxt_cld, 0.0);
+    nm_xxt_ctf.at(i, j) = ns_xxt_ctf;
+
+    // Focal apportionment
+
   }
 
-//   /* Cell loads & transfers
-//      ----------------------
-//   */
-//
-//   NumericMatrix nm_xxe_net = matrix_minus_matrix_elementwise(nm_xxe, nm_xxr); // Net emission
-//   NumericMatrix nm_xxt_cld = na_real_matrix(is_rws, is_cls); // Cell loads (empty matrix to loop through)
-//   NumericMatrix nm_xxt_ctf = na_real_matrix(is_rws, is_cls); // Cell transfers (empty matrix to loop through)
-//
-//   n = iv_ord_ovl_row_rev.size();
-//   for (int i = 0; i < n; ++i) { // Bottom-up calculation of cell loads and transfers (overland)
-//     im_fDi_foc = im_fDi;
-//     moving_data_window(iv_ord_ovl_row_rev[i], iv_ord_ovl_col_rev[i], is_rws, is_cls, is_row_min, is_row_max, is_col_min, is_col_max, im_fDi_foc);
-//     im_foc     = im_dir(Range(is_row_min, is_row_max), Range(is_col_min, is_col_max)); // Moving potential inflow direction window
-//     nm_xxt_foc = nm_xxt(Range(is_row_min, is_row_max), Range(is_col_min, is_col_max)); // Moving transport data window
-//     if (!NumericMatrix::is_na(nm_xxt_inp(iv_ord_ovl_row_rev[i], iv_ord_ovl_col_rev[i]))) { // Riparian zone or inlet cell
-//       ns_xxt_cld = nm_xxt_inp(iv_ord_ovl_row_rev[i], iv_ord_ovl_col_rev[i]); // Intermediate cell load equals input into channel
-//     } else if (!NumericMatrix::is_na(nm_xxt_ctf(iv_ord_ovl_row_rev[i], iv_ord_ovl_col_rev[i]))) { // Cell upstream of a riparian zone or inlet cell
-//       ns_xxt_cld = nm_xxt_ctf(iv_ord_ovl_row_rev[i], iv_ord_ovl_col_rev[i]); // Intermediate cell load equals cell transfer from downstream
-//     } else { // Other cell (cell at road embankment without subsurface drainage)
-//       ns_xxt_cld = 0.0;
-//     }
-//     ns_xxt_ctf = ns_xxt_cld; // Intermediate cell transfer
-//     ns_xxt_cld = nm_xxt(iv_ord_ovl_row_rev[i], iv_ord_ovl_col_rev[i]) * ns_xxt_cld / (nm_xxt(iv_ord_ovl_row_rev[i], iv_ord_ovl_col_rev[i]) + focal_sum_matrix_cond(nm_xxt_foc, im_fDi_foc, im_foc)); // Calculated intermediate cell load
-//     if (nm_xxe_net(iv_ord_ovl_row_rev[i], iv_ord_ovl_col_rev[i]) < 0.0 || !std::isfinite(ns_xxt_cld)) { // Max possible cell load
-//       ns_xxt_cld = 0.0;
-//     } else {
-//       ns_xxt_cld = std::min(ns_xxt_cld, nm_xxe_net(iv_ord_ovl_row_rev[i], iv_ord_ovl_col_rev[i]));
-//     }
-//     nm_xxt_cld(iv_ord_ovl_row_rev[i], iv_ord_ovl_col_rev[i]) = ns_xxt_cld; // Cell load
-//     ns_xxt_ctf = std::max(ns_xxt_ctf - ns_xxt_cld, 0.0); // Cell load carry equals cell transfer
-//     nm_xxt_ctf(iv_ord_ovl_row_rev[i], iv_ord_ovl_col_rev[i]) = ns_xxt_ctf; // Cell transfer
 //     nm_xxt_ctf_foc = nm_xxt_ctf(Range(is_row_min, is_row_max), Range(is_col_min, is_col_max)); // Moving cell transfer data window
 //     focal_apportionment(ns_xxt_ctf, nm_xxt_ctf_foc, nm_xxt_foc, im_fDi_foc, im_foc); // Cell load/transfer apportionment
 //     replace_submatrix(nm_xxt_ctf, nm_xxt_ctf_foc, is_row_min, is_col_min); // Inserts cell load/transfer apportionment into cell transfer
-//   }
 
   return Rcpp::List::create(
+    Rcpp::Named("im_ifl") = im_ifl,
+    // Rcpp::Named("im_ord") = im_ord,
     Rcpp::Named("nm_xxr"    ) = nm_xxr    ,
     Rcpp::Named("nm_xxt"    ) = nm_xxt    ,
     Rcpp::Named("nm_xxt_inp") = nm_xxt_inp,
     Rcpp::Named("nm_xxt_out") = nm_xxt_out,
-    // Rcpp::Named("nm_xxt_cld") = nm_xxt_cld,
-    // Rcpp::Named("nm_xxt_ctf") = nm_xxt_ctf
-    Rcpp::Named("im_ifl") = im_ifl//,
-    // Rcpp::Named("im_ord") = im_ord
+    Rcpp::Named("nm_xxt_ctf") = nm_xxt_ctf,
+    Rcpp::Named("nm_xxt_cld") = nm_xxt_cld
   );
 }
