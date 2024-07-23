@@ -39,12 +39,12 @@ const struct {
 
 struct FacetProperties {
   bool ls_x1_oob {false}; // Is row or col of x1 out of bounds or proportion of x1 == 0.0?
-  double ns_p1 {};        // Proportion of x1
+  double ns_p1 {NA_REAL}; // Proportion of x1
   arma::uword us_x1_r {}; // Row of x1
   arma::uword us_x1_c {}; // Col of x1
 
   bool ls_x2_oob {false}; // Is row or col of x2 out of bounds or proportion of x2 == 0.0?
-  double ns_p2 {};        // Proportion of x2
+  double ns_p2 {NA_REAL}; // Proportion of x2
   arma::uword us_x2_r {}; // Row of x2
   arma::uword us_x2_c {}; // Col of x2
 };
@@ -52,10 +52,19 @@ struct FacetProperties {
 template <typename T>
 struct X1X2 {
   T x1 {}; // Horizontal or vertical cell value
-  double ns_p1 {}; // Proportion of x1
+  double ns_p1 {NA_REAL}; // Proportion of x1
+  arma::uword us_x1_r {}; // Row of x1
+  arma::uword us_x1_c {}; // Col of x1
 
   T x2 {}; // Diagonal cell value
-  double ns_p2 {}; // Proportion of x2
+  double ns_p2 {NA_REAL}; // Proportion of x2
+  arma::uword us_x2_r {}; // Row of x2
+  arma::uword us_x2_c {}; // Col of x2
+
+  X1X2(T NA):
+    x1 {NA},
+    x2 {NA}
+  {}
 };
 
 struct CalcOrder {
@@ -98,6 +107,13 @@ public:
     const arma::uword j,
     const arma::Mat<T>& xm_xxx,
     const T NA
+  );
+
+  void set_x1x2(
+    const X1X2<int>& x1x2,
+    const double x1,
+    const double x2,
+    arma::dmat& nm_xxx
   );
 
   arma::dvec8 get_ifl_p(
@@ -176,9 +192,6 @@ inline FacetProperties MovingWindow::determineFacetProperties(
 
   } else {
     Rcpp::stop("\"dir_inf\" out of range.");
-
-    fct.ls_x1_oob = true;
-    fct.ls_x2_oob = true;
   }
 
   // Determine rows and cols of x1 and x2
@@ -218,18 +231,47 @@ inline X1X2<T> MovingWindow::get_x1x2(
   const T NA
 ) {
   FacetProperties fct {determineFacetProperties(ns_dir_inf, i, j)};
-  X1X2<T> x1x2 {NA, NA_REAL, NA, NA_REAL};
+  X1X2<T> x1x2(NA);
 
   if (!fct.ls_x1_oob) {
     x1x2.x1 = xm_xxx.at(fct.us_x1_r, fct.us_x1_c);
     x1x2.ns_p1 = fct.ns_p1;
+    x1x2.us_x1_r = fct.us_x1_r;
+    x1x2.us_x1_c = fct.us_x1_c;
   }
   if (!fct.ls_x2_oob) {
     x1x2.x2 = xm_xxx.at(fct.us_x2_r, fct.us_x2_c);
     x1x2.ns_p2 = fct.ns_p2;
+    x1x2.us_x2_r = fct.us_x2_r;
+    x1x2.us_x2_c = fct.us_x2_c;
   }
 
   return x1x2;
+}
+
+inline void MovingWindow::set_x1x2(
+  const X1X2<int>& x1x2,
+  const double x1,
+  const double x2,
+  arma::dmat& nm_xxx
+) {
+  if (!Rcpp::IntegerMatrix::is_na(x1x2.x1)) {
+    double ns_x1 {nm_xxx.at(x1x2.us_x1_r, x1x2.us_x1_c)};
+    if (Rcpp::NumericMatrix::is_na(ns_x1)) {
+      ns_x1 = 0.0;
+    }
+
+    nm_xxx.at(x1x2.us_x1_r, x1x2.us_x1_c) = ns_x1 + x1;
+  }
+
+  if (!Rcpp::IntegerMatrix::is_na(x1x2.x2)) {
+    double ns_x2 {nm_xxx.at(x1x2.us_x2_r, x1x2.us_x2_c)};
+    if (Rcpp::NumericMatrix::is_na(ns_x2)) {
+      ns_x2 = 0.0;
+    }
+
+    nm_xxx.at(x1x2.us_x2_r, x1x2.us_x2_c) = ns_x2 + x2;
+  }
 }
 
 inline arma::dvec8 MovingWindow::get_ifl_p(
@@ -237,6 +279,7 @@ inline arma::dvec8 MovingWindow::get_ifl_p(
   const arma::uword us_row,
   const arma::uword us_col
 ) {
+  // Determine cells, which are out of bounds
   arma::uvec8 uv_cll(arma::fill::ones);
 
   if (us_row == 0) {
@@ -252,12 +295,14 @@ inline arma::dvec8 MovingWindow::get_ifl_p(
     uv_cll.elem(ifl.uv_oob_uc) = ifl.uv_oob;
   }
 
-  double ns_dir_inf {};
+  // Determine proportions
   arma::dvec8 nv_ifl_p(arma::fill::zeros);
 
   for (arma::uword k = 0; k < uv_cll.n_elem; ++k) {
     if (uv_cll[k] == 1) {
-      ns_dir_inf = nm_dir_inf.at(us_row + ifl.iv_dr[k], us_col + ifl.iv_dc[k]);
+      double ns_dir_inf {
+        nm_dir_inf.at(us_row + ifl.iv_dr[k], us_col + ifl.iv_dc[k])
+      };
 
       if (k == 6) {
         if (ns_dir_inf > ifl.nv_dir_min[k] || ns_dir_inf < ifl.nv_dir_max[k]) {
@@ -289,14 +334,13 @@ inline arma::dvec8 MovingWindow::get_ifl_x(
   const arma::uword us_col,
   const arma::Mat<T>& xm_xxx
 ) {
-  double ns_ifl {};
   arma::dvec8 nv_ifl(arma::fill::zeros);
 
   for (arma::uword k = 0; k < nv_ifl_p.n_elem; ++k) {
     if (nv_ifl_p[k] > 0.0) {
-      ns_ifl = static_cast<double>(
+      double ns_ifl {static_cast<double>(
         xm_xxx.at(us_row + ifl.iv_dr[k], us_col + ifl.iv_dc[k])
-      );
+      )};
 
       if (ns_ifl > 0.0) {
         nv_ifl[k] = ns_ifl;

@@ -80,28 +80,28 @@ Rcpp::List transportCpp(
       ord.uv_r[n],
       ord.uv_c[n]
     )};
-    arma::sword x1 {NA_INTEGER}, x2 {NA_INTEGER};
+    arma::sword is_x1 {NA_INTEGER}, is_x2 {NA_INTEGER};
 
     if (!fct.ls_x1_oob) {
-      x1 = im_ifl.at(fct.us_x1_r, fct.us_x1_c);
-      if (!Rcpp::IntegerMatrix::is_na(x1)) {
-        --x1;
-        im_ifl.at(fct.us_x1_r, fct.us_x1_c) = x1;
+      is_x1 = im_ifl.at(fct.us_x1_r, fct.us_x1_c);
+      if (!Rcpp::IntegerMatrix::is_na(is_x1)) {
+        --is_x1;
+        im_ifl.at(fct.us_x1_r, fct.us_x1_c) = is_x1;
       }
     }
     if (!fct.ls_x2_oob) {
-      x2 = im_ifl.at(fct.us_x2_r, fct.us_x2_c);
-      if (!Rcpp::IntegerMatrix::is_na(x2)) {
-        --x2;
-        im_ifl.at(fct.us_x2_r, fct.us_x2_c) = x2;
+      is_x2 = im_ifl.at(fct.us_x2_r, fct.us_x2_c);
+      if (!Rcpp::IntegerMatrix::is_na(is_x2)) {
+        --is_x2;
+        im_ifl.at(fct.us_x2_r, fct.us_x2_c) = is_x2;
       }
     }
 
-    if (x1 == 0) {
+    if (is_x1 == 0) {
       ord.uv_r.push_back(fct.us_x1_r);
       ord.uv_c.push_back(fct.us_x1_c);
     }
-    if (x2 == 0) {
+    if (is_x2 == 0) {
       ord.uv_r.push_back(fct.us_x2_r);
       ord.uv_c.push_back(fct.us_x2_c);
     }
@@ -111,9 +111,6 @@ Rcpp::List transportCpp(
 
   /* Retentions and transports
    * =========================
-   */
-  /* Global variable declarations
-   * ----------------------------
    */
   const double ns_rhy_a {parameters.slot("ns_rhy_a")};
   const double ns_rhy_b {parameters.slot("ns_rhy_b")};
@@ -210,25 +207,9 @@ Rcpp::List transportCpp(
       double ns_xxt {ns_xxt_ifl + ns_xxe - ns_xxr};
       nm_xxt.at(i, j) = ns_xxt;
 
-      // Riparian zone or riparian zone as well as inlet cell
+      // Riparian zone cell
       if (!Rcpp::IntegerMatrix::is_na(is_rip)) {
-        // Proportional transport in case cell is not also an inlet cell or both
-        // downward cells are channel cells
-        double ns_xxt_p {};
-        if (Rcpp::IntegerMatrix::is_na(is_inl)) {
-          X1X2<int> cha1cha2 = movingWindow.get_x1x2<int>(ns_dir_inf, i, j, im_cha, NA_INTEGER);
-
-          if (!Rcpp::IntegerMatrix::is_na(cha1cha2.x1) &&
-              !Rcpp::IntegerMatrix::is_na(cha1cha2.x2)) {
-            ns_xxt_p = ns_xxt;
-          } else if (!Rcpp::IntegerMatrix::is_na(cha1cha2.x1)) {
-            ns_xxt_p = ns_xxt * cha1cha2.ns_p1;
-          } else {
-            ns_xxt_p = ns_xxt * cha1cha2.ns_p2;
-          }
-        } else {
-          ns_xxt_p = ns_xxt;
-        }
+        X1X2<int> cha1cha2 = movingWindow.get_x1x2<int>(ns_dir_inf, i, j, im_cha, NA_INTEGER);
 
         // Retention coefficient in case there is a riparian zone defined
         double ns_rtc_rip {};
@@ -242,25 +223,31 @@ Rcpp::List transportCpp(
         }
 
         // Retention and transport
-        nm_xxt_inp.at(i, j) = ns_xxt_p - ns_xxt_p * ns_rtc_rip;
-
+        double ns_x1 {ns_xxt * cha1cha2.ns_p1}, ns_x2 {ns_xxt * cha1cha2.ns_p2};
+        movingWindow.set_x1x2(
+          cha1cha2,
+          ns_x1 - ns_x1 * ns_rtc_rip,
+          ns_x2 - ns_x2 * ns_rtc_rip,
+          nm_xxt_inp
+        );
+      }
       // Inlet cell
-      } else if (!Rcpp::IntegerMatrix::is_na(is_inl)) {
-        // Proportional transport in case only one downward cell is a road cell
+      if (!Rcpp::IntegerMatrix::is_na(is_inl)) {
         X1X2<int> rds1rds2 = movingWindow.get_x1x2<int>(ns_dir_inf, i, j, im_rds, NA_INTEGER);
 
-        double ns_xxt_p {};
+        // Proportional transport in case only one downward cell is a road cell
+        double ns_x1x2 {};
         if (!Rcpp::IntegerMatrix::is_na(rds1rds2.x1) &&
             !Rcpp::IntegerMatrix::is_na(rds1rds2.x2)) {
-          ns_xxt_p = ns_xxt;
+          ns_x1x2 = ns_xxt;
         } else if (!Rcpp::IntegerMatrix::is_na(rds1rds2.x1)) {
-          ns_xxt_p = ns_xxt * rds1rds2.ns_p1;
+          ns_x1x2 = ns_xxt * rds1rds2.ns_p1;
         } else {
-          ns_xxt_p = ns_xxt * rds1rds2.ns_p2;
+          ns_x1x2 = ns_xxt * rds1rds2.ns_p2;
         }
 
         // Retention and transport
-        double ns_xxt_inp {ns_xxt_p * (1.0 - ns_tfc_inl)};
+        double ns_xxt_inp {ns_x1x2 * (1.0 - ns_tfc_inl)};
         nm_xxt_inp.at(i, j) = ns_xxt_inp;
 
         // Outlet row and col from inlet code (C++ indices start at 0)
@@ -283,12 +270,11 @@ Rcpp::List transportCpp(
       double ns_rtc_ifl {1.0 - std::exp(-ns_dep_cha * ns_rtm)};
       double ns_rtc_lcl {1.0 - std::exp(-ns_dep_cha * ns_rtm * 0.5)};
 
-      // Inflowing overland load (nm_xxt_inp already considers proportional
-      // transport)
-      arma::dvec8 nv_xxt_inp {
-        movingWindow.get_ifl_x<double>(nv_ifl_p, i, j, nm_xxt_inp)
-      };
-      double ns_xxt_inp {arma::accu(nv_xxt_inp)};
+      // Inflowing overland load
+      double ns_xxt_inp {nm_xxt_inp.at(i, j)};
+      if (Rcpp::NumericMatrix::is_na(ns_xxt_inp)) {
+        ns_xxt_inp = 0.0;
+      }
 
       // Inflowing channel load
       arma::dvec8 nv_xxt_cha {
@@ -315,9 +301,6 @@ Rcpp::List transportCpp(
 
   /* Cell loads and transfers
    * ========================
-   */
-  /* Global variable declarations
-   * ----------------------------
    */
   arma::dmat nm_xxt_ctf(
     arma::size(nm_dir_inf),
@@ -362,7 +345,7 @@ Rcpp::List transportCpp(
 
     // Cell load
     double ns_xxt {nm_xxt.at(i, j)};
-    ns_xxt_cld = ns_xxt * ns_xxt_cld / (ns_xxt + ns_xxt_ifl);
+    ns_xxt_cld = ns_xxt_cld * ns_xxt / (ns_xxt + ns_xxt_ifl);
 
     if (!std::isfinite(ns_xxt_cld) || ns_xxe_net < 0.0) {
       ns_xxt_cld = 0.0;
