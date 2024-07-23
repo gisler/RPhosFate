@@ -132,12 +132,6 @@ for (emissiveSubstance in setdiff(slotNames(control@substances), "SS")) {
 saveState(x)
 
 expect_identical(
-  readRDS(file.path(cs_dir_tst, "order.rds")),
-  readRDS(file.path(cs_dir_ctl, "order.rds")),
-  info = '"order.rds" is written correctly'
-)
-
-expect_identical(
   yaml::read_yaml(file.path(cs_dir_tst, "parameters.yaml"))[-1L],
   yaml::read_yaml(file.path(cs_dir_ctl, "parameters.yaml"))[-1L],
   info = '"parameters.yaml" is written correctly'

@@ -108,7 +108,7 @@ In case the only substance of interest is PP, it is possible to set its enrichme
 
 ## Save state
 
-Write parameters and transport calculation order to disk:
+Write parameters to disk:
 
 ```{r eval=FALSE}
 saveState(x)

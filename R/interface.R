@@ -777,8 +777,7 @@ setGeneric(
 )
 #' Save state
 #'
-#' Saves parameters _(parameters.yaml)_ and transport calculation order
-#' _(order.rds)_ to disk.
+#' Saves parameters _(parameters.yaml)_ to disk.
 #'
 #' @inheritParams erosionPrerequisites,RPhosFate-method
 #'
@@ -809,6 +808,5 @@ setMethod(
     on.exit(setwd(cs_dir_old))
 
     writeParameters(x@parameters)
-    saveRDS(x@helpers@order, "order.rds")
   }
 )
