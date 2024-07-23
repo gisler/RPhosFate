@@ -260,7 +260,6 @@ Rcpp::List transportCpp(
         if (Rcpp::NumericMatrix::is_na(ns_xxt_out)) {
           ns_xxt_out = 0.0;
         }
-
         nm_xxt_out(is_row, is_col) = ns_xxt_out + ns_xxt_inp;
       }
 
@@ -327,23 +326,31 @@ Rcpp::List transportCpp(
       movingWindow.get_ifl_x<double>(nv_ifl_p, i, j, nm_xxt) % nv_ifl_p
     };
     double ns_xxt_ifl {arma::accu(nv_xxt_ifl)};
-
     // Net emission
     double ns_xxe_net {nm_xxe.at(i, j) - nm_xxr.at(i, j)};
 
-    // Initialise intermediate cell load
+    // Initialise intermediate cell load (step 1)
     double ns_xxt_cld {nm_xxt_ctf.at(i, j)};
     if (Rcpp::NumericMatrix::is_na(ns_xxt_cld)) {
       ns_xxt_cld = 0.0;
     }
-    double ns_xxt_inp {nm_xxt_inp.at(i, j)};
-    if (!Rcpp::NumericMatrix::is_na(ns_xxt_inp)) {
-      ns_xxt_cld += ns_xxt_inp;
+    if (!Rcpp::IntegerMatrix::is_na(im_rip.at(i, j))) {
+      X1X2<double> inp1inp2 {movingWindow.get_x1x2<double>(nm_dir_inf.at(i, j), i, j, nm_xxt_inp, NA_REAL)};
+
+      if (!Rcpp::NumericMatrix::is_na(inp1inp2.x1)) {
+        ns_xxt_cld += inp1inp2.x1 * inp1inp2.ns_p1;
+      }
+      if (!Rcpp::NumericMatrix::is_na(inp1inp2.x2)) {
+        ns_xxt_cld += inp1inp2.x2 * inp1inp2.ns_p2;
+      }
     }
-    // Initialise intermediate cell transfer
+    if (!Rcpp::IntegerMatrix::is_na(im_inl.at(i, j))) {
+      ns_xxt_cld += nm_xxt_inp.at(i, j);
+    }
+    // Initialise intermediate cell transfer (step 2)
     double ns_xxt_ctf {ns_xxt_cld};
 
-    // Cell load
+    // Cell load (steps 3 and 4)
     double ns_xxt {nm_xxt.at(i, j)};
     ns_xxt_cld = ns_xxt_cld * ns_xxt / (ns_xxt + ns_xxt_ifl);
 
@@ -353,17 +360,23 @@ Rcpp::List transportCpp(
       ns_xxt_cld = std::min(ns_xxt_cld, ns_xxe_net);
     }
     nm_xxt_cld.at(i, j) = ns_xxt_cld;
-    // Cell transfer
+    // Cell transfer (steps 5 and 6)
     ns_xxt_ctf = std::max(ns_xxt_ctf - ns_xxt_cld, 0.0);
     nm_xxt_ctf.at(i, j) = ns_xxt_ctf;
 
-    // Focal apportionment
+    // Weighted apportioning (step 7)
+    for (arma::uword k = 0; k < nv_ifl_p.n_elem; ++k) {
+      if (nv_ifl_p[k] > 0.0 && nv_xxt_ifl[k] > 0.0) {
+        double ns_tmp {nm_xxt_ctf.at(i + ifl.iv_dr[k], j + ifl.iv_dc[k])};
+        if (Rcpp::NumericMatrix::is_na(ns_tmp)) {
+          ns_tmp = 0.0;
+        }
 
+        nm_xxt_ctf.at(i + ifl.iv_dr[k], j + ifl.iv_dc[k]) = ns_tmp +
+          ns_xxt_ctf * nv_xxt_ifl[k] / ns_xxt_ifl;
+      }
+    }
   }
-
-//     nm_xxt_ctf_foc = nm_xxt_ctf(Range(is_row_min, is_row_max), Range(is_col_min, is_col_max)); // Moving cell transfer data window
-//     focal_apportionment(ns_xxt_ctf, nm_xxt_ctf_foc, nm_xxt_foc, im_fDi_foc, im_foc); // Cell load/transfer apportionment
-//     replace_submatrix(nm_xxt_ctf, nm_xxt_ctf_foc, is_row_min, is_col_min); // Inserts cell load/transfer apportionment into cell transfer
 
   return Rcpp::List::create(
     Rcpp::Named("im_ifl") = im_ifl,
