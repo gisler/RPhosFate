@@ -150,6 +150,10 @@ Rcpp::List transportCpp(
     arma::size(nm_dir_inf),
     arma::fill::value(NA_REAL)
   );
+  arma::dmat nm_xxt_rip(
+    arma::size(nm_dir_inf),
+    arma::fill::value(NA_REAL)
+  );
 
   /* Calculation of retentions and transports
    * ----------------------------------------
@@ -223,12 +227,13 @@ Rcpp::List transportCpp(
         }
 
         // Retention and transport
-        double ns_x1 {ns_xxt * cha1cha2.ns_p1}, ns_x2 {ns_xxt * cha1cha2.ns_p2};
-        movingWindow.set_x1x2(
+        double ns_xxt_x1 {ns_xxt * cha1cha2.ns_p1};
+        double ns_xxt_x2 {ns_xxt * cha1cha2.ns_p2};
+        nm_xxt_inp.at(i, j) = movingWindow.set_x1x2(
           cha1cha2,
-          ns_x1 - ns_x1 * ns_rtc_rip,
-          ns_x2 - ns_x2 * ns_rtc_rip,
-          nm_xxt_inp
+          ns_xxt_x1 - ns_xxt_x1 * ns_rtc_rip,
+          ns_xxt_x2 - ns_xxt_x2 * ns_rtc_rip,
+          nm_xxt_rip
         );
       }
       // Inlet cell
@@ -236,19 +241,23 @@ Rcpp::List transportCpp(
         X1X2<int> rds1rds2 = movingWindow.get_x1x2<int>(ns_dir_inf, i, j, im_rds, NA_INTEGER);
 
         // Proportional transport in case only one downward cell is a road cell
-        double ns_x1x2 {};
+        double ns_xxt_x1x2 {};
         if (!Rcpp::IntegerMatrix::is_na(rds1rds2.x1) &&
             !Rcpp::IntegerMatrix::is_na(rds1rds2.x2)) {
-          ns_x1x2 = ns_xxt;
+          ns_xxt_x1x2 = ns_xxt;
         } else if (!Rcpp::IntegerMatrix::is_na(rds1rds2.x1)) {
-          ns_x1x2 = ns_xxt * rds1rds2.ns_p1;
+          ns_xxt_x1x2 = ns_xxt * rds1rds2.ns_p1;
         } else {
-          ns_x1x2 = ns_xxt * rds1rds2.ns_p2;
+          ns_xxt_x1x2 = ns_xxt * rds1rds2.ns_p2;
         }
 
         // Retention and transport
-        double ns_xxt_inp {ns_x1x2 * (1.0 - ns_tfc_inl)};
-        nm_xxt_inp.at(i, j) = ns_xxt_inp;
+        double ns_xxt_inp {ns_xxt_x1x2 * (1.0 - ns_tfc_inl)};
+        double ns_xxt_inp_tmp {nm_xxt_inp.at(i, j)};
+        if (Rcpp::NumericMatrix::is_na(ns_xxt_inp_tmp)) {
+          ns_xxt_inp_tmp = 0.0;
+        }
+        nm_xxt_inp.at(i, j) = ns_xxt_inp_tmp + ns_xxt_inp;
 
         // Outlet row and col from inlet code (C++ indices start at 0)
         std::div_t code {std::div(im_inl.at(i, j), movingWindow.is_cls)};
@@ -270,9 +279,9 @@ Rcpp::List transportCpp(
       double ns_rtc_lcl {1.0 - std::exp(-ns_dep_cha * ns_rtm * 0.5)};
 
       // Inflowing overland load
-      double ns_xxt_inp {nm_xxt_inp.at(i, j)};
-      if (Rcpp::NumericMatrix::is_na(ns_xxt_inp)) {
-        ns_xxt_inp = 0.0;
+      double ns_xxt_rip {nm_xxt_rip.at(i, j)};
+      if (Rcpp::NumericMatrix::is_na(ns_xxt_rip)) {
+        ns_xxt_rip = 0.0;
       }
 
       // Inflowing channel load
@@ -290,11 +299,11 @@ Rcpp::List transportCpp(
       }
 
       // Retention
-      double ns_xxr {(ns_xxt_inp + ns_xxt_cha) * ns_rtc_ifl +
+      double ns_xxr {(ns_xxt_rip + ns_xxt_cha) * ns_rtc_ifl +
         ns_xxt_out * ns_rtc_lcl};
       nm_xxr.at(i, j) = ns_xxr;
       // Transport
-      nm_xxt.at(i, j) = ns_xxt_inp + ns_xxt_cha + ns_xxt_out - ns_xxr;
+      nm_xxt.at(i, j) = ns_xxt_rip + ns_xxt_cha + ns_xxt_out - ns_xxr;
     }
   }
 
@@ -334,18 +343,9 @@ Rcpp::List transportCpp(
     if (Rcpp::NumericMatrix::is_na(ns_xxt_cld)) {
       ns_xxt_cld = 0.0;
     }
-    if (!Rcpp::IntegerMatrix::is_na(im_rip.at(i, j))) {
-      X1X2<double> inp1inp2 {movingWindow.get_x1x2<double>(nm_dir_inf.at(i, j), i, j, nm_xxt_inp, NA_REAL)};
-
-      if (!Rcpp::NumericMatrix::is_na(inp1inp2.x1)) {
-        ns_xxt_cld += inp1inp2.x1 * inp1inp2.ns_p1;
-      }
-      if (!Rcpp::NumericMatrix::is_na(inp1inp2.x2)) {
-        ns_xxt_cld += inp1inp2.x2 * inp1inp2.ns_p2;
-      }
-    }
-    if (!Rcpp::IntegerMatrix::is_na(im_inl.at(i, j))) {
-      ns_xxt_cld += nm_xxt_inp.at(i, j);
+    double ns_xxt_inp {nm_xxt_inp.at(i, j)};
+    if (!Rcpp::NumericMatrix::is_na(ns_xxt_inp)) {
+      ns_xxt_cld += ns_xxt_inp;
     }
     // Initialise intermediate cell transfer (step 2)
     double ns_xxt_ctf {ns_xxt_cld};
@@ -366,13 +366,17 @@ Rcpp::List transportCpp(
 
     // Weighted apportioning (step 7)
     for (arma::uword k = 0; k < nv_ifl_p.n_elem; ++k) {
-      if (nv_ifl_p[k] > 0.0 && nv_xxt_ifl[k] > 0.0) {
-        double ns_tmp {nm_xxt_ctf.at(i + ifl.iv_dr[k], j + ifl.iv_dc[k])};
-        if (Rcpp::NumericMatrix::is_na(ns_tmp)) {
-          ns_tmp = 0.0;
+      arma::uword us_row {i + ifl.iv_dr[k]};
+      arma::uword us_col {j + ifl.iv_dc[k]};
+
+      if (nv_ifl_p[k] > 0.0 &&
+          !Rcpp::NumericMatrix::is_na(nm_acc_inf.at(us_row, us_col))) {
+        double ns_xxt_ctf_tmp {nm_xxt_ctf.at(us_row, us_col)};
+        if (Rcpp::NumericMatrix::is_na(ns_xxt_ctf_tmp)) {
+          ns_xxt_ctf_tmp = 0.0;
         }
 
-        nm_xxt_ctf.at(i + ifl.iv_dr[k], j + ifl.iv_dc[k]) = ns_tmp +
+        nm_xxt_ctf.at(us_row, us_col) = ns_xxt_ctf_tmp +
           ns_xxt_ctf * nv_xxt_ifl[k] / ns_xxt_ifl;
       }
     }

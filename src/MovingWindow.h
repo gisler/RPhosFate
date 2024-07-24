@@ -109,7 +109,7 @@ public:
     const T NA
   );
 
-  void set_x1x2(
+  double set_x1x2(
     const X1X2<int>& x1x2,
     const double x1,
     const double x2,
@@ -249,29 +249,35 @@ inline X1X2<T> MovingWindow::get_x1x2(
   return x1x2;
 }
 
-inline void MovingWindow::set_x1x2(
+inline double MovingWindow::set_x1x2(
   const X1X2<int>& x1x2,
   const double x1,
   const double x2,
   arma::dmat& nm_xxx
 ) {
+  double ns_xxx {0.0};
+
   if (!Rcpp::IntegerMatrix::is_na(x1x2.x1)) {
-    double ns_x1 {nm_xxx.at(x1x2.us_x1_r, x1x2.us_x1_c)};
-    if (Rcpp::NumericMatrix::is_na(ns_x1)) {
-      ns_x1 = 0.0;
+    double ns_xxx_x1 {nm_xxx.at(x1x2.us_x1_r, x1x2.us_x1_c)};
+    if (Rcpp::NumericMatrix::is_na(ns_xxx_x1)) {
+      ns_xxx_x1 = 0.0;
     }
 
-    nm_xxx.at(x1x2.us_x1_r, x1x2.us_x1_c) = ns_x1 + x1;
+    nm_xxx.at(x1x2.us_x1_r, x1x2.us_x1_c) = ns_xxx_x1 + x1;
+    ns_xxx += x1;
   }
 
   if (!Rcpp::IntegerMatrix::is_na(x1x2.x2)) {
-    double ns_x2 {nm_xxx.at(x1x2.us_x2_r, x1x2.us_x2_c)};
-    if (Rcpp::NumericMatrix::is_na(ns_x2)) {
-      ns_x2 = 0.0;
+    double ns_xxx_x2 {nm_xxx.at(x1x2.us_x2_r, x1x2.us_x2_c)};
+    if (Rcpp::NumericMatrix::is_na(ns_xxx_x2)) {
+      ns_xxx_x2 = 0.0;
     }
 
-    nm_xxx.at(x1x2.us_x2_r, x1x2.us_x2_c) = ns_x2 + x2;
+    nm_xxx.at(x1x2.us_x2_r, x1x2.us_x2_c) = ns_xxx_x2 + x2;
+    ns_xxx += x2;
   }
+
+  return ns_xxx;
 }
 
 inline arma::dvec8 MovingWindow::get_ifl_p(
