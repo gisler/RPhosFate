@@ -240,15 +240,13 @@ Rcpp::List transportCpp(
       if (!Rcpp::IntegerMatrix::is_na(is_inl)) {
         X1X2<int> rds1rds2 = movingWindow.get_x1x2<int>(ns_dir_inf, i, j, im_rds, NA_INTEGER);
 
-        // Proportional transport in case only one downward cell is a road cell
-        double ns_xxt_x1x2 {};
-        if (!Rcpp::IntegerMatrix::is_na(rds1rds2.x1) &&
-            !Rcpp::IntegerMatrix::is_na(rds1rds2.x2)) {
-          ns_xxt_x1x2 = ns_xxt;
-        } else if (!Rcpp::IntegerMatrix::is_na(rds1rds2.x1)) {
-          ns_xxt_x1x2 = ns_xxt * rds1rds2.ns_p1;
-        } else {
-          ns_xxt_x1x2 = ns_xxt * rds1rds2.ns_p2;
+        // Proportional transport
+        double ns_xxt_x1x2 {0.0};
+        if (!Rcpp::IntegerMatrix::is_na(rds1rds2.x1)) {
+          ns_xxt_x1x2 += ns_xxt * rds1rds2.ns_p1;
+        }
+        if (!Rcpp::IntegerMatrix::is_na(rds1rds2.x2)) {
+          ns_xxt_x1x2 += ns_xxt * rds1rds2.ns_p2;
         }
 
         // Retention and transport
@@ -283,7 +281,6 @@ Rcpp::List transportCpp(
       if (Rcpp::NumericMatrix::is_na(ns_xxt_rip)) {
         ns_xxt_rip = 0.0;
       }
-
       // Inflowing channel load
       arma::dvec8 nv_xxt_cha {
         movingWindow.get_ifl_x<double>(nv_ifl_p, i, j, nm_xxt) %
@@ -291,7 +288,6 @@ Rcpp::List transportCpp(
           nv_ifl_p
       };
       double ns_xxt_cha {arma::accu(nv_xxt_cha)};
-
       // Outlet load
       double ns_xxt_out {nm_xxt_out.at(i, j)};
       if (Rcpp::NumericMatrix::is_na(ns_xxt_out)) {
@@ -351,12 +347,12 @@ Rcpp::List transportCpp(
     double ns_xxt_ctf {ns_xxt_cld};
 
     // Cell load (steps 3 and 4)
-    double ns_xxt {nm_xxt.at(i, j)};
-    ns_xxt_cld = ns_xxt_cld * ns_xxt / (ns_xxt + ns_xxt_ifl);
-
-    if (!std::isfinite(ns_xxt_cld) || ns_xxe_net < 0.0) {
+    if (ns_xxe_net <= 0.0) {
       ns_xxt_cld = 0.0;
     } else {
+      double ns_xxt {nm_xxt.at(i, j)};
+      ns_xxt_cld = ns_xxt_cld * ns_xxt / (ns_xxt + ns_xxt_ifl);
+
       ns_xxt_cld = std::min(ns_xxt_cld, ns_xxe_net);
     }
     nm_xxt_cld.at(i, j) = ns_xxt_cld;
