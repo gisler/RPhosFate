@@ -14,8 +14,7 @@
 \code{NULL} invisibly and side effects in the form of files.
 }
 \description{
-Saves parameters \emph{(parameters.yaml)} and transport calculation order
-\emph{(order.rds)} to disk.
+Saves parameters \emph{(parameters.yaml)} to disk.
 }
 \examples{
 

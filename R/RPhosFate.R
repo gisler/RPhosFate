@@ -450,25 +450,17 @@ setMethod(
       is_ths = x@is_ths
     )
 
+    # begin debugging
+    # writeRaster(rast(li_tpt$im_ifl    , crs = x@helpers@cs_cmt, extent = x@helpers@ex_cmt), filename = "ifl.tif"    , datatype = "INT4S", overwrite = TRUE)
+    # writeRaster(rast(li_tpt$im_ord    , crs = x@helpers@cs_cmt, extent = x@helpers@ex_cmt), filename = "ord.tif"    , datatype = "INT4S", overwrite = TRUE)
+    # writeRaster(rast(li_tpt$nm_xxt_rip, crs = x@helpers@cs_cmt, extent = x@helpers@ex_cmt), filename = "xxt_rip.tif", datatype = "FLT8S", overwrite = TRUE)
+    # end debugging
     slot(x@substances, substance)@rl_xxr     <- writeLayer(x, "xxr"    , rast(li_tpt$nm_xxr    , crs = x@helpers@cs_cmt, extent = x@helpers@ex_cmt), "FLT8S", substance)
     slot(x@substances, substance)@rl_xxt     <- writeLayer(x, "xxt"    , rast(li_tpt$nm_xxt    , crs = x@helpers@cs_cmt, extent = x@helpers@ex_cmt), "FLT8S", substance)
     slot(x@substances, substance)@rl_xxt_inp <- writeLayer(x, "xxt_inp", rast(li_tpt$nm_xxt_inp, crs = x@helpers@cs_cmt, extent = x@helpers@ex_cmt), "FLT8S", substance)
     slot(x@substances, substance)@rl_xxt_out <- writeLayer(x, "xxt_out", rast(li_tpt$nm_xxt_out, crs = x@helpers@cs_cmt, extent = x@helpers@ex_cmt), "FLT8S", substance)
     slot(x@substances, substance)@rl_xxt_ctf <- writeLayer(x, "xxt_ctf", rast(li_tpt$nm_xxt_ctf, crs = x@helpers@cs_cmt, extent = x@helpers@ex_cmt), "FLT8S", substance)
     slot(x@substances, substance)@rl_xxt_cld <- writeLayer(x, "xxt_cld", rast(li_tpt$nm_xxt_cld, crs = x@helpers@cs_cmt, extent = x@helpers@ex_cmt), "FLT8S", substance)
-
-    writeRaster(
-      rast(li_tpt$im_ifl, crs = x@helpers@cs_cmt, extent = x@helpers@ex_cmt),
-      filename = "ifl.tif",
-      datatype = "INT4S",
-      overwrite = TRUE
-    )
-    # writeRaster(
-    #   rast(li_tpt$im_ord, crs = x@helpers@cs_cmt, extent = x@helpers@ex_cmt),
-    #   filename = "ord.tif",
-    #   datatype = "INT4S",
-    #   overwrite = TRUE
-    # )
 
     x
   }

@@ -123,7 +123,7 @@ effect in case Monte Carlo simulation mode is disabled).
 
 \itemize{
 \item \code{ns_slp_min}: A numeric scalar specifying the minimum bounding slope in \%
-(defaults to \code{0.001}).
+(defaults to \code{1.0}).
 \item \code{ns_slp_max}: A numeric scalar specifying the maximum bounding slope in \%
 (defaults to \code{999.0}).
 \item \code{ns_rhy_a}: A numeric scalar specifying a network constant depending on the

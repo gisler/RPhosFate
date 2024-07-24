@@ -65,15 +65,22 @@ Rcpp::List transportCpp(
     }
   }
 
+  // begin debugging
+  // Rcpp::Rcout << "Debugging" << std::endl;
   // arma::imat im_ord(
   //   arma::size(nm_dir_inf),
   //   arma::fill::value(NA_INTEGER)
   // );
+  // end debugging
 
   for (arma::uword n = 0; n < ord.uv_r.capacity(); ++n) {
     if (n == ord.uv_r.size()) {
       Rcpp::stop("Warning: Could not determine a hydrologic consistent transport calculation order.");
     }
+
+    // begin debugging
+    // im_ord.at(ord.uv_r[n], ord.uv_c[n]) = n;
+    // end debugging
 
     FacetProperties fct{movingWindow.determineFacetProperties(
       nm_dir_inf.at(ord.uv_r[n], ord.uv_c[n]),
@@ -105,8 +112,6 @@ Rcpp::List transportCpp(
       ord.uv_r.push_back(fct.us_x2_r);
       ord.uv_c.push_back(fct.us_x2_c);
     }
-
-    // im_ord.at(ord.uv_r[n], ord.uv_c[n]) = n;
   }
 
   /* Retentions and transports
@@ -379,8 +384,11 @@ Rcpp::List transportCpp(
   }
 
   return Rcpp::List::create(
-    Rcpp::Named("im_ifl") = im_ifl,
-    // Rcpp::Named("im_ord") = im_ord,
+    // begin debugging
+    // Rcpp::Named("im_ifl"    ) = im_ifl    ,
+    // Rcpp::Named("im_ord"    ) = im_ord    ,
+    // Rcpp::Named("nm_xxt_rip") = nm_xxt_rip,
+    // end debugging
     Rcpp::Named("nm_xxr"    ) = nm_xxr    ,
     Rcpp::Named("nm_xxt"    ) = nm_xxt    ,
     Rcpp::Named("nm_xxt_inp") = nm_xxt_inp,
