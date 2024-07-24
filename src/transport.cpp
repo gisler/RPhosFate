@@ -143,14 +143,14 @@ Rcpp::List transportCpp(
     arma::fill::value(NA_REAL)
   );
   arma::dmat nm_xxt_inp(
-      arma::size(nm_dir_inf),
-      arma::fill::value(NA_REAL)
-  );
-  arma::dmat nm_xxt_out(
     arma::size(nm_dir_inf),
     arma::fill::value(NA_REAL)
   );
   arma::dmat nm_xxt_rip(
+    arma::size(nm_dir_inf),
+    arma::fill::value(NA_REAL)
+  );
+  arma::dmat nm_xxt_out(
     arma::size(nm_dir_inf),
     arma::fill::value(NA_REAL)
   );
