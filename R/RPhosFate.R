@@ -72,7 +72,7 @@ setMethod(
       cores = x@is_ths
     )
 
-    # Overland flow accumulation
+    # Overland (weighted) flow accumulation
     rl_acc_inf_ovl <- x@topo@rl_acc_inf
     rl_acc_inf_ovl[!is.na(x@topo@rl_cha)] <- NA_real_
 

@@ -27,11 +27,12 @@ RPhosFate <- function(...) {
 #'
 #' @section _Input_ subdirectory:
 #' This directory holds all possible user input raster data (flow obstacles like
-#' roads must be considered during generation of the flow accumulation layers
-#' and also be cut out from them in order to be properly respected):
+#' roads must be considered during generation of the (weighted) flow
+#' accumulation layer and also be cut out from them in order to be properly
+#' respected):
 #'
-#' * \emph{acc_inf:} D-infinity flow accumulations in number of upslope grid
-#' cells required for everything.
+#' * \emph{acc_inf:} D-infinity (weighted) flow accumulations in number of
+#' upslope grid cells required for everything.
 #' * _CFa:_ (R)USLE C-factors required for [`erosion`].
 #' * _cha:_ Channel cells required for everything (`1`: channel cell, `NA`: no
 #' channel cell).
