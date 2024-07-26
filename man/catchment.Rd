@@ -33,8 +33,8 @@ See subdirectory sections for further information.
 \section{\emph{Input} subdirectory}{
 
 This directory holds all possible user input raster data (flow obstacles like
-roads must be considered during generation of the flow accumulation layers
-and also be cut out from them in order to be properly respected):
+roads must be considered during the generation of the flow accumulation layer
+and must also be cut out from it in order to be properly respected):
 \itemize{
 \item \emph{acc_inf:} D-infinity flow accumulations in number of upslope grid
 cells required for everything.
