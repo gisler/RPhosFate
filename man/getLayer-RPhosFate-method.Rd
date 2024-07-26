@@ -31,12 +31,11 @@ Obtains a project raster layer for further analysis.
 \section{\emph{Input} subdirectory}{
 
 This directory holds all possible user input raster data (flow obstacles like
-roads must be considered during generation of the (weighted) flow
-accumulation layer and also be cut out from them in order to be properly
-respected):
+roads must be considered during generation of the flow accumulation layers
+and also be cut out from them in order to be properly respected):
 \itemize{
-\item \emph{acc_inf:} D-infinity (weighted) flow accumulations in number of
-upslope grid cells required for everything.
+\item \emph{acc_inf:} D-infinity flow accumulations in number of upslope grid
+cells required for everything.
 \item \emph{CFa:} (R)USLE C-factors required for \code{\link{erosion}}.
 \item \emph{cha:} Channel cells required for everything (\code{1}: channel cell, \code{NA}: no
 channel cell).
