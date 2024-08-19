@@ -340,8 +340,8 @@ setMethod(
     df_out$code <- as.integer(df_out$y * x@helpers@is_cls + df_out$x)
     x@topo@rl_inl <- subst(x@topo@rl_inl, df_out[["from_id"]], df_out[["code"]])
 
-    x@topo@rl_rip      <- writeLayer(x, "rip", x@topo@rl_rip     , "INT4S")
-    x@topo@rl_inl      <- writeLayer(x, "inl", x@topo@rl_inl     , "INT4S")
+    x@topo@rl_rip <- writeLayer(x, "rip", x@topo@rl_rip, "INT4S")
+    x@topo@rl_inl <- writeLayer(x, "inl", x@topo@rl_inl, "INT4S")
 
     x
   }
