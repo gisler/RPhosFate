@@ -264,15 +264,15 @@ Rcpp::List transportCpp(
 
         // Outlet row and col from inlet code (C++ indices start at 0)
         std::div_t code {std::div(im_inl.at(i, j), movingWindow.is_cls)};
-        arma::uword is_row {static_cast<arma::uword>(code.quot - 1)};
-        arma::uword is_col {static_cast<arma::uword>(code.rem  - 1)};
+        arma::uword us_row {static_cast<arma::uword>(code.quot - 1)};
+        arma::uword us_col {static_cast<arma::uword>(code.rem  - 1)};
 
         // Outlet load
-        double ns_xxt_out {nm_xxt_out.at(is_row, is_col)};
+        double ns_xxt_out {nm_xxt_out.at(us_row, us_col)};
         if (Rcpp::NumericMatrix::is_na(ns_xxt_out)) {
           ns_xxt_out = 0.0;
         }
-        nm_xxt_out(is_row, is_col) = ns_xxt_out + ns_xxt_inp;
+        nm_xxt_out(us_row, us_col) = ns_xxt_out + ns_xxt_inp;
       }
 
     // Channel cell
