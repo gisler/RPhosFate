@@ -154,7 +154,7 @@ Rcpp::List transportCpp(
   arma::dmat nm_xxt_rip(
     arma::size(nm_dir_inf),
     arma::fill::value(NA_REAL)
-  );
+  ); // Substance inputs of riparian zone into surface waters
   arma::dmat nm_xxt_out(
     arma::size(nm_dir_inf),
     arma::fill::value(NA_REAL)
@@ -220,7 +220,7 @@ Rcpp::List transportCpp(
       if (!Rcpp::IntegerMatrix::is_na(is_rip)) {
         X1X2<int> cha1cha2 = movingWindow.get_x1x2<int>(ns_dir_inf, i, j, im_cha, NA_INTEGER);
 
-        // Retention coefficient in case there is a riparian zone defined
+        // Retention coefficient (0.0 in case there is no riparian zone defined)
         double ns_rtc_rip {};
         if (ns_cha_rto < 1.0) {
           // Residence time
@@ -231,7 +231,8 @@ Rcpp::List transportCpp(
           ns_rtc_rip = 0.0;
         }
 
-        // Retention and transport
+        // Retention, transport and substance input (of riparian zone) into
+        // surface water
         double ns_xxt_x1 {ns_xxt * cha1cha2.ns_p1};
         double ns_xxt_x2 {ns_xxt * cha1cha2.ns_p2};
         nm_xxt_inp.at(i, j) = movingWindow.set_x1x2(
@@ -254,7 +255,8 @@ Rcpp::List transportCpp(
           ns_xxt_x1x2 += ns_xxt * rds1rds2.ns_p2;
         }
 
-        // Retention and transport
+        // Retention, transport and (additional) substance input into surface
+        // water
         double ns_xxt_inp {ns_xxt_x1x2 * (1.0 - ns_tfc_inl)};
         double ns_xxt_inp_tmp {nm_xxt_inp.at(i, j)};
         if (Rcpp::NumericMatrix::is_na(ns_xxt_inp_tmp)) {
@@ -300,11 +302,11 @@ Rcpp::List transportCpp(
       }
 
       // Retention
-      double ns_xxr {(ns_xxt_rip + ns_xxt_cha) * ns_rtc_ifl +
-        ns_xxt_out * ns_rtc_lcl};
+      double ns_xxr {ns_xxt_cha * ns_rtc_ifl +
+        (ns_xxt_rip + ns_xxt_out) * ns_rtc_lcl};
       nm_xxr.at(i, j) = ns_xxr;
       // Transport
-      nm_xxt.at(i, j) = ns_xxt_rip + ns_xxt_cha + ns_xxt_out - ns_xxr;
+      nm_xxt.at(i, j) = ns_xxt_cha + ns_xxt_rip + ns_xxt_out - ns_xxr;
     }
   }
 
