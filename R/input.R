@@ -107,8 +107,9 @@ demoProject <- function(cs_dir = tempdir(TRUE)) {
 #' `ns_cha` can be used to enhance the channel network obtained by the tracing
 #' of downslope flowpaths from the provided channel sources.
 #'
-#' _dem_ represents the original DEM, which also serves as the basis for the
-#' calculation of the D-infinity slopes provided by \emph{slp_inf.}
+#' _dem_ represents the breached DEM with reversed stream burning if applicable.
+#' The basis for the calculation of the D-infinity slopes provided by
+#' \emph{slp_inf,} however, is the original DEM.
 #'
 #' @return A two column numeric [`matrix`] specifying one or more catchment
 #'   outlet coordinates and side effects in the form of raster files.
@@ -521,7 +522,16 @@ DEMrelatedInput <- function(
   }
   rm(rl_cha_ovr, rl_cha_ovr_cha)
 
-  # Calculate (oversized DEM) and extract DInf slopes by watershed
+  # Extract breached DEM by watershed
+  rl_dem_brd <- mask(
+    crop(rl_dem_ovr_brd, rl_wsh),
+    rl_wsh,
+    filename = "dem_brd.tif",
+    datatype = "FLT8S",
+    overwrite = TRUE
+  )
+
+  # Calculate (original oversized DEM) and extract DInf slopes by watershed
   nm_slp_inf_ovr <- DInfSlopeCpp(
     nm_dir_inf = as.matrix(extend(rl_dir_inf, rl_dem_ovr), wide = TRUE),
     nm_dem = as.matrix(rl_dem_ovr, wide = TRUE),
@@ -541,15 +551,6 @@ DEMrelatedInput <- function(
     overwrite = TRUE
   )
   rm(nm_slp_inf_ovr)
-
-  # Extract breached DEM by watershed
-  rl_dem_brd <- mask(
-    crop(rl_dem_ovr_brd, rl_wsh),
-    rl_wsh,
-    filename = "dem_brd.tif",
-    datatype = "FLT8S",
-    overwrite = TRUE
-  )
 
   # Copy data to "Input" directory
   toInput <- list(
