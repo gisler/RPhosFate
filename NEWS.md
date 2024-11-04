@@ -1,5 +1,15 @@
 # RPhosFate v1.0.4.9000
 
+
+* Zusätzlich zum neuen D-Infinity-Multi-Flow- wird der D8-Single-Flow-Algorithmus weiterhin, allerdings nicht rückwärtskompatibel unterstützt.
+* Eine gewichtete Abflussakkumulation wird nicht mehr unterstützt (dies hätte weiterhin die Installation von TauDEM, einer Software erfordert, die sich außerhalb des R-Ökosystems befindet).
+* Die Erstellung des Abflussbaums ist keine eigene Funktion mehr, sondern in den Transport integriert. Zusätzlich entfällt die Speicherung und das Laden desselben.
+* Der hydraulische Radius wird nicht mehr als eigener Layer ausgegeben.
+* Der Default-Wert des minimalen Gefälles beträgt nun nicht mehr 0,001, sondern 1%.
+* Für den L-Faktor wird nun der originale und nicht ein modifizierter Algorithmus verwendet, was in einem ca. 20% niedrigeren L-Faktor und damit Erosion mündet.
+* Die Fracht der Rohrauslässe der unterirdischen Ableitungen werden im Gewässer nun analog zur lokalen Emission mit der halben Fließlänge in die Retention miteinberechnet.
+
+
 * Switched to utilising the `SpatRaster` and `SpatVector` classes from the `terra` package instead of the `RasterLayer` class from the `raster` and the `Spatial*DataFrame` classes from the `sp` packages.
 * Added `ns_cha` argument to `DEMrelatedInput()` function: allows for specifying the minimum (weighted) flow accumulation determining a channel.
 * Added `is_ths` argument to `RPhosFate()` and `catchment()` constructors: allows for specifying the number of threads to use for processing, where applicable. 
