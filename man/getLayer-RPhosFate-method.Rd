@@ -108,7 +108,7 @@ x <- RPhosFate(
 # presupposed method call
 x <- firstRun(x, "SS")
 
-getLayer(x, "dir")
+getLayer(x, "dir_inf")
 getLayer(x, "xxt", "SS")
 getLayer(x, "xxe", "PP")}
 
