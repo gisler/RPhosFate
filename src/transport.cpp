@@ -4,6 +4,8 @@
 #endif
 #include "MovingWindow.h"
 
+// #define DEBUGGING
+
 // [[Rcpp::export]]
 Rcpp::List transportCpp(
   const arma::dmat& nm_acc_inf,
@@ -65,22 +67,22 @@ Rcpp::List transportCpp(
     }
   }
 
-  // begin debugging
-  // Rcpp::Rcout << "Debugging" << std::endl;
-  // arma::imat im_ord(
-  //   arma::size(nm_dir_inf),
-  //   arma::fill::value(NA_INTEGER)
-  // );
-  // end debugging
+  #ifdef DEBUGGING
+  Rcpp::Rcout << "Debugging" << std::endl;
+  arma::imat im_ord(
+    arma::size(nm_dir_inf),
+    arma::fill::value(NA_INTEGER)
+  );
+  #endif
 
   for (arma::uword n = 0; n < ord.uv_r.capacity(); ++n) {
     if (n == ord.uv_r.size()) {
       Rcpp::stop("Warning: Could not determine a hydrologic consistent transport calculation order.");
     }
 
-    // begin debugging
-    // im_ord.at(ord.uv_r[n], ord.uv_c[n]) = n;
-    // end debugging
+    #ifdef DEBUGGING
+    im_ord.at(ord.uv_r[n], ord.uv_c[n]) = n;
+    #endif
 
     FacetProperties fct{movingWindow.determineFacetProperties(
       nm_dir_inf.at(ord.uv_r[n], ord.uv_c[n]),
@@ -386,11 +388,11 @@ Rcpp::List transportCpp(
   }
 
   return Rcpp::List::create(
-    // begin debugging
-    // Rcpp::Named("im_ifl"    ) = im_ifl    ,
-    // Rcpp::Named("im_ord"    ) = im_ord    ,
-    // Rcpp::Named("nm_xxt_rip") = nm_xxt_rip,
-    // end debugging
+    #ifdef DEBUGGING
+    Rcpp::Named("im_ifl"    ) = im_ifl    ,
+    Rcpp::Named("im_ord"    ) = im_ord    ,
+    Rcpp::Named("nm_xxt_rip") = nm_xxt_rip,
+    #endif
     Rcpp::Named("nm_xxr"    ) = nm_xxr    ,
     Rcpp::Named("nm_xxt"    ) = nm_xxt    ,
     Rcpp::Named("nm_xxt_inp") = nm_xxt_inp,
