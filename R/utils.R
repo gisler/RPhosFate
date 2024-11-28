@@ -130,6 +130,17 @@ readLayer <- function(cmt, layer, isRequiredInputLayer = FALSE) {
 readParameters <- function(arguments) {
   parameters <- read_yaml("parameters.yaml")
 
+  if (as.package_version(parameters[["RPhosFate"]]) <
+      as.package_version("2.0.0")) {
+    parameters[["iv_fDo"]] <- NULL
+
+    warning(
+      'Omitted parameter "iv_fDo", as it is no longer required. ',
+      "It will definitely be lost upon saving the project's state.",
+      call. = FALSE
+    )
+  }
+
   parameters[["nv_tfc_inl"]] <- unlist(parameters[["nv_tfc_inl"]])
   parameters[["nv_enr_rto"]] <- unlist(parameters[["nv_enr_rto"]])
   parameters[["nm_olc"]] <- matrix(parameters[["nm_olc"]], ncol = 2L)

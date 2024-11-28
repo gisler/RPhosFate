@@ -1,4 +1,4 @@
-RPhosFate: 1.0.4
+RPhosFate: 2.0.0
 ns_slp_min: 1.0
 ns_slp_max: 999.0
 ns_rhy_a: 0.09
@@ -9,20 +9,10 @@ ns_man_cha: 0.04
 ns_dep_ovl: 0.002
 ns_dep_cha: 0.0
 nv_tfc_inl:
-  SS: 0.6
-  PP: 0.6
+  SS: 0.1
+  PP: 0.1
 nv_enr_rto:
   PP: 2.0
-iv_fDo:
-  - 32
-  - 16
-  - 8
-  - 64
-  - 0
-  - 4
-  - 128
-  - 1
-  - 2
 nm_olc:
   - 4704255.0
   - 2795195.0
