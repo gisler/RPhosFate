@@ -559,7 +559,7 @@ setMethod(
       cex = 1.2
     )
 
-    metrics
+    invisible(metrics)
   }
 )
 
