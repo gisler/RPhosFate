@@ -259,7 +259,7 @@ Rcpp::List transportCpp(
 
         // Retention, transport and (additional) substance input into surface
         // water
-        double ns_xxt_inp {ns_xxt_x1x2 * (1.0 - ns_tfc_inl)};
+        double ns_xxt_inp {ns_xxt_x1x2 * ns_tfc_inl};
         double ns_xxt_inp_tmp {nm_xxt_inp.at(i, j)};
         if (Rcpp::NumericMatrix::is_na(ns_xxt_inp_tmp)) {
           ns_xxt_inp_tmp = 0.0;
