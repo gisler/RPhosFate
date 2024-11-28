@@ -9,8 +9,8 @@ ns_man_cha: 0.04
 ns_dep_ovl: 0.002
 ns_dep_cha: 0.0
 nv_tfc_inl:
-  SS: 0.1
-  PP: 0.1
+  SS: 0.6
+  PP: 0.6
 nv_enr_rto:
   PP: 2.0
 nm_olc:
