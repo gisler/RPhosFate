@@ -200,7 +200,7 @@ x <- subsequentRun(
 
 layers <- file.path(
   cs_dir_tst,
-  c(rep("Intermediate", 2L), rep("Result", 3L)),
+  c("Intermediate", rep("Result", 3L)),
   c("LFa1", "ero1", "ppe1", "ppt_cld1")
 )
 for (layer in layers) {
