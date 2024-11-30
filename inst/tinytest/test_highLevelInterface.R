@@ -210,6 +210,18 @@ for (layer in layers) {
   )
 }
 
+layers <- file.path(
+  cs_dir_tst,
+  c(rep("Intermediate", 2L), rep("Result", 3L)),
+  c("rip1", "SFa1", "ppr1", "ppt1", "ppt_ctf1")
+)
+for (layer in layers) {
+  expect_false(
+    file.exists(sprintf("%s.tif", layer)),
+    info = "Monte Carlo simulation mode outputs do not exist"
+  )
+}
+
 x <- RPhosFate(
   cv_dir = cs_dir_tst,
   ls_ini = TRUE,
