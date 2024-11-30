@@ -180,7 +180,7 @@ x <- RPhosFate(
   cv_dir = c(cs_dir_tst, cs_dir_ctl),
   ls_ini = TRUE,
   is_MCi = 1L,
-  cv_MCl = c("LFa", "ero", "xxe", "xxt_cld")
+  cv_MCl = c("inl", "LFa", "ero", "xxe", "xxt_cld")
 )
 
 expect_identical(
@@ -200,8 +200,8 @@ x <- subsequentRun(
 
 layers <- file.path(
   cs_dir_tst,
-  c("Intermediate", rep("Result", 3L)),
-  c("LFa1", "ero1", "ppe1", "ppt_cld1")
+  c(rep("Intermediate", 2L), rep("Result", 3L)),
+  c("inl1", "LFa1", "ero1", "ppe1", "ppt_cld1")
 )
 for (layer in layers) {
   expect_true(
