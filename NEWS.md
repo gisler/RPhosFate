@@ -9,6 +9,8 @@
 * Für den L-Faktor wird nun der originale und nicht ein modifizierter Algorithmus verwendet, was in einem ca. 20% niedrigeren L-Faktor und damit Erosion mündet.
 * Die Fracht der Rohrauslässe der unterirdischen Ableitungen werden im Gewässer nun analog zur lokalen Emission mit der halben Fließlänge in die Retention miteinberechnet.
 
+calibrationQuality returns metrics invisibly
+transportCalcOrder gone (integrated into transport)
 
 * Switched to utilising the `SpatRaster` and `SpatVector` classes from the `terra` package instead of the `RasterLayer` class from the `raster` and the `Spatial*DataFrame` classes from the `sp` packages.
 * Added `ns_cha` argument to `DEMrelatedInput()` function: allows for specifying the minimum (weighted) flow accumulation determining a channel.
@@ -22,8 +24,6 @@
 
 # RPhosFate v1.0.4
 
-* The current `raster` package does not compress _GeoTIFF_ raster files any longer by default. This is probably due to the switch from `rgdal` to `terra` and has been fixed by generally using the _LZW_ algorithm.
-* Fixed warning "GDAL Message 6: driver GTiff does not support creation option COMPRESSED" curiously only occurring in the reference on GitHub Pages.
 * Removed `hydroGOF` from imported packages list (`maptools` is retiring and `hydroGOF` depends on it via `hydroTSM`). Thanks to Roger Bivand for raising this issue (#17).
 * Bumped minimum tested R version from 4.2.2 to 4.2.3 using the corresponding _Posit_ public package manager snapshot.
 * Slightly improved documentation.
