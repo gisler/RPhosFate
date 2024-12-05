@@ -324,9 +324,9 @@ Rcpp::List transportCpp(
     arma::fill::value(NA_REAL)
   );
 
-  for (arma::uword n = ord.uv_r.size(); n > 0; --n) {
-    arma::uword i {ord.uv_r[n - 1]};
-    arma::uword j {ord.uv_c[n - 1]};
+  for (arma::uword n = ord.uv_r.size() - 1; n-- > 0; ) {
+    arma::uword i {ord.uv_r[n]};
+    arma::uword j {ord.uv_c[n]};
 
     if (!Rcpp::IntegerMatrix::is_na(im_cha.at(i, j))) {
       continue;
