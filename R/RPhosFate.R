@@ -88,7 +88,7 @@ setMethod(
         # Rill erodibility parameter
         m <- b / (1 + b)
 
-        z_rad = z * pi / 180
+        z_rad <- z * pi / 180
 
         ((x * ns_siz)^(m + 1) - ((x - 1) * ns_siz)^(m + 1)) /
           (ns_res^(m + 2) * (abs(sin(z_rad)) + abs(cos(z_rad)))^m * 22.13^m)
@@ -450,11 +450,11 @@ setMethod(
       is_ths = x@is_ths
     )
 
-    # begin debugging
+    # begin debugging # nolint start
     # writeRaster(rast(li_tpt$im_ifl    , crs = x@helpers@cs_cmt, extent = x@helpers@ex_cmt), filename = "ifl.tif"    , datatype = "INT4S", overwrite = TRUE)
     # writeRaster(rast(li_tpt$im_ord    , crs = x@helpers@cs_cmt, extent = x@helpers@ex_cmt), filename = "ord.tif"    , datatype = "INT4S", overwrite = TRUE)
     # writeRaster(rast(li_tpt$nm_xxt_rip, crs = x@helpers@cs_cmt, extent = x@helpers@ex_cmt), filename = "xxt_rip.tif", datatype = "FLT8S", overwrite = TRUE)
-    # end debugging
+    # end debugging # nolint end
     slot(x@substances, substance)@rl_xxr     <- writeLayer(x, "xxr"    , rast(li_tpt$nm_xxr    , crs = x@helpers@cs_cmt, extent = x@helpers@ex_cmt), "FLT8S", substance)
     slot(x@substances, substance)@rl_xxt     <- writeLayer(x, "xxt"    , rast(li_tpt$nm_xxt    , crs = x@helpers@cs_cmt, extent = x@helpers@ex_cmt), "FLT8S", substance)
     slot(x@substances, substance)@rl_xxt_inp <- writeLayer(x, "xxt_inp", rast(li_tpt$nm_xxt_inp, crs = x@helpers@cs_cmt, extent = x@helpers@ex_cmt), "FLT8S", substance)

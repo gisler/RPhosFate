@@ -445,6 +445,7 @@ DEMrelatedInput <- function(
         z = rl_rds
       ),
       fun = function(x, y, z) {
+        # nolint start
         ifelse(
           is.na(y),
           ifelse(
@@ -454,6 +455,7 @@ DEMrelatedInput <- function(
           ),
           x
         )
+        # nolint end
       },
       cores = is_ths,
       filename = "dir_inf_rds.tif",
