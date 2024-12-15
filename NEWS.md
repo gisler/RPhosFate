@@ -14,7 +14,7 @@ This version introduces several breaking changes into `RPhosFate`.
 * Ceased support for _ERDAS IMAGINE_ (\*.img) raster files. `img2tif()` can be used to convert all _ERDAS IMAGINE_ raster files in a directory and its subdirectories into _GeoTIFF_ raster files.
 * Dropped backward compatibility to major version zero.
 
-## Details
+## Technical details
 
 * Input data changes:
   * Removed the layers holding the (weighted) D8 flow accumulations (_acc_ and _acc\_wtd_) and added _acc\_inf_ holding the D-infinity flow accumulations.
