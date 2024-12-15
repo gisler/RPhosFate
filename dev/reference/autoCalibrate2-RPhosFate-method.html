@@ -8,7 +8,7 @@ end-points."><meta name="robots" content="noindex"><!-- mathjax --><script src="
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]--></head><body data-spy="scroll" data-target="#toc">
-    
+
 
     <div class="container template-reference-topic">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -22,7 +22,7 @@ end-points."><meta name="robots" content="noindex"><!-- mathjax --><script src="
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">RPhosFate</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.0.4.9000</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.0.4.9004</span>
       </span>
     </div>
 
@@ -30,7 +30,7 @@ end-points."><meta name="robots" content="noindex"><!-- mathjax --><script src="
       <ul class="nav navbar-nav"><li>
   <a href="../index.html">
     <span class="fa fa-home fa-lg"></span>
-     
+
   </a>
 </li>
 <li>
@@ -39,7 +39,7 @@ end-points."><meta name="robots" content="noindex"><!-- mathjax --><script src="
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Vignettes
-     
+
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu"><li>
@@ -49,7 +49,7 @@ end-points."><meta name="robots" content="noindex"><!-- mathjax --><script src="
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Publications
-     
+
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu"><li>
@@ -71,20 +71,20 @@ end-points."><meta name="robots" content="noindex"><!-- mathjax --><script src="
       </ul><ul class="nav navbar-nav navbar-right"><li>
   <a href="https://github.com/gisler/RPhosFate/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
-     
+
   </a>
 </li>
       </ul></div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
 
-      
+
 
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Two dimensional automatic model calibration</h1>
-    <small class="dont-index">Source: <a href="https://github.com/gisler/RPhosFate/blob/HEAD/R/interface.R" class="external-link"><code>R/interface.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/gisler/RPhosFate/blob/main/R/interface.R" class="external-link"><code>R/interface.R</code></a></small>
     <div class="hidden name"><code>autoCalibrate2-RPhosFate-method.Rd</code></div>
     </div>
 
@@ -98,7 +98,7 @@ end-points.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S4 method for RPhosFate</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S4 method for class 'RPhosFate'</span></span>
 <span><span class="fu">autoCalibrate2</span><span class="op">(</span></span>
 <span>  <span class="va">x</span>,</span>
 <span>  <span class="va">substance</span>,</span>
@@ -113,50 +113,50 @@ end-points.</p>
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <dl><dt>x</dt>
+
+
+<dl><dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
 <dd><p>An S4 <code><a href="RPhosFate-class.html">RPhosFate</a></code> river catchment object.</p></dd>
 
 
-<dt>substance</dt>
+<dt id="arg-substance">substance<a class="anchor" aria-label="anchor" href="#arg-substance"></a></dt>
 <dd><p>A character string specifying the substance to calculate.</p></dd>
 
 
-<dt>col</dt>
+<dt id="arg-col">col<a class="anchor" aria-label="anchor" href="#arg-col"></a></dt>
 <dd><p>A character string specifying the calibration data column with the
 respective substance river loads.</p></dd>
 
 
-<dt>metric</dt>
+<dt id="arg-metric">metric<a class="anchor" aria-label="anchor" href="#arg-metric"></a></dt>
 <dd><p>A character string specifying the metric to optimise. See
 <code><a href="calibrationQuality-RPhosFate-method.html">calibrationQuality</a></code> for available metrics.</p></dd>
 
 
-<dt>method</dt>
+<dt id="arg-method">method<a class="anchor" aria-label="anchor" href="#arg-method"></a></dt>
 <dd><p>A character string specifying the utilised optimisation method.
 See <code><a href="https://rdrr.io/r/stats/optim.html" class="external-link">optim</a></code> for further information (use <code><a href="autoCalibrate-RPhosFate-method.html">autoCalibrate</a></code> instead of
 method <code>"Brent"</code>).</p></dd>
 
 
-<dt>lower</dt>
+<dt id="arg-lower">lower<a class="anchor" aria-label="anchor" href="#arg-lower"></a></dt>
 <dd><p>A numeric scalar or vector specifying the lower end-point(s) of
 the interval(s) to be searched.</p></dd>
 
 
-<dt>upper</dt>
+<dt id="arg-upper">upper<a class="anchor" aria-label="anchor" href="#arg-upper"></a></dt>
 <dd><p>A numeric scalar or vector specifying the upper end-point(s) of
 the interval(s) to be searched.</p></dd>
 
 
-<dt>control</dt>
+<dt id="arg-control">control<a class="anchor" aria-label="anchor" href="#arg-control"></a></dt>
 <dd><p>A <code><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></code> of control parameters passed on to <code><a href="https://rdrr.io/r/stats/optim.html" class="external-link">optim</a></code>. See
 <code><a href="https://rdrr.io/r/stats/optim.html" class="external-link">optim</a></code> for further information.</p></dd>
 
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    
-
-<p>An S4 <code><a href="RPhosFate-class.html">RPhosFate</a></code> river catchment object and side effects in
+    <p>An S4 <code><a href="RPhosFate-class.html">RPhosFate</a></code> river catchment object and side effects in
 the form of raster files.</p>
     </div>
     <div id="see-also">
@@ -183,410 +183,475 @@ the form of raster files.</p>
 <span class="r-in"><span>  <span class="va">x</span>,</span></span>
 <span class="r-in"><span>  <span class="st">"SS"</span>,</span></span>
 <span class="r-in"><span>  col <span class="op">=</span> <span class="st">"SS_load"</span>,</span></span>
-<span class="r-in"><span>  metric <span class="op">=</span> <span class="st">"NSE"</span>,</span></span>
+<span class="r-in"><span>  metric <span class="op">=</span> <span class="st">"KGE"</span>,</span></span>
 <span class="r-in"><span>  method <span class="op">=</span> <span class="st">"L-BFGS-B"</span>,</span></span>
-<span class="r-in"><span>  lower <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">10e-4</span>, <span class="fl">0</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>  upper <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">20e-4</span>, <span class="fl">20e-4</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  lower <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1e-3</span>, <span class="fl">0</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  upper <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2e-3</span>, <span class="fl">2e-3</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  control <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>fnscale <span class="op">=</span> <span class="op">-</span><span class="fl">1</span>, parscale <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1e-3</span>, <span class="fl">1e-3</span><span class="op">)</span>, factr <span class="op">=</span> <span class="fl">1e12</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span><span class="co"># }</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> NSE:   0.7191828</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mNSE:  0.5345233</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> KGE:   0.7323813</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> RMSE:  5.656556</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> PBIAS: -26.6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> RSR:   0.4326794</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> RCV:   0.9761362</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> GMRAE: 0.3842057</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> MdRAE: 0.8072484</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> In-channel retention ratio: -4.440892e-16</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> NSE:   0.7191828</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mNSE:  0.5345233</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> KGE:   0.7323813</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> RMSE:  5.656556</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> PBIAS: -26.6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> RSR:   0.4326794</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> RCV:   0.9761362</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> GMRAE: 0.3842057</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> MdRAE: 0.8072484</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> In-channel retention ratio: -4.440892e-16</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-plt img"><img src="autoCalibrate2-RPhosFate-method-1.png" alt="" width="700" height="433"></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> NSE:   0.7199797</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mNSE:  0.5352918</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> KGE:   0.7328179</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> RMSE:  5.648524</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> PBIAS: -26.5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> RSR:   0.432065</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> RCV:   0.9761435</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> GMRAE: 0.3835328</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> MdRAE: 0.8062524</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> In-channel retention ratio: -4.440892e-16</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-plt img"><img src="autoCalibrate2-RPhosFate-method-2.png" alt="" width="700" height="433"></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> NSE:   0.7175584</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mNSE:  0.533252</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> KGE:   0.7316275</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> RMSE:  5.672893</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> PBIAS: -26.7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> RSR:   0.433929</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> RCV:   0.9758995</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> GMRAE: 0.3849627</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> MdRAE: 0.8095904</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> In-channel retention ratio: 0.001423537</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-plt img"><img src="autoCalibrate2-RPhosFate-method-3.png" alt="" width="700" height="433"></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> NSE:   0.7191828</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mNSE:  0.5345233</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> KGE:   0.7323813</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> RMSE:  5.656556</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> PBIAS: -26.6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> RSR:   0.4326794</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> RCV:   0.9761362</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> GMRAE: 0.3842057</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> MdRAE: 0.8072484</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> In-channel retention ratio: -4.440892e-16</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-plt img"><img src="autoCalibrate2-RPhosFate-method-4.png" alt="" width="700" height="433"></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> NSE:   0.6910678</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mNSE:  0.4945718</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> KGE:   0.7090686</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> RMSE:  5.932966</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> PBIAS: 28.9</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> RSR:   0.4538224</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> RCV:   0.9680198</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> GMRAE: 0.3447724</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> MdRAE: 0.4399217</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> In-channel retention ratio: -4.440892e-16</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-plt img"><img src="autoCalibrate2-RPhosFate-method-5.png" alt="" width="700" height="433"></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> NSE:   0.6931383</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mNSE:  0.4965049</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> KGE:   0.7101685</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> RMSE:  5.91305</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> PBIAS: 28.7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> RSR:   0.4522991</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> RCV:   0.9680672</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> GMRAE: 0.3428975</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> MdRAE: 0.4374743</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> NSE:   0.6071161</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mNSE:  0.4420663</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> KGE:   0.6753664</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> RMSE:  6.690713</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> PBIAS: -31.9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> RSR:   0.5117838</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> RCV:   0.9389487</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> GMRAE: 0.3970503</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> MdRAE: 0.9200186</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> In-channel retention ratio: -2.220446e-16</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-plt img"><img src="autoCalibrate2-RPhosFate-method-6.png" alt="" width="700" height="433"></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> NSE:   0.6889864</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mNSE:  0.4926358</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> KGE:   0.7079669</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> RMSE:  5.952919</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> PBIAS: 29</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> RSR:   0.4553487</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> RCV:   0.9679721</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> GMRAE: 0.3466493</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> MdRAE: 0.4423725</span>
+<span class="r-plt img"><img src="autoCalibrate2-RPhosFate-method-1.png" alt="" width="700" height="433"></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> NSE:   0.6071161</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mNSE:  0.4420663</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> KGE:   0.6753664</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> RMSE:  6.690713</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> PBIAS: -31.9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> RSR:   0.5117838</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> RCV:   0.9389487</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> GMRAE: 0.3970503</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> MdRAE: 0.9200186</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> In-channel retention ratio: -4.440892e-16</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> In-channel retention ratio: -2.220446e-16</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> NSE:   0.6080637</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mNSE:  0.4428216</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> KGE:   0.6757878</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> RMSE:  6.682639</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> PBIAS: -31.8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> RSR:   0.5111662</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> RCV:   0.9389382</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> GMRAE: 0.3963558</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> MdRAE: 0.919039</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> In-channel retention ratio: 1.221245e-15</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-plt img"><img src="autoCalibrate2-RPhosFate-method-2.png" alt="" width="700" height="433"></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> NSE:   0.6064526</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mNSE:  0.4416167</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> KGE:   0.675093</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> RMSE:  6.69636</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> PBIAS: -31.9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> RSR:   0.5122157</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> RCV:   0.9388427</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> GMRAE: 0.3972695</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> MdRAE: 0.9208093</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> In-channel retention ratio: 0.0005159496</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-plt img"><img src="autoCalibrate2-RPhosFate-method-3.png" alt="" width="700" height="433"></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> NSE:   0.6071161</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mNSE:  0.4420663</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> KGE:   0.6753664</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> RMSE:  6.690713</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> PBIAS: -31.9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> RSR:   0.5117838</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> RCV:   0.9389487</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> GMRAE: 0.3970503</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> MdRAE: 0.9200186</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> In-channel retention ratio: -2.220446e-16</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-plt img"><img src="autoCalibrate2-RPhosFate-method-4.png" alt="" width="700" height="433"></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> NSE:   0.9377421</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mNSE:  0.8298658</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> KGE:   0.885968</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> RMSE:  2.663406</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> PBIAS: -9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> RSR:   0.2037284</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> RCV:   0.9303839</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> GMRAE: 0.04548961</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> MdRAE: 0.01767349</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> In-channel retention ratio: -2.220446e-16</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-plt img"><img src="autoCalibrate2-RPhosFate-method-5.png" alt="" width="700" height="433"></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> NSE:   0.9372657</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mNSE:  0.8288419</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> KGE:   0.8854508</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> RMSE:  2.673578</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> PBIAS: -9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> RSR:   0.2045064</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> RCV:   0.930417</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> GMRAE: 0.04929736</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> MdRAE: 0.02270224</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> In-channel retention ratio: 7.771561e-16</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-plt img"><img src="autoCalibrate2-RPhosFate-method-6.png" alt="" width="700" height="433"></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> NSE:   0.9382161</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mNSE:  0.8308907</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> KGE:   0.886484</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> RMSE:  2.653249</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> PBIAS: -8.9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> RSR:   0.2029514</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> RCV:   0.9303506</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> GMRAE: 0.04080259</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> MdRAE: 0.01340401</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> In-channel retention ratio: 1.110223e-16</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-plt img"><img src="autoCalibrate2-RPhosFate-method-7.png" alt="" width="700" height="433"></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> NSE:   0.69327</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mNSE:  0.496767</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> KGE:   0.7102749</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> RMSE:  5.911782</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> PBIAS: 28.7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> RSR:   0.452202</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> RCV:   0.9677696</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> GMRAE: 0.3435011</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> MdRAE: 0.4358584</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> NSE:   0.9374155</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mNSE:  0.8292696</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> KGE:   0.8856287</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> RMSE:  2.670384</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> PBIAS: -9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> RSR:   0.2042621</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> RCV:   0.9302727</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> GMRAE: 0.04700307</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> MdRAE: 0.01944738</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> In-channel retention ratio: 0.001404835</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> In-channel retention ratio: 0.0005129603</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-plt img"><img src="autoCalibrate2-RPhosFate-method-8.png" alt="" width="700" height="433"></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> NSE:   0.6910678</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mNSE:  0.4945718</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> KGE:   0.7090686</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> RMSE:  5.932966</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> PBIAS: 28.9</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> RSR:   0.4538224</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> RCV:   0.9680198</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> GMRAE: 0.3447724</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> MdRAE: 0.4399217</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> NSE:   0.9377421</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mNSE:  0.8298658</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> KGE:   0.885968</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> RMSE:  2.663406</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> PBIAS: -9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> RSR:   0.2037284</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> RCV:   0.9303839</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> GMRAE: 0.04548961</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> MdRAE: 0.01767349</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> In-channel retention ratio: -4.440892e-16</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> In-channel retention ratio: -2.220446e-16</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-plt img"><img src="autoCalibrate2-RPhosFate-method-9.png" alt="" width="700" height="433"></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> NSE:   0.9575214</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mNSE:  0.8027044</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> KGE:   0.9541649</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> RMSE:  2.200014</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> PBIAS: -3.4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> RSR:   0.1682827</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> RCV:   0.9767316</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> GMRAE: 0.1806504</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> MdRAE: 0.2834657</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> In-channel retention ratio: 6.661338e-16</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-plt img"><img src="autoCalibrate2-RPhosFate-method-10.png" alt="" width="700" height="433"></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> NSE:   0.957352</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mNSE:  0.8025559</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> KGE:   0.9536547</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> RMSE:  2.204395</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> PBIAS: -3.5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> RSR:   0.1686178</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> RCV:   0.9767387</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> GMRAE: 0.1807294</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> MdRAE: 0.2849978</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> NSE:   0.4664724</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mNSE:  0.2591888</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> KGE:   0.5642745</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> RMSE:  7.796841</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> PBIAS: 42.3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> RSR:   0.5963934</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> RCV:   0.8958417</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> GMRAE: 0.7711987</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> MdRAE: 0.7283918</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> In-channel retention ratio: 0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-plt img"><img src="autoCalibrate2-RPhosFate-method-11.png" alt="" width="700" height="433"></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> NSE:   0.9576878</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mNSE:  0.8028532</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> KGE:   0.9546712</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> RMSE:  2.1957</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> PBIAS: -3.4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> RSR:   0.1679527</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> RCV:   0.9767245</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> GMRAE: 0.1805653</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> MdRAE: 0.2819319</span>
+<span class="r-plt img"><img src="autoCalibrate2-RPhosFate-method-10.png" alt="" width="700" height="433"></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> NSE:   0.4700652</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mNSE:  0.261723</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> KGE:   0.565708</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> RMSE:  7.770545</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> PBIAS: 42.2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> RSR:   0.5943819</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> RCV:   0.8959632</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> GMRAE: 0.7685763</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> MdRAE: 0.7252692</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> In-channel retention ratio: 5.551115e-16</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-plt img"><img src="autoCalibrate2-RPhosFate-method-12.png" alt="" width="700" height="433"></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> NSE:   0.9569899</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mNSE:  0.8018995</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> KGE:   0.9532673</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> RMSE:  2.213733</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> PBIAS: -3.5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> RSR:   0.1693321</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> RCV:   0.9764926</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> GMRAE: 0.1809222</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> MdRAE: 0.2865277</span>
+<span class="r-plt img"><img src="autoCalibrate2-RPhosFate-method-11.png" alt="" width="700" height="433"></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> NSE:   0.4628606</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mNSE:  0.2566501</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> KGE:   0.5628382</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> RMSE:  7.823188</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> PBIAS: 42.4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> RSR:   0.5984087</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> RCV:   0.89572</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> GMRAE: 0.7738261</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> MdRAE: 0.7315197</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> In-channel retention ratio: 0.001411743</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> In-channel retention ratio: 0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-plt img"><img src="autoCalibrate2-RPhosFate-method-12.png" alt="" width="700" height="433"></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> NSE:   0.467853</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mNSE:  0.2601182</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> KGE:   0.5647587</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> RMSE:  7.786747</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> PBIAS: 42.2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> RSR:   0.5956212</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> RCV:   0.8957155</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> GMRAE: 0.7704267</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> MdRAE: 0.726758</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> In-channel retention ratio: 0.0005136488</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-plt img"><img src="autoCalibrate2-RPhosFate-method-13.png" alt="" width="700" height="433"></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> NSE:   0.9575214</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mNSE:  0.8027044</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> KGE:   0.9541649</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> RMSE:  2.200014</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> PBIAS: -3.4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> RSR:   0.1682827</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> RCV:   0.9767316</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> GMRAE: 0.1806504</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> MdRAE: 0.2834657</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> NSE:   0.4664724</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mNSE:  0.2591888</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> KGE:   0.5642745</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> RMSE:  7.796841</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> PBIAS: 42.3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> RSR:   0.5963934</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> RCV:   0.8958417</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> GMRAE: 0.7711987</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> MdRAE: 0.7283918</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> In-channel retention ratio: 6.661338e-16</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> In-channel retention ratio: 0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-plt img"><img src="autoCalibrate2-RPhosFate-method-14.png" alt="" width="700" height="433"></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> NSE:   0.9552136</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mNSE:  0.8208966</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> KGE:   0.9431924</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> RMSE:  2.258985</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> PBIAS: 4.8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> RSR:   0.1727935</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> RCV:   0.9755208</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> GMRAE: 0.129613</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> MdRAE: 0.09851233</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> NSE:   0.9707589</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mNSE:  0.836942</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> KGE:   0.9234894</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> RMSE:  1.825311</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> PBIAS: -1.9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> RSR:   0.1396211</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> RCV:   0.9267516</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> GMRAE: 0.1566302</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> MdRAE: 0.2445573</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> In-channel retention ratio: 0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-plt img"><img src="autoCalibrate2-RPhosFate-method-15.png" alt="" width="700" height="433"></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> NSE:   0.9554464</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mNSE:  0.8207224</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> KGE:   0.9438469</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> RMSE:  2.253107</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> PBIAS: 4.7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> RSR:   0.1723439</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> RCV:   0.9755355</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> GMRAE: 0.1305188</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> MdRAE: 0.1002579</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> NSE:   0.9705705</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mNSE:  0.8369055</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> KGE:   0.9233325</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> RMSE:  1.831183</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> PBIAS: -2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> RSR:   0.1400703</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> RCV:   0.9267934</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> GMRAE: 0.1560648</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> MdRAE: 0.2462799</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> In-channel retention ratio: 0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> In-channel retention ratio: 3.330669e-16</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-plt img"><img src="autoCalibrate2-RPhosFate-method-16.png" alt="" width="700" height="433"></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> NSE:   0.9549765</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mNSE:  0.8210711</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> KGE:   0.9425341</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> RMSE:  2.264957</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> PBIAS: 4.8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> RSR:   0.1732503</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> RCV:   0.975506</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> GMRAE: 0.1286952</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> MdRAE: 0.09676464</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> NSE:   0.9709438</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mNSE:  0.8369785</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> KGE:   0.923639</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> RMSE:  1.819532</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> PBIAS: -1.8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> RSR:   0.139179</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> RCV:   0.9267096</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> GMRAE: 0.1571871</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> MdRAE: 0.2428326</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> In-channel retention ratio: -2.220446e-16</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> In-channel retention ratio: 3.330669e-16</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-plt img"><img src="autoCalibrate2-RPhosFate-method-17.png" alt="" width="700" height="433"></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> NSE:   0.955245</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mNSE:  0.8200235</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> KGE:   0.9438916</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> RMSE:  2.258193</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> PBIAS: 4.7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> RSR:   0.172733</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> RCV:   0.9752798</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> GMRAE: 0.1308989</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> MdRAE: 0.1018291</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> NSE:   0.9705897</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mNSE:  0.8366748</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> KGE:   0.9232838</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> RMSE:  1.830586</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> PBIAS: -2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> RSR:   0.1400246</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> RCV:   0.9266386</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> GMRAE: 0.15667</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> MdRAE: 0.2456889</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> In-channel retention ratio: 0.001409039</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> In-channel retention ratio: 0.0005125375</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-plt img"><img src="autoCalibrate2-RPhosFate-method-18.png" alt="" width="700" height="433"></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> NSE:   0.9552136</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mNSE:  0.8208966</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> KGE:   0.9431924</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> RMSE:  2.258985</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> PBIAS: 4.8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> RSR:   0.1727935</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> RCV:   0.9755208</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> GMRAE: 0.129613</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> MdRAE: 0.09851233</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> NSE:   0.9707589</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mNSE:  0.836942</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> KGE:   0.9234894</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> RMSE:  1.825311</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> PBIAS: -1.9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> RSR:   0.1396211</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> RCV:   0.9267516</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> GMRAE: 0.1566302</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> MdRAE: 0.2445573</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> In-channel retention ratio: 0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-plt img"><img src="autoCalibrate2-RPhosFate-method-19.png" alt="" width="700" height="433"></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> NSE:   0.962066</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mNSE:  0.8106337</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> KGE:   0.969484</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> RMSE:  2.079</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> PBIAS: 0.2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> RSR:   0.1590262</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> RCV:   0.9762867</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> GMRAE: 0.1683249</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> MdRAE: 0.2021909</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> NSE:   0.9752522</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mNSE:  0.8384166</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> KGE:   0.9230168</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> RMSE:  1.679224</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> PBIAS: 1.3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> RSR:   0.1284466</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> RCV:   0.924948</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> GMRAE: 0.1720404</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> MdRAE: 0.1721504</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> In-channel retention ratio: 1.110223e-16</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-plt img"><img src="autoCalibrate2-RPhosFate-method-20.png" alt="" width="700" height="433"></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> NSE:   0.9620605</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mNSE:  0.8104743</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> KGE:   0.9695189</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> RMSE:  2.079151</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> PBIAS: 0.1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> RSR:   0.1590377</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> RCV:   0.9762969</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> GMRAE: 0.1687208</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> MdRAE: 0.2038152</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> NSE:   0.9752215</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mNSE:  0.8383812</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> KGE:   0.9231968</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> RMSE:  1.680266</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> PBIAS: 1.2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> RSR:   0.1285264</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> RCV:   0.9249941</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> GMRAE: 0.1718613</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> MdRAE: 0.1739629</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> In-channel retention ratio: 0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-plt img"><img src="autoCalibrate2-RPhosFate-method-21.png" alt="" width="700" height="433"></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> NSE:   0.9752788</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mNSE:  0.838452</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> KGE:   0.9228283</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> RMSE:  1.678322</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> PBIAS: 1.4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> RSR:   0.1283777</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> RCV:   0.9249017</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> GMRAE: 0.1722083</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> MdRAE: 0.1703357</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> In-channel retention ratio: -2.220446e-16</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-plt img"><img src="autoCalibrate2-RPhosFate-method-21.png" alt="" width="700" height="433"></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> NSE:   0.962068</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mNSE:  0.8107934</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> KGE:   0.969432</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> RMSE:  2.078945</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> PBIAS: 0.2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> RSR:   0.159022</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> RCV:   0.9762764</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> GMRAE: 0.1679225</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> MdRAE: 0.2005647</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> In-channel retention ratio: 2.220446e-16</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-plt img"><img src="autoCalibrate2-RPhosFate-method-22.png" alt="" width="700" height="433"></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> NSE:   0.9617705</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mNSE:  0.8097989</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> KGE:   0.9692383</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> RMSE:  2.087082</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> PBIAS: 0.1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> RSR:   0.1596444</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> RCV:   0.9760469</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> GMRAE: 0.1689422</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> MdRAE: 0.2053648</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> NSE:   0.9751637</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mNSE:  0.8381407</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> KGE:   0.9229651</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> RMSE:  1.682224</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> PBIAS: 1.3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> RSR:   0.1286761</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> RCV:   0.9248341</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> GMRAE: 0.1722736</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> MdRAE: 0.1733189</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> In-channel retention ratio: 0.00141047</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> In-channel retention ratio: 0.0005124075</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-plt img"><img src="autoCalibrate2-RPhosFate-method-23.png" alt="" width="700" height="433"></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> NSE:   0.962066</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mNSE:  0.8106337</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> KGE:   0.969484</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> RMSE:  2.079</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> PBIAS: 0.2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> RSR:   0.1590262</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> RCV:   0.9762867</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> GMRAE: 0.1683249</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> MdRAE: 0.2021909</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> NSE:   0.9752522</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mNSE:  0.8384166</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> KGE:   0.9230168</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> RMSE:  1.679224</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> PBIAS: 1.3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> RSR:   0.1284466</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> RCV:   0.924948</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> GMRAE: 0.1720404</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> MdRAE: 0.1721504</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> In-channel retention ratio: 1.110223e-16</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-plt img"><img src="autoCalibrate2-RPhosFate-method-24.png" alt="" width="700" height="433"></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> NSE:   0.962068</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mNSE:  0.8108216</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> KGE:   0.969421</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> RMSE:  2.078945</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> PBIAS: 0.2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> RSR:   0.159022</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> RCV:   0.9762746</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> GMRAE: 0.1678508</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> MdRAE: 0.2002773</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> NSE:   0.9736669</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mNSE:  0.8376379</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> KGE:   0.925005</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> RMSE:  1.732172</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> PBIAS: -0.4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> RSR:   0.1324967</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> RCV:   0.9259289</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> GMRAE: 0.1657955</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> MdRAE: 0.211108</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> In-channel retention ratio: 0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> In-channel retention ratio: -2.220446e-16</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-plt img"><img src="autoCalibrate2-RPhosFate-method-25.png" alt="" width="700" height="433"></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> NSE:   0.9620666</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mNSE:  0.8106619</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> KGE:   0.9694761</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> RMSE:  2.078983</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> PBIAS: 0.2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> RSR:   0.1590249</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> RCV:   0.9762849</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> GMRAE: 0.1682543</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> MdRAE: 0.2019038</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> NSE:   0.9735493</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mNSE:  0.8376018</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> KGE:   0.9249994</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> RMSE:  1.736038</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> PBIAS: -0.5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> RSR:   0.1327924</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> RCV:   0.9259728</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> GMRAE: 0.1653983</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> MdRAE: 0.2128719</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> In-channel retention ratio: 7.771561e-16</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> In-channel retention ratio: 5.551115e-16</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-plt img"><img src="autoCalibrate2-RPhosFate-method-26.png" alt="" width="700" height="433"></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> NSE:   0.9620659</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mNSE:  0.8109816</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> KGE:   0.969349</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> RMSE:  2.079003</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> PBIAS: 0.3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> RSR:   0.1590264</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> RCV:   0.9762642</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> GMRAE: 0.1674407</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> MdRAE: 0.1986489</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> NSE:   0.9737807</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mNSE:  0.8376739</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> KGE:   0.9250022</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> RMSE:  1.728424</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> PBIAS: -0.3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> RSR:   0.1322101</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> RCV:   0.925885</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> GMRAE: 0.1661836</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> MdRAE: 0.209342</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> In-channel retention ratio: 7.771561e-16</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> In-channel retention ratio: -4.440892e-16</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-plt img"><img src="autoCalibrate2-RPhosFate-method-27.png" alt="" width="700" height="433"></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> NSE:   0.9617783</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mNSE:  0.809986</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> KGE:   0.9692028</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> RMSE:  2.08687</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> PBIAS: 0.1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> RSR:   0.1596282</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> RCV:   0.9760347</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> GMRAE: 0.1684769</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> MdRAE: 0.2034539</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> NSE:   0.9735343</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mNSE:  0.8373667</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> KGE:   0.9248663</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> RMSE:  1.736529</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> PBIAS: -0.5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> RSR:   0.13283</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> RCV:   0.9258156</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> GMRAE: 0.1659181</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> MdRAE: 0.2122566</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> In-channel retention ratio: 0.001410442</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> In-channel retention ratio: 0.0005124726</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-plt img"><img src="autoCalibrate2-RPhosFate-method-28.png" alt="" width="700" height="433"></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> NSE:   0.962068</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mNSE:  0.8108216</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> KGE:   0.969421</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> RMSE:  2.078945</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> PBIAS: 0.2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> RSR:   0.159022</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> RCV:   0.9762746</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> GMRAE: 0.1678508</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> MdRAE: 0.2002773</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> NSE:   0.9736669</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mNSE:  0.8376379</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> KGE:   0.925005</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> RMSE:  1.732172</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> PBIAS: -0.4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> RSR:   0.1324967</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> RCV:   0.9259289</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> GMRAE: 0.1657955</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> MdRAE: 0.211108</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> In-channel retention ratio: -2.220446e-16</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-plt img"><img src="autoCalibrate2-RPhosFate-method-29.png" alt="" width="700" height="433"></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> NSE:   0.9736871</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mNSE:  0.8376442</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> KGE:   0.9250051</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> RMSE:  1.731508</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> PBIAS: -0.4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> RSR:   0.1324459</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> RCV:   0.9259213</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> GMRAE: 0.1658641</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> MdRAE: 0.2107992</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> In-channel retention ratio: 5.551115e-16</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-plt img"><img src="autoCalibrate2-RPhosFate-method-30.png" alt="" width="700" height="433"></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> NSE:   0.9735701</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mNSE:  0.8376081</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> KGE:   0.925001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> RMSE:  1.735353</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> PBIAS: -0.5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> RSR:   0.13274</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> RCV:   0.9259651</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> GMRAE: 0.1654684</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> MdRAE: 0.2125634</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> In-channel retention ratio: 0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-plt img"><img src="autoCalibrate2-RPhosFate-method-29.png" alt="" width="700" height="433"></span>
+<span class="r-plt img"><img src="autoCalibrate2-RPhosFate-method-31.png" alt="" width="700" height="433"></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> NSE:   0.9738003</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mNSE:  0.8376803</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> KGE:   0.9250008</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> RMSE:  1.727781</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> PBIAS: -0.3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> RSR:   0.1321608</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> RCV:   0.9258773</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> GMRAE: 0.1662506</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> MdRAE: 0.2090327</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> In-channel retention ratio: -2.220446e-16</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-plt img"><img src="autoCalibrate2-RPhosFate-method-32.png" alt="" width="700" height="433"></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> NSE:   0.9735548</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mNSE:  0.8373729</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> KGE:   0.9248671</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> RMSE:  1.735855</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> PBIAS: -0.4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> RSR:   0.1327784</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> RCV:   0.9258079</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> GMRAE: 0.1659875</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> MdRAE: 0.2119479</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> In-channel retention ratio: 0.0005124721</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-plt img"><img src="autoCalibrate2-RPhosFate-method-33.png" alt="" width="700" height="433"></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> NSE:   0.9736871</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mNSE:  0.8376442</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> KGE:   0.9250051</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> RMSE:  1.731508</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> PBIAS: -0.4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> RSR:   0.1324459</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> RCV:   0.9259213</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> GMRAE: 0.1658641</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> MdRAE: 0.2107992</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> In-channel retention ratio: 5.551115e-16</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-plt img"><img src="autoCalibrate2-RPhosFate-method-34.png" alt="" width="700" height="433"></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $par</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.001523864 0.000000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.001462119 0.000000000</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $value</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.962068</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.9250051</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $counts</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> function gradient </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>        6        6 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        7        7 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $convergence</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0</span>
@@ -609,15 +674,15 @@ the form of raster files.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.9.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
 </div>
 
       </footer></div>
 
-  
 
 
-  
+
+
 
   </body></html>
 

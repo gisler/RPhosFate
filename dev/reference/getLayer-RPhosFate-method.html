@@ -3,7 +3,7 @@
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]--></head><body data-spy="scroll" data-target="#toc">
-    
+
 
     <div class="container template-reference-topic">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">RPhosFate</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.0.4.9000</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.0.4.9004</span>
       </span>
     </div>
 
@@ -25,7 +25,7 @@
       <ul class="nav navbar-nav"><li>
   <a href="../index.html">
     <span class="fa fa-home fa-lg"></span>
-     
+
   </a>
 </li>
 <li>
@@ -34,7 +34,7 @@
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Vignettes
-     
+
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu"><li>
@@ -44,7 +44,7 @@
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Publications
-     
+
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu"><li>
@@ -66,20 +66,20 @@
       </ul><ul class="nav navbar-nav navbar-right"><li>
   <a href="https://github.com/gisler/RPhosFate/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
-     
+
   </a>
 </li>
       </ul></div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
 
-      
+
 
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Get layer</h1>
-    <small class="dont-index">Source: <a href="https://github.com/gisler/RPhosFate/blob/HEAD/R/gettersSetters.R" class="external-link"><code>R/gettersSetters.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/gisler/RPhosFate/blob/main/R/gettersSetters.R" class="external-link"><code>R/gettersSetters.R</code></a></small>
     <div class="hidden name"><code>getLayer-RPhosFate-method.Rd</code></div>
     </div>
 
@@ -88,20 +88,22 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre><code># S4 method for RPhosFate
-getLayer(x, i, j = NULL)
-
-# S4 method for RPhosFate,ANY,ANY
-[(x, i, j)</code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S4 method for class 'RPhosFate'</span></span>
+<span><span class="fu">getLayer</span><span class="op">(</span><span class="va">x</span>, <span class="va">i</span>, j <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S4 method for class 'RPhosFate,ANY,ANY'</span></span>
+<span><span class="va">x</span><span class="op">[</span><span class="va">i</span>, <span class="va">j</span><span class="op">]</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <dl><dt>x</dt>
+
+
+<dl><dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
 <dd><p>An S4 <code><a href="RPhosFate-class.html">RPhosFate</a></code> river catchment object.</p></dd>
 
 
-<dt>i</dt>
+<dt id="arg-i">i<a class="anchor" aria-label="anchor" href="#arg-i"></a></dt>
 <dd><p>A character string specifying a layer name. Substance related layers
 whose names start with <em>xx</em> are treated differently. They have to be
 queried by their name (not filename), for example, <code>"xxc"</code> in combination
@@ -110,33 +112,32 @@ concentrations in top soils. See subdirectory sections for further
 information.</p></dd>
 
 
-<dt>j</dt>
+<dt id="arg-j">j<a class="anchor" aria-label="anchor" href="#arg-j"></a></dt>
 <dd><p>A character string specifying a substance if applicable.</p></dd>
 
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    
-
-<p>A <code><a href="https://rspatial.github.io/terra/reference/SpatRaster-class.html" class="external-link">terra::SpatRaster</a></code> object.</p>
+    <p>A <code><a href="https://rspatial.github.io/terra/reference/SpatRaster-class.html" class="external-link">terra::SpatRaster</a></code> object.</p>
     </div>
     <div id="input-subdirectory">
     <h2><em>Input</em> subdirectory</h2>
-    
+
 
 <p>This directory holds all possible user input raster data (flow obstacles like
-roads must be considered during generation of the flow accumulation layers
-and also be cut out from them in order to be properly respected):</p><ul><li><p><em>acc:</em> Flow accumulations required for <code><a href="transportCalcOrder-RPhosFate-method.html">transportCalcOrder</a></code>.</p></li>
-<li><p><em>acc_wtd:</em> Weighted flow accumulations required for everything (can be
-equal to <em>acc</em>).</p></li>
+roads must be considered during the generation of the flow accumulation layer
+and must also be cut out from it in order to be properly respected):</p><ul><li><p><em>acc_inf:</em> D-infinity flow accumulations in number of upslope grid
+cells required for everything.</p></li>
 <li><p><em>CFa:</em> (R)USLE C-factors required for <code><a href="erosion-RPhosFate-method.html">erosion</a></code>.</p></li>
 <li><p><em>cha:</em> Channel cells required for everything (<code>1</code>: channel cell, <code>NA</code>: no
 channel cell).</p></li>
 <li><p><em>clc:</em> Clay contents of top soils in % required for substance
 <code><a href="emission-RPhosFate-method.html">emission</a></code>s.</p></li>
 <li><p><em>dem:</em> Digital elevation model in m a.s.l. (optional).</p></li>
-<li><p><em>dir:</em> D8 flow directions required for <code><a href="transportPrerequisites-RPhosFate-method.html">transportPrerequisites</a></code> and
-substance <code><a href="transport-RPhosFate-method.html">transport</a></code>.</p></li>
+<li><p><em>dir_inf:</em> D-infinity flow directions in azimuth degrees
+measured from north (0 to 360 clockwise) required for
+<code><a href="transportPrerequisites-RPhosFate-method.html">transportPrerequisites</a></code> and substance
+<code><a href="transport-RPhosFate-method.html">transport</a></code>.</p></li>
 <li><p><em>fid:</em> Field IDs (optional).</p></li>
 <li><p><em>KFa:</em> (R)USLE K-factors required for <code><a href="erosion-RPhosFate-method.html">erosion</a></code>.</p></li>
 <li><p><em>lue:</em> Land use classes (optional).</p></li>
@@ -148,23 +149,22 @@ substance <code><a href="transport-RPhosFate-method.html">transport</a></code>.<
 without subsurface drainage, <code>1</code>: road cell with subsurface drainage, <code>NA</code>:
 no road cell).</p></li>
 <li><p><em>RFa:</em> (R)USLE R-factors required for <code><a href="erosion-RPhosFate-method.html">erosion</a></code>.</p></li>
-<li><p><em>slp:</em> Slopes in % required for everything.</p></li>
+<li><p><em>slp_inf:</em> D-infinity slopes in % required for everything.</p></li>
 <li><p><em>wsh:</em> Watershed (optional).</p></li>
 </ul></div>
     <div id="intermediate-subdirectory">
     <h2><em>Intermediate</em> subdirectory</h2>
-    
+
 
 <p>This directory holds intermediate calculations:</p><ul><li><p><em>inl:</em> Cells representing inlets at roads (storm drains).</p></li>
 <li><p><em>LFa:</em> L-factors.</p></li>
-<li><p><em>rhy:</em> Hydraulic radii in m.</p></li>
 <li><p><em>rip:</em> Cells representing the riparian zones within channel cells.</p></li>
 <li><p><em>SFa:</em> RUSLE S-factors.</p></li>
 <li><p><em>slp_cap:</em> Capped slopes in %.</p></li>
 </ul></div>
     <div id="result-subdirectory">
     <h2><em>Result</em> subdirectory</h2>
-    
+
 
 <p>This directory holds the model results:</p><ul><li><p><em>ero:</em> Erosion in t/cell/yr.</p></li>
 <li><p><em>xxe:</em> Substance emissions in kg/cell/yr, for example, <em>ppe</em> for PP
@@ -197,16 +197,16 @@ kg/cell/yr, for example, <em>ppt_inp</em> for PP inputs into surface waters.</p>
 <span class="r-in"><span><span class="co"># presupposed method call</span></span></span>
 <span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="firstRun-RPhosFate-method.html">firstRun</a></span><span class="op">(</span><span class="va">x</span>, <span class="st">"SS"</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="fu">getLayer</span><span class="op">(</span><span class="va">x</span>, <span class="st">"dir"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">getLayer</span><span class="op">(</span><span class="va">x</span>, <span class="st">"dir_inf"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> class       : SpatRaster </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> dimensions  : 92, 155, 1  (nrow, ncol, nlyr)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> resolution  : 10, 10  (x, y)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> extent      : 4702990, 4704540, 2795190, 2796110  (xmin, xmax, ymin, ymax)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> coord. ref. : +proj=laea +lat_0=52 +lon_0=10 +x_0=4321000 +y_0=3210000 +ellps=GRS80 +units=m +no_defs </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> source      : dir.tif </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> name        : dir </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> min value   :   1 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> max value   : 128 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> source      : dir_inf.tif </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> name        :     dir_inf </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> min value   :   0.2138069 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> max value   : 360.0000000 </span>
 <span class="r-in"><span><span class="fu">getLayer</span><span class="op">(</span><span class="va">x</span>, <span class="st">"xxt"</span>, <span class="st">"SS"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> class       : SpatRaster </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> dimensions  : 92, 155, 1  (nrow, ncol, nlyr)</span>
@@ -214,9 +214,9 @@ kg/cell/yr, for example, <em>ppt_inp</em> for PP inputs into surface waters.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> extent      : 4702990, 4704540, 2795190, 2796110  (xmin, xmax, ymin, ymax)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> coord. ref. : +proj=laea +lat_0=52 +lon_0=10 +x_0=4321000 +y_0=3210000 +ellps=GRS80 +units=m +no_defs </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> source      : sst.tif </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> name        :      sst </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> min value   :  0.00000 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> max value   : 18.83847 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> name        :          sst </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> min value   : 3.027626e-06 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> max value   : 1.754717e+01 </span>
 <span class="r-in"><span><span class="fu">getLayer</span><span class="op">(</span><span class="va">x</span>, <span class="st">"xxe"</span>, <span class="st">"PP"</span><span class="op">)</span><span class="co"># }</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> class       : SpatRaster </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> dimensions  : 92, 155, 1  (nrow, ncol, nlyr)</span>
@@ -225,8 +225,8 @@ kg/cell/yr, for example, <em>ppt_inp</em> for PP inputs into surface waters.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> coord. ref. : +proj=laea +lat_0=52 +lon_0=10 +x_0=4321000 +y_0=3210000 +ellps=GRS80 +units=m +no_defs </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> source      : ppe.tif </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> name        :          ppe </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> min value   : 1.387505e-05 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> max value   : 1.202173e+00 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> min value   : 5.648591e-05 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> max value   : 9.866220e-01 </span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
@@ -242,15 +242,15 @@ kg/cell/yr, for example, <em>ppt_inp</em> for PP inputs into surface waters.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.9.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
 </div>
 
       </footer></div>
 
-  
 
 
-  
+
+
 
   </body></html>
 

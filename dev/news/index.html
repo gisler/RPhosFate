@@ -3,7 +3,7 @@
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]--></head><body data-spy="scroll" data-target="#toc">
-    
+
 
     <div class="container template-news">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">RPhosFate</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.0.4.9000</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.0.4.9004</span>
       </span>
     </div>
 
@@ -25,7 +25,7 @@
       <ul class="nav navbar-nav"><li>
   <a href="../index.html">
     <span class="fa fa-home fa-lg"></span>
-     
+
   </a>
 </li>
 <li>
@@ -34,7 +34,7 @@
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Vignettes
-     
+
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu"><li>
@@ -44,7 +44,7 @@
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Publications
-     
+
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu"><li>
@@ -66,46 +66,75 @@
       </ul><ul class="nav navbar-nav navbar-right"><li>
   <a href="https://github.com/gisler/RPhosFate/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
-     
+
   </a>
 </li>
       </ul></div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
 
-      
+
 
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
       <h1 data-toc-skip>Changelog <small></small></h1>
-      <small>Source: <a href="https://github.com/gisler/RPhosFate/blob/HEAD/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
+      <small>Source: <a href="https://github.com/gisler/RPhosFate/blob/main/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
     <div class="section level2">
-<h2 class="page-header" data-toc-text="1.0.4.9000" id="rphosfate-v1049000">RPhosFate v1.0.4.9000<a class="anchor" aria-label="anchor" href="#rphosfate-v1049000"></a></h2>
-<ul><li>Switched to utilising the <code>SpatRaster</code> and <code>SpatVector</code> classes from the <code>terra</code> package instead of the <code>RasterLayer</code> class from the <code>raster</code> and the <code>Spatial*DataFrame</code> classes from the <code>sp</code> packages.</li>
-<li>Added <code>ns_cha</code> argument to <code><a href="../reference/DEMrelatedInput.html">DEMrelatedInput()</a></code> function: allows for specifying the minimum (weighted) flow accumulation determining a channel.</li>
-<li>Added <code>is_ths</code> argument to <code><a href="../reference/catchment.html">RPhosFate()</a></code> and <code><a href="../reference/catchment.html">catchment()</a></code> constructors: allows for specifying the number of threads to use for processing, where applicable.</li>
+<h2 class="page-header" data-toc-text="1.0.4.9004" id="rphosfate-v1049004">RPhosFate v1.0.4.9004<a class="anchor" aria-label="anchor" href="#rphosfate-v1049004"></a></h2>
+<p>This version introduces several breaking changes into <code>RPhosFate</code>.</p>
+<div class="section level3">
+<h3 id="overview-1-0-4-9004">Overview<a class="anchor" aria-label="anchor" href="#overview-1-0-4-9004"></a></h3>
+<ul><li>Use of the D-infinity instead of the D8 flow method, however, the D8 flow method can still be mimicked by rounding the D-infinity flow directions to the nearest multiple of 45 degrees.</li>
+<li>Weighted flow accumulations are no longer supported for the time being.</li>
+<li>The basis for the calculation of the D-infinity slopes is the original digital elevation model and not the breached one with reversed stream burning any longer.</li>
+<li>The default value for the parameter holding the minimum bounding slope <em>(ns_slp_min)</em> is now 1 instead of 0.001%.</li>
+<li>The L factor is now calculated using the original equation (9) developed by Desmet and Govers (1996) and not the adjusted one from Kovacs (2013).</li>
+<li>The channel retentions of the substance outlet loads of subsurface drainages are now calculated analogous to the overland retentions of the local emissions, i.e. by using half of the flow path lengths.</li>
+<li>
+<code>RPhosFate</code> now utilises the <code>terra</code> instead of the <code>raster</code> package.</li>
 <li>Ceased support for <em>ERDAS IMAGINE</em> (*.img) raster files. <code><a href="../reference/img2tif.html">img2tif()</a></code> can be used to convert all <em>ERDAS IMAGINE</em> raster files in a directory and its subdirectories into <em>GeoTIFF</em> raster files.</li>
 <li>Dropped backward compatibility to major version zero.</li>
+</ul></div>
+<div class="section level3">
+<h3 id="details-1-0-4-9004">Details<a class="anchor" aria-label="anchor" href="#details-1-0-4-9004"></a></h3>
+<ul><li>Input data changes:
+<ul><li>Removed the layers holding the (weighted) D8 flow accumulations (<em>acc</em> and <em>acc_wtd</em>) and added <em>acc_inf</em> holding the D-infinity flow accumulations.</li>
+<li>Removed the layer holding the D8 flow directions <em>(dir)</em> and added <em>dir_inf</em> holding the D-infinity flow directions.</li>
+<li>Removed the layer holding the D8 slopes <em>(slp)</em> and added <em>slp_inf</em> holding the D-infinity slopes.</li>
+</ul></li>
+<li>
+<code><a href="../reference/DEMrelatedInput.html">DEMrelatedInput()</a></code> function changes:
+<ul><li>Adjusted it to reflect the aforementioned input data changes.</li>
+<li>Added <code>ns_cha</code> argument to it: allows for specifying the minimum D8 flow accumulation determining a channel.</li>
+<li>Added <code>ls_fD8</code> argument to it: allows for mimicking D8 flow directions by rounding the D-infinity flow directions to the nearest multiple of 45 degrees. Please note that this treatment is always applied to channel cells independently of this argument.</li>
+<li>Removed the <code>cs_wgs</code> and <code>cs_dir</code> arguments from it: These input data are no longer supported for the time being.</li>
+</ul></li>
+<li>Switched to utilising the <code>SpatRaster</code> and <code>SpatVector</code> classes from the <code>terra</code> package instead of the <code>RasterLayer</code> class from the <code>raster</code> and the <code>Spatial*DataFrame</code> classes from the <code>sp</code> packages.</li>
+<li>Added <code>is_ths</code> argument to the <code><a href="../reference/catchment.html">RPhosFate()</a></code> and <code><a href="../reference/catchment.html">catchment()</a></code> constructors: allows for specifying the number of threads to use for processing, where applicable.</li>
+<li>Removed the layer holding the hydraulic radii <em>(rhy),</em> as the calculation of the hydraulic radii is now integrated into the <code><a href="../reference/transport-RPhosFate-method.html">transport()</a></code> method. This implies that the <code><a href="../reference/transportPrerequisites-RPhosFate-method.html">transportPrerequisites()</a></code> method does not save it to disk any longer.</li>
+<li>Removed the parameter holding the D8 outflow direction vector <em>(iv_fDo).</em> Existing parameter files <em>(parameters.yaml)</em> containing it can still be used, but the parameter is removed upon saving a project’s state.</li>
+<li>Removed the <code>transportCalcOrder()</code> method, as the determination of the cell transport calculation order is now integrated into the <code><a href="../reference/transport-RPhosFate-method.html">transport()</a></code> method. This implies that the <code><a href="../reference/firstRun-RPhosFate-method.html">firstRun()</a></code> as well as <code><a href="../reference/subsequentRun-RPhosFate-method.html">subsequentRun()</a></code> methods do not call it any longer and the <code><a href="../reference/saveState-RPhosFate-method.html">saveState()</a></code> method does not save the transport calculation order to disk any longer.</li>
+<li>The <code><a href="../reference/calibrationQuality-RPhosFate-method.html">calibrationQuality()</a></code> method now returns its return value invisibly.</li>
+<li>Considerably revised the internal <code>RPhosFateHelpers</code> class.</li>
 <li>Removed <code>spatstat.geom</code> from imported packages list (utilised functionality is now also provided by <code>terra</code>).</li>
-<li>Bumped minimum tested R version from 4.2.3 to 4.3.2 using the corresponding <em>Posit</em> public package manager snapshot.</li>
+<li>Bumped the minimum tested R version from 4.2.3 to 4.3.2 using the corresponding <em>Posit</em> public package manager snapshot.</li>
 <li>Slightly improved documentation.</li>
 <li>Major internal code improvements.</li>
 </ul></div>
+</div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="1.0.4" id="rphosfate-v104">RPhosFate v1.0.4<small>2023-10-07</small><a class="anchor" aria-label="anchor" href="#rphosfate-v104"></a></h2>
-<ul><li>The current <code>raster</code> package does not compress <em>GeoTIFF</em> raster files any longer by default. This is probably due to the switch from <code>rgdal</code> to <code>terra</code> and has been fixed by generally using the <em>LZW</em> algorithm.</li>
-<li>Fixed warning “GDAL Message 6: driver GTiff does not support creation option COMPRESSED” curiously only occurring in the reference on GitHub Pages.</li>
-<li>Removed <code>hydroGOF</code> from imported packages list (<code>maptools</code> is retiring and <code>hydroGOF</code> depends on it via <code>hydroTSM</code>). Thanks to Roger Bivand for raising this issue (<a href="https://github.com/gisler/RPhosFate/issues/17" class="external-link">#17</a>).</li>
-<li>Bumped minimum tested R version from 4.2.2 to 4.2.3 using the corresponding <em>Posit</em> public package manager snapshot.</li>
+<ul><li>Removed <code>hydroGOF</code> from imported packages list (<code>maptools</code> is retiring and <code>hydroGOF</code> depends on it via <code>hydroTSM</code>). Thanks to Roger Bivand for raising this issue (<a href="https://github.com/gisler/RPhosFate/issues/17" class="external-link">#17</a>).</li>
+<li>Bumped the minimum tested R version from 4.2.2 to 4.2.3 using the corresponding <em>Posit</em> public package manager snapshot.</li>
 <li>Slightly improved documentation.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="1.0.3" id="rphosfate-v103">RPhosFate v1.0.3<small>2023-03-06</small><a class="anchor" aria-label="anchor" href="#rphosfate-v103"></a></h2>
 <ul><li>Removed <code>rgdal</code> from suggested packages list and set minimum required version of the <code>raster</code> package to ≥ 3.6.3 (<code>rgdal</code> is retiring and <code>raster</code> ≥ 3.6.3 does not depend on it any longer). Thanks to Roger Bivand for raising this issue (<a href="https://github.com/gisler/RPhosFate/issues/17" class="external-link">#17</a>).</li>
-<li>Bumped minimum tested R version from 4.1.2 to 4.2.2 using the corresponding <em>MRAN</em> repository snapshot.</li>
+<li>Bumped the minimum tested R version from 4.1.2 to 4.2.2 using the corresponding <em>MRAN</em> repository snapshot.</li>
 <li>Slightly improved documentation.</li>
 <li>Minor internal code improvements.</li>
 </ul></div>
@@ -152,11 +181,10 @@
 </ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.10.0" id="rphosfate-v0100">RPhosFate v0.10.0<a class="anchor" aria-label="anchor" href="#rphosfate-v0100"></a></h2>
-<ul><li>
-<code><a href="../reference/DEMrelatedInput.html">DEMrelatedInput()</a></code> function now calculates the slopes from the breached DEM (stream burning is undone beforehand).</li>
+<ul><li>The <code><a href="../reference/DEMrelatedInput.html">DEMrelatedInput()</a></code> function now calculates the slopes from the breached DEM (stream burning is undone beforehand).</li>
 <li>Switched to utilising <em>GeoTIFF</em> (*.tif) instead of <em>ERDAS IMAGINE</em> (*.img) raster files.</li>
-<li>Added <code>cs_fex</code> argument to <code><a href="../reference/DEMrelatedInput.html">DEMrelatedInput()</a></code> function: allows for using <em>ERDAS IMAGINE</em> raster files for backward compatibility.</li>
-<li>Added <code>cs_dir</code> argument to <code><a href="../reference/DEMrelatedInput.html">DEMrelatedInput()</a></code> function: allows for utilising an existing D8 flow directions raster using <em>ArcGIS</em> codes.</li>
+<li>Added <code>cs_fex</code> argument to the <code><a href="../reference/DEMrelatedInput.html">DEMrelatedInput()</a></code> function: allows for using <em>ERDAS IMAGINE</em> raster files for backward compatibility.</li>
+<li>Added <code>cs_dir</code> argument to the <code><a href="../reference/DEMrelatedInput.html">DEMrelatedInput()</a></code> function: allows for utilising an existing D8 flow directions raster using <em>ArcGIS</em> codes.</li>
 <li>Added <code><a href="../reference/demoProject.html">demoProject()</a></code> function providing training data.</li>
 <li>Added examples to documentation.</li>
 <li>Fixed backward incompatibility.</li>
@@ -177,15 +205,15 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.9.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
 </div>
 
       </footer></div>
 
-  
 
 
-  
+
+
 
   </body></html>
 
