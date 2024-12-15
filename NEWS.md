@@ -1,15 +1,15 @@
 # RPhosFate v1.0.4.9004
 
-This version introduces several breaking changes into `RPhosFate`.
+This version introduces a new flow method, but also comes with several breaking changes.
 
 ## Overview
 
 * Use of the D-infinity instead of the D8 flow method, however, the D8 flow method can still be mimicked by rounding the D-infinity flow directions to the nearest multiple of 45 degrees.
 * Weighted flow accumulations are no longer supported for the time being.
-* The basis for the calculation of the D-infinity slopes is the original digital elevation model and not the breached one with reversed stream burning any longer.
+* The basis for the calculation of the D-infinity slopes is the original digital elevation model and not the breached one with reversed stream burning as it used to be for the calculation of the D8 slopes.
 * The default value for the parameter holding the minimum bounding slope _(ns\_slp_min)_ is now 1 instead of 0.001%.
-* The L factor is now calculated using the original equation\ (9) developed by Desmet and Govers (1996) and not the adjusted one from Kovacs (2013).
-* The channel retentions of the substance outlet loads of subsurface drainages are now calculated analogous to the overland retentions of the local emissions, i.e. by using half of the flow path lengths.
+* The L factor is now calculated using equation\ (9) as it was developed by Desmet and Govers (1996) and not as it was adjusted by Kovacs (2013).
+* The channel retentions of the substance outlet loads of subsurface drainages are now calculated analogous to the overland retentions of the local emissions, i.e. by using half of the respective flow path length.
 * `RPhosFate` now utilises the `terra` instead of the `raster` package.
 * Ceased support for _ERDAS IMAGINE_ (\*.img) raster files. `img2tif()` can be used to convert all _ERDAS IMAGINE_ raster files in a directory and its subdirectories into _GeoTIFF_ raster files.
 * Dropped backward compatibility to major version zero.
@@ -21,15 +21,15 @@ This version introduces several breaking changes into `RPhosFate`.
   * Removed the layer holding the D8 flow directions _(dir)_ and added _dir\_inf_ holding the D-infinity flow directions.
   * Removed the layer holding the D8 slopes _(slp)_ and added _slp\_inf_ holding the D-infinity slopes.
 * `DEMrelatedInput()` function changes:
-  * Adjusted it to reflect the aforementioned input data changes.
-  * Added `ns_cha` argument to it: allows for specifying the minimum D8 flow accumulation determining a channel.
-  * Added `ls_fD8` argument to it: allows for mimicking D8 flow directions by rounding the D-infinity flow directions to the nearest multiple of 45 degrees. Please note that this treatment is always applied to channel cells independently of this argument.
-  * Removed the `cs_wgs` and `cs_dir` arguments from it: These input data are no longer supported for the time being.
+  * Considerable adjustments to reflect the aforementioned input data changes.
+  * Addition of `ns_cha` argument: allows for specifying the minimum D8 flow accumulation determining a channel.
+  * Addition of `ls_fD8` argument: allows for mimicking D8 flow directions by rounding the D-infinity flow directions to the nearest multiple of 45 degrees. Please note that this treatment is always applied to channel cells independently of this argument.
+  * Removal of the `cs_wgs` and `cs_dir` arguments: These input data are no longer supported for the time being.
 * Switched to utilising the `SpatRaster` and `SpatVector` classes from the `terra` package instead of the `RasterLayer` class from the `raster` and the `Spatial*DataFrame` classes from the `sp` packages.
 * Added `is_ths` argument to the `RPhosFate()` and `catchment()` constructors: allows for specifying the number of threads to use for processing, where applicable.
 * Removed the layer holding the hydraulic radii _(rhy),_ as the calculation of the hydraulic radii is now integrated into the `transport()` method. This implies that the `transportPrerequisites()` method does not save it to disk any longer.
-* Removed the parameter holding the D8 outflow direction vector _(iv\_fDo)._ Existing parameter files _(parameters.yaml)_ containing it can still be used, but the parameter is removed upon saving a project's state.
-* Removed the `transportCalcOrder()` method, as the determination of the cell transport calculation order is now integrated into the `transport()` method. This implies that the `firstRun()` as well as `subsequentRun()` methods do not call it any longer and the `saveState()` method does not save the transport calculation order to disk any longer.
+* Removed the parameter holding the D8 outflow direction vector _(iv\_fDo)._ Existing parameter files containing it can still be used, but the parameter will definitely be lost upon saving the project's state.
+* Removed the `transportCalcOrder()` method, as the determination of the cell transport calculation order is now integrated into the `transport()` method. This implies that the `firstRun()` as well as `subsequentRun()` methods do not call it and the `saveState()` method does not save it to disk any longer.
 * The `calibrationQuality()` method now returns its return value invisibly.
 * Considerably revised the internal `RPhosFateHelpers` class.
 * Removed `spatstat.geom` from imported packages list (utilised functionality is now also provided by `terra`).
