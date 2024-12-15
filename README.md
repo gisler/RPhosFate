@@ -1,4 +1,4 @@
-An enhanced version of the semi-empirical, spatially distributed emission and transport model PhosFate implemented in R and C++. It currently supports suspended solids (SS) and particulate phosphorus (PP). A major feature is the allocation of substance loads entering surface waters to their sources of origin, which is a basic requirement for the identification of critical source areas and in consequence a cost-effective implementation of mitigation measures.
+An enhanced version of the semi-empirical, spatially distributed emission and transport model PhosFate implemented in R and C++. It is based on the D-infinity, but also supports the D8 flow method. The currently available substances are suspended solids (SS) and particulate phosphorus (PP). A major feature is the allocation of substance loads entering surface waters to their sources of origin, which is a basic requirement for the identification of critical source areas and in consequence a cost-effective implementation of mitigation measures.
 
 Copyright (C) 2021 RPhosFate authors
 
