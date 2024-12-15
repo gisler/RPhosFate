@@ -84,15 +84,15 @@
 
     <div class="section level2">
 <h2 class="page-header" data-toc-text="1.0.4.9004" id="rphosfate-v1049004">RPhosFate v1.0.4.9004<a class="anchor" aria-label="anchor" href="#rphosfate-v1049004"></a></h2>
-<p>This version introduces several breaking changes into <code>RPhosFate</code>.</p>
+<p>This version introduces a new flow method, but also comes with several breaking changes.</p>
 <div class="section level3">
 <h3 id="overview-1-0-4-9004">Overview<a class="anchor" aria-label="anchor" href="#overview-1-0-4-9004"></a></h3>
 <ul><li>Use of the D-infinity instead of the D8 flow method, however, the D8 flow method can still be mimicked by rounding the D-infinity flow directions to the nearest multiple of 45 degrees.</li>
 <li>Weighted flow accumulations are no longer supported for the time being.</li>
-<li>The basis for the calculation of the D-infinity slopes is the original digital elevation model and not the breached one with reversed stream burning any longer.</li>
+<li>The basis for the calculation of the D-infinity slopes is the original digital elevation model and not the breached one with reversed stream burning as it used to be for the calculation of the D8 slopes.</li>
 <li>The default value for the parameter holding the minimum bounding slope <em>(ns_slp_min)</em> is now 1 instead of 0.001%.</li>
-<li>The L factor is now calculated using the original equation (9) developed by Desmet and Govers (1996) and not the adjusted one from Kovacs (2013).</li>
-<li>The channel retentions of the substance outlet loads of subsurface drainages are now calculated analogous to the overland retentions of the local emissions, i.e. by using half of the flow path lengths.</li>
+<li>The L factor is now calculated using equation (9) as it was developed by Desmet and Govers (1996) and not as it was adjusted by Kovacs (2013).</li>
+<li>The channel retentions of the substance outlet loads of subsurface drainages are now calculated analogous to the overland retentions of the local emissions, i.e. by using half of the respective flow path length.</li>
 <li>
 <code>RPhosFate</code> now utilises the <code>terra</code> instead of the <code>raster</code> package.</li>
 <li>Ceased support for <em>ERDAS IMAGINE</em> (*.img) raster files. <code><a href="../reference/img2tif.html">img2tif()</a></code> can be used to convert all <em>ERDAS IMAGINE</em> raster files in a directory and its subdirectories into <em>GeoTIFF</em> raster files.</li>
@@ -107,16 +107,16 @@
 </ul></li>
 <li>
 <code><a href="../reference/DEMrelatedInput.html">DEMrelatedInput()</a></code> function changes:
-<ul><li>Adjusted it to reflect the aforementioned input data changes.</li>
-<li>Added <code>ns_cha</code> argument to it: allows for specifying the minimum D8 flow accumulation determining a channel.</li>
-<li>Added <code>ls_fD8</code> argument to it: allows for mimicking D8 flow directions by rounding the D-infinity flow directions to the nearest multiple of 45 degrees. Please note that this treatment is always applied to channel cells independently of this argument.</li>
-<li>Removed the <code>cs_wgs</code> and <code>cs_dir</code> arguments from it: These input data are no longer supported for the time being.</li>
+<ul><li>Considerable adjustments to reflect the aforementioned input data changes.</li>
+<li>Addition of <code>ns_cha</code> argument: allows for specifying the minimum D8 flow accumulation determining a channel.</li>
+<li>Addition of <code>ls_fD8</code> argument: allows for mimicking D8 flow directions by rounding the D-infinity flow directions to the nearest multiple of 45 degrees. Please note that this treatment is always applied to channel cells independently of this argument.</li>
+<li>Removal of the <code>cs_wgs</code> and <code>cs_dir</code> arguments: These input data are no longer supported for the time being.</li>
 </ul></li>
 <li>Switched to utilising the <code>SpatRaster</code> and <code>SpatVector</code> classes from the <code>terra</code> package instead of the <code>RasterLayer</code> class from the <code>raster</code> and the <code>Spatial*DataFrame</code> classes from the <code>sp</code> packages.</li>
 <li>Added <code>is_ths</code> argument to the <code><a href="../reference/catchment.html">RPhosFate()</a></code> and <code><a href="../reference/catchment.html">catchment()</a></code> constructors: allows for specifying the number of threads to use for processing, where applicable.</li>
 <li>Removed the layer holding the hydraulic radii <em>(rhy),</em> as the calculation of the hydraulic radii is now integrated into the <code><a href="../reference/transport-RPhosFate-method.html">transport()</a></code> method. This implies that the <code><a href="../reference/transportPrerequisites-RPhosFate-method.html">transportPrerequisites()</a></code> method does not save it to disk any longer.</li>
-<li>Removed the parameter holding the D8 outflow direction vector <em>(iv_fDo).</em> Existing parameter files <em>(parameters.yaml)</em> containing it can still be used, but the parameter is removed upon saving a project’s state.</li>
-<li>Removed the <code>transportCalcOrder()</code> method, as the determination of the cell transport calculation order is now integrated into the <code><a href="../reference/transport-RPhosFate-method.html">transport()</a></code> method. This implies that the <code><a href="../reference/firstRun-RPhosFate-method.html">firstRun()</a></code> as well as <code><a href="../reference/subsequentRun-RPhosFate-method.html">subsequentRun()</a></code> methods do not call it any longer and the <code><a href="../reference/saveState-RPhosFate-method.html">saveState()</a></code> method does not save the transport calculation order to disk any longer.</li>
+<li>Removed the parameter holding the D8 outflow direction vector <em>(iv_fDo).</em> Existing parameter files containing it can still be used, but the parameter will definitely be lost upon saving the project’s state.</li>
+<li>Removed the <code>transportCalcOrder()</code> method, as the determination of the cell transport calculation order is now integrated into the <code><a href="../reference/transport-RPhosFate-method.html">transport()</a></code> method. This implies that the <code><a href="../reference/firstRun-RPhosFate-method.html">firstRun()</a></code> as well as <code><a href="../reference/subsequentRun-RPhosFate-method.html">subsequentRun()</a></code> methods do not call it and the <code><a href="../reference/saveState-RPhosFate-method.html">saveState()</a></code> method does not save it to disk any longer.</li>
 <li>The <code><a href="../reference/calibrationQuality-RPhosFate-method.html">calibrationQuality()</a></code> method now returns its return value invisibly.</li>
 <li>Considerably revised the internal <code>RPhosFateHelpers</code> class.</li>
 <li>Removed <code>spatstat.geom</code> from imported packages list (utilised functionality is now also provided by <code>terra</code>).</li>
