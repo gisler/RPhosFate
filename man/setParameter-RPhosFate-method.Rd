@@ -23,7 +23,7 @@ Sets one or more model parameters or substance parameter values.
 
 \itemize{
 \item \code{ns_slp_min}: A numeric scalar specifying the minimum bounding slope in \%
-(defaults to \code{0.001}).
+(defaults to \code{1.0}).
 \item \code{ns_slp_max}: A numeric scalar specifying the maximum bounding slope in \%
 (defaults to \code{999.0}).
 \item \code{ns_rhy_a}: A numeric scalar specifying a network constant depending on the
@@ -54,8 +54,6 @@ default).
 coefficients required for substance \code{\link{transport}}, for example, \code{c(SS = 0.6, PP = 0.6)} (no default).
 \item \code{nv_enr_rto} A named numeric vector specifying the substance enrichment
 ratios required for substance except SS \code{\link{transport}}, for example, \code{c(PP = 2.0)} (calibration parameter; no default).
-\item \code{iv_fDo}: An integer vector specifying the outflow direction vector
-required for substance \code{\link{transport}} (defaults to \emph{ArcGIS} codes).
 \item \code{nm_olc}: A two column numeric \code{\link{matrix}} specifying one or more catchment
 outlet coordinates required for the in-channel retention ratio of
 \code{\link{calibrationQuality}} (no default).

@@ -32,7 +32,6 @@ if (.Platform$OS.type == "windows" && tinytest::at_home()) {
     sp_olp = terra::vect(file.path(cs_dir_lrg, "olp.shp")),
     sp_sds = terra::vect(file.path(cs_dir_lrg, "sds.shp")),
     cs_rds = file.path(cs_dir_lrg, "rds_lrg.tif"),
-    cs_wgs = file.path(cs_dir_lrg, "wgs_lrg.tif"),
     ls_tmp = TRUE
   )
 

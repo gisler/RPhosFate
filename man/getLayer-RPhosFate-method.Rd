@@ -31,20 +31,21 @@ Obtains a project raster layer for further analysis.
 \section{\emph{Input} subdirectory}{
 
 This directory holds all possible user input raster data (flow obstacles like
-roads must be considered during generation of the flow accumulation layers
-and also be cut out from them in order to be properly respected):
+roads must be considered during the generation of the flow accumulation layer
+and must also be cut out from it in order to be properly respected):
 \itemize{
-\item \emph{acc:} Flow accumulations required for \code{\link{transportCalcOrder}}.
-\item \emph{acc_wtd:} Weighted flow accumulations required for everything (can be
-equal to \emph{acc}).
+\item \emph{acc_inf:} D-infinity flow accumulations in number of upslope grid
+cells required for everything.
 \item \emph{CFa:} (R)USLE C-factors required for \code{\link{erosion}}.
 \item \emph{cha:} Channel cells required for everything (\code{1}: channel cell, \code{NA}: no
 channel cell).
 \item \emph{clc:} Clay contents of top soils in \% required for substance
 \code{\link{emission}}s.
 \item \emph{dem:} Digital elevation model in m a.s.l. (optional).
-\item \emph{dir:} D8 flow directions required for \code{\link{transportPrerequisites}} and
-substance \code{\link{transport}}.
+\item \emph{dir_inf:} D-infinity flow directions in azimuth degrees
+measured from north (0 to 360 clockwise) required for
+\code{\link{transportPrerequisites}} and substance
+\code{\link{transport}}.
 \item \emph{fid:} Field IDs (optional).
 \item \emph{KFa:} (R)USLE K-factors required for \code{\link{erosion}}.
 \item \emph{lue:} Land use classes (optional).
@@ -56,7 +57,7 @@ substance \code{\link{transport}}.
 without subsurface drainage, \code{1}: road cell with subsurface drainage, \code{NA}:
 no road cell).
 \item \emph{RFa:} (R)USLE R-factors required for \code{\link{erosion}}.
-\item \emph{slp:} Slopes in \% required for everything.
+\item \emph{slp_inf:} D-infinity slopes in \% required for everything.
 \item \emph{wsh:} Watershed (optional).
 }
 }
@@ -67,7 +68,6 @@ This directory holds intermediate calculations:
 \itemize{
 \item \emph{inl:} Cells representing inlets at roads (storm drains).
 \item \emph{LFa:} L-factors.
-\item \emph{rhy:} Hydraulic radii in m.
 \item \emph{rip:} Cells representing the riparian zones within channel cells.
 \item \emph{SFa:} RUSLE S-factors.
 \item \emph{slp_cap:} Capped slopes in \%.
@@ -108,7 +108,7 @@ x <- RPhosFate(
 # presupposed method call
 x <- firstRun(x, "SS")
 
-getLayer(x, "dir")
+getLayer(x, "dir_inf")
 getLayer(x, "xxt", "SS")
 getLayer(x, "xxe", "PP")}
 

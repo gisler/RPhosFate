@@ -80,7 +80,7 @@ expect_identical(
 #### firstRun ####
 x <- firstRun(x, "SS")
 
-layers <- c("inl", "LFa", "rhy", "rip", "SFa", "slp_cap", "ero")
+layers <- c("inl", "LFa", "rip", "SFa", "slp_cap", "ero")
 for (layer in layers) {
   expect_true(
     terra::all.equal(
@@ -132,12 +132,6 @@ for (emissiveSubstance in setdiff(slotNames(control@substances), "SS")) {
 saveState(x)
 
 expect_identical(
-  readRDS(file.path(cs_dir_tst, "order.rds")),
-  readRDS(file.path(cs_dir_ctl, "order.rds")),
-  info = '"order.rds" is written correctly'
-)
-
-expect_identical(
   yaml::read_yaml(file.path(cs_dir_tst, "parameters.yaml"))[-1L],
   yaml::read_yaml(file.path(cs_dir_ctl, "parameters.yaml"))[-1L],
   info = '"parameters.yaml" is written correctly'
@@ -186,7 +180,7 @@ x <- RPhosFate(
   cv_dir = c(cs_dir_tst, cs_dir_ctl),
   ls_ini = TRUE,
   is_MCi = 1L,
-  cv_MCl = c("LFa", "rhy", "ero", "xxe", "xxt_cld")
+  cv_MCl = c("inl", "LFa", "ero", "xxe", "xxt_cld")
 )
 
 expect_identical(
@@ -207,12 +201,24 @@ x <- subsequentRun(
 layers <- file.path(
   cs_dir_tst,
   c(rep("Intermediate", 2L), rep("Result", 3L)),
-  c("LFa1", "rhy1", "ero1", "ppe1", "ppt_cld1")
+  c("inl1", "LFa1", "ero1", "ppe1", "ppt_cld1")
 )
 for (layer in layers) {
   expect_true(
     file.exists(sprintf("%s.tif", layer)),
     info = "Monte Carlo simulation mode outputs exist"
+  )
+}
+
+layers <- file.path(
+  cs_dir_tst,
+  c(rep("Intermediate", 2L), rep("Result", 3L)),
+  c("rip1", "SFa1", "ppr1", "ppt1", "ppt_ctf1")
+)
+for (layer in layers) {
+  expect_false(
+    file.exists(sprintf("%s.tif", layer)),
+    info = "Monte Carlo simulation mode outputs do not exist"
   )
 }
 

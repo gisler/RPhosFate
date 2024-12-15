@@ -57,7 +57,7 @@ for (emissiveSubstance in setdiff(slotNames(control@substances), "SS")) {
 #### transportPrerequisites ####
 x <- transportPrerequisites(x)
 
-layers <- c("inl", "rhy", "rip")
+layers <- c("inl", "rip")
 for (layer in layers) {
   expect_true(
     terra::all.equal(
@@ -68,15 +68,6 @@ for (layer in layers) {
     info = '"transportPrerequisites" outputs are correct'
   )
 }
-
-#### transportCalcOrder ####
-x <- transportCalcOrder(x)
-
-expect_identical(
-  x@helpers@order,
-  control@helpers@order,
-  info = '"transportCalcOrder" is correct'
-)
 
 #### transport ####
 layers <- c("xxr", "xxt", "xxt_cld", "xxt_ctf", "xxt_inp", "xxt_out")

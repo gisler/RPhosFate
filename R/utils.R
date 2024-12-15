@@ -1,7 +1,3 @@
-adjustExtent <- function(rl, ex) {
-  extend(crop(rl, ex), ex)
-}
-
 adjustMetric <- function(metric, metrics) {
   if (metric == "PBIAS") {
     abs(metrics[metric])
@@ -133,6 +129,17 @@ readLayer <- function(cmt, layer, isRequiredInputLayer = FALSE) {
 
 readParameters <- function(arguments) {
   parameters <- read_yaml("parameters.yaml")
+
+  if (as.package_version(parameters[["RPhosFate"]]) <
+      as.package_version("2.0.0")) {
+    parameters[["iv_fDo"]] <- NULL
+
+    warning(
+      'Omitted parameter "iv_fDo", as it is no longer required. ',
+      "It will definitely be lost upon saving the project's state.",
+      call. = FALSE
+    )
+  }
 
   parameters[["nv_tfc_inl"]] <- unlist(parameters[["nv_tfc_inl"]])
   parameters[["nv_enr_rto"]] <- unlist(parameters[["nv_enr_rto"]])

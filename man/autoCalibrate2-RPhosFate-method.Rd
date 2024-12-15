@@ -69,10 +69,10 @@ x <- autoCalibrate2(
   x,
   "SS",
   col = "SS_load",
-  metric = "NSE",
+  metric = "KGE",
   method = "L-BFGS-B",
-  lower = c(10e-4, 0),
-  upper = c(20e-4, 20e-4),
+  lower = c(1e-3, 0),
+  upper = c(2e-3, 2e-3),
   control = list(fnscale = -1, parscale = c(1e-3, 1e-3), factr = 1e12)
 )}
 

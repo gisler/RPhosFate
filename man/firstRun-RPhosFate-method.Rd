@@ -18,10 +18,9 @@ the form of raster files.
 }
 \description{
 Calls \code{\link{erosionPrerequisites}}, \code{\link{erosion}}, \code{\link{emission}},
-\code{\link{transportPrerequisites}}, \code{\link{transportCalcOrder}} and \code{\link{transport}} in the
-mentioned order. While \code{\link{transport}} is called for the specified substance
-only, \code{\link{emission}} is called for all substances whose top soil concentrations
-have been provided.
+\code{\link{transportPrerequisites}} and \code{\link{transport}} in the mentioned order. While
+\code{\link{transport}} is called for the specified substance only, \code{\link{emission}} is
+called for all substances whose top soil concentrations have been provided.
 }
 \examples{
 \donttest{

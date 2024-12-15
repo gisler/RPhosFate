@@ -27,20 +27,21 @@ RPhosFate <- function(...) {
 #'
 #' @section _Input_ subdirectory:
 #' This directory holds all possible user input raster data (flow obstacles like
-#' roads must be considered during generation of the flow accumulation layers
-#' and also be cut out from them in order to be properly respected):
+#' roads must be considered during the generation of the flow accumulation layer
+#' and must also be cut out from it in order to be properly respected):
 #'
-#' * _acc:_ Flow accumulations required for [`transportCalcOrder`].
-#' * \emph{acc_wtd:} Weighted flow accumulations required for everything (can be
-#' equal to _acc_).
+#' * \emph{acc_inf:} D-infinity flow accumulations in number of upslope grid
+#' cells required for everything.
 #' * _CFa:_ (R)USLE C-factors required for [`erosion`].
 #' * _cha:_ Channel cells required for everything (`1`: channel cell, `NA`: no
 #' channel cell).
 #' * _clc:_ Clay contents of top soils in % required for substance
 #' [`emission`]s.
 #' * _dem:_ Digital elevation model in m a.s.l. (optional).
-#' * _dir:_ D8 flow directions required for [`transportPrerequisites`] and
-#' substance [`transport`].
+#' * \emph{dir_inf:} D-infinity flow directions in azimuth degrees
+#' measured from north (0 to 360 clockwise) required for
+#' [`transportPrerequisites`] and substance
+#' [`transport`].
 #' * _fid:_ Field IDs (optional).
 #' * _KFa:_ (R)USLE K-factors required for [`erosion`].
 #' * _lue:_ Land use classes (optional).
@@ -52,7 +53,7 @@ RPhosFate <- function(...) {
 #' without subsurface drainage, `1`: road cell with subsurface drainage, `NA`:
 #' no road cell).
 #' * _RFa:_ (R)USLE R-factors required for [`erosion`].
-#' * _slp:_ Slopes in % required for everything.
+#' * \emph{slp_inf:} D-infinity slopes in % required for everything.
 #' * _wsh:_ Watershed (optional).
 #'
 #' @section _Intermediate_ subdirectory:
@@ -60,7 +61,6 @@ RPhosFate <- function(...) {
 #'
 #' * _inl:_ Cells representing inlets at roads (storm drains).
 #' * _LFa:_ L-factors.
-#' * _rhy:_ Hydraulic radii in m.
 #' * _rip:_ Cells representing the riparian zones within channel cells.
 #' * _SFa:_ RUSLE S-factors.
 #' * \emph{slp_cap:} Capped slopes in %.
@@ -103,7 +103,7 @@ RPhosFate <- function(...) {
 #'
 #' @section Model parameter arguments:
 #' * `ns_slp_min`: A numeric scalar specifying the minimum bounding slope in %
-#' (defaults to `0.001`).
+#' (defaults to `1.0`).
 #' * `ns_slp_max`: A numeric scalar specifying the maximum bounding slope in %
 #' (defaults to `999.0`).
 #' * `ns_rhy_a`: A numeric scalar specifying a network constant depending on the
@@ -136,8 +136,6 @@ RPhosFate <- function(...) {
 #' * `nv_enr_rto` A named numeric vector specifying the substance enrichment
 #' ratios required for substance except SS [`transport`], for example, `c(PP =
 #' 2.0)` (calibration parameter; no default).
-#' * `iv_fDo`: An integer vector specifying the outflow direction vector
-#' required for substance [`transport`] (defaults to _ArcGIS_ codes).
 #' * `nm_olc`: A two column numeric [`matrix`] specifying one or more catchment
 #' outlet coordinates required for the in-channel retention ratio of
 #' [`calibrationQuality`] (no default).
@@ -208,10 +206,9 @@ setGeneric(
 #' First run
 #'
 #' Calls [`erosionPrerequisites`], [`erosion`], [`emission`],
-#' [`transportPrerequisites`], [`transportCalcOrder`] and [`transport`] in the
-#' mentioned order. While [`transport`] is called for the specified substance
-#' only, [`emission`] is called for all substances whose top soil concentrations
-#' have been provided.
+#' [`transportPrerequisites`] and [`transport`] in the mentioned order. While
+#' [`transport`] is called for the specified substance only, [`emission`] is
+#' called for all substances whose top soil concentrations have been provided.
 #'
 #' @inheritParams emission,RPhosFate-method
 #'
@@ -244,7 +241,7 @@ setMethod(
     x <- erosion(x)
     for (emissiveSubstance in setdiff(slotNames(x@substances), "SS")) {
       if (compareGeom(
-        x@topo@rl_acc_wtd,
+        x@topo@rl_acc_inf,
         slot(x@substances, emissiveSubstance)@rl_xxc,
         stopOnError = FALSE
       )) {
@@ -252,7 +249,6 @@ setMethod(
       }
     }
     x <- transportPrerequisites(x)
-    x <- transportCalcOrder(x)
     transport(x, substance)
   }
 )
@@ -266,8 +262,8 @@ setGeneric(
 #' Subsequent run
 #'
 #' Calls [`transport`] for the specified substance and optionally
-#' [`erosionPrerequisites`], [`erosion`], [`emission`],
-#' [`transportPrerequisites`] and/or [`transportCalcOrder`] beforehand.
+#' [`erosionPrerequisites`], [`erosion`], [`emission`] and
+#' [`transportPrerequisites`] beforehand.
 #'
 #' @inheritParams emission,RPhosFate-method
 #' @param erosionPrerequisites A logical scalar specifying if
@@ -277,8 +273,6 @@ setGeneric(
 #'   never called with `substance = "SS"` though.
 #' @param transportPrerequisites A logical scalar specifying if
 #'   [`transportPrerequisites`] is called.
-#' @param transportCalcOrder A logical scalar specifying if
-#'   [`transportCalcOrder`] is called.
 #'
 #' @inherit erosionPrerequisites,RPhosFate-method return
 #'
@@ -310,8 +304,7 @@ setMethod(
     erosionPrerequisites = FALSE,
     erosion = FALSE,
     emission = FALSE,
-    transportPrerequisites = FALSE,
-    transportCalcOrder = FALSE
+    transportPrerequisites = FALSE
   ) {
     assertChoice(substance, slotNames(x@substances))
 
@@ -326,9 +319,6 @@ setMethod(
     }
     if (transportPrerequisites) {
       x <- transportPrerequisites(x)
-    }
-    if (transportCalcOrder || length(x@helpers@order@iv_ord_row) == 0L) {
-      x <- transportCalcOrder(x)
     }
 
     transport(x, substance)
@@ -569,7 +559,7 @@ setMethod(
       cex = 1.2
     )
 
-    metrics
+    invisible(metrics)
   }
 )
 
@@ -618,8 +608,8 @@ setGeneric(
 #'   x,
 #'   "SS",
 #'   col = "SS_load",
-#'   interval = c(10e-4, 20e-4),
-#'   metric = "NSE"
+#'   interval = c(1e-3, 2e-3),
+#'   metric = "KGE"
 #' )}
 #'
 #' @aliases autoCalibrate
@@ -725,10 +715,10 @@ setGeneric(
 #'   x,
 #'   "SS",
 #'   col = "SS_load",
-#'   metric = "NSE",
+#'   metric = "KGE",
 #'   method = "L-BFGS-B",
-#'   lower = c(10e-4, 0),
-#'   upper = c(20e-4, 20e-4),
+#'   lower = c(1e-3, 0),
+#'   upper = c(2e-3, 2e-3),
 #'   control = list(fnscale = -1, parscale = c(1e-3, 1e-3), factr = 1e12)
 #' )}
 #'
@@ -787,8 +777,7 @@ setGeneric(
 )
 #' Save state
 #'
-#' Saves parameters _(parameters.yaml)_ and transport calculation order
-#' _(order.rds)_ to disk.
+#' Saves parameters _(parameters.yaml)_ to disk.
 #'
 #' @inheritParams erosionPrerequisites,RPhosFate-method
 #'
@@ -819,6 +808,5 @@ setMethod(
     on.exit(setwd(cs_dir_old))
 
     writeParameters(x@parameters)
-    saveRDS(x@helpers@order, "order.rds")
   }
 )

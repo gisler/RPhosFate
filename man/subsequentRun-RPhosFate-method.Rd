@@ -11,8 +11,7 @@
   erosionPrerequisites = FALSE,
   erosion = FALSE,
   emission = FALSE,
-  transportPrerequisites = FALSE,
-  transportCalcOrder = FALSE
+  transportPrerequisites = FALSE
 )
 }
 \arguments{
@@ -30,9 +29,6 @@ never called with \code{substance = "SS"} though.}
 
 \item{transportPrerequisites}{A logical scalar specifying if
 \code{\link{transportPrerequisites}} is called.}
-
-\item{transportCalcOrder}{A logical scalar specifying if
-\code{\link{transportCalcOrder}} is called.}
 }
 \value{
 An S4 \code{\linkS4class{RPhosFate}} river catchment object and side effects in
@@ -40,8 +36,8 @@ the form of raster files.
 }
 \description{
 Calls \code{\link{transport}} for the specified substance and optionally
-\code{\link{erosionPrerequisites}}, \code{\link{erosion}}, \code{\link{emission}},
-\code{\link{transportPrerequisites}} and/or \code{\link{transportCalcOrder}} beforehand.
+\code{\link{erosionPrerequisites}}, \code{\link{erosion}}, \code{\link{emission}} and
+\code{\link{transportPrerequisites}} beforehand.
 }
 \examples{
 \donttest{

@@ -33,20 +33,21 @@ See subdirectory sections for further information.
 \section{\emph{Input} subdirectory}{
 
 This directory holds all possible user input raster data (flow obstacles like
-roads must be considered during generation of the flow accumulation layers
-and also be cut out from them in order to be properly respected):
+roads must be considered during the generation of the flow accumulation layer
+and must also be cut out from it in order to be properly respected):
 \itemize{
-\item \emph{acc:} Flow accumulations required for \code{\link{transportCalcOrder}}.
-\item \emph{acc_wtd:} Weighted flow accumulations required for everything (can be
-equal to \emph{acc}).
+\item \emph{acc_inf:} D-infinity flow accumulations in number of upslope grid
+cells required for everything.
 \item \emph{CFa:} (R)USLE C-factors required for \code{\link{erosion}}.
 \item \emph{cha:} Channel cells required for everything (\code{1}: channel cell, \code{NA}: no
 channel cell).
 \item \emph{clc:} Clay contents of top soils in \% required for substance
 \code{\link{emission}}s.
 \item \emph{dem:} Digital elevation model in m a.s.l. (optional).
-\item \emph{dir:} D8 flow directions required for \code{\link{transportPrerequisites}} and
-substance \code{\link{transport}}.
+\item \emph{dir_inf:} D-infinity flow directions in azimuth degrees
+measured from north (0 to 360 clockwise) required for
+\code{\link{transportPrerequisites}} and substance
+\code{\link{transport}}.
 \item \emph{fid:} Field IDs (optional).
 \item \emph{KFa:} (R)USLE K-factors required for \code{\link{erosion}}.
 \item \emph{lue:} Land use classes (optional).
@@ -58,7 +59,7 @@ substance \code{\link{transport}}.
 without subsurface drainage, \code{1}: road cell with subsurface drainage, \code{NA}:
 no road cell).
 \item \emph{RFa:} (R)USLE R-factors required for \code{\link{erosion}}.
-\item \emph{slp:} Slopes in \% required for everything.
+\item \emph{slp_inf:} D-infinity slopes in \% required for everything.
 \item \emph{wsh:} Watershed (optional).
 }
 }
@@ -69,7 +70,6 @@ This directory holds intermediate calculations:
 \itemize{
 \item \emph{inl:} Cells representing inlets at roads (storm drains).
 \item \emph{LFa:} L-factors.
-\item \emph{rhy:} Hydraulic radii in m.
 \item \emph{rip:} Cells representing the riparian zones within channel cells.
 \item \emph{SFa:} RUSLE S-factors.
 \item \emph{slp_cap:} Capped slopes in \%.
@@ -123,7 +123,7 @@ effect in case Monte Carlo simulation mode is disabled).
 
 \itemize{
 \item \code{ns_slp_min}: A numeric scalar specifying the minimum bounding slope in \%
-(defaults to \code{0.001}).
+(defaults to \code{1.0}).
 \item \code{ns_slp_max}: A numeric scalar specifying the maximum bounding slope in \%
 (defaults to \code{999.0}).
 \item \code{ns_rhy_a}: A numeric scalar specifying a network constant depending on the
@@ -154,8 +154,6 @@ default).
 coefficients required for substance \code{\link{transport}}, for example, \code{c(SS = 0.6, PP = 0.6)} (no default).
 \item \code{nv_enr_rto} A named numeric vector specifying the substance enrichment
 ratios required for substance except SS \code{\link{transport}}, for example, \code{c(PP = 2.0)} (calibration parameter; no default).
-\item \code{iv_fDo}: An integer vector specifying the outflow direction vector
-required for substance \code{\link{transport}} (defaults to \emph{ArcGIS} codes).
 \item \code{nm_olc}: A two column numeric \code{\link{matrix}} specifying one or more catchment
 outlet coordinates required for the in-channel retention ratio of
 \code{\link{calibrationQuality}} (no default).
