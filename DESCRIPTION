@@ -1,7 +1,7 @@
 Package: RPhosFate
 Type: Package
 Title: Soil and Chemical Substance Emission and Transport Model
-Version: 1.0.4.9003
+Version: 1.0.4.9004
 Authors@R: person("Gerold", "Hepp", email = "gisler@hepp.cc", role = c("aut", "cre"))
 Description: An enhanced version of the semi-empirical, spatially distributed
     emission and transport model PhosFate implemented in 'R' and 'C++'. It is 

@@ -87,7 +87,8 @@ demoProject <- function(cs_dir = tempdir(TRUE)) {
 #'   processing, where applicable.
 #' @param ls_fD8 A logical scalar specifying if D8 flow directions shall be
 #'   mimicked, i.e. the D-infinity flow directions are rounded to the nearest
-#'   multiple of 45 degrees.
+#'   multiple of 45 degrees. Please note that this treatment is always applied
+#'   to channel cells independently of this argument.
 #' @param ls_tmp A logical scalar specifying if the temporary files created
 #'   during computation shall be kept.
 #'
