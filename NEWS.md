@@ -4,11 +4,11 @@ This version introduces a new flow method, but also comes with several breaking 
 
 ## Overview
 
-* Use of the D-infinity instead of the D8 flow method, however, the D8 flow method can still be mimicked by rounding the D-infinity flow directions to the nearest multiple of 45 degrees.
+* Use of the D-infinity instead of the D8 flow method, however, the D8 flow method can still be mimicked by rounding D-infinity flow directions to the nearest multiple of 45 degrees.
 * Weighted flow accumulations are no longer supported for the time being.
 * The basis for the calculation of the D-infinity slopes is the original digital elevation model and not the breached one with reversed stream burning as it used to be for the calculation of the D8 slopes.
 * The default value for the parameter holding the minimum bounding slope _(ns\_slp_min)_ is now 1 instead of 0.001%.
-* The L factor is now calculated using equation\ (9) as it was developed by Desmet and Govers (1996) and not as it was adjusted by Kovacs (2013).
+* The L factor is now calculated using equation\ (9) as published by Desmet and Govers (1996) and not as modified by Kovacs (2013).
 * The channel retentions of the substance outlet loads of subsurface drainages are now calculated analogous to the overland retentions of the local emissions, i.e. by using half of the respective flow path length.
 * `RPhosFate` now utilises the `terra` instead of the `raster` package.
 * Ceased support for _ERDAS IMAGINE_ (\*.img) raster files. `img2tif()` can be used to convert all _ERDAS IMAGINE_ raster files in a directory and its subdirectories into _GeoTIFF_ raster files.
@@ -45,7 +45,7 @@ This version introduces a new flow method, but also comes with several breaking 
 
 # RPhosFate v1.0.3
 
-* Removed `rgdal` from suggested packages list and set minimum required version of the `raster` package to ≥ 3.6.3 (`rgdal` is retiring and `raster` ≥ 3.6.3 does not depend on it any longer). Thanks to Roger Bivand for raising this issue (#17).
+* Removed `rgdal` from suggested packages list and set the minimum required version of the `raster` package to ≥ 3.6.3 (`rgdal` is retiring and `raster` ≥ 3.6.3 does not depend on it any longer). Thanks to Roger Bivand for raising this issue (#17).
 * Bumped the minimum tested R version from 4.1.2 to 4.2.2 using the corresponding _MRAN_ repository snapshot.
 * Slightly improved documentation.
 * Minor internal code improvements.
@@ -57,11 +57,11 @@ This version introduces a new flow method, but also comes with several breaking 
 # RPhosFate v0.12.0
 
 * Added `autoCalibrate2()` method: allows for calibrating the overland and channel deposition rate in one go.
-* `DEMrelatedInput()` can handle multiple catchment outlets now and so does `calibrationQuality()`.
-* `DEMrelatedInput()` now returns the breached DEM with reversed stream burning if applicable instead of the original one.
-* `DEMrelatedInput()` now calculates “correct” slopes even if the channels used for stream burning contain gaps.
+* The `DEMrelatedInput()` function can handle multiple catchment outlets now and so does the `calibrationQuality()` method.
+* The `DEMrelatedInput()` function now returns the breached DEM with reversed stream burning if applicable instead of the original one.
+* The `DEMrelatedInput()` function now calculates “correct” slopes even if the channels used for stream burning contain gaps.
 * `RPhosFate` now makes sure that the x- and y-coordinates of gauges used for calibration lie within the extent of the river catchment object.
-* Renamed `"inChannelRetention"` output of `calibrationQuality()` to `"inChannelRetentionRatio"`.
+* Renamed the `"inChannelRetention"` output of the `calibrationQuality()` method to `"inChannelRetentionRatio"`.
 * `RPhosFate` requires R ≥ 3.5.0 now.
 * Improved documentation.
 
@@ -74,12 +74,12 @@ This version introduces a new flow method, but also comes with several breaking 
   * `emission`
   * `transportPrerequisites`
   * `transportCalcOrder`
-* Added `cv_MCl` argument to `RPhosFate()` and `catchment()` methods: allows for specifying the names of the layers, which shall be written to disk with the associated Monte Carlo iteration in their filenames upon calling the appropriate methods.
+* Added `cv_MCl` argument to the `RPhosFate()` and `catchment()` constructors: allows for specifying the names of the layers, which shall be written to disk with the associated Monte Carlo iteration in their filenames upon calling the appropriate methods.
 * Initialising a project in Monte Carlo simulation mode now also reads model results produced by a possible earlier run associated with the specified iteration. This implies that Monte Carlo input data additionally can reside in the project root subdirectories and not only in a separate directory.
-* Plot produced by `calibrationQuality()` is now prettier.
+* The plot produced by the `calibrationQuality()` method is now prettier.
 * Added a vignette describing the basic modelling workflow.
 * `RPhosFate` now depends on the `spatstat.geom` instead of the `spatstat` package.
-* Fixed minimum required version of the `whitebox` package (≥ 2.0.0).
+* Fixed the minimum required version of the `whitebox` package (≥ 2.0.0).
 * Added test for the standard use case of the `DEMrelatedInput()` function.
 * Slightly improved documentation.
 
