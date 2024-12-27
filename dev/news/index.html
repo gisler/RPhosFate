@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">RPhosFate</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.0.4.9004</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.0.4.9005</span>
       </span>
     </div>
 
@@ -109,7 +109,7 @@
 <code><a href="../reference/DEMrelatedInput.html">DEMrelatedInput()</a></code> function changes:
 <ul><li>Considerable adjustments to reflect the aforementioned input data changes.</li>
 <li>Addition of <code>ns_cha</code> argument: allows for specifying the minimum D8 flow accumulation determining a channel.</li>
-<li>Addition of <code>ls_fD8</code> argument: allows for mimicking D8 flow directions by rounding the D-infinity flow directions to the nearest multiple of 45 degrees. Please note that this treatment is always applied to channel cells independently of this argument.</li>
+<li>Addition of <code>ls_mD8</code> argument: allows for mimicking D8 flow directions by rounding the D-infinity flow directions to the nearest multiple of 45 degrees. Please note that this treatment is always applied to channel cells independently of this argument.</li>
 <li>Removal of the <code>cs_wgs</code> and <code>cs_dir</code> arguments: These input data are no longer supported for the time being.</li>
 </ul></li>
 <li>Switched to utilising the <code>SpatRaster</code> and <code>SpatVector</code> classes from the <code>terra</code> package instead of the <code>RasterLayer</code> class from the <code>raster</code> and the <code>Spatial*DataFrame</code> classes from the <code>sp</code> packages.</li>
