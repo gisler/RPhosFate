@@ -85,7 +85,7 @@ demoProject <- function(cs_dir = tempdir(TRUE)) {
 #'   shall be burnt.
 #' @param is_ths An integer scalar specifying the number of threads to use for
 #'   processing, where applicable.
-#' @param ls_fD8 A logical scalar specifying if D8 flow directions shall be
+#' @param ls_mD8 A logical scalar specifying if D8 flow directions shall be
 #'   mimicked, i.e. the D-infinity flow directions are rounded to the nearest
 #'   multiple of 45 degrees. Please note that this treatment is always applied
 #'   to channel cells independently of this argument.
@@ -161,7 +161,7 @@ DEMrelatedInput <- function(
   ns_brn = 50,
   is_adj = 1L,
   is_ths = 1L,
-  ls_fD8 = FALSE,
+  ls_mD8 = FALSE,
   ls_tmp = FALSE
 ) {
   if (!requireNamespace("whitebox", quietly = TRUE) ||
@@ -353,7 +353,7 @@ DEMrelatedInput <- function(
 
   rl_dir_inf[rl_dir_inf == -1] <- NA_real_
 
-  if (ls_fD8) {
+  if (ls_mD8) {
     rl_dir_inf <- app(
       rl_dir_inf,
       function(x) {

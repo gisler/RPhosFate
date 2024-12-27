@@ -23,7 +23,7 @@ This version introduces a new flow method, but also comes with several breaking 
 * `DEMrelatedInput()` function changes:
   * Considerable adjustments to reflect the aforementioned input data changes.
   * Addition of `ns_cha` argument: allows for specifying the minimum D8 flow accumulation determining a channel.
-  * Addition of `ls_fD8` argument: allows for mimicking D8 flow directions by rounding the D-infinity flow directions to the nearest multiple of 45 degrees. Please note that this treatment is always applied to channel cells independently of this argument.
+  * Addition of `ls_mD8` argument: allows for mimicking D8 flow directions by rounding the D-infinity flow directions to the nearest multiple of 45 degrees. Please note that this treatment is always applied to channel cells independently of this argument.
   * Removal of the `cs_wgs` and `cs_dir` arguments: These input data are no longer supported for the time being.
 * Switched to utilising the `SpatRaster` and `SpatVector` classes from the `terra` package instead of the `RasterLayer` class from the `raster` and the `Spatial*DataFrame` classes from the `sp` packages.
 * Added `is_ths` argument to the `RPhosFate()` and `catchment()` constructors: allows for specifying the number of threads to use for processing, where applicable.

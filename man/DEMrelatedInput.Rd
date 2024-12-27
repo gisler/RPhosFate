@@ -16,7 +16,7 @@ DEMrelatedInput(
   ns_brn = 50,
   is_adj = 1L,
   is_ths = 1L,
-  ls_fD8 = FALSE,
+  ls_mD8 = FALSE,
   ls_tmp = FALSE
 )
 }
@@ -53,7 +53,7 @@ shall be burnt.}
 \item{is_ths}{An integer scalar specifying the number of threads to use for
 processing, where applicable.}
 
-\item{ls_fD8}{A logical scalar specifying if D8 flow directions shall be
+\item{ls_mD8}{A logical scalar specifying if D8 flow directions shall be
 mimicked, i.e. the D-infinity flow directions are rounded to the nearest
 multiple of 45 degrees. Please note that this treatment is always applied
 to channel cells independently of this argument.}
