@@ -32,22 +32,22 @@ This version introduces a new flow method, but also comes with several breaking 
 * Removed the `transportCalcOrder()` method, as the determination of the cell transport calculation order is now integrated into the `transport()` method. This implies that the `firstRun()` as well as `subsequentRun()` methods do not call it and the `saveState()` method does not save it to disk any longer.
 * The `calibrationQuality()` method now returns its return value invisibly.
 * Considerably revised the internal `RPhosFateHelpers` class.
-* Removed `spatstat.geom` from imported packages list (utilised functionality is now also provided by `terra`).
+* Removed `spatstat.geom` from the imported packages list (utilised functionality is now also provided by `terra`).
 * Bumped the minimum tested R version from 4.2.3 to 4.3.2 using the corresponding _Posit_ public package manager snapshot.
-* Slightly improved documentation.
+* Slightly improved the documentation.
 * Major internal code improvements.
 
 # RPhosFate v1.0.4
 
-* Removed `hydroGOF` from imported packages list (`maptools` is retiring and `hydroGOF` depends on it via `hydroTSM`). Thanks to Roger Bivand for raising this issue (#17).
+* Removed `hydroGOF` from the imported packages list (`maptools` is retiring and `hydroGOF` depends on it via `hydroTSM`). Thanks to Roger Bivand for raising this issue (#17).
 * Bumped the minimum tested R version from 4.2.2 to 4.2.3 using the corresponding _Posit_ public package manager snapshot.
-* Slightly improved documentation.
+* Slightly improved the documentation.
 
 # RPhosFate v1.0.3
 
-* Removed `rgdal` from suggested packages list and set the minimum required version of the `raster` package to ≥ 3.6.3 (`rgdal` is retiring and `raster` ≥ 3.6.3 does not depend on it any longer). Thanks to Roger Bivand for raising this issue (#17).
+* Removed `rgdal` from the suggested packages list and set the minimum required version of the `raster` package to ≥ 3.6.3 (`rgdal` is retiring and `raster` ≥ 3.6.3 does not depend on it any longer). Thanks to Roger Bivand for raising this issue (#17).
 * Bumped the minimum tested R version from 4.1.2 to 4.2.2 using the corresponding _MRAN_ repository snapshot.
-* Slightly improved documentation.
+* Slightly improved the documentation.
 * Minor internal code improvements.
 
 # RPhosFate v1.0.2
@@ -63,7 +63,7 @@ This version introduces a new flow method, but also comes with several breaking 
 * `RPhosFate` now makes sure that the x- and y-coordinates of gauges used for calibration lie within the extent of the river catchment object.
 * Renamed the `"inChannelRetention"` output of the `calibrationQuality()` method to `"inChannelRetentionRatio"`.
 * `RPhosFate` requires R ≥ 3.5.0 now.
-* Improved documentation.
+* Improved the documentation.
 
 # RPhosFate v0.11.0
 
@@ -81,7 +81,7 @@ This version introduces a new flow method, but also comes with several breaking 
 * `RPhosFate` now depends on the `spatstat.geom` instead of the `spatstat` package.
 * Fixed the minimum required version of the `whitebox` package (≥ 2.0.0).
 * Added test for the standard use case of the `DEMrelatedInput()` function.
-* Slightly improved documentation.
+* Slightly improved the documentation.
 
 # RPhosFate v0.10.0
 
@@ -90,7 +90,7 @@ This version introduces a new flow method, but also comes with several breaking 
 * Added `cs_fex` argument to the `DEMrelatedInput()` function: allows for using _ERDAS IMAGINE_ raster files for backward compatibility.
 * Added `cs_dir` argument to the `DEMrelatedInput()` function: allows for utilising an existing D8 flow directions raster using _ArcGIS_ codes.
 * Added `demoProject()` function providing training data.
-* Added examples to documentation.
-* Fixed backward incompatibility.
+* Added examples to the documentation.
+* Fixed a backward incompatibility.
 * Added tests utilising the unit testing framework of the `tinytest` package.
 * Added means to measure code coverage with the help of `covr`.
