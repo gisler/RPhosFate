@@ -7,11 +7,11 @@ This version introduces a new flow method, but also comes with several breaking 
 * Use of the D-infinity (Tarboton, [1997](https://doi.org/10.1029/96WR03137)) instead of the D8 flow method, however, the D8 flow method can still be mimicked by rounding D-infinity flow directions to the nearest multiple of 45 degrees.
 * Weighted flow accumulations are no longer supported for the time being.
 * The basis for the calculation of the D-infinity slopes is the original digital elevation model and not the breached one with reversed stream burning as it used to be for the calculation of the D8 slopes.
-* The default value for the parameter holding the minimum bounding slope _(ns\_slp_min)_ is now 1 instead of 0.001%.
+* The default value for the parameter holding the minimum bounding slope _(ns\_slp\_min)_ is now 1 instead of 0.001%.
 * The L factor is now calculated using equation\ (9) as published by Desmet and Govers ([1996](https://www.jswconline.org/content/51/5/427)) and not as modified by Kovacs ([2013](http://hdl.handle.net/20.500.12708/9468)).
 * The channel retentions of the substance outlet loads of subsurface drainages are now calculated analogous to the overland retentions of the local emissions, i.e. by using half of the respective flow path length.
 * `RPhosFate` now utilises the `terra` instead of the `raster` package.
-* Ceased support for _ERDAS IMAGINE_ (\*.img) raster files. `img2tif()` can be used to convert all _ERDAS IMAGINE_ raster files in a directory and its subdirectories into _GeoTIFF_ raster files.
+* Ceased the support for _ERDAS IMAGINE_ (\*.img) raster files and added `img2tif()` function can be used to convert all _ERDAS IMAGINE_ raster files in a directory and its subdirectories into _GeoTIFF_ raster files.
 * Dropped backward compatibility to major version zero.
 
 ## Technical details
