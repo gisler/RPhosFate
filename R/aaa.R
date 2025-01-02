@@ -380,7 +380,7 @@ setMethod(
       arguments <- readParameters(arguments)
       argumentNames <- names(arguments)
     } else if (.Object@ls_ini) {
-      stop('"parameters.yaml" file does not exist.', call. = FALSE)
+      stop('"parameters.yaml" file does not exist.')
     }
     arguments <- arguments[setdiff(
       argumentNames,

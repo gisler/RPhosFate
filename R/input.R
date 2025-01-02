@@ -29,10 +29,7 @@ demoProject <- function(cs_dir = tempdir(TRUE)) {
   demoRoot <- file.path(cs_dir, "demoProject")
 
   if (dir.exists(demoRoot)) {
-    warning(
-      'A folder called "demoProject" already exists and is left as is.',
-      call. = FALSE
-    )
+    warning('A folder called "demoProject" already exists and is left as is.')
   } else {
     dir.create(demoRoot)
     testRoot <- system.file("tinytest", "testProject", package = "RPhosFate")
@@ -168,15 +165,13 @@ DEMrelatedInput <- function(
         packageVersion("whitebox") < package_version("2.0.0")) {
     stop(
       'Package "whitebox" (v2.0.0 or higher) must be installed for this ',
-      "functionality.",
-      call. = FALSE
+      "functionality."
     )
   }
   if (!whitebox::check_whitebox_binary()) {
     stop(
       'The "WhiteboxTools" binary must be installed for this functionality. ',
-      'Consider calling "whitebox::install_whitebox()" first.',
-      call. = FALSE
+      'Consider calling "whitebox::install_whitebox()" first.'
     )
   }
   qassert(cv_dir, "S+")

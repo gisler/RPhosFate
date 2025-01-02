@@ -136,8 +136,7 @@ readParameters <- function(arguments) {
 
     warning(
       'Omitted parameter "iv_fDo", as it is no longer required. ',
-      "It will definitely be lost upon saving the project's state.",
-      call. = FALSE
+      "It will definitely be lost upon saving the project's state."
     )
   }
 
