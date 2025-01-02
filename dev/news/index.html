@@ -119,23 +119,23 @@
 <li>Removed the <code>transportCalcOrder()</code> method, as the determination of the cell transport calculation order is now integrated into the <code><a href="../reference/transport-RPhosFate-method.html">transport()</a></code> method. This implies that the <code><a href="../reference/firstRun-RPhosFate-method.html">firstRun()</a></code> as well as <code><a href="../reference/subsequentRun-RPhosFate-method.html">subsequentRun()</a></code> methods do not call it and the <code><a href="../reference/saveState-RPhosFate-method.html">saveState()</a></code> method does not save it to disk any longer.</li>
 <li>The <code><a href="../reference/calibrationQuality-RPhosFate-method.html">calibrationQuality()</a></code> method now returns its return value invisibly.</li>
 <li>Considerably revised the internal <code>RPhosFateHelpers</code> class.</li>
-<li>Removed <code>spatstat.geom</code> from imported packages list (utilised functionality is now also provided by <code>terra</code>).</li>
+<li>Removed <code>spatstat.geom</code> from the imported packages list (utilised functionality is now also provided by <code>terra</code>).</li>
 <li>Bumped the minimum tested R version from 4.2.3 to 4.3.2 using the corresponding <em>Posit</em> public package manager snapshot.</li>
-<li>Slightly improved documentation.</li>
+<li>Slightly improved the documentation.</li>
 <li>Major internal code improvements.</li>
 </ul></div>
 </div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="1.0.4" id="rphosfate-v104">RPhosFate v1.0.4<small>2023-10-07</small><a class="anchor" aria-label="anchor" href="#rphosfate-v104"></a></h2>
-<ul><li>Removed <code>hydroGOF</code> from imported packages list (<code>maptools</code> is retiring and <code>hydroGOF</code> depends on it via <code>hydroTSM</code>). Thanks to Roger Bivand for raising this issue (<a href="https://github.com/gisler/RPhosFate/issues/17" class="external-link">#17</a>).</li>
+<ul><li>Removed <code>hydroGOF</code> from the imported packages list (<code>maptools</code> is retiring and <code>hydroGOF</code> depends on it via <code>hydroTSM</code>). Thanks to Roger Bivand for raising this issue (<a href="https://github.com/gisler/RPhosFate/issues/17" class="external-link">#17</a>).</li>
 <li>Bumped the minimum tested R version from 4.2.2 to 4.2.3 using the corresponding <em>Posit</em> public package manager snapshot.</li>
-<li>Slightly improved documentation.</li>
+<li>Slightly improved the documentation.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="1.0.3" id="rphosfate-v103">RPhosFate v1.0.3<small>2023-03-06</small><a class="anchor" aria-label="anchor" href="#rphosfate-v103"></a></h2>
-<ul><li>Removed <code>rgdal</code> from suggested packages list and set the minimum required version of the <code>raster</code> package to ≥ 3.6.3 (<code>rgdal</code> is retiring and <code>raster</code> ≥ 3.6.3 does not depend on it any longer). Thanks to Roger Bivand for raising this issue (<a href="https://github.com/gisler/RPhosFate/issues/17" class="external-link">#17</a>).</li>
+<ul><li>Removed <code>rgdal</code> from the suggested packages list and set the minimum required version of the <code>raster</code> package to ≥ 3.6.3 (<code>rgdal</code> is retiring and <code>raster</code> ≥ 3.6.3 does not depend on it any longer). Thanks to Roger Bivand for raising this issue (<a href="https://github.com/gisler/RPhosFate/issues/17" class="external-link">#17</a>).</li>
 <li>Bumped the minimum tested R version from 4.1.2 to 4.2.2 using the corresponding <em>MRAN</em> repository snapshot.</li>
-<li>Slightly improved documentation.</li>
+<li>Slightly improved the documentation.</li>
 <li>Minor internal code improvements.</li>
 </ul></div>
     <div class="section level2">
@@ -154,7 +154,7 @@
 <li>Renamed the <code>"inChannelRetention"</code> output of the <code><a href="../reference/calibrationQuality-RPhosFate-method.html">calibrationQuality()</a></code> method to <code>"inChannelRetentionRatio"</code>.</li>
 <li>
 <code>RPhosFate</code> requires R ≥ 3.5.0 now.</li>
-<li>Improved documentation.</li>
+<li>Improved the documentation.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.11.0" id="rphosfate-v0110">RPhosFate v0.11.0<a class="anchor" aria-label="anchor" href="#rphosfate-v0110"></a></h2>
@@ -174,7 +174,7 @@
 <code>RPhosFate</code> now depends on the <code>spatstat.geom</code> instead of the <code>spatstat</code> package.</li>
 <li>Fixed the minimum required version of the <code>whitebox</code> package (≥ 2.0.0).</li>
 <li>Added test for the standard use case of the <code><a href="../reference/DEMrelatedInput.html">DEMrelatedInput()</a></code> function.</li>
-<li>Slightly improved documentation.</li>
+<li>Slightly improved the documentation.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.10.0" id="rphosfate-v0100">RPhosFate v0.10.0<a class="anchor" aria-label="anchor" href="#rphosfate-v0100"></a></h2>
@@ -183,8 +183,8 @@
 <li>Added <code>cs_fex</code> argument to the <code><a href="../reference/DEMrelatedInput.html">DEMrelatedInput()</a></code> function: allows for using <em>ERDAS IMAGINE</em> raster files for backward compatibility.</li>
 <li>Added <code>cs_dir</code> argument to the <code><a href="../reference/DEMrelatedInput.html">DEMrelatedInput()</a></code> function: allows for utilising an existing D8 flow directions raster using <em>ArcGIS</em> codes.</li>
 <li>Added <code><a href="../reference/demoProject.html">demoProject()</a></code> function providing training data.</li>
-<li>Added examples to documentation.</li>
-<li>Fixed backward incompatibility.</li>
+<li>Added examples to the documentation.</li>
+<li>Fixed a backward incompatibility.</li>
 <li>Added tests utilising the unit testing framework of the <code>tinytest</code> package.</li>
 <li>Added means to measure code coverage with the help of <code>covr</code>.</li>
 </ul></div>
