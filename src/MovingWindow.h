@@ -113,9 +113,7 @@ public:
 
   template <typename T>
   X1X2<T> get_ofl_x1x2(
-    const double ns_dir_inf,
-    const arma::uword i,
-    const arma::uword j,
+    const FacetProperties& fct,
     const arma::Mat<T>& xm_xxx,
     const T NA
   );
@@ -255,13 +253,10 @@ inline FacetProperties FocalWindow::get_ofl_facetProperties(
 //' @return
 template <typename T>
 inline X1X2<T> FocalWindow::get_ofl_x1x2(
-  const double ns_dir_inf,
-  const arma::uword i,
-  const arma::uword j,
+  const FacetProperties& fct,
   const arma::Mat<T>& xm_xxx,
   const T NA
 ) {
-  FacetProperties fct {get_ofl_facetProperties(ns_dir_inf, i, j)};
   X1X2<T> x1x2(NA);
 
   if (!fct.ls_x1_oob) {

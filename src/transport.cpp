@@ -218,67 +218,73 @@ Rcpp::List transportCpp(
       double ns_xxt {ns_xxt_ifl + ns_xxe - ns_xxr};
       nm_xxt.at(i, j) = ns_xxt;
 
-      // Riparian zone cell
-      if (!Rcpp::IntegerMatrix::is_na(is_rip)) {
-        X1X2<int> cha1cha2 = focalWindow.get_ofl_x1x2<int>(ns_dir_inf, i, j, im_cha, NA_INTEGER);
+      // Riparian zone or inlet cell
+      if (!Rcpp::IntegerMatrix::is_na(is_rip) ||
+          !Rcpp::IntegerMatrix::is_na(is_inl)) {
+        FacetProperties fct{focalWindow.get_ofl_facetProperties(ns_dir_inf, i, j)};
 
-        // Retention coefficient (0.0 in case there is no riparian zone defined)
-        double ns_rtc_rip {};
-        if (ns_cha_rto < 1.0) {
-          // Residence time
-          double ns_rtm_rip {ns_fpl_rip / (ns_str_rip * ns_rhy_slp)};
+        // Riparian zone cell
+        if (!Rcpp::IntegerMatrix::is_na(is_rip)) {
+          X1X2<int> cha1cha2 = focalWindow.get_ofl_x1x2<int>(fct, im_cha, NA_INTEGER);
 
-          ns_rtc_rip = 1.0 - std::exp(-ns_dep_ovl * ns_rtm_rip);
-        } else {
-          ns_rtc_rip = 0.0;
+          // Retention coefficient (0.0 in case there is no riparian zone defined)
+          double ns_rtc_rip {};
+          if (ns_cha_rto < 1.0) {
+            // Residence time
+            double ns_rtm_rip {ns_fpl_rip / (ns_str_rip * ns_rhy_slp)};
+
+            ns_rtc_rip = 1.0 - std::exp(-ns_dep_ovl * ns_rtm_rip);
+          } else {
+            ns_rtc_rip = 0.0;
+          }
+
+          // Retention, transport and substance input (of riparian zone) into
+          // surface water
+          double ns_xxt_x1 {ns_xxt * cha1cha2.ns_p1};
+          double ns_xxt_x2 {ns_xxt * cha1cha2.ns_p2};
+          nm_xxt_inp.at(i, j) = focalWindow.set_ofl_x1x2(
+            cha1cha2,
+            ns_xxt_x1 - ns_xxt_x1 * ns_rtc_rip,
+            ns_xxt_x2 - ns_xxt_x2 * ns_rtc_rip,
+            nm_xxt_rip
+          );
         }
 
-        // Retention, transport and substance input (of riparian zone) into
-        // surface water
-        double ns_xxt_x1 {ns_xxt * cha1cha2.ns_p1};
-        double ns_xxt_x2 {ns_xxt * cha1cha2.ns_p2};
-        nm_xxt_inp.at(i, j) = focalWindow.set_ofl_x1x2(
-          cha1cha2,
-          ns_xxt_x1 - ns_xxt_x1 * ns_rtc_rip,
-          ns_xxt_x2 - ns_xxt_x2 * ns_rtc_rip,
-          nm_xxt_rip
-        );
+        // Inlet cell
+        if (!Rcpp::IntegerMatrix::is_na(is_inl)) {
+          X1X2<int> rds1rds2 = focalWindow.get_ofl_x1x2<int>(ns_dir_inf, i, j, im_rds, NA_INTEGER);
+
+          // Proportional transport
+          double ns_xxt_x1x2 {0.0};
+          if (!Rcpp::IntegerMatrix::is_na(rds1rds2.x1)) {
+            ns_xxt_x1x2 += ns_xxt * rds1rds2.ns_p1;
+          }
+          if (!Rcpp::IntegerMatrix::is_na(rds1rds2.x2)) {
+            ns_xxt_x1x2 += ns_xxt * rds1rds2.ns_p2;
+          }
+
+          // Retention, transport and (additional) substance input into surface
+          // water
+          double ns_xxt_inp {ns_xxt_x1x2 * ns_tfc_inl};
+          double ns_xxt_inp_tmp {nm_xxt_inp.at(i, j)};
+          if (Rcpp::NumericMatrix::is_na(ns_xxt_inp_tmp)) {
+            ns_xxt_inp_tmp = 0.0;
+          }
+          nm_xxt_inp.at(i, j) = ns_xxt_inp_tmp + ns_xxt_inp;
+
+          // Outlet row and col from inlet code (C++ indices start at 0)
+          std::div_t code {std::div(im_inl.at(i, j), focalWindow.is_cls)};
+          arma::uword us_row {static_cast<arma::uword>(code.quot - 1)};
+          arma::uword us_col {static_cast<arma::uword>(code.rem  - 1)};
+
+          // Outlet load
+          double ns_xxt_out {nm_xxt_out.at(us_row, us_col)};
+          if (Rcpp::NumericMatrix::is_na(ns_xxt_out)) {
+            ns_xxt_out = 0.0;
+          }
+          nm_xxt_out(us_row, us_col) = ns_xxt_out + ns_xxt_inp;
+        }
       }
-      // Inlet cell
-      if (!Rcpp::IntegerMatrix::is_na(is_inl)) {
-        X1X2<int> rds1rds2 = focalWindow.get_ofl_x1x2<int>(ns_dir_inf, i, j, im_rds, NA_INTEGER);
-
-        // Proportional transport
-        double ns_xxt_x1x2 {0.0};
-        if (!Rcpp::IntegerMatrix::is_na(rds1rds2.x1)) {
-          ns_xxt_x1x2 += ns_xxt * rds1rds2.ns_p1;
-        }
-        if (!Rcpp::IntegerMatrix::is_na(rds1rds2.x2)) {
-          ns_xxt_x1x2 += ns_xxt * rds1rds2.ns_p2;
-        }
-
-        // Retention, transport and (additional) substance input into surface
-        // water
-        double ns_xxt_inp {ns_xxt_x1x2 * ns_tfc_inl};
-        double ns_xxt_inp_tmp {nm_xxt_inp.at(i, j)};
-        if (Rcpp::NumericMatrix::is_na(ns_xxt_inp_tmp)) {
-          ns_xxt_inp_tmp = 0.0;
-        }
-        nm_xxt_inp.at(i, j) = ns_xxt_inp_tmp + ns_xxt_inp;
-
-        // Outlet row and col from inlet code (C++ indices start at 0)
-        std::div_t code {std::div(im_inl.at(i, j), focalWindow.is_cls)};
-        arma::uword us_row {static_cast<arma::uword>(code.quot - 1)};
-        arma::uword us_col {static_cast<arma::uword>(code.rem  - 1)};
-
-        // Outlet load
-        double ns_xxt_out {nm_xxt_out.at(us_row, us_col)};
-        if (Rcpp::NumericMatrix::is_na(ns_xxt_out)) {
-          ns_xxt_out = 0.0;
-        }
-        nm_xxt_out(us_row, us_col) = ns_xxt_out + ns_xxt_inp;
-      }
-
     // Channel cell
     } else {
       // Retention coefficients

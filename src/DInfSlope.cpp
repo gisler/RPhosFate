@@ -29,7 +29,8 @@ arma::dmat DInfSlopeCpp(
         continue;
       }
 
-      X1X2<double> e1e2 {focalWindow.get_ofl_x1x2<double>(ns_dir_inf, i, j, nm_dem, NA_REAL)};
+      FacetProperties fct{focalWindow.get_ofl_facetProperties(ns_dir_inf, i, j)};
+      X1X2<double> e1e2 {focalWindow.get_ofl_x1x2<double>(fct, nm_dem, NA_REAL)};
 
       if (Rcpp::NumericMatrix::is_na(e1e2.x1) &&
           Rcpp::NumericMatrix::is_na(e1e2.x2)) {
