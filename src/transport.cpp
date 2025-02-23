@@ -252,7 +252,7 @@ Rcpp::List transportCpp(
 
         // Inlet cell
         if (!Rcpp::IntegerMatrix::is_na(is_inl)) {
-          X1X2<int> rds1rds2 = focalWindow.get_ofl_x1x2<int>(ns_dir_inf, i, j, im_rds, NA_INTEGER);
+          X1X2<int> rds1rds2 = focalWindow.get_ofl_x1x2<int>(fct, im_rds, NA_INTEGER);
 
           // Proportional transport
           double ns_xxt_x1x2 {0.0};
