@@ -29,19 +29,21 @@ struct FacetProperties {
 template <typename T>
 struct X1X2 {
   T x1 {}; // Value of the horizontal or vertical receiving cell x1
+  bool ls_x1_oob {false}; // Out of bounds flag of x1
   double ns_p1 {NA_REAL}; // Proportion for x1
   arma::uword us_x1_r {}; // Row index of x1
   arma::uword us_x1_c {}; // Column index of x1
 
   T x2 {}; // Value of the diagonal receiving cell x2
+  bool ls_x2_oob {false}; // Out of bounds flag of x2
   double ns_p2 {NA_REAL}; // Proportion for x2
   arma::uword us_x2_r {}; // Row index of x2
   arma::uword us_x2_c {}; // Column index of x2
 
   // Constructor
-  X1X2(T NA):
-    x1 {NA},
-    x2 {NA}
+  X1X2(T NA_):
+    x1 {NA_},
+    x2 {NA_}
   {}
 };
 
@@ -115,11 +117,12 @@ public:
   X1X2<T> get_ofl_x1x2(
     const FacetProperties& fct,
     const arma::Mat<T>& xm_xxx,
-    const T NA
+    const T NA_
   );
 
+  template <typename T>
   double set_ofl_x1x2(
-    const X1X2<int>& x1x2,
+    const X1X2<T>& x1x2,
     const double x1,
     const double x2,
     arma::dmat& nm_xxx
@@ -244,29 +247,36 @@ inline FacetProperties FocalWindow::get_ofl_facetProperties(
   return fct;
 }
 
-//' Title
+//' Gets the values and properties of the receiving cells x1 and x2
 //'
-//' Description
+//' In case a receiving cell is not out of bounds, its value is extracted from
+//' the provided matrix. Furthermore, its properties are copied to the returned
+//' struct.
 //'
-//' @param
+//' @param fct The DInf facet properties of the examined cell.
+//' @param xm_xxx The matrix holding the values of the receiving cells.
+//' @param NA_ The NA value corresponding to the matrix's data type.
 //'
-//' @return
+//' @return A struct holding the values and properties of the receiving cells x1
+//'   and x2.
 template <typename T>
 inline X1X2<T> FocalWindow::get_ofl_x1x2(
   const FacetProperties& fct,
   const arma::Mat<T>& xm_xxx,
-  const T NA
+  const T NA_
 ) {
-  X1X2<T> x1x2(NA);
+  X1X2<T> x1x2(NA_);
 
   if (!fct.ls_x1_oob) {
     x1x2.x1 = xm_xxx.at(fct.us_x1_r, fct.us_x1_c);
+    x1x2.ls_x1_oob = fct.ls_x1_oob;
     x1x2.ns_p1 = fct.ns_p1;
     x1x2.us_x1_r = fct.us_x1_r;
     x1x2.us_x1_c = fct.us_x1_c;
   }
   if (!fct.ls_x2_oob) {
     x1x2.x2 = xm_xxx.at(fct.us_x2_r, fct.us_x2_c);
+    x1x2.ls_x2_oob = fct.ls_x2_oob;
     x1x2.ns_p2 = fct.ns_p2;
     x1x2.us_x2_r = fct.us_x2_r;
     x1x2.us_x2_c = fct.us_x2_c;
@@ -275,22 +285,28 @@ inline X1X2<T> FocalWindow::get_ofl_x1x2(
   return x1x2;
 }
 
-//' Title
+//' Sets the values of the receiving cells x1 and x2
 //'
 //' Description
 //'
-//' @param
+//' @param x1x2 A struct holding the properties of the receiving cells x1 and x2
+//'   of the examined cell.
+//' @param x1 The value for the receiving cell x1.
+//' @param x2 The value for the receiving cell x2.
+//' @param nm_xxx The numeric matrix whose receiving cells x1 and x2 shall be
+//'   set.
 //'
-//' @return
+//' @return The sum of the values for the receiving cells x1 and x2.
+template <typename T>
 inline double FocalWindow::set_ofl_x1x2(
-  const X1X2<int>& x1x2,
+  const X1X2<T>& x1x2,
   const double x1,
   const double x2,
   arma::dmat& nm_xxx
 ) {
   double ns_xxx {0.0};
 
-  if (!Rcpp::IntegerMatrix::is_na(x1x2.x1)) {
+  if (!x1x2.ls_x1_oob)) {
     double ns_xxx_x1 {nm_xxx.at(x1x2.us_x1_r, x1x2.us_x1_c)};
     if (Rcpp::NumericMatrix::is_na(ns_xxx_x1)) {
       ns_xxx_x1 = 0.0;
@@ -300,7 +316,7 @@ inline double FocalWindow::set_ofl_x1x2(
     ns_xxx += x1;
   }
 
-  if (!Rcpp::IntegerMatrix::is_na(x1x2.x2)) {
+  if (!x1x2.ls_x2_oob) {
     double ns_xxx_x2 {nm_xxx.at(x1x2.us_x2_r, x1x2.us_x2_c)};
     if (Rcpp::NumericMatrix::is_na(ns_xxx_x2)) {
       ns_xxx_x2 = 0.0;
