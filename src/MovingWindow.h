@@ -45,21 +45,6 @@ struct X1X2 {
   {}
 };
 
-// Struct holding the transport calculation order
-struct CalcOrder {
-  std::vector<arma::uword> uv_r {}; // Vector holding row indices
-  std::vector<arma::uword> uv_c {}; // vector holding column indices
-
-  // Constructor
-  CalcOrder(arma::uword n):
-    uv_r {},
-    uv_c {}
-  {
-    uv_r.reserve(n);
-    uv_c.reserve(n);
-  }
-};
-
 // Struct required for the *_ifl_* methods
 const struct {
   arma::ivec8 iv_dr {-1, -1, -1,
@@ -86,6 +71,21 @@ const struct {
 
   arma::uvec3 uv_oob {0, 0, 0}; // Vector for setting focal window vector indices, which are out of bounds to 0
 } ifl;
+
+// Struct holding the transport calculation order
+struct CalcOrder {
+  std::vector<arma::uword> uv_r {}; // Vector holding row indices
+  std::vector<arma::uword> uv_c {}; // vector holding column indices
+
+  // Constructor
+  CalcOrder(arma::uword n):
+    uv_r {},
+    uv_c {}
+  {
+    uv_r.reserve(n);
+    uv_c.reserve(n);
+  }
+};
 
 // Class handling all issues related to outflow and inflow by focusing on an
 // examined cell and its eight neighbours
@@ -246,6 +246,13 @@ inline FacetProperties FocalWindow::get_ofl_facetProperties(
   return fct;
 }
 
+//' Title
+//'
+//' Description
+//'
+//' @param
+//'
+//' @return
 template <typename T>
 inline X1X2<T> FocalWindow::get_ofl_x1x2(
   const double ns_dir_inf,
@@ -273,6 +280,13 @@ inline X1X2<T> FocalWindow::get_ofl_x1x2(
   return x1x2;
 }
 
+//' Title
+//'
+//' Description
+//'
+//' @param
+//'
+//' @return
 inline double FocalWindow::set_ofl_x1x2(
   const X1X2<int>& x1x2,
   const double x1,
@@ -304,6 +318,13 @@ inline double FocalWindow::set_ofl_x1x2(
   return ns_xxx;
 }
 
+//' Title
+//'
+//' Description
+//'
+//' @param
+//'
+//' @return
 inline arma::dvec8 FocalWindow::get_ifl_p(
   const arma::dmat& nm_dir_inf,
   const arma::uword us_row,
@@ -357,6 +378,13 @@ inline arma::dvec8 FocalWindow::get_ifl_p(
   return nv_ifl_p;
 }
 
+//' Title
+//'
+//' Description
+//'
+//' @param
+//'
+//' @return
 template <typename T>
 inline arma::dvec8 FocalWindow::get_ifl_x(
   const arma::dvec8& nv_ifl_p,

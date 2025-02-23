@@ -220,7 +220,7 @@ Rcpp::List transportCpp(
 
       // Riparian zone cell
       if (!Rcpp::IntegerMatrix::is_na(is_rip)) {
-        X1X2<int> cha1cha2 = focalWindow.get_x1x2<int>(ns_dir_inf, i, j, im_cha, NA_INTEGER);
+        X1X2<int> cha1cha2 = focalWindow.get_ofl_x1x2<int>(ns_dir_inf, i, j, im_cha, NA_INTEGER);
 
         // Retention coefficient (0.0 in case there is no riparian zone defined)
         double ns_rtc_rip {};
@@ -237,7 +237,7 @@ Rcpp::List transportCpp(
         // surface water
         double ns_xxt_x1 {ns_xxt * cha1cha2.ns_p1};
         double ns_xxt_x2 {ns_xxt * cha1cha2.ns_p2};
-        nm_xxt_inp.at(i, j) = focalWindow.set_x1x2(
+        nm_xxt_inp.at(i, j) = focalWindow.set_ofl_x1x2(
           cha1cha2,
           ns_xxt_x1 - ns_xxt_x1 * ns_rtc_rip,
           ns_xxt_x2 - ns_xxt_x2 * ns_rtc_rip,
@@ -246,7 +246,7 @@ Rcpp::List transportCpp(
       }
       // Inlet cell
       if (!Rcpp::IntegerMatrix::is_na(is_inl)) {
-        X1X2<int> rds1rds2 = focalWindow.get_x1x2<int>(ns_dir_inf, i, j, im_rds, NA_INTEGER);
+        X1X2<int> rds1rds2 = focalWindow.get_ofl_x1x2<int>(ns_dir_inf, i, j, im_rds, NA_INTEGER);
 
         // Proportional transport
         double ns_xxt_x1x2 {0.0};

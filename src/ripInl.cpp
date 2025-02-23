@@ -35,8 +35,8 @@ Rcpp::List ripInlCpp(
         continue;
       }
 
-      X1X2<int> cha1cha2 {focalWindow.get_x1x2<int>(ns_dir_inf, i, j, im_cha, NA_INTEGER)};
-      X1X2<int> rds1rds2 {focalWindow.get_x1x2<int>(ns_dir_inf, i, j, im_rds, NA_INTEGER)};
+      X1X2<int> cha1cha2 {focalWindow.get_ofl_x1x2<int>(ns_dir_inf, i, j, im_cha, NA_INTEGER)};
+      X1X2<int> rds1rds2 {focalWindow.get_ofl_x1x2<int>(ns_dir_inf, i, j, im_rds, NA_INTEGER)};
 
       if (!Rcpp::IntegerMatrix::is_na(cha1cha2.x1) ||
           !Rcpp::IntegerMatrix::is_na(cha1cha2.x2)) {
