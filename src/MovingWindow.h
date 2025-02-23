@@ -148,9 +148,9 @@ public:
 //'
 //' First, the outflowing proportions are calculated from the DInf flow
 //' direction. Then the row and column indices of the receiving cells x1 and x2
-//' are determined. In case a receiving cell lies outside of the extent of the
-//' river catchment or has a receiving proportion of 0.0, it is flagged as out
-//' of bounds.
+//' are determined. In case a receiving cell would lie outside of the extent of
+//' the river catchment or has a receiving proportion of 0.0, it is flagged as
+//' out of bounds.
 //'
 //' @param us_row The row index of the examined cell.
 //' @param us_col The column index of the examined cell.
