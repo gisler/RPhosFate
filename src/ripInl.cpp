@@ -11,7 +11,7 @@ Rcpp::List ripInlCpp(
   const arma::imat& im_rds,
   const int is_ths = 1
 ) {
-  MovingWindow movingWindow {nm_dir_inf.n_rows, nm_dir_inf.n_cols};
+  FocalWindow focalWindow {nm_dir_inf.n_rows, nm_dir_inf.n_cols};
   int is_rip {1}, is_inl {1};
 
   arma::imat im_rip(
@@ -35,8 +35,8 @@ Rcpp::List ripInlCpp(
         continue;
       }
 
-      X1X2<int> cha1cha2 {movingWindow.get_x1x2<int>(ns_dir_inf, i, j, im_cha, NA_INTEGER)};
-      X1X2<int> rds1rds2 {movingWindow.get_x1x2<int>(ns_dir_inf, i, j, im_rds, NA_INTEGER)};
+      X1X2<int> cha1cha2 {focalWindow.get_x1x2<int>(ns_dir_inf, i, j, im_cha, NA_INTEGER)};
+      X1X2<int> rds1rds2 {focalWindow.get_x1x2<int>(ns_dir_inf, i, j, im_rds, NA_INTEGER)};
 
       if (!Rcpp::IntegerMatrix::is_na(cha1cha2.x1) ||
           !Rcpp::IntegerMatrix::is_na(cha1cha2.x2)) {
