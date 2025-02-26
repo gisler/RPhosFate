@@ -35,7 +35,7 @@ Rcpp::List ripInlCpp(
         continue;
       }
 
-      FacetProperties fct{focalWindow.get_ofl_facetProperties(ns_dir_inf, i, j)};
+      FacetProperties fct {focalWindow.get_ofl_facetProperties(ns_dir_inf, i, j)};
       X1X2<int> cha1cha2 {focalWindow.get_ofl_x1x2<int>(fct, im_cha, NA_INTEGER)};
       X1X2<int> rds1rds2 {focalWindow.get_ofl_x1x2<int>(fct, im_rds, NA_INTEGER)};
 

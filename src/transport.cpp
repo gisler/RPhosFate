@@ -84,7 +84,7 @@ Rcpp::List transportCpp(
     im_ord.at(ord.uv_r[n], ord.uv_c[n]) = n;
     #endif
 
-    FacetProperties fct{focalWindow.get_ofl_facetProperties(
+    FacetProperties fct {focalWindow.get_ofl_facetProperties(
       nm_dir_inf.at(ord.uv_r[n], ord.uv_c[n]),
       ord.uv_r[n],
       ord.uv_c[n]
@@ -221,7 +221,7 @@ Rcpp::List transportCpp(
       // Riparian zone or inlet cell
       if (!Rcpp::IntegerMatrix::is_na(is_rip) ||
           !Rcpp::IntegerMatrix::is_na(is_inl)) {
-        FacetProperties fct{focalWindow.get_ofl_facetProperties(ns_dir_inf, i, j)};
+        FacetProperties fct {focalWindow.get_ofl_facetProperties(ns_dir_inf, i, j)};
 
         // Riparian zone cell
         if (!Rcpp::IntegerMatrix::is_na(is_rip)) {
