@@ -121,7 +121,7 @@ public:
   );
 
   template <typename T>
-  double set_ofl_x1x2(
+  double inc_ofl_x1x2(
     const X1X2<T>& x1x2,
     const double x1,
     const double x2,
@@ -157,7 +157,7 @@ public:
 //' @param us_col The column index of the examined cell.
 //' @param ns_dir_inf The DInf flow direction at the examined cell.
 //'
-//' @return A struct holding the DInf facet properties.
+//' @return A FacetProperties struct holding the DInf facet properties.
 inline FacetProperties FocalWindow::get_ofl_facetProperties(
   const double ns_dir_inf,
   const arma::uword us_row,
@@ -257,8 +257,8 @@ inline FacetProperties FocalWindow::get_ofl_facetProperties(
 //' @param xm_xxx The matrix holding the values of the receiving cells.
 //' @param NA_ The NA value corresponding to the matrix's data type.
 //'
-//' @return A struct holding the values and properties of the receiving cells x1
-//'   and x2.
+//' @return An X1X2 struct holding the values and properties of the receiving
+//'   cells x1 and x2.
 template <typename T>
 inline X1X2<T> FocalWindow::get_ofl_x1x2(
   const FacetProperties& fct,
@@ -285,20 +285,24 @@ inline X1X2<T> FocalWindow::get_ofl_x1x2(
   return x1x2;
 }
 
-//' Sets the values of the receiving cells x1 and x2
+//' Increases the existing values of the receiving cells x1 and x2
 //'
-//' Description
+//' In case a receiving cell is not out of bounds, its existing value is
+//' increased by the respective provided value.
 //'
-//' @param x1x2 A struct holding the properties of the receiving cells x1 and x2
-//'   of the examined cell.
-//' @param x1 The value for the receiving cell x1.
-//' @param x2 The value for the receiving cell x2.
-//' @param nm_xxx The numeric matrix whose receiving cells x1 and x2 shall be
-//'   set.
+//' @param x1x2 An X1X2 struct holding the properties of the receiving cells x1
+//'   and x2 of the examined cell.
+//' @param x1 The value by which the existing value of the receiving cell x1
+//'   shall be increased.
+//' @param x2 The value by which the existing value of the receiving cell x2
+//'   shall be increased.
+//' @param nm_xxx The numeric matrix holding the values of the receiving cells
+//'   x1 and x2, which shall be increased.
 //'
-//' @return The sum of the values for the receiving cells x1 and x2.
+//' @return The sum of the values by which the existing values of the receiving
+//'   cells x1 and x2 were increased.
 template <typename T>
-inline double FocalWindow::set_ofl_x1x2(
+inline double FocalWindow::inc_ofl_x1x2(
   const X1X2<T>& x1x2,
   const double x1,
   const double x2,
@@ -306,7 +310,7 @@ inline double FocalWindow::set_ofl_x1x2(
 ) {
   double ns_xxx {0.0};
 
-  if (!x1x2.ls_x1_oob)) {
+  if (!x1x2.ls_x1_oob) {
     double ns_xxx_x1 {nm_xxx.at(x1x2.us_x1_r, x1x2.us_x1_c)};
     if (Rcpp::NumericMatrix::is_na(ns_xxx_x1)) {
       ns_xxx_x1 = 0.0;

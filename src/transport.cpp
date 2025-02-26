@@ -242,7 +242,7 @@ Rcpp::List transportCpp(
           // surface water
           double ns_xxt_x1 {ns_xxt * cha1cha2.ns_p1};
           double ns_xxt_x2 {ns_xxt * cha1cha2.ns_p2};
-          nm_xxt_inp.at(i, j) = focalWindow.set_ofl_x1x2(
+          nm_xxt_inp.at(i, j) = focalWindow.inc_ofl_x1x2(
             cha1cha2,
             ns_xxt_x1 - ns_xxt_x1 * ns_rtc_rip,
             ns_xxt_x2 - ns_xxt_x2 * ns_rtc_rip,
