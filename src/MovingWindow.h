@@ -259,8 +259,6 @@ inline X1X2<T> FocalWindow::get_ofl_x1x2(
 ) {
   X1X2<T> x1x2(NA_);
 
-  x1x2.fct = fct;
-
   if (!fct.ls_x1_oob) {
     x1x2.x1 = xm_xxx.at(fct.us_x1_r, fct.us_x1_c);
   }
@@ -268,25 +266,28 @@ inline X1X2<T> FocalWindow::get_ofl_x1x2(
     x1x2.x2 = xm_xxx.at(fct.us_x2_r, fct.us_x2_c);
   }
 
+  x1x2.fct = fct;
+
   return x1x2;
 }
 
 //' Increases the existing values of the receiving cells x1 and x2
 //'
-//' In case a receiving cell is not out of bounds, its existing value is
-//' increased by the respective provided value.
+//' In case a receiving cell is not out of bounds or NA_INTEGER in a conditional
+//' layer, its existing value is increased by the respective provided value.
 //'
-//' @param x1x2 An X1X2<int> struct holding the properties of the receiving cells x1
-//'   and x2 of the examined cell.
-//' @param x1 The value by which the existing value of the receiving cell x1
-//'   shall be increased.
-//' @param x2 The value by which the existing value of the receiving cell x2
-//'   shall be increased.
+//' @param x1x2 An X1X2<int> struct holding the values of the receiving cells x1
+//'   and x2 of a conditional layer and the DInf facet properties of the
+//'   examined cell.
+//' @param x1 The value by which the existing value of the receiving cell x1 in
+//'   nm_xxx shall be increased.
+//' @param x2 The value by which the existing value of the receiving cell x2 in
+//'   nm_xxx shall be increased.
 //' @param nm_xxx The numeric matrix holding the values of the receiving cells
 //'   x1 and x2, which shall be increased.
 //'
 //' @return The sum of the values by which the existing values of the receiving
-//'   cells x1 and x2 were actually increased (receiving cells out of bounds are not increased).
+//'   cells x1 and x2 were actually increased.
 inline double FocalWindow::inc_ofl_x1x2(
   const X1X2<int>& x1x2,
   const double x1,
@@ -305,7 +306,7 @@ inline double FocalWindow::inc_ofl_x1x2(
     ns_xxx += x1;
   }
 
-  if (!Rcpp::IntegerMatrix::is_na(x1x2.x1)) {
+  if (!Rcpp::IntegerMatrix::is_na(x1x2.x2)) {
     double ns_xxx_x2 {nm_xxx.at(x1x2.fct.us_x2_r, x1x2.fct.us_x2_c)};
     if (Rcpp::NumericMatrix::is_na(ns_xxx_x2)) {
       ns_xxx_x2 = 0.0;
