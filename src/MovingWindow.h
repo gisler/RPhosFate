@@ -239,18 +239,18 @@ inline FacetProperties FocalWindow::get_ofl_facetProperties(
   return fct;
 }
 
-//' Gets the values and properties of the receiving cells x1 and x2
+//' Gets the values of the receiving cells x1 and x2
 //'
 //' In case a receiving cell is not out of bounds, its value is extracted from
-//' the provided matrix. Furthermore, its properties are copied to the returned
-//' struct.
+//' the provided matrix. Furthermore, the DInf facet properties of the examined
+//' cell are copied to the returned struct.
 //'
-//' @param fct The DInf facet properties of the examined cell.
+//' @param fct The FacetProperties struct of the examined cell.
 //' @param xm_xxx The matrix holding the values of the receiving cells.
 //' @param NA_ The NA value corresponding to the matrix's data type.
 //'
-//' @return An X1X2 struct holding the values and properties of the receiving
-//'   cells x1 and x2.
+//' @return An X1X2 struct holding the values of the receiving cells x1 and x2
+//'   and the DInf facet properties of the examined cell.
 template <typename T>
 inline X1X2<T> FocalWindow::get_ofl_x1x2(
   const FacetProperties& fct,
@@ -287,7 +287,7 @@ inline X1X2<T> FocalWindow::get_ofl_x1x2(
 //'   x1 and x2, which shall be increased.
 //'
 //' @return The sum of the values by which the existing values of the receiving
-//'   cells x1 and x2 were actually increased.
+//'   cells x1 and x2 were actually increased, i.e. the total outflowing load.
 inline double FocalWindow::inc_ofl_x1x2(
   const X1X2<int>& x1x2,
   const double x1,
