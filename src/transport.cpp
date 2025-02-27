@@ -240,8 +240,8 @@ Rcpp::List transportCpp(
 
           // Retention, transport and substance input (of riparian zone) into
           // surface water
-          double ns_xxt_x1 {ns_xxt * cha1cha2.ns_p1};
-          double ns_xxt_x2 {ns_xxt * cha1cha2.ns_p2};
+          double ns_xxt_x1 {ns_xxt * cha1cha2.fct.ns_p1};
+          double ns_xxt_x2 {ns_xxt * cha1cha2.fct.ns_p2};
           nm_xxt_inp.at(i, j) = focalWindow.inc_ofl_x1x2(
             cha1cha2,
             ns_xxt_x1 - ns_xxt_x1 * ns_rtc_rip,
@@ -257,10 +257,10 @@ Rcpp::List transportCpp(
           // Proportional transport
           double ns_xxt_x1x2 {0.0};
           if (!Rcpp::IntegerMatrix::is_na(rds1rds2.x1)) {
-            ns_xxt_x1x2 += ns_xxt * rds1rds2.ns_p1;
+            ns_xxt_x1x2 += ns_xxt * rds1rds2.fct.ns_p1;
           }
           if (!Rcpp::IntegerMatrix::is_na(rds1rds2.x2)) {
-            ns_xxt_x1x2 += ns_xxt * rds1rds2.ns_p2;
+            ns_xxt_x1x2 += ns_xxt * rds1rds2.fct.ns_p2;
           }
 
           // Retention, transport and (additional) substance input into surface

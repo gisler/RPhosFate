@@ -29,16 +29,9 @@ struct FacetProperties {
 template <typename T>
 struct X1X2 {
   T x1 {}; // Value of the horizontal or vertical receiving cell x1
-  bool ls_x1_oob {false}; // Out of bounds flag of x1
-  double ns_p1 {NA_REAL}; // Proportion for x1
-  arma::uword us_x1_r {}; // Row index of x1
-  arma::uword us_x1_c {}; // Column index of x1
-
   T x2 {}; // Value of the diagonal receiving cell x2
-  bool ls_x2_oob {false}; // Out of bounds flag of x2
-  double ns_p2 {NA_REAL}; // Proportion for x2
-  arma::uword us_x2_r {}; // Row index of x2
-  arma::uword us_x2_c {}; // Column index of x2
+
+  FacetProperties fct {};
 
   // Constructor
   X1X2(T NA_):
@@ -50,8 +43,8 @@ struct X1X2 {
 // Struct required for the *_ifl_* methods
 const struct {
   arma::ivec8 iv_dr {-1, -1, -1,
-                     0,      0,
-                     1,  1,  1}; // Focal window vector deltas of the row indices
+                      0,      0,
+                      1,  1,  1}; // Focal window vector deltas of the row indices
   arma::ivec8 iv_dc {-1,  0,  1,
                      -1,      1,
                      -1,  0,  1}; // Focal window vector deltas of the column indices
@@ -120,9 +113,8 @@ public:
     const T NA_
   );
 
-  template <typename T>
   double inc_ofl_x1x2(
-    const X1X2<T>& x1x2,
+    const X1X2<int>& x1x2,
     const double x1,
     const double x2,
     arma::dmat& nm_xxx
@@ -267,19 +259,13 @@ inline X1X2<T> FocalWindow::get_ofl_x1x2(
 ) {
   X1X2<T> x1x2(NA_);
 
+  x1x2.fct = fct;
+
   if (!fct.ls_x1_oob) {
     x1x2.x1 = xm_xxx.at(fct.us_x1_r, fct.us_x1_c);
-    x1x2.ls_x1_oob = fct.ls_x1_oob;
-    x1x2.ns_p1 = fct.ns_p1;
-    x1x2.us_x1_r = fct.us_x1_r;
-    x1x2.us_x1_c = fct.us_x1_c;
   }
   if (!fct.ls_x2_oob) {
     x1x2.x2 = xm_xxx.at(fct.us_x2_r, fct.us_x2_c);
-    x1x2.ls_x2_oob = fct.ls_x2_oob;
-    x1x2.ns_p2 = fct.ns_p2;
-    x1x2.us_x2_r = fct.us_x2_r;
-    x1x2.us_x2_c = fct.us_x2_c;
   }
 
   return x1x2;
@@ -290,7 +276,7 @@ inline X1X2<T> FocalWindow::get_ofl_x1x2(
 //' In case a receiving cell is not out of bounds, its existing value is
 //' increased by the respective provided value.
 //'
-//' @param x1x2 An X1X2 struct holding the properties of the receiving cells x1
+//' @param x1x2 An X1X2<int> struct holding the properties of the receiving cells x1
 //'   and x2 of the examined cell.
 //' @param x1 The value by which the existing value of the receiving cell x1
 //'   shall be increased.
@@ -300,33 +286,32 @@ inline X1X2<T> FocalWindow::get_ofl_x1x2(
 //'   x1 and x2, which shall be increased.
 //'
 //' @return The sum of the values by which the existing values of the receiving
-//'   cells x1 and x2 were increased.
-template <typename T>
+//'   cells x1 and x2 were actually increased (receiving cells out of bounds are not increased).
 inline double FocalWindow::inc_ofl_x1x2(
-  const X1X2<T>& x1x2,
+  const X1X2<int>& x1x2,
   const double x1,
   const double x2,
   arma::dmat& nm_xxx
 ) {
   double ns_xxx {0.0};
 
-  if (!x1x2.ls_x1_oob) {
-    double ns_xxx_x1 {nm_xxx.at(x1x2.us_x1_r, x1x2.us_x1_c)};
+  if (!Rcpp::IntegerMatrix::is_na(x1x2.x1)) {
+    double ns_xxx_x1 {nm_xxx.at(x1x2.fct.us_x1_r, x1x2.fct.us_x1_c)};
     if (Rcpp::NumericMatrix::is_na(ns_xxx_x1)) {
       ns_xxx_x1 = 0.0;
     }
 
-    nm_xxx.at(x1x2.us_x1_r, x1x2.us_x1_c) = ns_xxx_x1 + x1;
+    nm_xxx.at(x1x2.fct.us_x1_r, x1x2.fct.us_x1_c) = ns_xxx_x1 + x1;
     ns_xxx += x1;
   }
 
-  if (!x1x2.ls_x2_oob) {
-    double ns_xxx_x2 {nm_xxx.at(x1x2.us_x2_r, x1x2.us_x2_c)};
+  if (!Rcpp::IntegerMatrix::is_na(x1x2.x1)) {
+    double ns_xxx_x2 {nm_xxx.at(x1x2.fct.us_x2_r, x1x2.fct.us_x2_c)};
     if (Rcpp::NumericMatrix::is_na(ns_xxx_x2)) {
       ns_xxx_x2 = 0.0;
     }
 
-    nm_xxx.at(x1x2.us_x2_r, x1x2.us_x2_c) = ns_xxx_x2 + x2;
+    nm_xxx.at(x1x2.fct.us_x2_r, x1x2.fct.us_x2_c) = ns_xxx_x2 + x2;
     ns_xxx += x2;
   }
 
