@@ -1,5 +1,5 @@
-#ifndef FOCALWINDOW_H
-#define FOCALWINDOW_H
+#ifndef DINFWINDOW_H
+#define DINFWINDOW_H
 
 #include <RcppArmadillo.h>
 
@@ -10,17 +10,17 @@ const struct {
 
   arma::ivec8 iv_x2_dr {-1, -1, -1, -1,  1,  1, 1, 1};
   arma::ivec8 iv_x2_dc { 1,  1, -1, -1, -1, -1, 1, 1};
-} fct_drdc; // DInf facets: focal window vector deltas of the row and column indices of the receiving cells x1 and x2
+} fct_drdc; // DInf facets: focal window vector deltas of the row and column indices of the receiving neighbours x1 and x2
 
 // Struct returned by get_ofl_facetProperties()
 struct FacetProperties {
-  bool ls_x1_oob {false}; // Is the row or column index of the receiving cell x1 out of bounds or the proportion for x1 == 0.0?
-  double ns_p1 {NA_REAL}; // Proportion for x1
+  bool ls_x1_oob {false}; // Is the row or column index of the receiving neighbour x1 out of bounds or the outflow proportion to x1 == 0.0?
+  double ns_p1 {NA_REAL}; // Outflow proportion to x1
   arma::uword us_x1_r {}; // Row index of x1
   arma::uword us_x1_c {}; // Column index of x1
 
-  bool ls_x2_oob {false}; // Is the row or column index of the receiving cell x2 out of bounds or the proportion for x2 == 0.0?
-  double ns_p2 {NA_REAL}; // Proportion for x2
+  bool ls_x2_oob {false}; // Is the row or column index of the receiving neighbour x2 out of bounds or the outflow proportion to x2 == 0.0?
+  double ns_p2 {NA_REAL}; // Outflow proportion to x2
   arma::uword us_x2_r {}; // Row index of x2
   arma::uword us_x2_c {}; // Column index of x2
 };
@@ -28,8 +28,8 @@ struct FacetProperties {
 // Struct returned by get_ofl_x1x2()
 template <typename T>
 struct X1X2 {
-  T x1 {}; // Value of the horizontal or vertical receiving cell x1
-  T x2 {}; // Value of the diagonal receiving cell x2
+  T x1 {}; // Value of the horizontal or vertical receiving neighbour x1
+  T x2 {}; // Value of the diagonal receiving neighbour x2
 
   FacetProperties fct {};
 
@@ -82,9 +82,9 @@ struct CalcOrder {
   }
 };
 
-// Class handling all issues related to outflow and inflow by focusing on an
-// examined cell and its eight neighbours
-class FocalWindow {
+// Class handling all issues related to DInf outflow and inflow by focusing on
+// the examined cell and its eight neighbours
+class DinfWindow {
 public:
   const arma::uword us_rws {}; // Total number of rows of the extent of the river catchment as unsigned integer
   const arma::uword us_cls {}; // Total number of columns of the extent of the river catchment as unsigned integer
@@ -92,7 +92,7 @@ public:
   const arma::sword is_cls {}; // Total number of columns as signed integer
 
   // Constructor
-  FocalWindow(arma::uword us_rws, arma::uword us_cls):
+  DinfWindow(arma::uword us_rws, arma::uword us_cls):
     us_rws {us_rws},
     us_cls {us_cls},
     is_rws {static_cast<arma::sword>(us_rws)},
@@ -137,20 +137,21 @@ public:
 
 #endif
 
-//' Determines the DInf facet of a cell and returns its properties
+//' Determine the DInf facet and return its properties
 //'
-//' First, the outflowing proportions are calculated from the DInf flow
-//' direction. Then the row and column indices of the receiving cells x1 and x2
-//' are determined. In case a receiving cell would lie outside of the extent of
+//' First, the outflow proportions are calculated from the DInf flow direction.
+//' Then the row and column indices of the receiving neighbours x1 and x2 are
+//' determined. In case a receiving neighbour would lie outside of the extent of
 //' the river catchment or has a receiving proportion of 0.0, it is flagged as
 //' out of bounds.
 //'
+//' @param ns_dir_inf The DInf flow direction at the examined cell.
 //' @param us_row The row index of the examined cell.
 //' @param us_col The column index of the examined cell.
-//' @param ns_dir_inf The DInf flow direction at the examined cell.
 //'
-//' @return A FacetProperties struct holding the DInf facet properties.
-inline FacetProperties FocalWindow::get_ofl_facetProperties(
+//' @return A FacetProperties struct holding the DInf facet properties of the
+//'   examined cell.
+inline FacetProperties DinfWindow::get_ofl_facetProperties(
   const double ns_dir_inf,
   const arma::uword us_row,
   const arma::uword us_col
@@ -158,7 +159,7 @@ inline FacetProperties FocalWindow::get_ofl_facetProperties(
   arma::uword us_fct {};
   FacetProperties fct {};
 
-  // Determine the DInf facet and calculate its outflowing proportions
+  // Determine the DInf facet and calculate its outflow proportions
   if        (ns_dir_inf >=  45.0 && ns_dir_inf <   90.0) {
     us_fct = 0;
 
@@ -211,7 +212,7 @@ inline FacetProperties FocalWindow::get_ofl_facetProperties(
     Rcpp::stop("\"dir_inf\" out of range.");
   }
 
-  // Determine the row and column indices of the receiving cells x1 and x2
+  // Determine the row and column indices of the receiving neighbours x1 and x2
   arma::sword is_row {static_cast<arma::sword>(us_row)};
   arma::sword is_col {static_cast<arma::sword>(us_col)};
   arma::sword is_x1_row {is_row + fct_drdc.iv_x1_dr[us_fct]};
@@ -239,20 +240,20 @@ inline FacetProperties FocalWindow::get_ofl_facetProperties(
   return fct;
 }
 
-//' Gets the values of the receiving cells x1 and x2
+//' Get the values of the receiving neighbours x1 and x2
 //'
-//' In case a receiving cell is not out of bounds, its value is extracted from
-//' the provided matrix. Furthermore, the DInf facet properties of the examined
-//' cell are copied to the returned struct.
+//' In case a receiving neighbour is not out of bounds, its value is extracted
+//' from the provided matrix. Furthermore, the DInf facet properties  are copied
+//' to the returned struct.
 //'
 //' @param fct The FacetProperties struct of the examined cell.
-//' @param xm_xxx The matrix holding the values of the receiving cells.
+//' @param xm_xxx The matrix holding the values of the receiving neighbours.
 //' @param NA_ The NA value corresponding to the matrix's data type.
 //'
-//' @return An X1X2 struct holding the values of the receiving cells x1 and x2
-//'   and the DInf facet properties of the examined cell.
+//' @return An X1X2 struct holding the values of the receiving neighbours x1 and
+//'   x2 and the DInf facet properties of the examined cell.
 template <typename T>
-inline X1X2<T> FocalWindow::get_ofl_x1x2(
+inline X1X2<T> DinfWindow::get_ofl_x1x2(
   const FacetProperties& fct,
   const arma::Mat<T>& xm_xxx,
   const T NA_
@@ -271,24 +272,26 @@ inline X1X2<T> FocalWindow::get_ofl_x1x2(
   return x1x2;
 }
 
-//' Increases the existing values of the receiving cells x1 and x2
+//' Increase the existing values of the receiving neighbours x1 and x2
 //'
-//' In case a receiving cell is not out of bounds or NA_INTEGER in a conditional
-//' layer, its existing value is increased by the respective provided value.
+//' In case a receiving neighbour is not out of bounds or NA_INTEGER in a
+//' conditional layer, its existing value is increased by the respective
+//' provided value.
 //'
-//' @param x1x2 An X1X2<int> struct holding the values of the receiving cells x1
-//'   and x2 of a conditional layer and the DInf facet properties of the
-//'   examined cell.
-//' @param x1 The value by which the existing value of the receiving cell x1 in
-//'   nm_xxx shall be increased.
-//' @param x2 The value by which the existing value of the receiving cell x2 in
-//'   nm_xxx shall be increased.
-//' @param nm_xxx The numeric matrix holding the values of the receiving cells
-//'   x1 and x2, which shall be increased.
+//' @param x1x2 An X1X2<int> struct holding the values of the receiving
+//'   neighbours x1 and x2 of a conditional layer and the DInf facet properties
+//'   of the examined cell.
+//' @param x1 The value by which the existing value of the receiving neighbour
+//'   x1 in nm_xxx shall be increased.
+//' @param x2 The value by which the existing value of the receiving neighbour
+//'   x2 in nm_xxx shall be increased.
+//' @param nm_xxx The numeric matrix holding the values of the receiving
+//'   neighbours x1 and x2, which shall be increased.
 //'
 //' @return The sum of the values by which the existing values of the receiving
-//'   cells x1 and x2 were actually increased, i.e. the total outflowing load.
-inline double FocalWindow::inc_ofl_x1x2(
+//'   neighbours x1 and x2 of the examined cell were actually increased, i.e.
+//'   the total outflowing load.
+inline double DinfWindow::inc_ofl_x1x2(
   const X1X2<int>& x1x2,
   const double x1,
   const double x2,
@@ -319,21 +322,22 @@ inline double FocalWindow::inc_ofl_x1x2(
   return ns_xxx;
 }
 
-//' Title
+//' Determine the DInf inflow proportions
 //'
-//' Description
+//' @param nm_dir_inf The numeric matrix holding the DInf flow directions.
+//' @param us_row The row index of the examined cell.
+//' @param us_col The column index of the examined cell.
 //'
-//' @param
-//'
-//' @return
-inline arma::dvec8 FocalWindow::get_ifl_p(
+//' @return A vector holding the DInf inflow proportions of the eight neighbours
+//'   of the examined cell.
+inline arma::dvec8 DinfWindow::get_ifl_p(
   const arma::dmat& nm_dir_inf,
   const arma::uword us_row,
   const arma::uword us_col
 ) {
-  // Determine cells, which are out of bounds
   arma::uvec8 uv_cll(arma::fill::ones);
 
+  // Set neighbours, which are out of bounds to 0
   if (us_row == 0) {
     uv_cll.elem(ifl.uv_oob_lr) = ifl.uv_oob;
   }
@@ -347,7 +351,7 @@ inline arma::dvec8 FocalWindow::get_ifl_p(
     uv_cll.elem(ifl.uv_oob_uc) = ifl.uv_oob;
   }
 
-  // Determine proportions
+  // Determine the inflow proportions
   arma::dvec8 nv_ifl_p(arma::fill::zeros);
 
   for (arma::uword k = 0; k < uv_cll.n_elem; ++k) {
@@ -379,15 +383,19 @@ inline arma::dvec8 FocalWindow::get_ifl_p(
   return nv_ifl_p;
 }
 
-//' Title
+//' Determine the loads flowing into the examined cell
 //'
-//' Description
+//' @param nv_ifl_p The vector holding the DInf inflow proportions of the eight
+//'   neighbours of the examined cell.
+//' @param us_row The row index of the examined cell.
+//' @param us_col The column index of the examined cell.
+//' @param xm_xxx The matrix holding the total loads of the eight neighbours of
+//'   the examined cell.
 //'
-//' @param
-//'
-//' @return
+//' @return A vector holding the loads flowing into the examined cell from its
+//'   eight neighbours.
 template <typename T>
-inline arma::dvec8 FocalWindow::get_ifl_x(
+inline arma::dvec8 DinfWindow::get_ifl_x(
   const arma::dvec8& nv_ifl_p,
   const arma::uword us_row,
   const arma::uword us_col,
@@ -401,9 +409,7 @@ inline arma::dvec8 FocalWindow::get_ifl_x(
         xm_xxx.at(us_row + ifl.iv_dr[k], us_col + ifl.iv_dc[k])
       )};
 
-      if (ns_ifl > 0.0) {
-        nv_ifl[k] = ns_ifl;
-      }
+      nv_ifl[k] = ns_ifl;
     }
   }
 

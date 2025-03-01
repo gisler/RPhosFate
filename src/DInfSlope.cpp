@@ -13,7 +13,7 @@ arma::dmat DInfSlopeCpp(
 ) {
   const double ns_res_dgl {std::sqrt(2.0 * ns_res * ns_res)};
 
-  FocalWindow focalWindow {nm_dir_inf.n_rows, nm_dir_inf.n_cols};
+  DinfWindow dinfWindow {nm_dir_inf.n_rows, nm_dir_inf.n_cols};
 
   arma::dmat nm_slp_inf(
     arma::size(nm_dir_inf),
@@ -29,8 +29,8 @@ arma::dmat DInfSlopeCpp(
         continue;
       }
 
-      FacetProperties fct {focalWindow.get_ofl_facetProperties(ns_dir_inf, i, j)};
-      X1X2<double> e1e2 {focalWindow.get_ofl_x1x2<double>(fct, nm_dem, NA_REAL)};
+      FacetProperties fct {dinfWindow.get_ofl_facetProperties(ns_dir_inf, i, j)};
+      X1X2<double> e1e2 {dinfWindow.get_ofl_x1x2<double>(fct, nm_dem, NA_REAL)};
 
       if (Rcpp::NumericMatrix::is_na(e1e2.x1) &&
           Rcpp::NumericMatrix::is_na(e1e2.x2)) {

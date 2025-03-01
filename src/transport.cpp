@@ -22,7 +22,7 @@ Rcpp::List transportCpp(
   const Rcpp::S4& helpers,
   const int is_ths = 1
 ) {
-  FocalWindow focalWindow {nm_dir_inf.n_rows, nm_dir_inf.n_cols};
+  DinfWindow dinfWindow {nm_dir_inf.n_rows, nm_dir_inf.n_cols};
 
   /* Transport calculation order
    * ===========================
@@ -46,9 +46,9 @@ Rcpp::List transportCpp(
         continue;
       }
 
-      arma::dvec8 nv_ifl_p {focalWindow.get_ifl_p(nm_dir_inf, i, j)};
+      arma::dvec8 nv_ifl_p {dinfWindow.get_ifl_p(nm_dir_inf, i, j)};
       im_ifl.at(i, j) = arma::accu(
-        focalWindow.get_ifl_x<double>(nv_ifl_p, i, j, nm_acc_inf) > 0.0
+        dinfWindow.get_ifl_x<double>(nv_ifl_p, i, j, nm_acc_inf) > 0.0
       );
     }
   }
@@ -84,7 +84,7 @@ Rcpp::List transportCpp(
     im_ord.at(ord.uv_r[n], ord.uv_c[n]) = n;
     #endif
 
-    FacetProperties fct {focalWindow.get_ofl_facetProperties(
+    FacetProperties fct {dinfWindow.get_ofl_facetProperties(
       nm_dir_inf.at(ord.uv_r[n], ord.uv_c[n]),
       ord.uv_r[n],
       ord.uv_c[n]
@@ -196,7 +196,7 @@ Rcpp::List transportCpp(
     double ns_rtm {ns_fpl / (ns_str * ns_rhy_slp)};
 
     // Inflow proportions
-    arma::dvec8 nv_ifl_p {focalWindow.get_ifl_p(nm_dir_inf, i, j)};
+    arma::dvec8 nv_ifl_p {dinfWindow.get_ifl_p(nm_dir_inf, i, j)};
 
     // Overland cell
     if (Rcpp::IntegerMatrix::is_na(is_cha)) {
@@ -206,7 +206,7 @@ Rcpp::List transportCpp(
 
       // Inflowing load
       arma::dvec8 nv_xxt_ifl {
-        focalWindow.get_ifl_x<double>(nv_ifl_p, i, j, nm_xxt) %
+        dinfWindow.get_ifl_x<double>(nv_ifl_p, i, j, nm_xxt) %
           nv_ifl_p
       };
       double ns_xxt_ifl {arma::accu(nv_xxt_ifl)};
@@ -221,11 +221,11 @@ Rcpp::List transportCpp(
       // Riparian zone or inlet cell
       if (!Rcpp::IntegerMatrix::is_na(is_rip) ||
           !Rcpp::IntegerMatrix::is_na(is_inl)) {
-        FacetProperties fct {focalWindow.get_ofl_facetProperties(ns_dir_inf, i, j)};
+        FacetProperties fct {dinfWindow.get_ofl_facetProperties(ns_dir_inf, i, j)};
 
         // Riparian zone cell
         if (!Rcpp::IntegerMatrix::is_na(is_rip)) {
-          X1X2<int> cha1cha2 = focalWindow.get_ofl_x1x2<int>(fct, im_cha, NA_INTEGER);
+          X1X2<int> cha1cha2 = dinfWindow.get_ofl_x1x2<int>(fct, im_cha, NA_INTEGER);
 
           // Retention coefficient (0.0 in case there is no riparian zone defined)
           double ns_rtc_rip {};
@@ -242,7 +242,7 @@ Rcpp::List transportCpp(
           // surface water
           double ns_xxt_x1 {ns_xxt * cha1cha2.fct.ns_p1};
           double ns_xxt_x2 {ns_xxt * cha1cha2.fct.ns_p2};
-          nm_xxt_inp.at(i, j) = focalWindow.inc_ofl_x1x2(
+          nm_xxt_inp.at(i, j) = dinfWindow.inc_ofl_x1x2(
             cha1cha2,
             ns_xxt_x1 - ns_xxt_x1 * ns_rtc_rip,
             ns_xxt_x2 - ns_xxt_x2 * ns_rtc_rip,
@@ -252,7 +252,7 @@ Rcpp::List transportCpp(
 
         // Inlet cell
         if (!Rcpp::IntegerMatrix::is_na(is_inl)) {
-          X1X2<int> rds1rds2 = focalWindow.get_ofl_x1x2<int>(fct, im_rds, NA_INTEGER);
+          X1X2<int> rds1rds2 = dinfWindow.get_ofl_x1x2<int>(fct, im_rds, NA_INTEGER);
 
           // Proportional transport
           double ns_xxt_x1x2 {0.0};
@@ -273,7 +273,7 @@ Rcpp::List transportCpp(
           nm_xxt_inp.at(i, j) = ns_xxt_inp_tmp + ns_xxt_inp;
 
           // Outlet row and col from inlet code (C++ indices start at 0)
-          std::div_t code {std::div(im_inl.at(i, j), focalWindow.is_cls)};
+          std::div_t code {std::div(im_inl.at(i, j), dinfWindow.is_cls)};
           arma::uword us_row {static_cast<arma::uword>(code.quot - 1)};
           arma::uword us_col {static_cast<arma::uword>(code.rem  - 1)};
 
@@ -298,8 +298,8 @@ Rcpp::List transportCpp(
       }
       // Inflowing channel load
       arma::dvec8 nv_xxt_cha {
-        focalWindow.get_ifl_x<double>(nv_ifl_p, i, j, nm_xxt) %
-          (focalWindow.get_ifl_x<int>(nv_ifl_p, i, j, im_cha) > 0.0) %
+        dinfWindow.get_ifl_x<double>(nv_ifl_p, i, j, nm_xxt) %
+          (dinfWindow.get_ifl_x<int>(nv_ifl_p, i, j, im_cha) > 0.0) %
           nv_ifl_p
       };
       double ns_xxt_cha {arma::accu(nv_xxt_cha)};
@@ -339,11 +339,11 @@ Rcpp::List transportCpp(
     }
 
     // Inflow proportions
-    arma::dvec8 nv_ifl_p {focalWindow.get_ifl_p(nm_dir_inf, i, j)};
+    arma::dvec8 nv_ifl_p {dinfWindow.get_ifl_p(nm_dir_inf, i, j)};
 
     // Inflowing overland load
     arma::dvec8 nv_xxt_ifl {
-      focalWindow.get_ifl_x<double>(nv_ifl_p, i, j, nm_xxt) % nv_ifl_p
+      dinfWindow.get_ifl_x<double>(nv_ifl_p, i, j, nm_xxt) % nv_ifl_p
     };
     double ns_xxt_ifl {arma::accu(nv_xxt_ifl)};
     // Net emission
