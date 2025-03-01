@@ -409,7 +409,9 @@ inline arma::dvec8 DinfWindow::get_ifl_x(
         xm_xxx.at(us_row + ifl.iv_dr[k], us_col + ifl.iv_dc[k])
       )};
 
-      nv_ifl[k] = ns_ifl;
+      if (ns_ifl > 0.0) {
+        nv_ifl[k] = ns_ifl;
+      }
     }
   }
 
