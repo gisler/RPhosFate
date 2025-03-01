@@ -49,7 +49,7 @@ Rcpp::List transportCpp(
       arma::dvec8 nv_ifl_p {dinfWindow.get_ifl_p(nm_dir_inf, i, j)};
       im_ifl.at(i, j) = arma::accu(
         dinfWindow.get_ifl_x<double>(nv_ifl_p, i, j, nm_acc_inf) > 0.0
-      );
+      ); // The flow accumulation can be NA where the flow direction and therefore the inflow proportion is not (e.g. roads)
     }
   }
 
@@ -205,11 +205,9 @@ Rcpp::List transportCpp(
       double ns_rtc_lcl {1.0 - std::exp(-ns_dep_ovl * ns_rtm * 0.5)};
 
       // Inflowing load
-      arma::dvec8 nv_xxt_ifl {
-        dinfWindow.get_ifl_x<double>(nv_ifl_p, i, j, nm_xxt) %
-          nv_ifl_p
-      };
-      double ns_xxt_ifl {arma::accu(nv_xxt_ifl)};
+      double ns_xxt_ifl {arma::accu(
+        dinfWindow.get_ifl_x<double>(nv_ifl_p, i, j, nm_xxt)
+      )};
 
       // Retention
       double ns_xxr {ns_xxt_ifl * ns_rtc_ifl + ns_xxe * ns_rtc_lcl};
@@ -299,8 +297,7 @@ Rcpp::List transportCpp(
       // Inflowing channel load
       arma::dvec8 nv_xxt_cha {
         dinfWindow.get_ifl_x<double>(nv_ifl_p, i, j, nm_xxt) %
-          (dinfWindow.get_ifl_x<int>(nv_ifl_p, i, j, im_cha) > 0.0) %
-          nv_ifl_p
+          (dinfWindow.get_ifl_x<int>(nv_ifl_p, i, j, im_cha) > 0.0)
       };
       double ns_xxt_cha {arma::accu(nv_xxt_cha)};
       // Outlet load
@@ -343,7 +340,7 @@ Rcpp::List transportCpp(
 
     // Inflowing overland load
     arma::dvec8 nv_xxt_ifl {
-      dinfWindow.get_ifl_x<double>(nv_ifl_p, i, j, nm_xxt) % nv_ifl_p
+      dinfWindow.get_ifl_x<double>(nv_ifl_p, i, j, nm_xxt)
     };
     double ns_xxt_ifl {arma::accu(nv_xxt_ifl)};
     // Net emission

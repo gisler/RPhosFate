@@ -410,7 +410,7 @@ inline arma::dvec8 DinfWindow::get_ifl_x(
       )};
 
       if (ns_ifl > 0.0) {
-        nv_ifl[k] = ns_ifl;
+        nv_ifl[k] = ns_ifl * nv_ifl_p[k];
       }
     }
   }
