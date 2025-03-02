@@ -216,9 +216,10 @@ Rcpp::List transportCpp(
       double ns_xxt {ns_xxt_ifl + ns_xxe - ns_xxr};
       nm_xxt.at(i, j) = ns_xxt;
 
-      // Riparian zone or inlet cell (an outflowing instead of inflowing point of view is used in these cases)
+      // Riparian zone or inlet cell
       if (!Rcpp::IntegerMatrix::is_na(is_rip) ||
           !Rcpp::IntegerMatrix::is_na(is_inl)) {
+        // Outflowing instead of inflowing point of view
         FacetProperties fct {dinfWindow.get_ofl_facetProperties(ns_dir_inf, i, j)};
 
         // Riparian zone cell
@@ -238,12 +239,9 @@ Rcpp::List transportCpp(
 
           // Retention, transport and substance input (of riparian zone) into
           // surface water
-          double ns_xxt_x1 {ns_xxt * cha1cha2.fct.ns_p1};
-          double ns_xxt_x2 {ns_xxt * cha1cha2.fct.ns_p2};
           nm_xxt_inp.at(i, j) = dinfWindow.inc_ofl_x1x2(
             cha1cha2,
-            ns_xxt_x1 - ns_xxt_x1 * ns_rtc_rip,
-            ns_xxt_x2 - ns_xxt_x2 * ns_rtc_rip,
+            ns_xxt - ns_xxt * ns_rtc_rip,
             nm_xxt_rip
           );
         }
@@ -263,12 +261,13 @@ Rcpp::List transportCpp(
 
           // Retention, transport and (additional) substance input into surface
           // water
-          double ns_xxt_inp {ns_xxt_x1x2 * ns_tfc_inl};
-          double ns_xxt_inp_tmp {nm_xxt_inp.at(i, j)};
-          if (Rcpp::NumericMatrix::is_na(ns_xxt_inp_tmp)) {
-            ns_xxt_inp_tmp = 0.0;
+          ns_xxt_x1x2 *= ns_tfc_inl;
+          double ns_xxt_inp {nm_xxt_inp.at(i, j)};
+          if (Rcpp::NumericMatrix::is_na(ns_xxt_inp)) {
+            ns_xxt_inp = 0.0;
           }
-          nm_xxt_inp.at(i, j) = ns_xxt_inp_tmp + ns_xxt_inp; // A cell can be a riparian zone and inlet at the same time
+          ns_xxt_inp += ns_xxt_x1x2; // A cell can be a riparian zone and inlet at the same time
+          nm_xxt_inp.at(i, j) = ns_xxt_inp;
 
           // Outlet row and col from inlet code (C++ indices start at 0)
           std::div_t code {std::div(im_inl.at(i, j), dinfWindow.is_cls)};

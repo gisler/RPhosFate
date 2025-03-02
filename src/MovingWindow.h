@@ -34,9 +34,9 @@ struct X1X2 {
   FacetProperties fct {};
 
   // Constructor
-  X1X2(T NA_T):
-    x1 {NA_T},
-    x2 {NA_T}
+  X1X2(T NA_RTYPE):
+    x1 {NA_RTYPE},
+    x2 {NA_RTYPE}
   {}
 };
 
@@ -110,13 +110,12 @@ public:
   X1X2<T> get_ofl_x1x2(
     const FacetProperties& fct,
     const arma::Mat<T>& xm_xxx,
-    const T NA_T
+    const T NA_RTYPE
   );
 
   double inc_ofl_x1x2(
     const X1X2<int>& x1x2,
-    const double x1,
-    const double x2,
+    const double x,
     arma::dmat& nm_xxx
   );
 
@@ -248,7 +247,7 @@ inline FacetProperties DinfWindow::get_ofl_facetProperties(
 //'
 //' @param fct The FacetProperties struct of the examined cell.
 //' @param xm_xxx The matrix holding the values of the receiving neighbours.
-//' @param NA_T The NA value corresponding to the matrix's data type.
+//' @param NA_RTYPE The NA value corresponding to the matrix's data type.
 //'
 //' @return An X1X2 struct holding the values of the receiving neighbours x1 and
 //'   x2 and the DInf facet properties of the examined cell.
@@ -256,9 +255,9 @@ template <typename T>
 inline X1X2<T> DinfWindow::get_ofl_x1x2(
   const FacetProperties& fct,
   const arma::Mat<T>& xm_xxx,
-  const T NA_T
+  const T NA_RTYPE
 ) {
-  X1X2<T> x1x2(NA_T);
+  X1X2<T> x1x2(NA_RTYPE);
 
   if (!fct.ls_x1_oob) {
     x1x2.x1 = xm_xxx.at(fct.us_x1_r, fct.us_x1_c);
@@ -275,16 +274,14 @@ inline X1X2<T> DinfWindow::get_ofl_x1x2(
 //' Increase the existing values of the receiving neighbours x1 and x2
 //'
 //' In case a receiving neighbour is not out of bounds or NA_INTEGER in a
-//' conditional layer, its existing value is increased by the respective
+//' conditional layer, its existing value is increased proportionally by the
 //' provided value.
 //'
 //' @param x1x2 An X1X2<int> struct holding the values of the receiving
 //'   neighbours x1 and x2 of a conditional layer and the DInf facet properties
 //'   of the examined cell.
-//' @param x1 The value by which the existing value of the receiving neighbour
-//'   x1 in nm_xxx shall be increased.
-//' @param x2 The value by which the existing value of the receiving neighbour
-//'   x2 in nm_xxx shall be increased.
+//' @param x The value by which the existing values of the receiving neighbours
+//'   x1 and x2 in nm_xxx shall be proportionally increased.
 //' @param nm_xxx The numeric matrix holding the values of the receiving
 //'   neighbours x1 and x2, which shall be increased.
 //'
@@ -293,10 +290,10 @@ inline X1X2<T> DinfWindow::get_ofl_x1x2(
 //'   the total outflowing load.
 inline double DinfWindow::inc_ofl_x1x2(
   const X1X2<int>& x1x2,
-  const double x1,
-  const double x2,
+  const double x,
   arma::dmat& nm_xxx
 ) {
+  double ns_x1, ns_x2 {};
   double ns_xxx {0.0};
 
   if (!Rcpp::IntegerMatrix::is_na(x1x2.x1)) {
@@ -305,8 +302,9 @@ inline double DinfWindow::inc_ofl_x1x2(
       ns_xxx_x1 = 0.0;
     }
 
-    nm_xxx.at(x1x2.fct.us_x1_r, x1x2.fct.us_x1_c) = ns_xxx_x1 + x1;
-    ns_xxx += x1;
+    ns_x1 = x * x1x2.fct.ns_p1;
+    nm_xxx.at(x1x2.fct.us_x1_r, x1x2.fct.us_x1_c) = ns_xxx_x1 + ns_x1;
+    ns_xxx += ns_x1;
   }
 
   if (!Rcpp::IntegerMatrix::is_na(x1x2.x2)) {
@@ -315,8 +313,9 @@ inline double DinfWindow::inc_ofl_x1x2(
       ns_xxx_x2 = 0.0;
     }
 
-    nm_xxx.at(x1x2.fct.us_x2_r, x1x2.fct.us_x2_c) = ns_xxx_x2 + x2;
-    ns_xxx += x2;
+    ns_x2 = x * x1x2.fct.ns_p2;
+    nm_xxx.at(x1x2.fct.us_x2_r, x1x2.fct.us_x2_c) = ns_xxx_x2 + ns_x2;
+    ns_xxx += ns_x2;
   }
 
   return ns_xxx;
