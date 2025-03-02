@@ -239,7 +239,7 @@ Rcpp::List transportCpp(
 
           // Retention, transport and substance input (of riparian zone) into
           // surface water
-          nm_xxt_inp.at(i, j) = dinfWindow.inc_ofl_x1x2(
+          nm_xxt_inp.at(i, j) = dinfWindow.inc_ofl_x1x2<int, INTSXP>(
             cha1cha2,
             ns_xxt - ns_xxt * ns_rtc_rip,
             nm_xxt_rip

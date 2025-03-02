@@ -113,8 +113,9 @@ public:
     const T NA_RTYPE
   );
 
+  template <typename T, int RTYPE>
   double inc_ofl_x1x2(
-    const X1X2<int>& x1x2,
+    const X1X2<T>& x1x2,
     const double x,
     arma::dmat& nm_xxx
   );
@@ -273,47 +274,48 @@ inline X1X2<T> DinfWindow::get_ofl_x1x2(
 
 //' Increase the existing values of the receiving neighbours x1 and x2
 //'
-//' In case a receiving neighbour is not out of bounds or NA_INTEGER in a
+//' In case a receiving neighbour is not out of bounds or NA_RTYPE in a
 //' conditional layer, its existing value is increased proportionally by the
 //' provided value.
 //'
-//' @param x1x2 An X1X2<int> struct holding the values of the receiving
-//'   neighbours x1 and x2 of a conditional layer and the DInf facet properties
-//'   of the examined cell.
-//' @param x The value by which the existing values of the receiving neighbours
-//'   x1 and x2 in nm_xxx shall be proportionally increased.
+//' @param x1x2 An X1X2 struct holding the values of the receiving neighbours x1
+//'   and x2 of a conditional layer and the DInf facet properties of the
+//'   examined cell.
+//' @param ns_x The value by which the existing values of the receiving
+//'   neighbours x1 and x2 in nm_xxx shall be proportionally increased.
 //' @param nm_xxx The numeric matrix holding the values of the receiving
 //'   neighbours x1 and x2, which shall be increased.
 //'
 //' @return The sum of the values by which the existing values of the receiving
 //'   neighbours x1 and x2 of the examined cell were actually increased, i.e.
 //'   the total outflowing load.
+template <typename T, int RTYPE>
 inline double DinfWindow::inc_ofl_x1x2(
-  const X1X2<int>& x1x2,
-  const double x,
+  const X1X2<T>& x1x2,
+  const double ns_x,
   arma::dmat& nm_xxx
 ) {
   double ns_x1, ns_x2 {};
   double ns_xxx {0.0};
 
-  if (!Rcpp::IntegerMatrix::is_na(x1x2.x1)) {
+  if (!Rcpp::Matrix<RTYPE>::is_na(x1x2.x1)) {
     double ns_xxx_x1 {nm_xxx.at(x1x2.fct.us_x1_r, x1x2.fct.us_x1_c)};
     if (Rcpp::NumericMatrix::is_na(ns_xxx_x1)) {
       ns_xxx_x1 = 0.0;
     }
 
-    ns_x1 = x * x1x2.fct.ns_p1;
+    ns_x1 = ns_x * x1x2.fct.ns_p1;
     nm_xxx.at(x1x2.fct.us_x1_r, x1x2.fct.us_x1_c) = ns_xxx_x1 + ns_x1;
     ns_xxx += ns_x1;
   }
 
-  if (!Rcpp::IntegerMatrix::is_na(x1x2.x2)) {
+  if (!Rcpp::Matrix<RTYPE>::is_na(x1x2.x2)) {
     double ns_xxx_x2 {nm_xxx.at(x1x2.fct.us_x2_r, x1x2.fct.us_x2_c)};
     if (Rcpp::NumericMatrix::is_na(ns_xxx_x2)) {
       ns_xxx_x2 = 0.0;
     }
 
-    ns_x2 = x * x1x2.fct.ns_p2;
+    ns_x2 = ns_x * x1x2.fct.ns_p2;
     nm_xxx.at(x1x2.fct.us_x2_r, x1x2.fct.us_x2_c) = ns_xxx_x2 + ns_x2;
     ns_xxx += ns_x2;
   }
