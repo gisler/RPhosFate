@@ -216,7 +216,7 @@ Rcpp::List transportCpp(
       double ns_xxt {ns_xxt_ifl + ns_xxe - ns_xxr};
       nm_xxt.at(i, j) = ns_xxt;
 
-      // Riparian zone or inlet cell
+      // Riparian zone or inlet cell (an outflowing instead of inflowing point of view is used in these cases)
       if (!Rcpp::IntegerMatrix::is_na(is_rip) ||
           !Rcpp::IntegerMatrix::is_na(is_inl)) {
         FacetProperties fct {dinfWindow.get_ofl_facetProperties(ns_dir_inf, i, j)};
@@ -245,7 +245,7 @@ Rcpp::List transportCpp(
             ns_xxt_x1 - ns_xxt_x1 * ns_rtc_rip,
             ns_xxt_x2 - ns_xxt_x2 * ns_rtc_rip,
             nm_xxt_rip
-          ); // An outflowing instead of inflowing point of view is used here
+          );
         }
 
         // Inlet cell
