@@ -34,9 +34,9 @@ struct X1X2 {
   FacetProperties fct {};
 
   // Constructor
-  X1X2(T NA_):
-    x1 {NA_},
-    x2 {NA_}
+  X1X2(T NA_T):
+    x1 {NA_T},
+    x2 {NA_T}
   {}
 };
 
@@ -110,7 +110,7 @@ public:
   X1X2<T> get_ofl_x1x2(
     const FacetProperties& fct,
     const arma::Mat<T>& xm_xxx,
-    const T NA_
+    const T NA_T
   );
 
   double inc_ofl_x1x2(
@@ -127,7 +127,7 @@ public:
   );
 
   template <typename T>
-  arma::dvec8 get_ifl_x(
+  arma::dvec8 get_ifl_xp(
     const arma::dvec8& nv_ifl_p,
     const arma::uword us_row,
     const arma::uword us_col,
@@ -248,7 +248,7 @@ inline FacetProperties DinfWindow::get_ofl_facetProperties(
 //'
 //' @param fct The FacetProperties struct of the examined cell.
 //' @param xm_xxx The matrix holding the values of the receiving neighbours.
-//' @param NA_ The NA value corresponding to the matrix's data type.
+//' @param NA_T The NA value corresponding to the matrix's data type.
 //'
 //' @return An X1X2 struct holding the values of the receiving neighbours x1 and
 //'   x2 and the DInf facet properties of the examined cell.
@@ -256,9 +256,9 @@ template <typename T>
 inline X1X2<T> DinfWindow::get_ofl_x1x2(
   const FacetProperties& fct,
   const arma::Mat<T>& xm_xxx,
-  const T NA_
+  const T NA_T
 ) {
-  X1X2<T> x1x2(NA_);
+  X1X2<T> x1x2(NA_T);
 
   if (!fct.ls_x1_oob) {
     x1x2.x1 = xm_xxx.at(fct.us_x1_r, fct.us_x1_c);
@@ -324,6 +324,9 @@ inline double DinfWindow::inc_ofl_x1x2(
 
 //' Determine the DInf inflow proportions
 //'
+//' In case a neighbour of the examined cell is out of bounds, its inflow
+//' proportion is set to 0.0.
+//'
 //' @param nm_dir_inf The numeric matrix holding the DInf flow directions.
 //' @param us_row The row index of the examined cell.
 //' @param us_col The column index of the examined cell.
@@ -385,6 +388,9 @@ inline arma::dvec8 DinfWindow::get_ifl_p(
 
 //' Determine the loads flowing into the examined cell
 //'
+//' Multiplies the total loads of the eight neighbours of the examined cell with
+//' their respective inflow proportions.
+//'
 //' @param nv_ifl_p The vector holding the DInf inflow proportions of the eight
 //'   neighbours of the examined cell.
 //' @param us_row The row index of the examined cell.
@@ -395,7 +401,7 @@ inline arma::dvec8 DinfWindow::get_ifl_p(
 //' @return A vector holding the loads flowing into the examined cell from its
 //'   eight neighbours.
 template <typename T>
-inline arma::dvec8 DinfWindow::get_ifl_x(
+inline arma::dvec8 DinfWindow::get_ifl_xp(
   const arma::dvec8& nv_ifl_p,
   const arma::uword us_row,
   const arma::uword us_col,
@@ -409,7 +415,7 @@ inline arma::dvec8 DinfWindow::get_ifl_x(
         xm_xxx.at(us_row + ifl.iv_dr[k], us_col + ifl.iv_dc[k])
       )};
 
-      if (ns_ifl > 0.0) {
+      if (ns_ifl > 0.0) { // ns_ifl can be NA_REAL
         nv_ifl[k] = ns_ifl * nv_ifl_p[k];
       }
     }

@@ -42,19 +42,19 @@ Rcpp::List transportCpp(
 
       if (Rcpp::NumericMatrix::is_na(nm_acc_inf.at(i, j)) ||
           Rcpp::NumericMatrix::is_na(ns_dir_inf) ||
-          ns_dir_inf == -1.0) {
+          ns_dir_inf == -1.0) { // A value of -1.0 is used by the WhiteboxTool DInfPointer to designate cells with no flow direction
         continue;
       }
 
       arma::dvec8 nv_ifl_p {dinfWindow.get_ifl_p(nm_dir_inf, i, j)};
       im_ifl.at(i, j) = arma::accu(
-        dinfWindow.get_ifl_x<double>(nv_ifl_p, i, j, nm_acc_inf) > 0.0
-      ); // The flow accumulation can be NA where the flow direction and therefore the inflow proportion is not (e.g. roads)
+        dinfWindow.get_ifl_xp<double>(nv_ifl_p, i, j, nm_acc_inf) > 0.0
+      ); // The flow accumulation can be NA_REAL where the flow direction and therefore the inflow proportion is not (e.g. roads)
     }
   }
 
-  /* Determine order of rows and cols indices
-   * ----------------------------------------
+  /* Determine order of row and column indices
+   * -----------------------------------------
    */
   CalcOrder ord(arma::accu(im_ifl >= 0));
 
@@ -206,7 +206,7 @@ Rcpp::List transportCpp(
 
       // Inflowing load
       double ns_xxt_ifl {arma::accu(
-        dinfWindow.get_ifl_x<double>(nv_ifl_p, i, j, nm_xxt)
+        dinfWindow.get_ifl_xp<double>(nv_ifl_p, i, j, nm_xxt)
       )};
 
       // Retention
@@ -245,7 +245,7 @@ Rcpp::List transportCpp(
             ns_xxt_x1 - ns_xxt_x1 * ns_rtc_rip,
             ns_xxt_x2 - ns_xxt_x2 * ns_rtc_rip,
             nm_xxt_rip
-          );
+          ); // An outflowing instead of inflowing point of view is used here
         }
 
         // Inlet cell
@@ -268,7 +268,7 @@ Rcpp::List transportCpp(
           if (Rcpp::NumericMatrix::is_na(ns_xxt_inp_tmp)) {
             ns_xxt_inp_tmp = 0.0;
           }
-          nm_xxt_inp.at(i, j) = ns_xxt_inp_tmp + ns_xxt_inp;
+          nm_xxt_inp.at(i, j) = ns_xxt_inp_tmp + ns_xxt_inp; // A cell can be a riparian zone and inlet at the same time
 
           // Outlet row and col from inlet code (C++ indices start at 0)
           std::div_t code {std::div(im_inl.at(i, j), dinfWindow.is_cls)};
@@ -296,8 +296,8 @@ Rcpp::List transportCpp(
       }
       // Inflowing channel load
       arma::dvec8 nv_xxt_cha {
-        dinfWindow.get_ifl_x<double>(nv_ifl_p, i, j, nm_xxt) %
-          (dinfWindow.get_ifl_x<int>(nv_ifl_p, i, j, im_cha) > 0.0)
+        dinfWindow.get_ifl_xp<double>(nv_ifl_p, i, j, nm_xxt) %
+          (dinfWindow.get_ifl_xp<int>(nv_ifl_p, i, j, im_cha) > 0.0)
       };
       double ns_xxt_cha {arma::accu(nv_xxt_cha)};
       // Outlet load
@@ -340,7 +340,7 @@ Rcpp::List transportCpp(
 
     // Inflowing overland load
     arma::dvec8 nv_xxt_ifl {
-      dinfWindow.get_ifl_x<double>(nv_ifl_p, i, j, nm_xxt)
+      dinfWindow.get_ifl_xp<double>(nv_ifl_p, i, j, nm_xxt)
     };
     double ns_xxt_ifl {arma::accu(nv_xxt_ifl)};
     // Net emission
