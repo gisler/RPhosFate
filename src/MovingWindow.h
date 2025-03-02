@@ -272,7 +272,8 @@ inline X1X2<T> DinfWindow::get_ofl_x1x2(
   return x1x2;
 }
 
-//' Increase the existing values of the receiving neighbours x1 and x2
+//' Proportionally increase the existing values of the receiving neighbours x1
+//' and x2
 //'
 //' In case a receiving neighbour is not out of bounds or NA_RTYPE in a
 //' conditional layer, its existing value is increased proportionally by the
