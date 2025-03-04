@@ -282,6 +282,7 @@ Rcpp::List transportCpp(
           nm_xxt_out(us_row, us_col) = ns_xxt_out + ns_xxt_inp;
         }
       }
+
     // Channel cell
     } else {
       // Retention coefficients

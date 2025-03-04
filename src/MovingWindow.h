@@ -296,7 +296,7 @@ inline double DinfWindow::inc_ofl_x1x2(
   const double ns_x,
   arma::dmat& nm_xxx
 ) {
-  double ns_x1, ns_x2 {};
+  double ns_x1 {}, ns_x2 {};
   double ns_xxx {0.0};
 
   if (!Rcpp::Matrix<RTYPE>::is_na(x1x2.x1)) {
