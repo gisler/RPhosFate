@@ -2,7 +2,7 @@
 #ifdef _OPENMP
 #include <omp.h>
 #endif
-#include "MovingWindow.h"
+#include "DInfWindow.h"
 
 // #define DEBUGGING
 
