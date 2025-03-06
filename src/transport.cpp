@@ -379,12 +379,12 @@ Rcpp::List transportCpp(
 
       if (nv_ifl_p[k] > 0.0 &&
           !Rcpp::NumericMatrix::is_na(nm_acc_inf.at(us_row, us_col))) {
-        double ns_xxt_ctf_tmp {nm_xxt_ctf.at(us_row, us_col)};
-        if (Rcpp::NumericMatrix::is_na(ns_xxt_ctf_tmp)) {
-          ns_xxt_ctf_tmp = 0.0;
+        double ns_xxt_ctf_old {nm_xxt_ctf.at(us_row, us_col)};
+        if (Rcpp::NumericMatrix::is_na(ns_xxt_ctf_old)) {
+          ns_xxt_ctf_old = 0.0;
         }
 
-        nm_xxt_ctf.at(us_row, us_col) = ns_xxt_ctf_tmp +
+        nm_xxt_ctf.at(us_row, us_col) = ns_xxt_ctf_old +
           ns_xxt_ctf * nv_xxt_ifl[k] / ns_xxt_ifl;
       }
     }

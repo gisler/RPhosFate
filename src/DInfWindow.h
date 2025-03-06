@@ -296,7 +296,6 @@ inline double DinfWindow::inc_ofl_x1x2(
   const double ns_x,
   arma::dmat& nm_xxx
 ) {
-  double ns_x1 {}, ns_x2 {};
   double ns_xxx {0.0};
 
   if (!Rcpp::Matrix<RTYPE>::is_na(x1x2.x1)) {
@@ -305,7 +304,7 @@ inline double DinfWindow::inc_ofl_x1x2(
       ns_xxx_x1 = 0.0;
     }
 
-    ns_x1 = ns_x * x1x2.fct.ns_p1;
+    double ns_x1 {ns_x * x1x2.fct.ns_p1};
     nm_xxx.at(x1x2.fct.us_x1_r, x1x2.fct.us_x1_c) = ns_xxx_x1 + ns_x1;
     ns_xxx += ns_x1;
   }
@@ -316,7 +315,7 @@ inline double DinfWindow::inc_ofl_x1x2(
       ns_xxx_x2 = 0.0;
     }
 
-    ns_x2 = ns_x * x1x2.fct.ns_p2;
+    double ns_x2 {ns_x * x1x2.fct.ns_p2};
     nm_xxx.at(x1x2.fct.us_x2_r, x1x2.fct.us_x2_c) = ns_xxx_x2 + ns_x2;
     ns_xxx += ns_x2;
   }
