@@ -11,23 +11,9 @@ Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
 Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
 #endif
 
-// DInfSlopeCpp
-arma::dmat DInfSlopeCpp(const arma::dmat& nm_dir_inf, const arma::dmat& nm_dem, const double ns_res, const int is_ths);
-RcppExport SEXP _RPhosFate_DInfSlopeCpp(SEXP nm_dir_infSEXP, SEXP nm_demSEXP, SEXP ns_resSEXP, SEXP is_thsSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const arma::dmat& >::type nm_dir_inf(nm_dir_infSEXP);
-    Rcpp::traits::input_parameter< const arma::dmat& >::type nm_dem(nm_demSEXP);
-    Rcpp::traits::input_parameter< const double >::type ns_res(ns_resSEXP);
-    Rcpp::traits::input_parameter< const int >::type is_ths(is_thsSEXP);
-    rcpp_result_gen = Rcpp::wrap(DInfSlopeCpp(nm_dir_inf, nm_dem, ns_res, is_ths));
-    return rcpp_result_gen;
-END_RCPP
-}
-// ripInlCpp
-Rcpp::List ripInlCpp(const arma::dmat& nm_dir_inf, const arma::imat& im_cha, const arma::imat& im_rds, const int is_ths);
-RcppExport SEXP _RPhosFate_ripInlCpp(SEXP nm_dir_infSEXP, SEXP im_chaSEXP, SEXP im_rdsSEXP, SEXP is_thsSEXP) {
+// dinfRipInlCpp
+Rcpp::List dinfRipInlCpp(const arma::dmat& nm_dir_inf, const arma::imat& im_cha, const arma::imat& im_rds, const int is_ths);
+RcppExport SEXP _RPhosFate_dinfRipInlCpp(SEXP nm_dir_infSEXP, SEXP im_chaSEXP, SEXP im_rdsSEXP, SEXP is_thsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -35,13 +21,27 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const arma::imat& >::type im_cha(im_chaSEXP);
     Rcpp::traits::input_parameter< const arma::imat& >::type im_rds(im_rdsSEXP);
     Rcpp::traits::input_parameter< const int >::type is_ths(is_thsSEXP);
-    rcpp_result_gen = Rcpp::wrap(ripInlCpp(nm_dir_inf, im_cha, im_rds, is_ths));
+    rcpp_result_gen = Rcpp::wrap(dinfRipInlCpp(nm_dir_inf, im_cha, im_rds, is_ths));
     return rcpp_result_gen;
 END_RCPP
 }
-// transportCpp
-Rcpp::List transportCpp(const arma::dmat& nm_acc_inf, const arma::dmat& nm_dir_inf, const arma::dmat& nm_slp_cap, const arma::dmat& nm_man, const arma::dmat& nm_xxe, const arma::imat& im_cha, const arma::imat& im_rds, const arma::imat& im_rip, const arma::imat& im_inl, const Rcpp::String& substance, const Rcpp::S4& parameters, const Rcpp::S4& helpers, const int is_ths);
-RcppExport SEXP _RPhosFate_transportCpp(SEXP nm_acc_infSEXP, SEXP nm_dir_infSEXP, SEXP nm_slp_capSEXP, SEXP nm_manSEXP, SEXP nm_xxeSEXP, SEXP im_chaSEXP, SEXP im_rdsSEXP, SEXP im_ripSEXP, SEXP im_inlSEXP, SEXP substanceSEXP, SEXP parametersSEXP, SEXP helpersSEXP, SEXP is_thsSEXP) {
+// dinfSlopeCpp
+arma::dmat dinfSlopeCpp(const arma::dmat& nm_dir_inf, const arma::dmat& nm_dem, const double ns_res, const int is_ths);
+RcppExport SEXP _RPhosFate_dinfSlopeCpp(SEXP nm_dir_infSEXP, SEXP nm_demSEXP, SEXP ns_resSEXP, SEXP is_thsSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const arma::dmat& >::type nm_dir_inf(nm_dir_infSEXP);
+    Rcpp::traits::input_parameter< const arma::dmat& >::type nm_dem(nm_demSEXP);
+    Rcpp::traits::input_parameter< const double >::type ns_res(ns_resSEXP);
+    Rcpp::traits::input_parameter< const int >::type is_ths(is_thsSEXP);
+    rcpp_result_gen = Rcpp::wrap(dinfSlopeCpp(nm_dir_inf, nm_dem, ns_res, is_ths));
+    return rcpp_result_gen;
+END_RCPP
+}
+// dinfTransportCpp
+Rcpp::List dinfTransportCpp(const arma::dmat& nm_acc_inf, const arma::dmat& nm_dir_inf, const arma::dmat& nm_slp_cap, const arma::dmat& nm_man, const arma::dmat& nm_xxe, const arma::imat& im_cha, const arma::imat& im_rds, const arma::imat& im_rip, const arma::imat& im_inl, const Rcpp::String& substance, const Rcpp::S4& parameters, const Rcpp::S4& helpers, const int is_ths);
+RcppExport SEXP _RPhosFate_dinfTransportCpp(SEXP nm_acc_infSEXP, SEXP nm_dir_infSEXP, SEXP nm_slp_capSEXP, SEXP nm_manSEXP, SEXP nm_xxeSEXP, SEXP im_chaSEXP, SEXP im_rdsSEXP, SEXP im_ripSEXP, SEXP im_inlSEXP, SEXP substanceSEXP, SEXP parametersSEXP, SEXP helpersSEXP, SEXP is_thsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -58,15 +58,15 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const Rcpp::S4& >::type parameters(parametersSEXP);
     Rcpp::traits::input_parameter< const Rcpp::S4& >::type helpers(helpersSEXP);
     Rcpp::traits::input_parameter< const int >::type is_ths(is_thsSEXP);
-    rcpp_result_gen = Rcpp::wrap(transportCpp(nm_acc_inf, nm_dir_inf, nm_slp_cap, nm_man, nm_xxe, im_cha, im_rds, im_rip, im_inl, substance, parameters, helpers, is_ths));
+    rcpp_result_gen = Rcpp::wrap(dinfTransportCpp(nm_acc_inf, nm_dir_inf, nm_slp_cap, nm_man, nm_xxe, im_cha, im_rds, im_rip, im_inl, substance, parameters, helpers, is_ths));
     return rcpp_result_gen;
 END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_RPhosFate_DInfSlopeCpp", (DL_FUNC) &_RPhosFate_DInfSlopeCpp, 4},
-    {"_RPhosFate_ripInlCpp", (DL_FUNC) &_RPhosFate_ripInlCpp, 4},
-    {"_RPhosFate_transportCpp", (DL_FUNC) &_RPhosFate_transportCpp, 13},
+    {"_RPhosFate_dinfRipInlCpp", (DL_FUNC) &_RPhosFate_dinfRipInlCpp, 4},
+    {"_RPhosFate_dinfSlopeCpp", (DL_FUNC) &_RPhosFate_dinfSlopeCpp, 4},
+    {"_RPhosFate_dinfTransportCpp", (DL_FUNC) &_RPhosFate_dinfTransportCpp, 13},
     {NULL, NULL, 0}
 };
 

@@ -313,7 +313,7 @@ setMethod(
     on.exit(setwd(cs_dir_old))
 
     # Riparian zone and inlet cells
-    li_rip_inl <- ripInlCpp(
+    li_rip_inl <- dinfRipInlCpp(
       nm_dir_inf = as.matrix(x@topo@rl_dir_inf, wide = TRUE),
       im_cha = as.matrix(x@topo@rl_cha, wide = TRUE),
       im_rds = as.matrix(x@topo@rl_rds, wide = TRUE),
@@ -430,7 +430,7 @@ setMethod(
     cs_dir_old <- setwd(file.path(x@cv_dir[1L], "Result"))
     on.exit(setwd(cs_dir_old))
 
-    li_tpt <- transportCpp(
+    li_tpt <- dinfTransportCpp(
       nm_acc_inf = as.matrix(x@topo@rl_acc_inf, wide = TRUE),
       nm_dir_inf = as.matrix(x@topo@rl_dir_inf, wide = TRUE),
       nm_slp_cap = as.matrix(x@topo@rl_slp_cap, wide = TRUE),

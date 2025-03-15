@@ -530,7 +530,7 @@ DEMrelatedInput <- function(
   )
 
   # Calculate (original oversized DEM) and extract DInf slopes by watershed
-  nm_slp_inf_ovr <- DInfSlopeCpp(
+  nm_slp_inf_ovr <- dinfSlopeCpp(
     nm_dir_inf = as.matrix(extend(rl_dir_inf, rl_dem_ovr), wide = TRUE),
     nm_dem = as.matrix(rl_dem_ovr, wide = TRUE),
     ns_res = xres(rl_dem_ovr),

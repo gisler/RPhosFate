@@ -5,7 +5,7 @@
 #include "DInfWindow.h"
 
 // [[Rcpp::export]]
-Rcpp::List ripInlCpp(
+Rcpp::List dinfRipInlCpp(
   const arma::dmat& nm_dir_inf,
   const arma::imat& im_cha,
   const arma::imat& im_rds,

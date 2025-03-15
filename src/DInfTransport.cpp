@@ -7,7 +7,7 @@
 // #define DEBUGGING
 
 // [[Rcpp::export]]
-Rcpp::List transportCpp(
+Rcpp::List dinfTransportCpp(
   const arma::dmat& nm_acc_inf,
   const arma::dmat& nm_dir_inf,
   const arma::dmat& nm_slp_cap,

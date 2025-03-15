@@ -5,7 +5,7 @@
 #include "DInfWindow.h"
 
 // [[Rcpp::export]]
-arma::dmat DInfSlopeCpp(
+arma::dmat dinfSlopeCpp(
   const arma::dmat& nm_dir_inf,
   const arma::dmat& nm_dem,
   const double ns_res,
