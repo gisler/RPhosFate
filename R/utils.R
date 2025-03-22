@@ -131,7 +131,7 @@ readParameters <- function(arguments) {
   parameters <- read_yaml("parameters.yaml")
 
   if (as.package_version(parameters[["RPhosFate"]]) <
-      as.package_version("2.0.0")) {
+        as.package_version("2.0.0")) {
     parameters[["iv_fDo"]] <- NULL
 
     warning(
