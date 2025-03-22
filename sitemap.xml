@@ -1,93 +1,32 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://gisler.github.io/RPhosFate/404.html</loc>
-  </url>
-  <url>
-    <loc>https://gisler.github.io/RPhosFate/CONTRIBUTING.html</loc>
-  </url>
-  <url>
-    <loc>https://gisler.github.io/RPhosFate/LICENSE.html</loc>
-  </url>
-  <url>
-    <loc>https://gisler.github.io/RPhosFate/articles/basicWorkflow.html</loc>
-  </url>
-  <url>
-    <loc>https://gisler.github.io/RPhosFate/articles/index.html</loc>
-  </url>
-  <url>
-    <loc>https://gisler.github.io/RPhosFate/authors.html</loc>
-  </url>
-  <url>
-    <loc>https://gisler.github.io/RPhosFate/index.html</loc>
-  </url>
-  <url>
-    <loc>https://gisler.github.io/RPhosFate/news/index.html</loc>
-  </url>
-  <url>
-    <loc>https://gisler.github.io/RPhosFate/pull_request_template.html</loc>
-  </url>
-  <url>
-    <loc>https://gisler.github.io/RPhosFate/reference/DEMrelatedInput.html</loc>
-  </url>
-  <url>
-    <loc>https://gisler.github.io/RPhosFate/reference/RPhosFate-class.html</loc>
-  </url>
-  <url>
-    <loc>https://gisler.github.io/RPhosFate/reference/autoCalibrate-RPhosFate-method.html</loc>
-  </url>
-  <url>
-    <loc>https://gisler.github.io/RPhosFate/reference/autoCalibrate2-RPhosFate-method.html</loc>
-  </url>
-  <url>
-    <loc>https://gisler.github.io/RPhosFate/reference/calibrationQuality-RPhosFate-method.html</loc>
-  </url>
-  <url>
-    <loc>https://gisler.github.io/RPhosFate/reference/catchment.html</loc>
-  </url>
-  <url>
-    <loc>https://gisler.github.io/RPhosFate/reference/demoProject.html</loc>
-  </url>
-  <url>
-    <loc>https://gisler.github.io/RPhosFate/reference/emission-RPhosFate-method.html</loc>
-  </url>
-  <url>
-    <loc>https://gisler.github.io/RPhosFate/reference/erosion-RPhosFate-method.html</loc>
-  </url>
-  <url>
-    <loc>https://gisler.github.io/RPhosFate/reference/erosionPrerequisites-RPhosFate-method.html</loc>
-  </url>
-  <url>
-    <loc>https://gisler.github.io/RPhosFate/reference/firstRun-RPhosFate-method.html</loc>
-  </url>
-  <url>
-    <loc>https://gisler.github.io/RPhosFate/reference/getLayer-RPhosFate-method.html</loc>
-  </url>
-  <url>
-    <loc>https://gisler.github.io/RPhosFate/reference/getParameter-RPhosFate-method.html</loc>
-  </url>
-  <url>
-    <loc>https://gisler.github.io/RPhosFate/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>https://gisler.github.io/RPhosFate/reference/saveState-RPhosFate-method.html</loc>
-  </url>
-  <url>
-    <loc>https://gisler.github.io/RPhosFate/reference/setParameter-RPhosFate-method.html</loc>
-  </url>
-  <url>
-    <loc>https://gisler.github.io/RPhosFate/reference/snapGauges-RPhosFate-method.html</loc>
-  </url>
-  <url>
-    <loc>https://gisler.github.io/RPhosFate/reference/subsequentRun-RPhosFate-method.html</loc>
-  </url>
-  <url>
-    <loc>https://gisler.github.io/RPhosFate/reference/transport-RPhosFate-method.html</loc>
-  </url>
-  <url>
-    <loc>https://gisler.github.io/RPhosFate/reference/transportCalcOrder-RPhosFate-method.html</loc>
-  </url>
-  <url>
-    <loc>https://gisler.github.io/RPhosFate/reference/transportPrerequisites-RPhosFate-method.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>https://gisler.github.io/RPhosFate/404.html</loc></url>
+<url><loc>https://gisler.github.io/RPhosFate/CONTRIBUTING.html</loc></url>
+<url><loc>https://gisler.github.io/RPhosFate/LICENSE.html</loc></url>
+<url><loc>https://gisler.github.io/RPhosFate/articles/basicWorkflow.html</loc></url>
+<url><loc>https://gisler.github.io/RPhosFate/articles/index.html</loc></url>
+<url><loc>https://gisler.github.io/RPhosFate/authors.html</loc></url>
+<url><loc>https://gisler.github.io/RPhosFate/index.html</loc></url>
+<url><loc>https://gisler.github.io/RPhosFate/news/index.html</loc></url>
+<url><loc>https://gisler.github.io/RPhosFate/reference/DEMrelatedInput.html</loc></url>
+<url><loc>https://gisler.github.io/RPhosFate/reference/RPhosFate-class.html</loc></url>
+<url><loc>https://gisler.github.io/RPhosFate/reference/autoCalibrate-RPhosFate-method.html</loc></url>
+<url><loc>https://gisler.github.io/RPhosFate/reference/autoCalibrate2-RPhosFate-method.html</loc></url>
+<url><loc>https://gisler.github.io/RPhosFate/reference/calibrationQuality-RPhosFate-method.html</loc></url>
+<url><loc>https://gisler.github.io/RPhosFate/reference/catchment.html</loc></url>
+<url><loc>https://gisler.github.io/RPhosFate/reference/demoProject.html</loc></url>
+<url><loc>https://gisler.github.io/RPhosFate/reference/emission-RPhosFate-method.html</loc></url>
+<url><loc>https://gisler.github.io/RPhosFate/reference/erosion-RPhosFate-method.html</loc></url>
+<url><loc>https://gisler.github.io/RPhosFate/reference/erosionPrerequisites-RPhosFate-method.html</loc></url>
+<url><loc>https://gisler.github.io/RPhosFate/reference/firstRun-RPhosFate-method.html</loc></url>
+<url><loc>https://gisler.github.io/RPhosFate/reference/getLayer-RPhosFate-method.html</loc></url>
+<url><loc>https://gisler.github.io/RPhosFate/reference/getParameter-RPhosFate-method.html</loc></url>
+<url><loc>https://gisler.github.io/RPhosFate/reference/img2tif.html</loc></url>
+<url><loc>https://gisler.github.io/RPhosFate/reference/index.html</loc></url>
+<url><loc>https://gisler.github.io/RPhosFate/reference/saveState-RPhosFate-method.html</loc></url>
+<url><loc>https://gisler.github.io/RPhosFate/reference/setParameter-RPhosFate-method.html</loc></url>
+<url><loc>https://gisler.github.io/RPhosFate/reference/snapGauges-RPhosFate-method.html</loc></url>
+<url><loc>https://gisler.github.io/RPhosFate/reference/subsequentRun-RPhosFate-method.html</loc></url>
+<url><loc>https://gisler.github.io/RPhosFate/reference/transport-RPhosFate-method.html</loc></url>
+<url><loc>https://gisler.github.io/RPhosFate/reference/transportPrerequisites-RPhosFate-method.html</loc></url>
 </urlset>
+
