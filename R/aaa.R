@@ -377,12 +377,12 @@ setMethod(
     .Object@substances <- new("RPhosFateSubstances", .Object)
 
     if (.Object@ls_ini) {
-      if (file.exists("parameters.yaml")) {
-        arguments <- readParameters(arguments)
-        argumentNames <- names(arguments)
-      } else {
+      if (!file.exists("parameters.yaml")) {
         stop('"parameters.yaml" file does not exist.')
       }
+
+      arguments <- readParameters(arguments)
+      argumentNames <- names(arguments)
     }
     arguments <- arguments[setdiff(
       argumentNames,

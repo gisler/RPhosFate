@@ -58,11 +58,11 @@ setMethod(
       assertSubset(i, sub("^rl_", "", slotNames(slot(x@substances, j))))
 
       return(slot(slot(x@substances, j), sprintf("rl_%s", i)))
-    } else {
-      for (object in c("topo", "erosion", "transport")) {
-        if (i %in% sub("^rl_", "", slotNames(slot(x, object)))) {
-          return(slot(slot(x, object), sprintf("rl_%s", i)))
-        }
+    }
+
+    for (object in c("topo", "erosion", "transport")) {
+      if (i %in% sub("^rl_", "", slotNames(slot(x, object)))) {
+        return(slot(slot(x, object), sprintf("rl_%s", i)))
       }
     }
 
