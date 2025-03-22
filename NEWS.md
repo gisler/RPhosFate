@@ -1,4 +1,4 @@
-# RPhosFate v1.0.4.9006
+# RPhosFate v2.0.0
 
 This version introduces a new flow method, but also comes with several breaking changes.
 
