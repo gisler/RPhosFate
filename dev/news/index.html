@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">RPhosFate</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.0.4.9006</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">2.0.1.9000</span>
       </span>
     </div>
 
@@ -83,15 +83,18 @@
     </div>
 
     <div class="section level2">
-<h2 class="page-header" data-toc-text="1.0.4.9006" id="rphosfate-v1049006">RPhosFate v1.0.4.9006<a class="anchor" aria-label="anchor" href="#rphosfate-v1049006"></a></h2>
+<h2 class="page-header" data-toc-text="2.0.1.9000" id="rphosfate-v2019000">RPhosFate v2.0.1.9000<a class="anchor" aria-label="anchor" href="#rphosfate-v2019000"></a></h2>
+</div>
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="2.0.1" id="rphosfate-v201">RPhosFate v2.0.1<a class="anchor" aria-label="anchor" href="#rphosfate-v201"></a></h2>
 <p>This version introduces a new flow method, but also comes with several breaking changes.</p>
 <div class="section level3">
-<h3 id="overview-1-0-4-9006">Overview<a class="anchor" aria-label="anchor" href="#overview-1-0-4-9006"></a></h3>
+<h3 id="overview-2-0-1">Overview<a class="anchor" aria-label="anchor" href="#overview-2-0-1"></a></h3>
 <ul><li>Use of the D-infinity (Tarboton, <a href="https://doi.org/10.1029/96WR03137" class="external-link">1997</a>) instead of the D8 flow method, however, the D8 flow method can still be mimicked by rounding D-infinity flow directions to the nearest multiple of 45 degrees.</li>
 <li>Weighted flow accumulations are no longer supported for the time being.</li>
 <li>The basis for the calculation of the D-infinity slopes is the original digital elevation model and not the breached one with reversed stream burning as it used to be for the calculation of the D8 slopes.</li>
 <li>The default value for the parameter holding the minimum bounding slope <em>(ns_slp_min)</em> is now 1 instead of 0.001%.</li>
-<li>The L factor is now calculated using equation (9) as published by Desmet and Govers (<a href="https://www.jswconline.org/content/51/5/427" class="external-link">1996</a>) and not as modified by Kovacs (<a href="http://hdl.handle.net/20.500.12708/9468" class="external-link">2013</a>).</li>
+<li>The L factor is now calculated using equation (9) as published by Desmet and Govers (<a href="https://www.tandfonline.com/doi/abs/10.1080/00224561.1996.12457102" class="external-link">1996</a>) and not as modified by Kovacs (<a href="http://hdl.handle.net/20.500.12708/9468" class="external-link">2013</a>).</li>
 <li>The channel retentions of the substance outlet loads of subsurface drainages are now calculated analogous to the overland retentions of the local emissions, i.e. by using half of the respective flow path length.</li>
 <li>
 <code>RPhosFate</code> now utilises the <code>terra</code> instead of the <code>raster</code> package.</li>
@@ -99,7 +102,7 @@
 <li>Dropped backward compatibility to major version zero.</li>
 </ul></div>
 <div class="section level3">
-<h3 id="technical-details-1-0-4-9006">Technical details<a class="anchor" aria-label="anchor" href="#technical-details-1-0-4-9006"></a></h3>
+<h3 id="technical-details-2-0-1">Technical details<a class="anchor" aria-label="anchor" href="#technical-details-2-0-1"></a></h3>
 <ul><li>Input data changes:
 <ul><li>Removed the layers holding the (weighted) D8 flow accumulations (<em>acc</em> and <em>acc_wtd</em>) and added <em>acc_inf</em> holding the D-infinity flow accumulations.</li>
 <li>Removed the layer holding the D8 flow directions <em>(dir)</em> and added <em>dir_inf</em> holding the D-infinity flow directions.</li>
