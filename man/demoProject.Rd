@@ -19,7 +19,7 @@ Copies a demonstration project to an existing or a temporary directory.
 The demonstration project data are a derivative of the
 \itemize{
 \item \emph{\href{https://www.data.gv.at/katalog/dataset/d88a1246-9684-480b-a480-ff63286b35b7}{Geoland.at}} (digital elevation model),
-\item \emph{\href{https://www.data.gv.at/katalog/dataset/35e36014-ec69-439b-8629-389f52ffaa92}{AMA}} (field data),
+\item \emph{AMA} (field data; utilised dataset with the ID 35e36014-ec69-439b-8629-389f52ffaa92 was removed from \href{https://www.data.gv.at}{Offene Daten Österreich}),
 \item \emph{\href{https://www.data.gv.at/katalog/dataset/c2287ccb-f44c-48cd-bf7c-ac107b771246}{BMLRT}} (channel data) and
 \item \emph{\href{https://www.data.gv.at/katalog/dataset/3fefc838-791d-4dde-975b-a4131a54e7c5}{GIP.at}} (road data)
 }
