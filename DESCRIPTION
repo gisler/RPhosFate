@@ -22,7 +22,7 @@ Encoding: UTF-8
 LazyData: true
 ByteCompile: true
 Depends:
-    R (>= 3.5.0)
+    R (>= 4.0.0)
 Imports:
     checkmate,
     graphics,

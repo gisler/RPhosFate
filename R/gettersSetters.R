@@ -66,7 +66,7 @@ setMethod(
       }
     }
 
-    stop(sprintf("Layer %s was not found.", deparse(i)))
+    stop(sprintf("Layer %s was not found.", deparse1(i)))
   }
 )
 #' @rdname getLayer-RPhosFate-method
