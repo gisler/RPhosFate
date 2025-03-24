@@ -31,7 +31,7 @@ This version introduces a new flow method, but also comes with several breaking 
   * Removal of the `cs_wgs` and `cs_dir` arguments: These input data are no longer supported for the time being.
 * Switched to utilising the `SpatRaster` and `SpatVector` classes from the `terra` package instead of the `RasterLayer` class from the `raster` and the `Spatial*DataFrame` classes from the `sp` packages.
 * Added `is_ths` argument to the `RPhosFate()` and `catchment()` constructors: allows for specifying the number of threads to use for processing, where applicable.
-* Removed the layer holding the hydraulic radii _(rhy),_ as the calculation of the hydraulic radii is now integrated into the `transport()` method. This implies that the `transportPrerequisites()` method does not save it to disk any longer.
+* Removed the layer holding the hydraulic radii _(rhy),_ as the calculation of the hydraulic radii is now integrated into the `transport()` method. This implies that the `transportPrerequisites()` method does not save its result to disk any longer.
 * Removed the parameter holding the D8 outflow direction vector _(iv\_fDo)._ Existing parameter files containing it can still be used, but the parameter will definitely be lost upon saving the project's state.
 * Removed the `transportCalcOrder()` method, as the determination of the cell transport calculation order is now integrated into the `transport()` method. This implies that the `firstRun()` as well as `subsequentRun()` methods do not call it and the `saveState()` method does not save it to disk any longer.
 * The `calibrationQuality()` method now returns its return value invisibly.
