@@ -15,7 +15,7 @@ This version introduces a new flow method, but also comes with several breaking 
 * The L factor is now calculated using equation\ (9) as published by Desmet and Govers ([1996](https://www.tandfonline.com/doi/abs/10.1080/00224561.1996.12457102)) and not as modified by Kovacs ([2013](http://hdl.handle.net/20.500.12708/9468)).
 * The channel retentions of the substance outlet loads of subsurface drainages are now calculated analogous to the overland retentions of the local emissions, i.e. by using half of the respective flow path length.
 * `RPhosFate` now utilises the `terra` instead of the `raster` package.
-* Ceased the support for _ERDAS IMAGINE_ (\*.img) raster files and added `img2tif()` function can be used to convert all _ERDAS IMAGINE_ raster files in a directory and its subdirectories into _GeoTIFF_ raster files.
+* Ceased the support for _ERDAS IMAGINE_ (\*.img) raster files and added `img2tif()` function, which can be used to convert all _ERDAS IMAGINE_ raster files in a directory and its subdirectories into _GeoTIFF_ raster files.
 * Dropped backward compatibility to major version zero.
 
 ## Technical details
