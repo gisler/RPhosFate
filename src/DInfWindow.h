@@ -34,9 +34,9 @@ struct X1X2 {
   FacetProperties fct {};
 
   // Constructor
-  X1X2(T NA_RTYPE):
-    x1 {NA_RTYPE},
-    x2 {NA_RTYPE}
+  X1X2(T NA_rtype_):
+    x1 {NA_rtype_},
+    x2 {NA_rtype_}
   {}
 };
 
@@ -110,7 +110,7 @@ public:
   X1X2<T> get_ofl_x1x2(
     const FacetProperties& fct,
     const arma::Mat<T>& xm_xxx,
-    const T NA_RTYPE
+    const T NA_rtype_
   );
 
   template <typename T, int RTYPE>
@@ -248,7 +248,7 @@ inline FacetProperties DinfWindow::get_ofl_facetProperties(
 //'
 //' @param fct The FacetProperties struct of the examined cell.
 //' @param xm_xxx The matrix holding the values of the receiving neighbours.
-//' @param NA_RTYPE The NA value corresponding to the matrix's data type.
+//' @param NA_rtype_ The NA value corresponding to the matrix's data type.
 //'
 //' @return An X1X2 struct holding the values of the receiving neighbours x1 and
 //'   x2 and the DInf facet properties of the examined cell.
@@ -256,9 +256,9 @@ template <typename T>
 inline X1X2<T> DinfWindow::get_ofl_x1x2(
   const FacetProperties& fct,
   const arma::Mat<T>& xm_xxx,
-  const T NA_RTYPE
+  const T NA_rtype_
 ) {
-  X1X2<T> x1x2(NA_RTYPE);
+  X1X2<T> x1x2(NA_rtype_);
 
   if (!fct.ls_x1_oob) {
     x1x2.x1 = xm_xxx.at(fct.us_x1_r, fct.us_x1_c);
@@ -275,7 +275,7 @@ inline X1X2<T> DinfWindow::get_ofl_x1x2(
 //' Proportionally increase the existing values of the receiving neighbours x1
 //' and x2
 //'
-//' In case a receiving neighbour is not out of bounds or NA_RTYPE in a
+//' In case a receiving neighbour is not out of bounds or NA_rtype_ in a
 //' conditional layer, its existing value is increased proportionally by the
 //' provided value.
 //'
