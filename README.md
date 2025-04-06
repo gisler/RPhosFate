@@ -20,7 +20,7 @@ Install the [development version](https://gisler.github.io/RPhosFate/dev/) from 
 
 `remotes::install_github("gisler/RPhosFate")`
 
-[![R build status](https://github.com/gisler/RPhosFate/workflows/R-CMD-check/badge.svg)](https://github.com/gisler/RPhosFate/actions?query=workflow%3AR-CMD-check) [![GitHub Super-Linter](https://github.com/gisler/RPhosFate/workflows/Lint%20Code%20Base/badge.svg)](https://github.com/gisler/RPhosFate/actions?query=workflow%3A%22Lint+Code+Base%22)
+[![R build status](https://github.com/gisler/RPhosFate/workflows/R-CMD-check/badge.svg)](https://github.com/gisler/RPhosFate/actions?query=workflow%3AR-CMD-check)
 
 ## Semantic versioning
 
