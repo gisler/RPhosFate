@@ -1,0 +1,11 @@
+{
+  "configurations": [
+    {
+      "name": "(lldb) Attach to R",
+      "type": "lldb", // requires CodeLLDB extension
+      "request": "attach",
+      "pid": "${command:pickMyProcess}", // get from `Sys.getpid()`
+      "stopOnEntry": false
+    }
+  ]
+}
