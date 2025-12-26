@@ -1,0 +1,11 @@
+{
+  "configurations": [
+    {
+      "name": "(lldb) Attach to R",
+      "type": "lldb",
+      "request": "attach",
+      "pid": "${command:pickMyProcess}", // get from `Sys.getpid()`
+      "stopOnEntry": false
+    }
+  ]
+}
