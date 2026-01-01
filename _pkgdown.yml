@@ -1,23 +1,30 @@
 url: https://gisler.github.io/RPhosFate
 
-template:
-  params:
-    bootswatch: readable
-
 development:
   mode: auto
 
+template:
+  bootstrap: 5
+  bslib:
+    preset: lumen
+    pkgdown-nav-height: 57.6px
+    base_font: {google: "Gelasio"}
+    heading_font: {google: "Raleway"}
+
 navbar:
-  left:
-    - icon: fa-home fa-lg
-      href: index.html
-    - text: "Reference"
+  structure:
+    left: [reference, vignettes, publications, changelog]
+  components:
+    reference:
+      text: "Reference"
       href: reference/index.html
-    - text: "Vignettes"
+    vignettes:
+      text: "Vignettes"
       menu:
         - text: "Basic modelling workflow"
           href: articles/basicWorkflow.html
-    - text: "Publications"
+    publications:
+      text: "Publications"
       menu:
         - text: "2022: Particulate PhozzyLogic Index (PPLI)"
           href: https://doi.org/10.1016/j.jenvman.2022.114514
@@ -27,7 +34,8 @@ navbar:
           href: https://doi.org/10.1016/j.scitotenv.2012.06.024
         - text: "2008: Best management practice applications"
           href: https://doi.org/10.2166/wst.2008.264
-    - text: "Changelog"
+    changelog:
+      text: "Changelog"
       href: news/index.html
 
 reference:
