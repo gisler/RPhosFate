@@ -1,0 +1,122 @@
+An enhanced version of the semi-empirical, spatially distributed
+emission and transport model PhosFate implemented in R and C++. It is
+based on the D-infinity, but also supports the D8 flow method. The
+currently available substances are suspended solids (SS) and particulate
+phosphorus (PP). A major feature is the allocation of substance loads
+entering surface waters to their sources of origin, which is a basic
+requirement for the identification of critical source areas and in
+consequence a cost-effective implementation of mitigation measures.
+
+Copyright (C) 2021 RPhosFate authors
+
+This program is free software: you can redistribute it and/or modify it
+under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or (at
+your option) any later version.
+
+This program is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero
+General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program. If not, see <https://www.gnu.org/licenses/>.
+
+## Installation
+
+Install the latest release from CRAN:
+
+`install.packages("RPhosFate")`
+
+[![CRAN
+Version](https://www.r-pkg.org/badges/version/RPhosFate)](https://cran.r-project.org/package=RPhosFate)
+[![CRAN
+Checks](https://badges.cranchecks.info/worst/RPhosFate.svg)](https://cran.r-project.org/web/checks/check_results_RPhosFate.html)
+
+Install the [development
+version](https://gisler.github.io/RPhosFate/dev/) from GitHub (requires
+[Rtools](https://cran.r-project.org/bin/windows/Rtools/) on Windows and
+the `remotes` package):
+
+`remotes::install_github("gisler/RPhosFate")`
+
+[![R build
+status](https://github.com/gisler/RPhosFate/workflows/R-CMD-check/badge.svg)](https://github.com/gisler/RPhosFate/actions?query=workflow%3AR-CMD-check)
+
+## Semantic versioning
+
+Releases of this project are versioned following the rules of
+[SemVer](https://semver.org).
+
+# Package index
+
+## Input data
+
+- [`DEMrelatedInput()`](https://gisler.github.io/RPhosFate/dev/reference/DEMrelatedInput.md)
+  : DEM related input
+
+- [`demoProject()`](https://gisler.github.io/RPhosFate/dev/reference/demoProject.md)
+  : Demonstration project
+
+- [`img2tif()`](https://gisler.github.io/RPhosFate/dev/reference/img2tif.md)
+  :
+
+  Convert *ERDAS IMAGINE* to *GeoTIFF* raster files
+
+## Project management
+
+- [`RPhosFate()`](https://gisler.github.io/RPhosFate/dev/reference/catchment.md)
+  [`catchment()`](https://gisler.github.io/RPhosFate/dev/reference/catchment.md)
+  : Initialise project
+- [`saveState(`*`<RPhosFate>`*`)`](https://gisler.github.io/RPhosFate/dev/reference/saveState-RPhosFate-method.md)
+  : Save state
+
+## High-level interface
+
+- [`firstRun(`*`<RPhosFate>`*`)`](https://gisler.github.io/RPhosFate/dev/reference/firstRun-RPhosFate-method.md)
+  : First run
+- [`subsequentRun(`*`<RPhosFate>`*`)`](https://gisler.github.io/RPhosFate/dev/reference/subsequentRun-RPhosFate-method.md)
+  : Subsequent run
+- [`getLayer(`*`<RPhosFate>`*`)`](https://gisler.github.io/RPhosFate/dev/reference/getLayer-RPhosFate-method.md)
+  [`` `[`( ``*`<RPhosFate>`*`,`*`<ANY>`*`,`*`<ANY>`*`)`](https://gisler.github.io/RPhosFate/dev/reference/getLayer-RPhosFate-method.md)
+  : Get layer
+- [`getParameter(`*`<RPhosFate>`*`)`](https://gisler.github.io/RPhosFate/dev/reference/getParameter-RPhosFate-method.md)
+  : Get parameter(s)
+- [`setParameter(`*`<RPhosFate>`*`)`](https://gisler.github.io/RPhosFate/dev/reference/setParameter-RPhosFate-method.md)
+  : Set parameter(s)
+
+## Calibration
+
+- [`snapGauges(`*`<RPhosFate>`*`)`](https://gisler.github.io/RPhosFate/dev/reference/snapGauges-RPhosFate-method.md)
+  : Snap gauge(s)
+- [`calibrationQuality(`*`<RPhosFate>`*`)`](https://gisler.github.io/RPhosFate/dev/reference/calibrationQuality-RPhosFate-method.md)
+  : Calibration quality
+- [`autoCalibrate(`*`<RPhosFate>`*`)`](https://gisler.github.io/RPhosFate/dev/reference/autoCalibrate-RPhosFate-method.md)
+  : One dimensional automatic model calibration
+- [`autoCalibrate2(`*`<RPhosFate>`*`)`](https://gisler.github.io/RPhosFate/dev/reference/autoCalibrate2-RPhosFate-method.md)
+  : Two dimensional automatic model calibration
+
+## Low-level interface
+
+- [`erosionPrerequisites(`*`<RPhosFate>`*`)`](https://gisler.github.io/RPhosFate/dev/reference/erosionPrerequisites-RPhosFate-method.md)
+  : Erosion prerequisites
+- [`erosion(`*`<RPhosFate>`*`)`](https://gisler.github.io/RPhosFate/dev/reference/erosion-RPhosFate-method.md)
+  : Erosion
+- [`emission(`*`<RPhosFate>`*`)`](https://gisler.github.io/RPhosFate/dev/reference/emission-RPhosFate-method.md)
+  : Emission
+- [`transportPrerequisites(`*`<RPhosFate>`*`)`](https://gisler.github.io/RPhosFate/dev/reference/transportPrerequisites-RPhosFate-method.md)
+  : Transport prerequisites
+- [`transport(`*`<RPhosFate>`*`)`](https://gisler.github.io/RPhosFate/dev/reference/transport-RPhosFate-method.md)
+  : Transport
+
+## Class description
+
+- [`RPhosFate-class`](https://gisler.github.io/RPhosFate/dev/reference/RPhosFate-class.md)
+  : RPhosFate class
+
+# Articles
+
+### All vignettes
+
+- [Basic modelling
+  workflow](https://gisler.github.io/RPhosFate/dev/articles/basicWorkflow.md):
