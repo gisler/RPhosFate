@@ -1,5 +1,6 @@
 # RPhosFate v2.0.1.9000
 
+* Updated the package's `pkgdown` website to Bootstrap 5.
 * Minor internal code improvements, which require R ≥ 4.0.0.
 
 # RPhosFate v2.0.1
