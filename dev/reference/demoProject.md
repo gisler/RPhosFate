@@ -52,5 +52,5 @@ A character string containing the demonstration project root directory.
 ``` r
 demoProject()
 #> Warning: A folder called "demoProject" already exists and is left as is.
-#> [1] "/tmp/RtmpJsIC7o/demoProject"
+#> [1] "/tmp/RtmpB96zr4/demoProject"
 ```
