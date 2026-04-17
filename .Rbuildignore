@@ -1,10 +1,11 @@
 ^.*\.Rproj$
-^_pkgdown\.yml$
 ^\.github$
 ^\.lintr$
 ^\.Rproj\.user$
 ^\.vscode$
+^_pkgdown\.yml$
 ^CONTRIBUTING\.md$
 ^cran-comments\.md$
 ^debug\.R$
+^jarl\.toml$
 ^LICENSE\.md$
