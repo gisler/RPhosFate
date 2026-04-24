@@ -7,7 +7,7 @@ cha, dem, dir_inf, rds, slp_inf,* and *wsh.*
 Requires the
 *[WhiteboxTools](https://www.whiteboxgeo.com/download-whiteboxtools/)*
 binary
-([`whitebox::install_whitebox`](https://whiteboxr.gishub.org/reference/install_whitebox.html))
+([`whitebox::install_whitebox`](https://rdrr.io/pkg/whitebox/man/install_whitebox.html))
 to be installed on your computer.
 
 ## Usage
