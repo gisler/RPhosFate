@@ -8,10 +8,10 @@
 \S4method{snapGauges}{RPhosFate}(x)
 }
 \arguments{
-\item{x}{An S4 \code{\linkS4class{RPhosFate}} river catchment object.}
+\item{x}{An S4 \code{\link[=RPhosFate-class]{RPhosFate}} river catchment object.}
 }
 \value{
-An S4 \code{\linkS4class{RPhosFate}} river catchment object.
+An S4 \code{\link[=RPhosFate-class]{RPhosFate}} river catchment object.
 }
 \description{
 Snaps the coordinates of the provided calibration gauges to the respective

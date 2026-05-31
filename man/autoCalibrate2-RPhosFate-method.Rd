@@ -17,7 +17,7 @@
 )
 }
 \arguments{
-\item{x}{An S4 \code{\linkS4class{RPhosFate}} river catchment object.}
+\item{x}{An S4 \code{\link[=RPhosFate-class]{RPhosFate}} river catchment object.}
 
 \item{substance}{A character string specifying the substance to calculate.}
 
@@ -41,7 +41,7 @@ the interval(s) to be searched.}
 \code{\link{optim}} for further information.}
 }
 \value{
-An S4 \code{\linkS4class{RPhosFate}} river catchment object and side effects in
+An S4 \code{\link[=RPhosFate-class]{RPhosFate}} river catchment object and side effects in
 the form of raster files.
 }
 \description{

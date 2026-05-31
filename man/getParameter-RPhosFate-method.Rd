@@ -8,7 +8,7 @@
 \S4method{getParameter}{RPhosFate}(x, parameter = NULL)
 }
 \arguments{
-\item{x}{An S4 \code{\linkS4class{RPhosFate}} river catchment object.}
+\item{x}{An S4 \code{\link[=RPhosFate-class]{RPhosFate}} river catchment object.}
 
 \item{parameter}{A character string specifying a parameter name or \code{NULL} for
 a \code{\link{list}} of all parameters. See model parameter arguments section for

@@ -8,7 +8,7 @@
 \S4method{calibrationQuality}{RPhosFate}(x, substance, col)
 }
 \arguments{
-\item{x}{An S4 \code{\linkS4class{RPhosFate}} river catchment object.}
+\item{x}{An S4 \code{\link[=RPhosFate-class]{RPhosFate}} river catchment object.}
 
 \item{substance}{A character string specifying the substance to calculate.}
 

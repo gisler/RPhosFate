@@ -8,13 +8,13 @@
 \S4method{setParameter}{RPhosFate}(x, ...)
 }
 \arguments{
-\item{x}{An S4 \code{\linkS4class{RPhosFate}} river catchment object.}
+\item{x}{An S4 \code{\link[=RPhosFate-class]{RPhosFate}} river catchment object.}
 
 \item{\dots}{Names and values of the parameters to set. See model parameter
 arguments section for further information.}
 }
 \value{
-An S4 \code{\linkS4class{RPhosFate}} river catchment object.
+An S4 \code{\link[=RPhosFate-class]{RPhosFate}} river catchment object.
 }
 \description{
 Sets one or more model parameters or substance parameter values.

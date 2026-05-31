@@ -11,7 +11,7 @@
 \S4method{[}{RPhosFate,ANY,ANY}(x, i, j)
 }
 \arguments{
-\item{x}{An S4 \code{\linkS4class{RPhosFate}} river catchment object.}
+\item{x}{An S4 \code{\link[=RPhosFate-class]{RPhosFate}} river catchment object.}
 
 \item{i}{A character string specifying a layer name. Substance related layers
 whose names start with \emph{xx} are treated differently. They have to be

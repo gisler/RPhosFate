@@ -8,7 +8,7 @@
 \S4method{saveState}{RPhosFate}(x)
 }
 \arguments{
-\item{x}{An S4 \code{\linkS4class{RPhosFate}} river catchment object.}
+\item{x}{An S4 \code{\link[=RPhosFate-class]{RPhosFate}} river catchment object.}
 }
 \value{
 \code{NULL} invisibly and side effects in the form of files.

@@ -14,7 +14,7 @@ catchment(...)
 for further information.}
 }
 \value{
-An S4 \code{\linkS4class{RPhosFate}} river catchment object.
+An S4 \code{\link[=RPhosFate-class]{RPhosFate}} river catchment object.
 }
 \description{
 Initialises a project from scratch or loads the state of an existing one

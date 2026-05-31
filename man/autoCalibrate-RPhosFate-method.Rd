@@ -16,7 +16,7 @@
 )
 }
 \arguments{
-\item{x}{An S4 \code{\linkS4class{RPhosFate}} river catchment object.}
+\item{x}{An S4 \code{\link[=RPhosFate-class]{RPhosFate}} river catchment object.}
 
 \item{substance}{A character string specifying the substance to calculate.}
 
@@ -39,7 +39,7 @@ dedicated parameter utilised for calibration via a character string:
 \code{"ns_dep_ovl"} for overland or \code{"ns_dep_cha"} for channel deposition rate.}
 }
 \value{
-An S4 \code{\linkS4class{RPhosFate}} river catchment object and side effects in
+An S4 \code{\link[=RPhosFate-class]{RPhosFate}} river catchment object and side effects in
 the form of raster files.
 }
 \description{
