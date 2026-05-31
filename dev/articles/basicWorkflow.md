@@ -10,6 +10,7 @@ the `RPhosFate` package.
 Load the package and obtain a copy of the demonstration project:
 
 ``` r
+
 library(RPhosFate)
 
 cv_dir <- demoProject()
@@ -24,6 +25,7 @@ or
 to initialise the project:
 
 ``` r
+
 x <- RPhosFate(
   cv_dir = cv_dir,
   ns_dep_ovl = 25e-4,
@@ -46,6 +48,7 @@ calls all low-level interface methods for the specified substance in the
 required order:
 
 ``` r
+
 x <- firstRun(x, substance = "SS")
 ```
 
@@ -56,6 +59,7 @@ midpoint of the nearest channel cell if necessary and check calibration
 quality:
 
 ``` r
+
 x <- snapGauges(x)
 
 metrics <- calibrationQuality(x, substance = "SS", col = "SS_load")
@@ -74,6 +78,7 @@ only calls the
 low-level interface method for the specified substance:
 
 ``` r
+
 x <- setParameter(x, ns_dep_ovl = 15e-4)
 
 x <- subsequentRun(x, substance = "SS")
@@ -94,6 +99,7 @@ First, a further call to
 for PP is necessary:
 
 ``` r
+
 x <- subsequentRun(x, substance = "PP")
 
 metrics <- calibrationQuality(x, substance = "PP", col = "PP_load")
@@ -105,6 +111,7 @@ Same procedure as with SS apart from iteratively specifying better
 parameter values for the enrichment ratio:
 
 ``` r
+
 x <- setParameter(x, nv_enr_rto = c(PP = 1.4))
 
 x <- subsequentRun(x, substance = "PP")
@@ -121,6 +128,7 @@ and/or `ns_dep_cha`.
 Write parameters to disk:
 
 ``` r
+
 saveState(x)
 ```
 
@@ -135,6 +143,7 @@ or
 [`catchment()`](https://gisler.github.io/RPhosFate/dev/reference/catchment.md):
 
 ``` r
+
 x <- RPhosFate(
   cv_dir = cv_dir,
   ls_ini = TRUE

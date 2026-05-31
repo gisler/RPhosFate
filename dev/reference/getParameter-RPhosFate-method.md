@@ -111,6 +111,7 @@ See model parameter arguments section for further information.
 ## Examples
 
 ``` r
+
 # temporary demonstration project copy
 cv_dir <- demoProject()
 #> Warning: A folder called "demoProject" already exists and is left as is.

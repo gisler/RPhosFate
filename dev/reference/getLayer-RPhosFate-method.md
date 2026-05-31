@@ -149,33 +149,33 @@ x <- RPhosFate(
 x <- firstRun(x, "SS")
 
 getLayer(x, "dir_inf")
-#> class       : SpatRaster 
+#> class       : SpatRaster
 #> size        : 92, 155, 1  (nrow, ncol, nlyr)
 #> resolution  : 10, 10  (x, y)
 #> extent      : 4702990, 4704540, 2795190, 2796110  (xmin, xmax, ymin, ymax)
-#> coord. ref. : +proj=laea +lat_0=52 +lon_0=10 +x_0=4321000 +y_0=3210000 +ellps=GRS80 +units=m +no_defs 
-#> source      : dir_inf.tif 
-#> name        :     dir_inf 
-#> min value   :   0.2138069 
-#> max value   : 360.0000000 
+#> coord. ref. : +proj=laea +lat_0=52 +lon_0=10 +x_0=4321000 +y_0=3210000 +ellps=GRS80 +units=m +no_defs
+#> source      : dir_inf.tif
+#> name        :  dir_inf
+#> min value   : 0.213807
+#> max value   :      360
 getLayer(x, "xxt", "SS")
-#> class       : SpatRaster 
+#> class       : SpatRaster
 #> size        : 92, 155, 1  (nrow, ncol, nlyr)
 #> resolution  : 10, 10  (x, y)
 #> extent      : 4702990, 4704540, 2795190, 2796110  (xmin, xmax, ymin, ymax)
-#> coord. ref. : +proj=laea +lat_0=52 +lon_0=10 +x_0=4321000 +y_0=3210000 +ellps=GRS80 +units=m +no_defs 
-#> source      : sst.tif 
-#> name        :          sst 
-#> min value   : 3.027626e-06 
-#> max value   : 1.754717e+01 
+#> coord. ref. : +proj=laea +lat_0=52 +lon_0=10 +x_0=4321000 +y_0=3210000 +ellps=GRS80 +units=m +no_defs
+#> source      : sst.tif
+#> name        :       sst
+#> min value   :  0.000003
+#> max value   : 17.547173
 getLayer(x, "xxe", "PP")# }
-#> class       : SpatRaster 
+#> class       : SpatRaster
 #> size        : 92, 155, 1  (nrow, ncol, nlyr)
 #> resolution  : 10, 10  (x, y)
 #> extent      : 4702990, 4704540, 2795190, 2796110  (xmin, xmax, ymin, ymax)
-#> coord. ref. : +proj=laea +lat_0=52 +lon_0=10 +x_0=4321000 +y_0=3210000 +ellps=GRS80 +units=m +no_defs 
-#> source      : ppe.tif 
-#> name        :          ppe 
-#> min value   : 5.648591e-05 
-#> max value   : 9.866220e-01 
+#> coord. ref. : +proj=laea +lat_0=52 +lon_0=10 +x_0=4321000 +y_0=3210000 +ellps=GRS80 +units=m +no_defs
+#> source      : ppe.tif
+#> name        :      ppe
+#> min value   : 0.000056
+#> max value   : 0.986622
 ```
